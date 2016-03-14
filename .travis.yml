@@ -5,7 +5,7 @@ compiler:
     - clang
 
 before_script:  
-    - cd "Ejemplo Clion"
+    - cd EjemploClion
     - cmake .
     - make
 
