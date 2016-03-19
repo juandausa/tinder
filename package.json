@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "description": "ABM para usuarios de app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fabrizio Graffe",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "~4.13.4",
+    "body-parser": "~1.15.0",
+    "cookie-parser": "~1.4.1",
+    "multer": "~1.1.0",
+    "postgresql": "0.0.1",
+    "massive": "~2.1.0",
+    "node-base64-image": "~0.1.2",
+    "keygen": "~0.2.1"
+  }
+}
