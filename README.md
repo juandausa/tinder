@@ -10,14 +10,14 @@ El Shared Server es un servidor desarrollado en [node.js](https://nodejs.org) qu
 
 ### Requerimientos para su uso
 
-1. Instalar node.js así como su manejador de paquetes, [npm](https://www.npmjs.com/)
+* Instalar node.js así como su manejador de paquetes, [npm](https://www.npmjs.com/)
 ``` 
 sudo apt-get update
 sudo apt-get install nodejs
 sudo apt-get install npm
 ```
 
-2. Instalar postgreSQL
+* Instalar postgreSQL
 ```
 sudo apt-get install postgresql-9.4
 ```
