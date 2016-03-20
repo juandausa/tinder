@@ -30,3 +30,6 @@ before_script:
     - make
 
 script: valgrind --leak-check=full --error-exitcode=1 ./ar/fi/uba/concurrentes/test/runTests
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
