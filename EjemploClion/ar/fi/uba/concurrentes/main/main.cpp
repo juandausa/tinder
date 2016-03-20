@@ -1,24 +1,22 @@
+/* Copyright 2016 FiUBA */
+
 #include <unistd.h>
-#include <iostream>
 #include <wait.h>
+#include <iostream>
 #include <ctime>
 #include <fstream>
 #include <Lock.h>
 
-
-
-using namespace std;
-
 void printCurrentDir() {
     char cwd[1024];
     if (getcwd(cwd, sizeof(cwd)) != NULL)
-        cout<< "Current working dir: "<< cwd<<endl;
+        std::cout << "Current working dir: " << cwd << std::endl;
     else
         perror("getcwd() error");
 }
 
 int main(int arg, char** args) {
-    cout << "Esto es un programa hecho con Clion." << endl;
+    std::cout << "Esto es un programa hecho con Clion." << std::endl;
     printCurrentDir();
     return 0;
 }
