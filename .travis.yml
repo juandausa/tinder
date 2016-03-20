@@ -1,29 +1,33 @@
-language: cpp
+language: android
+jdk: oraclejdk7
 
-compiler:  
-    - gcc
-    - clang
-sudo: required
+android:
+  components:
+    # Uncomment the lines below if you want to
+    # use the latest revision of Android SDK Tools
+    - platform-tools
+    - tools
 
-notifications:
-  email:
-    recipients:
-      - juandausa@gmail.com
-    on_success: change
-    on_failure: always
-    
-before_install:
-    - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq libyajl-dev libxml2-dev libxqilla-dev valgrind
-    - if [ "$CXX" = "clang++" ]; then sudo apt-get install -qq libstdc++-4.8-dev; fi
-    - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
-    - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
-    - sudo apt-get install libgtest-dev
-    - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
-before_script:  
-    - cd EjemploClion
-    - cmake .
-    - make
+    # The BuildTools version used by your project
+    - build-tools-23.0.1
 
-script: valgrind --leak-check=full --error-exitcode=1 ./ar/fi/uba/concurrentes/test/runTests
+    # The SDK version used to compile your project
+    - android-23
+
+    # Additional components
+    - extra
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-19
+
+    # Specify at least one system image,
+    # if you need to run emulator(s) during your tests
+    - sys-img-armeabi-v7a-android-19
+    - sys-img-x86-android-17
+
+
+script:
+    - cd App/app/
+    - chmod +x gradlew
+    - ./gradlew assembleDebug
