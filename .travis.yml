@@ -21,13 +21,13 @@ before_install:
     - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
     - sudo apt-get install libgtest-dev
     - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
-    - lcov --zerocounters --directory ./EjemploClion/ar/fi/uba/concurrentes/test/
-    - lcov --capture --initial --directory ./EjemploClion/ar/fi/uba/concurrentes/test/ --output-file app
 
 before_script:  
     - cd EjemploClion
     - cmake .
     - make
+    - lcov --zerocounters --directory ./ar/fi/uba/concurrentes/test/
+    - lcov --capture --initial --directory ./ar/fi/uba/concurrentes/test/ --output-file app
 
 script: valgrind --leak-check=full --error-exitcode=1 ./ar/fi/uba/concurrentes/test/runTests
 
