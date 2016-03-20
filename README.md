@@ -45,3 +45,12 @@ Para clonar el branch y empezar a desarrollar sobre el mismo, desde la linea de 
 
 `git clone -b SharedServer https://github.com/juandausa/tinder.git SharedServer`
 
+
+### Pull y Push desde branches
+
+Para pullear desde un branch basta con ejecutar, desde el directorio donde se encuentran los archivos del branch:
+`git pull`
+
+Para push desde un branch basta con ejecutar, desde el directorio donde se encuentran los archivos del branch:
+`git push`
+
