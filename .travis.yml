@@ -1,6 +1,14 @@
 language: android
 jdk: oraclejdk7
 
+notifications:
+  email:
+    recipients:
+      - juandausa@gmail.com
+      - zebas.graffe@gmail.com
+    on_success: change
+    on_failure: always
+    
 android:
   components:
     # Uncomment the lines below if you want to
