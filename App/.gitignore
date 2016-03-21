@@ -17,6 +17,4 @@ build/
 .idea
 *.iml
 
-# Not ignore this
-!app/gradle/gradle-wrapper.jar
 
