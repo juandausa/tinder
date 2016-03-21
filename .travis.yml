@@ -30,6 +30,7 @@ install:
     - sudo make -C lcov-1.11/ install
     # install lcov to coveralls conversion + upload tool
     - gem install coveralls-lcov
+    - cd ..
 
 before_script:
     - cd EjemploClion
