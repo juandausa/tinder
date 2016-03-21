@@ -1,5 +1,10 @@
 # Tinder
 
+[![Build Status](https://travis-ci.com/juandausa/tinder.svg?token=BQqpkHq7v8pQHzVJzZjB&branch=App)](https://travis-ci.com/juandausa/tinder)
+[![Build Status](https://travis-ci.com/juandausa/tinder.svg?token=BQqpkHq7v8pQHzVJzZjB&branch=AppServer)](https://travis-ci.com/juandausa/tinder)
+[![Build Status](https://travis-ci.com/juandausa/tinder.svg?token=BQqpkHq7v8pQHzVJzZjB&branch=SharedServer)](https://travis-ci.com/juandausa/tinder)
+
+
 Proyecto para la materia 75.52 que consiste en el desarrollo de una aplicación clon de Tinder, según las especificaciones dadas.
 
 
