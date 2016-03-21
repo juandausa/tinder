@@ -22,27 +22,11 @@ before_install:
     - sudo apt-get install libgtest-dev
     - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
 
-install:
-    # install latest LCOV (1.9 was failing for me) [1]
-    - cd EjemploClion
-    - gem install coveralls-lcov
-    - cd ..
-
 before_script:
     - cd EjemploClion
     - ./cpplint/cpplint.py --extensions=cpp ./ar/fi/uba/concurrentes/src/*
     - ./cpplint/cpplint.py --extensions=cpp ./ar/fi/uba/concurrentes/main/*
-    - lcov --compat split_crc=on --zerocounters --directory ./ar/fi/uba/concurrentes/test/
     - cmake .
     - make
 
 script: valgrind --leak-check=full --error-exitcode=1 ./ar/fi/uba/concurrentes/test/runTests
-
-after_success:
-    - lcov --compat split_crc=on --capture --initial --directory ./ar/fi/uba/concurrentes/test/ --output-file app
-    - lcov --compat split_crc=on --no-checksum --directory ./ar/fi/uba/concurrentes/test/ --capture --output-file app.info
-    - genhtml ./ar/fi/uba/concurrentes/test/app.info
-    - lcov --remove ./ar/fi/uba/concurrentes/test/app.info 'tests/*' '/usr/*' --output-file coverage.info
-    - lcov --list ./ar/fi/uba/concurrentes/test/coverage.info
-    - cat ./ar/fi/uba/concurrentes/test/coverage.info
-    #- coveralls-lcov ./ar/fi/uba/concurrentes/test/coverage.info
