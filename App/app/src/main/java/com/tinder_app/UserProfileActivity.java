@@ -10,8 +10,14 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+/**
+ * Activity that shows the profile information of a determined user.
+ */
 public class UserProfileActivity extends AppCompatActivity {
 
+    /**
+     * Hardcoded string for getting the name of the user.
+     */
     public static final String EXTRA_NAME = "cheese_name";
 
     @Override
@@ -26,8 +32,8 @@ public class UserProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        CollapsingToolbarLayout collapsingToolbar
+                = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(cheeseName);
 
         loadBackdrop();

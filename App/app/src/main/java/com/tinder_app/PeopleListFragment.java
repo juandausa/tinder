@@ -12,8 +12,11 @@ import com.daprlabs.cardstack.SwipeDeck;
 
 import java.util.ArrayList;
 
-import Classes.SwipeDeckAdapter;
+import classes.SwipeDeckAdapter;
 
+/**
+ * Fragment that holds the SwipeDeck of the people to be liked or disliked by the user.
+ */
 public class PeopleListFragment extends Fragment {
 
     @Override

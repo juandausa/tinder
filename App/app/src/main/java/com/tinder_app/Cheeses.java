@@ -2,27 +2,15 @@ package com.tinder_app;
 
 import java.util.Random;
 
-public class Cheeses {
+/**
+ * Mock data class.
+ */
+public final class Cheeses {
 
-    private static final Random RANDOM = new Random();
-
-    public static int getRandomCheeseDrawable() {
-        switch (RANDOM.nextInt(5)) {
-            default:
-            case 0:
-                return R.drawable.cheese_1;
-            case 1:
-                return R.drawable.cheese_2;
-            case 2:
-                return R.drawable.cheese_3;
-            case 3:
-                return R.drawable.cheese_4;
-            case 4:
-                return R.drawable.cheese_5;
-        }
-    }
-
-    public static final String[] sCheeseStrings = {
+    /**
+     * Array of mock Strings.
+     */
+    public static final String[] CHEESE_STRINGS = {
             "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance", "Ackawi",
             "Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu", "Airag", "Airedale",
             "Aisy Cendre", "Allgauer Emmentaler", "Alverca", "Ambert", "American Cheese",
@@ -155,4 +143,32 @@ public class Cheeses {
             "Zamorano", "Zanetti Grana Padano", "Zanetti Parmigiano Reggiano"
     };
 
+    private static final Random RANDOM = new Random();
+
+    /**
+     * Private constructor for utility class Cheeses.
+     */
+    private Cheeses() {
+    }
+
+    /**
+     * Gets a random id from the ids of the drawables availables.
+     * @return id of the random drawable selected.
+     */
+    public static int getRandomCheeseDrawable() {
+        switch (RANDOM.nextInt(5)) {
+            case 0:
+                return R.drawable.cheese_1;
+            case 1:
+                return R.drawable.cheese_2;
+            case 2:
+                return R.drawable.cheese_3;
+            case 3:
+                return R.drawable.cheese_4;
+            case 4:
+                return R.drawable.cheese_5;
+            default:
+                return R.drawable.cheese_1;
+        }
+    }
 }

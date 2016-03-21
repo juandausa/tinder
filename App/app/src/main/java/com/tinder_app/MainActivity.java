@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import Classes.CustomViewPager;
+import classes.CustomViewPager;
 
 /**
  * TODO
@@ -59,12 +59,19 @@ public class MainActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Executes a determined action on item's selection on the menu.
+     * @param item item selected
+     * @return true if action is performed, false otherwise.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -72,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets the content of the ViewPager.
+     * @param viewPager
+     */
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new PeopleListFragment(), "Personas");
@@ -82,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets the content of the NavigationDrawer View
+     * @param navigationView
+     */
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -97,14 +112,26 @@ public class MainActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Adapter for the ViewPager.
+     */
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();
 
+        /**
+         * Constructor of the class Adapter.
+         * @param fm fragment manager.
+         */
         public Adapter(FragmentManager fm) {
             super(fm);
         }
 
+        /**
+         * Adds a fragment to the Adapter.
+         * @param fragment fragment to be added to the Adapter.
+         * @param title Title to be shown of the section that represents the Fragment.
+         */
         public void addFragment(Fragment fragment, String title) {
             mFragments.add(fragment);
             //mFragmentTitles.add(title);
