@@ -1,10 +1,10 @@
 {
   "name": "server",
   "version": "0.0.0",
-  "description": "ABM para usuarios de app",
+  "description": "ABM para usuarios de app, con integracion continua y chequeo de estilos.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/jshint/bin/jshint server.js"
   },
   "author": "Fabrizio Graffe",
   "license": "BSD-2-Clause",
@@ -17,5 +17,8 @@
     "massive": "~2.1.0",
     "node-base64-image": "~0.1.2",
     "keygen": "~0.2.1"
+  },
+  "devDependencies": {
+    "jshint": "~2.9.1"
   }
 }

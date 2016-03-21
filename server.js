@@ -6,11 +6,11 @@ var keygen = require('keygen');
 var app = express();
 var config      = require('./config.json');
 var connectionString = "postgres://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+"/"+config.postgres.db;
-var db = undefined;
+var db;
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true})); // for parsing application/x-www-form-urlencoded
-var photosPath = 'profile_photos/'
+
 
 /************************************************************************/
 /******************					AUX				 ********************/
@@ -19,6 +19,15 @@ var photosPath = 'profile_photos/'
 function checkForError(err, res, message) {
 	if (err) {
 		console.error(message, err);
+		res.sendStatus(500);
+		return true;
+	}
+	return false;
+}
+
+function checkIfUndefined(data, message) {
+	if (data === undefined) {
+		console.error(message);
 		res.sendStatus(500);
 		return true;
 	}
@@ -55,7 +64,7 @@ app.get('/users', function (req, res) {
 		response.metadata = {version: "0.1", count: users.length};
 		res.send(response);
 	});
-})
+});
 
 /************************************************************************/
 /************************************************************************/
@@ -65,13 +74,13 @@ app.get('/users/:user_id', function (req, res) {
 	var response = {};
 	db.users.findOne({id: req.params.user_id}, function(err, user) { 
 		if (checkForError(err, res, "Error at creating new user")) return;
-		if (user != undefined) {
+		if (user !== undefined) {
 			user.data.id = user.id;
 			response = {user: user.data, metadata: {version: "0.1"}};
 		} 
 		res.send(response);
 	});
-})
+});
 
 /************************************************************************/
 /************************************************************************/
@@ -80,10 +89,10 @@ app.get('/users/:user_id', function (req, res) {
 app.get('/users/:user_id/photo', function (req, res) {
 	db.users.findOne({id: req.params.user_id}, function(err, user) { 
 		if (checkForError(err, user, res, "Error downloading photo")) return;
-		if (user != undefined)
+		if (user !== undefined)
 			decodeImage(user.data.photo_profile, res);
 	});
-})
+});
 
 
 /************************************************************************/
@@ -97,7 +106,7 @@ app.post('/users', function (req, res) {
 		if (checkForError(err, saved, res, "Error at saving user data")) return;
 		res.sendStatus(201);
 	});
-})
+});
 
 /************************************************************************/
 /************************************************************************/
@@ -111,7 +120,7 @@ app.put('/users/:user_id', function (req, res) {
 		if (checkForError(err, saved, res, "Error at saving user data")) return;
 		res.sendStatus(200);
 	});
-})
+});
 
 /************************************************************************/
 /************************************************************************/
@@ -120,8 +129,8 @@ app.put('/users/:user_id', function (req, res) {
 app.put('/users/:user_id/photo', function (req, res) {
 	var user_id = req.params.user_id;
 	db.users.findOne({id: user_id}, function(err, user) {
-		if (checkForError(err, user, res, "Error at retrieving user data")) return;
-		if (user)
+		if (checkForError(err, res, "Error at retrieving user data")) return;
+		if (checkIfUndefined(user, "User does not exist")) return;
 		var userData = user.data;
 		userData.photo_profile = req.body.photo;
 		db.users.save({id: user_id, data: userData}, function(err, saved){
@@ -129,7 +138,7 @@ app.put('/users/:user_id/photo', function (req, res) {
 			res.sendStatus(200);
 		});
 	});
-})
+});
 
 /************************************************************************/
 /************************************************************************/
@@ -138,22 +147,20 @@ app.put('/users/:user_id/photo', function (req, res) {
 app.delete('/users/:user_id', function (req, res) {
 	db.users.destroy({id: req.params.user_id}, function(err, deleted) {
 		if (checkForError(err, res, "Error at deleting user")) return;
-		res.sendStatus(200);
+        if (checkIfUndefined(deleted, "User does not exist")) return;	
+    	res.sendStatus(200);
 	});
-	
-})
+});
 
 /************************************************************************/
 /************************************************************************/
 
 var server = app.listen(config.express.port, function () {
-	var host = server.address().address
-	var port = server.address().port
-	// You can use db for 'database name' running on localhost 
-	// or send in everything using 'connectionString' 
+	var host = server.address().address;
+	var port = server.address().port;
 	massive.connect({connectionString : connectionString}, function(err, database){
 		if (checkForError(err, "Error connecting to database")) return;
 		db = database;
 	});
-  	console.log("Example app listening at http://%s:%s", host, port)
-})
+  	console.log("Example app listening at http://%s:%s", host, port);
+});
