@@ -8,6 +8,10 @@ notifications:
       - zebas.graffe@gmail.com
     on_success: change
     on_failure: always
+
+branches:
+  only:
+    - App
     
 android:
   components:
@@ -33,9 +37,6 @@ android:
     # if you need to run emulator(s) during your tests
     - sys-img-armeabi-v7a-android-19
     - sys-img-x86-android-17
-
-  install:
-    - App/app/gradlew tasks
 
 script:
     - cd App/app/
