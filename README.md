@@ -1,6 +1,6 @@
 ## Branch App
 
-[![Travis branch](https://img.shields.io/travis/rust-lang/rust/master.svg)]()
+[![Build Status](https://travis-ci.com/juandausa/tinder.svg?token=BQqpkHq7v8pQHzVJzZjB&branch=App)](https://travis-ci.com/juandausa/tinder)
 
 
 En este branch se encuentran todos los sources, tests y otros archivos del cliente Android del proyecto.
