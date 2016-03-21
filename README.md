@@ -1,9 +1,6 @@
-# tinder
+# Branch Shared Server
 
-Proyecto para la materia 75.52 que consiste en el desarrollo de una aplicación clon de Tinder, según las especificaciones dadas.
-
-
-## Branch Shared Server
+[![Build Status](https://travis-ci.com/juandausa/tinder.svg?token=BQqpkHq7v8pQHzVJzZjB&branch=SharedServer)](https://travis-ci.com/juandausa/tinder)
 
 En este branch se encuentran todos los sources, tests y otros archivos del Shared Server.
 El Shared Server es un servidor desarrollado en [node.js](https://nodejs.org) que ofrece las operaciones de alta, baja, modificación y consulta de usuarios. Consta de una base de datos relacional para la cual se usa [postgreSQL](http://www.postgresql.org/) como administrador de base de datos.
