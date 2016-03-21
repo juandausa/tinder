@@ -24,9 +24,9 @@ before_install:
 
 before_script:
     - cd AppServer
-    - ./cpplint/cpplint.py --extensions=cpp ./ar/fi/uba/concurrentes/src/*
-    - ./cpplint/cpplint.py --extensions=cpp ./ar/fi/uba/concurrentes/main/*
+    - ./cpplint/cpplint.py --extensions=cpp ./ar/fi/uba/tallerii/src/*
+    - ./cpplint/cpplint.py --extensions=cpp ./ar/fi/uba/tallerii/main/*
     - cmake .
     - make
 
-script: valgrind --leak-check=full --error-exitcode=1 ./ar/fi/uba/concurrentes/test/runTests
+script: valgrind --leak-check=full --error-exitcode=1 ./ar/fi/uba/tallerii/test/runTests

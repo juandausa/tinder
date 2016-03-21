@@ -26,11 +26,11 @@ before_script:
     - cd EjemploClion
     - cmake .
     - make
-    - lcov --zerocounters --directory ./ar/fi/uba/concurrentes/test/
-    - lcov --compat split_crc=on --capture --initial --directory ./ar/fi/uba/concurrentes/test/ --output-file app
+    - lcov --zerocounters --directory ./ar/fi/uba/tallerii/test/
+    - lcov --compat split_crc=on --capture --initial --directory ./ar/fi/uba/tallerii/test/ --output-file app
 
-script: valgrind --leak-check=full --error-exitcode=1 ./ar/fi/uba/concurrentes/test/runTests
+script: valgrind --leak-check=full --error-exitcode=1 ./ar/fi/uba/tallerii/test/runTests
 
 after_script:
-    - lcov --compat split_crc=on --no-checksum --directory ./EjemploClion/ar/fi/uba/concurrentes/test/ --capture --output-file app.info
-    - genhtml ./EjemploClion/ar/fi/uba/concurrentes/test/app.info
+    - lcov --compat split_crc=on --no-checksum --directory ./EjemploClion/ar/fi/uba/tallerii/test/ --capture --output-file app.info
+    - genhtml ./EjemploClion/ar/fi/uba/tallerii/test/app.info
