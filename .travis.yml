@@ -30,4 +30,4 @@ android:
 script:
     - cd App/app/
     - chmod +x gradlew
-    - ./gradlew assembleDebug
+    - ./gradlew build
