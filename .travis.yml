@@ -22,11 +22,26 @@ before_install:
     - sudo apt-get install libgtest-dev
     - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
 
+install:
+    # install latest LCOV (1.9 was failing for me) [1]
+    - cd EjemploClion
+    - wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
+    - tar xf lcov_1.11.orig.tar.gz
+    - sudo make -C lcov-1.11/ install
+    # install lcov to coveralls conversion + upload tool
+    - gem install coveralls-lcov
+
 before_script:
     - cd EjemploClion
     - ./cpplint/cpplint.py --extensions=cpp ./ar/fi/uba/concurrentes/src/*
     - ./cpplint/cpplint.py --extensions=cpp ./ar/fi/uba/concurrentes/main/*
+    - lcov --compat split_crc=on --zerocounters --directory ./ar/fi/uba/concurrentes/test/
     - cmake .
     - make
 
 script: valgrind --leak-check=full --error-exitcode=1 ./ar/fi/uba/concurrentes/test/runTests
+
+after_success:
+    - lcov --compat split_crc=on --capture --initial --directory ./ar/fi/uba/concurrentes/test/ --output-file app
+    - lcov --compat split_crc=on --no-checksum --directory ./EjemploClion/ar/fi/uba/concurrentes/test/ --capture --output-file app.info
+    - genhtml ./EjemploClion/ar/fi/uba/concurrentes/test/app.info
