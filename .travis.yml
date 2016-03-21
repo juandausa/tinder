@@ -23,7 +23,7 @@ before_install:
     - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
 
 before_script:
-    - cd EjemploClion
+    - cd AppServer
     - ./cpplint/cpplint.py --extensions=cpp ./ar/fi/uba/concurrentes/src/*
     - ./cpplint/cpplint.py --extensions=cpp ./ar/fi/uba/concurrentes/main/*
     - cmake .
