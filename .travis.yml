@@ -24,5 +24,3 @@ install:
   - psql -c 'create database users;' -U postgres
   - psql -f SQL\ Scripts/create_table.sql -d users -U postgres 
 
-# script: 
-#  - sudo npm test
