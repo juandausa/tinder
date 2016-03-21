@@ -1,8 +1,8 @@
-language: cpp
+language: node_js
 
-compiler:  
-    - gcc
-    - clang
+node_js:
+  - "0.10"
+
 sudo: required
 
 notifications:
@@ -13,18 +13,16 @@ notifications:
     on_success: change
     on_failure: always
     
-before_install:
-    - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq libyajl-dev libxml2-dev libxqilla-dev valgrind
-    - if [ "$CXX" = "clang++" ]; then sudo apt-get install -qq libstdc++-4.8-dev; fi
-    - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
-    - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
-    - sudo apt-get install libgtest-dev
-    - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
-before_script:  
-    - cd EjemploClion
-    - cmake .
-    - make
+services:
+  - postgresql
 
-script: valgrind --leak-check=full --error-exitcode=1 ./ar/fi/uba/concurrentes/test/runTests
+addons:
+  postgresql: "9.3"
+
+install:
+  - sudo npm install
+  - psql -c 'create database users;' -U postgres
+  - psql -f SQL\ Scripts/create_table.sql -d users -U postgres 
+
+# script: 
+#  - sudo npm test

@@ -3,8 +3,9 @@ var bodyParser = require('body-parser');
 var massive = require("massive");
 var base64 = require('node-base64-image');
 var keygen = require('keygen');
-var messageParser = require('./js/message_parser')
 var app = express();
+var config      = require('./config.json');
+var connectionString = "postgres://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+"/"+config.postgres.db;
 var db = undefined;
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
@@ -145,12 +146,12 @@ app.delete('/users/:user_id', function (req, res) {
 /************************************************************************/
 /************************************************************************/
 
-var server = app.listen(8081, function () {
+var server = app.listen(config.express.port, function () {
 	var host = server.address().address
 	var port = server.address().port
 	// You can use db for 'database name' running on localhost 
 	// or send in everything using 'connectionString' 
-	massive.connect({db : "users"}, function(err, database){
+	massive.connect({connectionString : connectionString}, function(err, database){
 		if (checkForError(err, "Error connecting to database")) return;
 		db = database;
 	});
