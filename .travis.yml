@@ -45,4 +45,4 @@ after_success:
     - lcov --remove ./ar/fi/uba/concurrentes/test/app.info 'tests/*' '/usr/*' --output-file coverage.info
     - lcov --list ./ar/fi/uba/concurrentes/test/coverage.info
     - cat ./ar/fi/uba/concurrentes/test/coverage.info
-    - coveralls-lcov ./ar/fi/uba/concurrentes/test/coverage.info
+    #- coveralls-lcov ./ar/fi/uba/concurrentes/test/coverage.info
