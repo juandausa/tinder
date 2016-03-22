@@ -71,12 +71,12 @@ app.get('/users', function (req, res) {
 
 // This responds with a JSON of users
 app.get('/users/:user_id', function (req, res) {
-	var response = {};
+	var response = {metadata: {version: "0.1"}};
 	db.users.findOne({id: req.params.user_id}, function(err, user) { 
 		if (checkForError(err, res, "Error at creating new user")) return;
-		if (user !== undefined) {
+        if (user !== undefined) {
 			user.data.id = user.id;
-			response = {user: user.data, metadata: {version: "0.1"}};
+			response.user = user.data;
 		} 
 		res.send(response);
 	});
@@ -85,10 +85,10 @@ app.get('/users/:user_id', function (req, res) {
 /************************************************************************/
 /************************************************************************/
 
-// This responds with a JSON of users
+// This downloads a photo
 app.get('/users/:user_id/photo', function (req, res) {
 	db.users.findOne({id: req.params.user_id}, function(err, user) { 
-		if (checkForError(err, user, res, "Error downloading photo")) return;
+		if (checkForError(err, res, "Error downloading photo")) return;
 		if (user !== undefined)
 			decodeImage(user.data.photo_profile, res);
 	});
@@ -103,7 +103,8 @@ app.post('/users', function (req, res) {
 	var user_data = req.body.user;
 	user_data.photo_profile = '';
 	db.users.save({data: user_data}, function(err, saved) {
-		if (checkForError(err, saved, res, "Error at saving user data")) return;
+		if (checkForError(err, res, "Error at saving user data")) return;
+        if (checkIfUndefined(saved, "User not created")) return;
 		res.sendStatus(201);
 	});
 });
@@ -117,7 +118,8 @@ app.put('/users/:user_id', function (req, res) {
 	var user_id = req.params.user_id;
 	var new_record = {id: user_id, data: user_data};
 	db.users.save(new_record, function(err, saved) {
-		if (checkForError(err, saved, res, "Error at saving user data")) return;
+		if (checkForError(err, res, "Error at saving user data")) return;
+        if (checkIfUndefined(saved, "User does not exist")) return;
 		res.sendStatus(200);
 	});
 });
@@ -134,7 +136,7 @@ app.put('/users/:user_id/photo', function (req, res) {
 		var userData = user.data;
 		userData.photo_profile = req.body.photo;
 		db.users.save({id: user_id, data: userData}, function(err, saved){
-			if (checkForError(err, saved, res, "Error at saving photo")) return;
+			if (checkForError(err, res, "Error at saving photo")) return;
 			res.sendStatus(200);
 		});
 	});

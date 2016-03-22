@@ -1,29 +1,27 @@
 # -*- coding: utf-8 -*-
 import json
 import urllib2
+from users import users
 
-data = {
-        "user": { 
-            "name": "usuario", 
-            "alias": "not a user", 
-            "email": "usuario@usuario.com", 
-            "interests": [{ 
-                "category": "music/band", 
-                "value": "radiohead" 
-            }, { 
-                "category": "music/band", 
-                "value": "pearl jam" 
-            },{ 
-                "category": "outdoors", 
-                "value": "running" 
-            }],
-            "location": {
-                "latitude": 121.45356,
-                "longitude": 46.51119 
-            } 
-        } 
-    }
+correct = 201
 
-req = urllib2.Request('http://localhost:8081/users')
-req.add_header('Content-Type', 'application/json')
-response = urllib2.urlopen(req, json.dumps(data))
+def post_user(data):
+    req = urllib2.Request('http://localhost:8081/users')
+    req.add_header('Content-Type', 'application/json')
+    response = urllib2.urlopen(req, json.dumps(data))
+    return response.getcode()
+
+
+def is_correct(response):
+    return correct == response
+
+
+def quick_test():
+    response = post_user(users[1])
+    print "Status code", response
+    return is_correct(response)
+
+
+
+
+quick_test()
