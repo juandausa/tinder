@@ -6,6 +6,7 @@ var keygen = require('keygen');
 var app = express();
 var config = require('./config.json');
 //var connectionString = "postgres://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+"/"+config.postgres.db;
+var port = (process.env.PORT || 5000); // config.express.port
 var connectionString = process.env.DATABASE_URL;
 var db;
 
@@ -158,7 +159,7 @@ app.delete('/users/:user_id', function (req, res) {
 /************************************************************************/
 /************************************************************************/
 
-var server = app.listen(config.express.port, function () {
+var server = app.listen(port, function () {
 	var host = server.address().address;
 	var port = server.address().port;
 	massive.connect({connectionString : connectionString}, function(err, database){
