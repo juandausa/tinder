@@ -7,6 +7,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 # Locate all .cpp files in this src folder
 FILE(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/../src/*.cpp)
+# Locate all .cpp files in this src folder
+FILE(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/../src/*.c)
 
 add_executable(AppServer_main main.cpp ${SOURCE_FILES})
 

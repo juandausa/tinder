@@ -7,6 +7,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 # Locate all .cpp files in this folder
 FILE(GLOB SOURCE_FILES ./*.cpp)
+# Locate all .cpp files in this folder
+FILE(GLOB SOURCE_FILES ./*.c)
 
 #add_executable(ConcuPort2_2015_main ${SOURCE_FILES})
 
