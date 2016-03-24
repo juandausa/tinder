@@ -1,5 +1,6 @@
 package com.tinder_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import classes.CustomViewPager;
 
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = null;
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
@@ -100,13 +103,28 @@ public class MainActivity extends AppCompatActivity {
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                menuItem.setChecked(true);
-                mDrawerLayout.closeDrawers();
-                return true;
-            }
-        });
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        Intent intent = null;
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_discover_settings:
+                                break;
+                            case R.id.nav_settings:
+                                intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                                break;
+                            default:
+                                mDrawerLayout.closeDrawers();
+                                return true;
+                        }
+                        // menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        if (intent != null)
+                            startActivity(intent);
+                        return true;
+                    }
+                });
+
+
     }
 
     /**********************************************************************************************/
