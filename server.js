@@ -52,6 +52,14 @@ function decodeImage(data, res) {
 /***************				RESTFUL API				*****************/
 /************************************************************************/
 
+// This responds OK for Heroku badges
+app.get('/', function (req, res) {
+    res.sendStatus(200);
+});
+
+/************************************************************************/
+/************************************************************************/
+
 // This responds with a JSON of users
 app.get('/users', function (req, res) {
 	// TODO
