@@ -17,12 +17,13 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import classes.CustomViewPager;
 
 /**
- * TODO
+ * Main Activity of the App. Main screen, where the user will be the mayor part of the time.
+ * This Activity has two sections. The first has the people to be liked or dis-liked. The second,
+ * has the matches and links to the conversations with them.
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -118,8 +119,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                         // menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
-                        if (intent != null)
+                        if (intent != null) {
                             startActivity(intent);
+                        }
                         return true;
                     }
                 });

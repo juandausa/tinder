@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+/**
+ * This Activity holds the settings controls that allows the user customize some features.
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
