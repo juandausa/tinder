@@ -11,7 +11,10 @@
 class Server {
 public:
     Server();
-    void start(std::vector<std::string> options);
+    void start();
+
+private:
+    std::vector<std::string> options;
 };
 
 #endif //TINDER_SEVER_H

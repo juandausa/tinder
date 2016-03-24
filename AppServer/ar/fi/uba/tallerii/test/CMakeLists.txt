@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -std=c++11 -g -Wall")
 
@@ -36,7 +36,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 # Locate all .cpp files in src folder
 FILE(GLOB CPP_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/../src/*.cpp)
-FILE(GLOB CPP_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/../src/*.c)
 
 # Link runTests with what we want to test and the GTest and pthread library
 add_executable(runTests ${CPP_SOURCE_TEST} ${CPP_SOURCE})

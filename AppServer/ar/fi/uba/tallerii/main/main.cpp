@@ -1,11 +1,12 @@
 /* Copyright 2016 FiUBA */
 
 #include <unistd.h>
-#include <wait.h>
 #include <iostream>
 #include <ctime>
 #include <fstream>
-#include <Lock.h>
+#include <cstring>
+#include "Server.h"
+#include "Lock.h"
 
 void printCurrentDir() {
     char cwd[1024];
@@ -18,5 +19,8 @@ void printCurrentDir() {
 int main(int arg, char** args) {
     std::cout << "Esto es un programa hecho con Clion." << std::endl;
     printCurrentDir();
+    Server tinderServer;
+    tinderServer.start();
+
     return 0;
 }

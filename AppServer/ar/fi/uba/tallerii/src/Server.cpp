@@ -6,7 +6,7 @@
 #include <vector>
 #include <cstring>
 #include "Mongoose.h"
-#include "Sever.h"
+#include "Server.h"
 
 static const char *s_http_port = "8000";
 static struct mg_serve_http_opts s_http_server_opts;
@@ -55,12 +55,16 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     }
 }
 
-void Server :: start(std::vector<std::string> options) {
+Server :: Server() {
+	this->options = std::vector<std::string>();
+}
+
+void Server :: start() {
     struct mg_mgr mgr;
     struct mg_connection *nc;
     unsigned int i;
     char *cp;
-    unsigned int optionsLength = options.size();
+    unsigned int optionsLength = this->options.size();
 #ifdef MG_ENABLE_SSL
     const char *ssl_cert = NULL;
 #endif
@@ -69,35 +73,35 @@ void Server :: start(std::vector<std::string> options) {
 
     /* Process command line options to customize HTTP server */
     for (i = 1; i < optionsLength; i++) {
-        if (strcmp(options[i].c_str(), "-D") == 0 && i + 1 < optionsLength) {
-            mgr.hexdump_file = options[++i].c_str();
-        } else if (strcmp(options[i].c_str(), "-d") == 0 && i + 1 < optionsLength) {
-            s_http_server_opts.document_root = options[++i].c_str();
-        } else if (strcmp(options[i].c_str(), "-p") == 0 && i + 1 < optionsLength) {
-            s_http_port = options[++i].c_str();
-        } else if (strcmp(options[i].c_str(), "-a") == 0 && i + 1 < optionsLength) {
-            s_http_server_opts.auth_domain = options[++i].c_str();
+        if (strcmp(this->options[i].c_str(), "-D") == 0 && i + 1 < optionsLength) {
+            mgr.hexdump_file = this->options[++i].c_str();
+        } else if (strcmp(this->options[i].c_str(), "-d") == 0 && i + 1 < optionsLength) {
+            s_http_server_opts.document_root = this->options[++i].c_str();
+        } else if (strcmp(this->options[i].c_str(), "-p") == 0 && i + 1 < optionsLength) {
+            s_http_port = this->options[++i].c_str();
+        } else if (strcmp(this->options[i].c_str(), "-a") == 0 && i + 1 < optionsLength) {
+            s_http_server_opts.auth_domain = this->options[++i].c_str();
 #ifdef MG_ENABLE_JAVASCRIPT
-            } else if (strcmp(options[i].c_str(), "-j") == 0 && i + 1 < optionsLength) {
-      const char *init_file = options[++i].c_str();
+            } else if (strcmp(this->options[i].c_str(), "-j") == 0 && i + 1 < optionsLength) {
+      const char *init_file = this->options[++i].c_str();
       mg_enable_javascript(&mgr, v7_create(), init_file);
 #endif
-        } else if (strcmp(options[i].c_str(), "-P") == 0 && i + 1 < optionsLength) {
-            s_http_server_opts.global_auth_file = options[++i].c_str();
-        } else if (strcmp(options[i].c_str(), "-A") == 0 && i + 1 < optionsLength) {
-            s_http_server_opts.per_directory_auth_file = options[++i].c_str();
-        } else if (strcmp(options[i].c_str(), "-r") == 0 && i + 1 < optionsLength) {
-            s_http_server_opts.url_rewrites = options[++i].c_str();
+        } else if (strcmp(this->options[i].c_str(), "-P") == 0 && i + 1 < optionsLength) {
+            s_http_server_opts.global_auth_file = this->options[++i].c_str();
+        } else if (strcmp(this->options[i].c_str(), "-A") == 0 && i + 1 < optionsLength) {
+            s_http_server_opts.per_directory_auth_file = this->options[++i].c_str();
+        } else if (strcmp(this->options[i].c_str(), "-r") == 0 && i + 1 < optionsLength) {
+            s_http_server_opts.url_rewrites = this->options[++i].c_str();
 #ifndef MG_DISABLE_CGI
-        } else if (strcmp(options[i].c_str(), "-i") == 0 && i + 1 < optionsLength) {
-            s_http_server_opts.cgi_interpreter = options[++i].c_str();
+        } else if (strcmp(this->options[i].c_str(), "-i") == 0 && i + 1 < optionsLength) {
+            s_http_server_opts.cgi_interpreter = this->options[++i].c_str();
 #endif
 #ifdef MG_ENABLE_SSL
-        } else if (strcmp(options[i].c_str(), "-s") == 0 && i + 1 < optionsLength) {
-            ssl_cert = options[++i].c_str();
+        } else if (strcmp(this->options[i].c_str(), "-s") == 0 && i + 1 < optionsLength) {
+            ssl_cert = this->options[++i].c_str();
 #endif
         } else {
-            fprintf(stderr, "Unknown option: [%s]\n", options[i].c_str());
+            fprintf(stderr, "Unknown option: [%s]\n", this->options[i].c_str());
             exit(1);
         }
     }
@@ -124,12 +128,17 @@ void Server :: start(std::vector<std::string> options) {
     s_http_server_opts.enable_directory_listing = "yes";
 
     /* Use current binary directory as document root */
-    const char* first_option = options[0].c_str();
-    if (optionsLength > 0 && ((cp = (char*) strrchr(first_option, '/')) != NULL ||
-                     (cp = (char*) strrchr(options[0].c_str(), '/')) != NULL)) {
-        *cp = '\0';
-        s_http_server_opts.document_root = options[0].c_str();
+    if (optionsLength > 0) {
+        const char* first_option = this->options[0].c_str();
+        if (optionsLength > 0 && ((cp = (char*) strrchr(first_option, '/')) != NULL ||
+                                  (cp = (char*) strrchr(this->options[0].c_str(), '/')) != NULL)) {
+            *cp = '\0';
+            s_http_server_opts.document_root = this->options[0].c_str();
+        }
+    } else {
+        s_http_server_opts.document_root = "./";
     }
+
 
     signal(SIGINT, signal_handler);
     signal(SIGTERM, signal_handler);
