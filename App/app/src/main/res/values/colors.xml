@@ -4,4 +4,6 @@
   <color name="window_background">#FFF5F5F5</color>
   <color name="tab_background">#700000</color>
   <color name="button_login">#32bcff</color>
+  <color name="like_button_backgorund">#47DE6D</color>
+  <color name="light_green">#6DDE89</color>
 </resources>

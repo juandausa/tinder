@@ -1,33 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:fitsSystemWindows="true" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_swipe_layout">
 
     <com.daprlabs.cardstack.SwipeFrameLayout
         xmlns:swipedeck="http://schemas.android.com/apk/res-auto"
         android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="380dp"
         android:orientation="vertical">
 
         <com.daprlabs.cardstack.SwipeDeck
             android:id="@+id/swipe_deck"
             android:layout_width="match_parent"
-            android:layout_height="480dp"
+            android:layout_height="380dp"
             android:padding="20dp"
             swipedeck:card_spacing="10dp"
             swipedeck:max_visible="3"
             swipedeck:render_above="true"
             swipedeck:rotation_degrees="15" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="Button" />
-
     </com.daprlabs.cardstack.SwipeFrameLayout>
-</RelativeLayout>
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/main_like_fab"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_anchor="@id/main_swipe_layout"
+        app:layout_anchorGravity="bottom|right|end"
+        android:src="@drawable/ic_favorite_white_24dp"
+        android:tint="@android:color/white"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="20dp"
+        android:clickable="true"/>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/main_dislike_fab"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_anchor="@id/main_swipe_layout"
+        app:layout_anchorGravity="bottom|left|end"
+        android:src="@drawable/ic_close_white_24dp"
+        android:tint="@android:color/white"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="20dp"
+        android:clickable="true"/>
+
+
+</android.support.design.widget.CoordinatorLayout>
