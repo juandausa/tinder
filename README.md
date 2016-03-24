@@ -24,3 +24,16 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 
 * Instalar el IDE [Android Studio](https://developer.android.com/sdk/)
 * Instalar todas las librerias de la 23 en adelante desde el SDK Manager (dentro del Android Studio).
+
+
+### Integración con Facebook
+
+El login al cliente Android se realiza mediante facebook, por lo que es necesario realizar los siguientes pasos para lograr un login exitoso.
+
+- Generar un **key hash** para el ambiente de desarrollo de cada desarrollador. Para esto:
+    - Abrir la consola.
+    - Ejecutar el comando: `keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64`
+    - Darle **enter** cuando pida una contraseña.
+- Dirigirse a la [sección de Ajustes del sitio web de la app en developers facebook](https://developers.facebook.com/apps/469716263220924/settings/).
+- Copiar el código generado por el comando en el campo Key Hashes (sin borrar los que ya estén).
+- Guardar cambios.
