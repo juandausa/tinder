@@ -1,6 +1,8 @@
 # Branch Shared Server
 
 [![Build Status](https://travis-ci.com/juandausa/tinder.svg?token=BQqpkHq7v8pQHzVJzZjB&branch=SharedServer)](https://travis-ci.com/juandausa/tinder)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge)](https://heroku-badge.herokuapp.com/?app=enigmatic-scrubland-75073)
+
 
 En este branch se encuentran todos los sources, tests y otros archivos del Shared Server.
 El Shared Server es un servidor desarrollado en [node.js](https://nodejs.org) que ofrece las operaciones de alta, baja, modificación y consulta de usuarios. Consta de una base de datos relacional para la cual se usa [postgreSQL](http://www.postgresql.org/) como administrador de base de datos.
@@ -9,7 +11,7 @@ El Shared Server es un servidor desarrollado en [node.js](https://nodejs.org) qu
 
 Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar en la linea de comandos:
 
-`git clone -b SharedServer https://github.com/juandausa/tinder.git nombre-del-directorio`
+`git clone -b SharedServer https://github.com/juandausa/tinder.git SharedServer`
 
 ### Requerimientos para su uso
 
