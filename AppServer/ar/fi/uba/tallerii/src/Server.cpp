@@ -136,7 +136,7 @@ void Server :: start() {
             s_http_server_opts.document_root = this->options[0].c_str();
         }
     } else {
-        s_http_server_opts.document_root = "./";
+        s_http_server_opts.document_root = "../files/";
     }
 
 
