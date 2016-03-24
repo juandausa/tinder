@@ -1,5 +1,5 @@
 //
-// Created by lucas on 13/09/15.
+// Copyright 2016 juanchi
 //
 
 #include <gtest/gtest.h>

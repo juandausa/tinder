@@ -1,10 +1,9 @@
 //
-// Created by root on 9/7/15.
+// Copyright 2016 juanchi
 //
 
-#include "hello_test.h"
+#include "include/hello_test.h"
 
 TEST(MathTest, TwoPlusTwoEqualsFour) {
     EXPECT_EQ(2 + 2, 4);
 }
-
