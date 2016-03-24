@@ -1,7 +1,13 @@
 package com.tinder_app;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +27,11 @@ public class PeopleListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.swipe_deck, container, false);
+        CoordinatorLayout layout = (CoordinatorLayout) inflater.inflate(R.layout.swipe_deck, container, false);
         //SwipeDeck cardStack = (SwipeDeck) layout.findViewById(R.id.swipe_deck);
         //CardView cardView = (CardView) inflater.inflate(R.layout.card, container);
+        setUpLikeButton(layout);
+        setUpDislikeButton(layout);
 
         SwipeDeck cardStack = (SwipeDeck) layout.findViewById(R.id.swipe_deck);
         //cardStack.setHardwareAccelerationEnabled(true);
@@ -65,6 +73,37 @@ public class PeopleListFragment extends Fragment {
         });
 
         return layout;
+    }
+
+
+    private void setUpLikeButton(ViewGroup layout) {
+        FloatingActionButton fab = (FloatingActionButton) layout.findViewById(R.id.main_like_fab);
+        if (fab == null) {
+            return;
+        }
+        fab.setBackgroundTintList(getResources().getColorStateList(R.color.light_green));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    private void setUpDislikeButton(ViewGroup layout) {
+        FloatingActionButton fab = (FloatingActionButton) layout.findViewById(R.id.main_dislike_fab);
+        if (fab == null) {
+            return;
+        }
+        fab.setBackgroundTintList(getResources().getColorStateList(android.R.color.holo_red_light));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
 }
