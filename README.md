@@ -26,6 +26,16 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 * Instalar todas las librerias de la 23 en adelante desde el SDK Manager (dentro del Android Studio).
 
 
+### Correr scripts para chequeo de estilos, bugs, linter, etc.
+
+Para chequear que todo este correcto antes de subir código al repositorio realizar los siguientes pasos:
+
+* Situarse con la consola en `App/app/`
+* Ejecutar el comando `./gradlew build`
+* Verificar si realizó el buil correctamente. De haber fallado, observar que fué lo que falló leyendo el archivo de reportes indicado por la salida del comando que acabamos de ejecutar.
+* Corregir el problema, repetir los pasos anteriores y subir al repositorio.
+
+
 ### Integración con Facebook
 
 El login al cliente Android se realiza mediante facebook, por lo que es necesario realizar los siguientes pasos para lograr un login exitoso.
