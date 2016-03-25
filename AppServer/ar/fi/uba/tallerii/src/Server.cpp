@@ -1,10 +1,9 @@
 //
-// Created by juanchi on 22/03/16.
+// Copyright 2016 FiUBA
 //
 
 #include <iostream>
 #include <vector>
-#include <cstring>
 #include "Mongoose.h"
 #include "Server.h"
 
@@ -56,15 +55,14 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
 }
 
 Server :: Server() {
-	this->options = std::vector<std::string>();
+    this->options = std::vector<std::string>();
 }
 
 void Server :: start() {
     struct mg_mgr mgr;
     struct mg_connection *nc;
     unsigned int i;
-    char *cp;
-    unsigned int optionsLength = this->options.size();
+    unsigned long optionsLength = this->options.size();
 #ifdef MG_ENABLE_SSL
     const char *ssl_cert = NULL;
 #endif
@@ -128,17 +126,7 @@ void Server :: start() {
     s_http_server_opts.enable_directory_listing = "yes";
 
     /* Use current binary directory as document root */
-    if (optionsLength > 0) {
-        const char* first_option = this->options[0].c_str();
-        if (optionsLength > 0 && ((cp = (char*) strrchr(first_option, '/')) != NULL ||
-                                  (cp = (char*) strrchr(this->options[0].c_str(), '/')) != NULL)) {
-            *cp = '\0';
-            s_http_server_opts.document_root = this->options[0].c_str();
-        }
-    } else {
-        s_http_server_opts.document_root = "../files/";
-    }
-
+    s_http_server_opts.document_root = "../files/";
 
     signal(SIGINT, signal_handler);
     signal(SIGTERM, signal_handler);
