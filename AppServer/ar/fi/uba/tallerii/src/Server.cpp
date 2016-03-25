@@ -7,6 +7,7 @@
 #include <string>
 #include "Mongoose.h"
 #include "Server.h"
+#include "PlusController.h"
 
 static const char *s_http_port = "8000";
 static struct mg_serve_http_opts s_http_server_opts;
@@ -17,30 +18,15 @@ static void signal_handler(int sig_num) {
     s_sig_num = sig_num;
 }
 
-static void handle_sum_call(struct mg_connection *nc, struct http_message *hm) {
-    char n1[100], n2[100];
-    double result;
-
-    /* Get form variables */
-    mg_get_http_var(&hm->body, "n1", n1, sizeof(n1));
-    mg_get_http_var(&hm->body, "n2", n2, sizeof(n2));
-
-    /* Send headers */
-    mg_printf(nc, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
-
-    /* Compute the result and send it back as a JSON object */
-    result = strtod(n1, NULL) + strtod(n2, NULL);
-    mg_printf_http_chunk(nc, "{ \"result\": %lf }", result);
-    mg_send_http_chunk(nc, "", 0);  /* Send empty chunk, the end of response */
-}
-
 static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     struct http_message *hm = (struct http_message *) ev_data;
 
     switch (ev) {
         case MG_EV_HTTP_REQUEST:
             if (mg_vcmp(&hm->uri, "/api/v1/sum") == 0) {
-                handle_sum_call(nc, hm);                    /* Handle RESTful call */
+                /* Handle RESTful call */
+                PlusController plus;
+                plus.handle_sum_call(nc, hm);
             } else if (mg_vcmp(&hm->uri, "/printcontent") == 0) {
                 char buf[100] = {0};
                 memcpy(buf, hm->body.p,
