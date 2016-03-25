@@ -24,8 +24,8 @@ before_install:
 
 before_script:
     - cd AppServer
-    - ./cpplint/cpplint.py --extensions=cpp ./ar/fi/uba/tallerii/src/*
-    - ./cpplint/cpplint.py --extensions=cpp ./ar/fi/uba/tallerii/main/*
+    - ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/src/[^Mongoose.cpp]*
+    - ./cpplint/cpplint.py --extensions=cpp --linelength=140  ./ar/fi/uba/tallerii/main/*
     - cmake .
     - make
 
