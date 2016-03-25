@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include "Mongoose.h"
 #include "Server.h"
 
@@ -62,7 +63,7 @@ void Server :: start() {
     struct mg_mgr mgr;
     struct mg_connection *nc;
     unsigned int i;
-    unsigned long optionsLength = this->options.size();
+    unsigned int optionsLength = this->options.size();
 #ifdef MG_ENABLE_SSL
     const char *ssl_cert = NULL;
 #endif
