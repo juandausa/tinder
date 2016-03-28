@@ -9,6 +9,7 @@ notifications:
   email:
     recipients:
       - juandausa@gmail.com
+      - zebas.graffe@gmail.com
     on_success: change
     on_failure: always
     
