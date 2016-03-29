@@ -7,3 +7,10 @@ make
 sudo cp -a include/gtest /usr/include
 sudo cp -a libgtest_main.so libgtest.so /usr/lib/
 sudo ldconfig -v | grep gtest
+wget https://github.com/google/glog/archive/v0.3.4.tar.gz
+tar xf v0.3.4.tar.gz
+cd glog-0.3.4
+./configure
+make
+sudo make install
+sudo ldconfig -v | grep glog
