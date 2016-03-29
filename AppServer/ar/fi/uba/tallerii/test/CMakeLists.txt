@@ -39,4 +39,4 @@ FILE(GLOB CPP_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/../src/*.cpp)
 
 # Link runTests with what we want to test and the GTest and pthread library
 add_executable(runTests ${CPP_SOURCE_TEST} ${CPP_SOURCE})
-target_link_libraries(runTests ${GTEST_LIBRARIES} pthread ${CMAKE_INCLUDE_PATH} )
+target_link_libraries(runTests ${GTEST_LIBRARIES} ${GLOG_LIBRARIES} pthread ${CMAKE_INCLUDE_PATH} )

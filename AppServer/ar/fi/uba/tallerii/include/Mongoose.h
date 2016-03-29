@@ -584,7 +584,7 @@ extern double cs_log_ts;
 
 void cs_log_printf(const char *fmt, ...);
 
-#define LOG(l, x)                        \
+#define MLOG(l, x)                        \
   if (s_cs_log_level >= l) {             \
     fprintf(stderr, "%-20s ", __func__); \
     cs_log_printf x;                     \
@@ -606,7 +606,7 @@ void cs_log_printf(const char *fmt, ...);
 
 #else /* CS_DISABLE_STDIO */
 
-#define LOG(l, x)
+#define MLOG(l, x)
 #define DBG(x)
 
 #endif
