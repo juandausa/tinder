@@ -1,13 +1,12 @@
 /* Copyright 2016 FiUBA */
 
 #include <unistd.h>
+#include <glog/logging.h>
 #include <iostream>
 #include <ctime>
 #include <fstream>
 #include <cstring>
-#include <glog/logging.h>
 #include "Server.h"
-#include "Lock.h"
 
 void printCurrentDir() {
     char cwd[1024];
