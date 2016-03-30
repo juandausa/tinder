@@ -1,21 +1,23 @@
-## [Sprint 1](https://github.com/juandausa/tinder/milestones/Sprint%201)
+# [Sprint 1](https://github.com/juandausa/tinder/milestones/Sprint%201)
 
-### Objetivos del Sprint
+## Objetivos del Sprint
  * 
 
-### Calendario
+## Calendario
  * Duración del Sprint: 10.MAR.2016 to 21.ABR.2016
 
-### Equipo
+## Equipo
 * 
 * 
 * 
 * Juan Dausa (Developer)
 
-### Compromisos
+## Compromisos
 
-### Cosas que fueron bien
+### Historias de usuario
 
-### Cosas a mejorar
+## Cosas que fueron bien
 
-### Comentarios
+## Cosas a mejorar
+
+## Comentarios
