@@ -52,6 +52,16 @@ function decodeImage(data, res) {
 /***************				RESTFUL API				*****************/
 /************************************************************************/
 
+// Enable CORS (Cross-over Origins)
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+/************************************************************************/
+/************************************************************************/
+
 // This responds OK for Heroku badges
 app.get('/', function (req, res) {
     res.sendStatus(200);
