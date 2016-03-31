@@ -49,8 +49,8 @@ Desde el 10/03/2016 hasta el 21/04/2016
 | Mostrar personas cercanas | App           | 6.1 | Request                                                         | Graffe      |   2   |
 |                           |               | 6.2 | Pantalla principal: mostrar sliding cards de personas           | Graffe      |   5   |
 |                           | App           | 6.3 | Ver detalle de persona                                          | Graffe      |   5   |
-|                           | App Server    | 6.4 | Manejar request                                                 | Graffe      |   2   |
-|                           |               | 6.5 | Aplicar filtros y enviar resultados                             | Graffe      |   6   |
+|                           | App Server    | 6.4 | Manejar request                                                 | Sella       |   2   |
+|                           |               | 6.5 | Aplicar filtros y enviar resultados                             | Rojas       |   6   |
 |                           | Shared Server | 6.6 | Responder requests                                              | Graffe      |   1   |
 | Chat                      | App           | 7.1 | Pantalla de chat                                                | Graffe      |   10  |
 |                           |               | 7.2 | Requests para mensajes (entrada y salida)                       | Sella       |   8   |
