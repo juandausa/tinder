@@ -7,6 +7,7 @@ make
 sudo cp -a include/gtest /usr/include
 sudo cp -a libgtest_main.so libgtest.so /usr/lib/
 sudo ldconfig -v | grep gtest
+cd ..
 wget https://github.com/google/glog/archive/v0.3.4.tar.gz
 tar xf v0.3.4.tar.gz
 cd glog-0.3.4
@@ -14,3 +15,21 @@ cd glog-0.3.4
 make
 sudo make install
 sudo ldconfig -v | grep glog
+cd ..
+sudo apt-get install zlib1g-dev
+sudo apt-get install libbz2-dev
+sudo apt-get install libsnappy-dev
+wget https://github.com/schuhschuh/gflags/archive/v2.1.2.tar.gz
+tar xf v2.1.2.tar.gz
+cd gflags-2.1.2/
+cmake .
+make
+sudo make install
+cd ..
+wget https://github.com/facebook/rocksdb/archive/rocksdb-4.3.1.tar.gz
+tar xf rocksdb-4.3.1.tar.gz
+cd rocksdb-rocksdb-4.3.1/
+make static_lib
+make install
+sudo ldconfig -v
+cd ..
