@@ -41,8 +41,5 @@
 |                       | Shared Server | 5.4 | Frontend (HTML+Bootstrap+CSS)                                   | Rojas       |
 |                       |               | 5.5 | Backend (ABM Node.js)                                           | Rojas       |
 
-## Cosas que fueron bien
-
-## Cosas a mejorar
-
 ## Comentarios
+* 
