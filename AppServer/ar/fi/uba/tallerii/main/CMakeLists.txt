@@ -12,4 +12,4 @@ add_executable(Tinder_main main.cpp ${SOURCE_FILES})
 
 #copy files folder to build destination
 file(COPY ../files DESTINATION ..)
-target_link_libraries(Tinder_main ${GLOG_LIBRARIES} pthread ${CMAKE_INCLUDE_PATH} )
+target_link_libraries(Tinder_main ${GLOG_LIBRARIES} ${ROCKSDB_LIBRARIES} pthread ${CMAKE_INCLUDE_PATH} )
