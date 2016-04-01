@@ -14,13 +14,13 @@ notifications:
     on_failure: always
     
 before_install:
-    - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+    - sudo add-apt-repository ppa:ubuntu-toolchain-r/test
     - sudo apt-get update -qq
-    - sudo apt-get install -qq libyajl-dev libxml2-dev libxqilla-dev valgrind lcov
+    - if [ "$CXX" = "clang++" ]; then sudo apt-get install -qq libstdc++-4.9-dev; fi
+    - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.9; fi
+    - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.89"; fi
+    - sudo apt-get install -qq libyajl-dev libxml2-dev libxqilla-dev valgrind lcov build-essential
     - sudo apt-get install zlib1g-dev libbz2-dev libsnappy-dev
-    - if [ "$CXX" = "clang++" ]; then sudo apt-get install -qq libstdc++-4.8-dev; fi
-    - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
-    - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
     - sudo apt-get install libgtest-dev
     - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
     - wget https://github.com/google/glog/archive/v0.3.4.tar.gz
