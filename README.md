@@ -14,6 +14,6 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 
 ### Requerimientos para su uso
 
-* Ejecutar ./AppServer/install.sh . Eso instalará las herramientas  recursos necesarios.
+* Ejecutar ./AppServer/install.sh . Eso instalará las herramientas y recursos necesarios.
 
 
