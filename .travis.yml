@@ -53,5 +53,6 @@ before_script:
     - ./cpplint/cpplint.py --extensions=cpp --linelength=140  ./ar/fi/uba/tallerii/main/*
     - cmake .
     - make
+    - ./ar/fi/uba/tallerii/test/runTests
 
 script: valgrind --leak-check=full --error-exitcode=1 ./ar/fi/uba/tallerii/test/runTests

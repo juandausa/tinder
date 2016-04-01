@@ -27,6 +27,7 @@ TEST(RocksDB, ReadAndWriteString) {
     std::string value = "Valor", key = "Clave", retrivedValue;
     rocksdb::Status put_opreation_result = database->Put(rocksdb::WriteOptions(), key, value);
     rocksdb::Status read_operation_result = database->Get(rocksdb::ReadOptions(), key, &retrivedValue);
+    delete database;
     EXPECT_EQ(value.compare(retrivedValue), 0);
 }
 
@@ -40,6 +41,7 @@ TEST(RocksDB, UpdateString) {
     value = "ValorDos";
     put_opreation_result =  database->Put(rocksdb::WriteOptions(), key, value);
     rocksdb::Status read_operation_result = database->Get(rocksdb::ReadOptions(), key, &retrivedValue);
+    delete database;
     EXPECT_EQ(value.compare(retrivedValue), 0);
 }
 
@@ -52,5 +54,6 @@ TEST(RocksDB, DeleteString) {
     rocksdb::Status put_opreation_result = database->Put(rocksdb::WriteOptions(), key, value);
     rocksdb::Status delete_opreation_result =  database->Delete(rocksdb::WriteOptions(), key);
     rocksdb::Status read_operation_result = database->Get(rocksdb::ReadOptions(), key, &retrivedValue);
+    delete database;
     EXPECT_TRUE(!read_operation_result.ok());
 }
