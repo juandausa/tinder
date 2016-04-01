@@ -7,7 +7,17 @@ include(cmake-modules/FindGlog.cmake)
 include(cmake-modules/Findrocksdb.cmake)
 # Flags for rocks db
 SET(GCC_ROCKSDB_LINK_FLAGS "-lz -lpthread -lrt")
-SET( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_ROCKSDB_LINK_FLAGS}" )
+SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_ROCKSDB_LINK_FLAGS}" )
+
+set(NOMBRE_LIBS rocksdb z snappy bz2 pthread rt gtest glog)
+foreach(LIB ${NOMBRE_LIBS})
+    find_library(LIBRERIA${LIB} NAMES ${LIB} )
+    if (LIBRERIA${LIB}) #False si es 0, OFF, NO, FALSE, N, IGNORE, NOTFOUND, vacio, o si termina en "-NOTFOUND". Caso contrario es TRUE.
+        message(STATUS "Librería |${LIB}| encontrada en |${LIBRERIA${LIB}}|")
+    else (LIBRERIA${LIB})
+        message(FATAL_ERROR "No se encontró la librería |${LIB}|. Verificar existencia.")
+    endif (LIBRERIA${LIB})
+endforeach(LIB ${NOMBRE_LIBS})
 
 add_subdirectory(ar/fi/uba/tallerii/src)
 add_subdirectory(ar/fi/uba/tallerii/main)
