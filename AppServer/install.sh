@@ -1,4 +1,5 @@
 #!/bin/sh
+sudo apt-get install zlib1g-dev libbz2-dev libsnappy-dev
 wget https://github.com/google/googletest/archive/release-1.7.0.tar.gz
 tar xf release-1.7.0.tar.gz
 cd googletest-release-1.7.0
@@ -16,15 +17,13 @@ make
 sudo make install
 sudo ldconfig -v | grep glog
 cd ..
-sudo apt-get install zlib1g-dev
-sudo apt-get install libbz2-dev
-sudo apt-get install libsnappy-dev
 wget https://github.com/schuhschuh/gflags/archive/v2.1.2.tar.gz
 tar xf v2.1.2.tar.gz
 cd gflags-2.1.2/
 cmake .
 make
 sudo make install
+sudo ldconfig -v
 cd ..
 wget https://github.com/facebook/rocksdb/archive/rocksdb-4.3.1.tar.gz
 tar xf rocksdb-4.3.1.tar.gz
