@@ -14,10 +14,6 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 
 ### Requerimientos para su uso
 
-* TODO: Agregar instalacion de compilador, valgrind, gCov, Mongoose
+* Ejecutar ./AppServer/install.sh . Eso instalará las herramientas  recursos necesarios.
 
-* Instalar RocksDB.
-    * Descargar zip de [https://github.com/facebook/rocksdb](https://github.com/facebook/rocksdb) y descomprimirlo.
-    * Dentro del directorio descomprimido, compilar RocksDB ejecutando: `make static_lib`.
-    * Compilar todos los ejemplos con: `cd examples/; make all`
 
