@@ -29,6 +29,6 @@ wget https://github.com/facebook/rocksdb/archive/rocksdb-4.3.1.tar.gz
 tar xf rocksdb-4.3.1.tar.gz
 cd rocksdb-rocksdb-4.3.1/
 make static_lib
-make install
+sudo make install
 sudo ldconfig -v
 cd ..
