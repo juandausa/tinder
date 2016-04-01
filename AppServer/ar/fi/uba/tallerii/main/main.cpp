@@ -25,11 +25,10 @@ int main(int arg, char** args) {
 
     LOG(INFO) << "App Server started. INFO MESSAGE";
     LOG(WARNING) << "App Server started. WARNING MESSAGE";
-
-    std::cout << "Esto es un programa hecho con Clion." << std::endl;
     printCurrentDir();
     Server tinderServer;
     tinderServer.start();
     LOG(INFO) << "App Server finished. INFO MESSAGE";
     return 0;
 }
+
