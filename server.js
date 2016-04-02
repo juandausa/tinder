@@ -5,9 +5,9 @@ var base64 = require('node-base64-image');
 var keygen = require('keygen');
 var app = express();
 var config = require('./config.json');
-//var connectionString = "postgres://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+"/"+config.postgres.db;
+var localhostString = "postgres://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+"/"+config.postgres.db;
 var port = (process.env.PORT || 5000); // config.express.port
-var connectionString = process.env.DATABASE_URL;
+var connectionString = (process.env.DATABASE_URL || localhostString);
 var db;
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
