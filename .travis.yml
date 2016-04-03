@@ -27,7 +27,7 @@ before_install:
     - bzip2 -dk valgrind-3.10.1.tar.bz2
     - tar xf valgrind-3.10.1.tar
     - cd valgrind-3.10.1
-    - sed -i 's/-mt//g' configure && sed -i 's|/doc/valgrind||' docs/Makefile.in && ./configure --prefix=/usr \ --datadir=/usr/share/doc/valgrind-3.10.1 && make
+    - sed -i 's/-mt//g' configure && sed -i 's|/doc/valgrind||' docs/Makefile.in && ./configure --prefix=/usr --datadir=/usr/share/doc/valgrind-3.10.1 && make
     - sudo make install
     - sudo ldconfig -v | grep valgrind
     - cd ..
