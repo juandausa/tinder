@@ -19,9 +19,7 @@ before_install:
     - if [ "$CXX" = "clang++" ]; then sudo apt-get install -qq libstdc++-4.9-dev; fi
     - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.9; fi
     - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
-    - sudo apt-get install -qq libyajl-dev libxml2-dev libxqilla-dev valgrind lcov build-essential
-    - sudo apt-get install zlib1g-dev libbz2-dev libsnappy-dev
-    - sudo apt-get install libgtest-dev
+    - sudo apt-get install -qq libyajl-dev libxml2-dev libxqilla-dev lcov build-essential zlib1g-dev libbz2-dev libsnappy-dev libgtest-dev
     - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
     - wget https://github.com/google/glog/archive/v0.3.4.tar.gz
     - tar xf v0.3.4.tar.gz
@@ -46,11 +44,12 @@ before_install:
     - sudo make install
     - sudo ldconfig -v
     - cd ..
-
+    - sudo apt-get install valgrind
+    
 before_script:
     - cd AppServer
     - ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/src/[^Mongoose.cpp]*
-    - ./cpplint/cpplint.py --extensions=cpp --linelength=140  ./ar/fi/uba/tallerii/main/*
+    - ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/main/*
     - cmake .
     - make
     - ./ar/fi/uba/tallerii/test/runTests
