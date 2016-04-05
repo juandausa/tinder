@@ -32,3 +32,23 @@ TEST(DataBaseWrapper, DeleteString) {
     EXPECT_TRUE(db.Delete(key));
     EXPECT_FALSE(db.Get(key, &retrivedValue));
 }
+
+TEST(DataBaseWrapper, WriteStringWithDataBaseCreationFailing) {
+    DataBase db("/noexiste/testdb3");
+    std::string value = "ValorUno", key = "ClaveUno";
+    EXPECT_FALSE(db.Set(key, value));
+}
+
+TEST(DataBaseWrapper, ReadStringWithDataBaseCreationFailing) {
+    DataBase db("/noexiste/testdb3");
+    std::string key = "ClaveUno", retrivedValue;
+    EXPECT_FALSE(db.Get(key, &retrivedValue));
+}
+
+TEST(DataBaseWrapper, DeleteStringWithDataBaseCreationFailing) {
+    DataBase db("/noexiste/testdb3");
+    std::string key = "ClaveUno";
+    EXPECT_FALSE(db.Delete(key));
+}
+
+
