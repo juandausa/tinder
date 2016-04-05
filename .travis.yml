@@ -1,9 +1,9 @@
 language: cpp
-
+dist: trusty
+sudo: required
 compiler:  
     - gcc
 
-sudo: required
 
 notifications:
   email:
@@ -19,7 +19,7 @@ before_install:
     - if [ "$CXX" = "clang++" ]; then sudo apt-get install -qq libstdc++-4.9-dev; fi
     - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.9; fi
     - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
-    - sudo apt-get install -qq libyajl-dev libxml2-dev libxqilla-dev lcov build-essential zlib1g-dev libbz2-dev libsnappy-dev libgtest-dev libc6-dbg
+    - sudo apt-get install -qq libyajl-dev libxml2-dev libxqilla-dev lcov build-essential zlib1g-dev libbz2-dev libsnappy-dev libgtest-dev valgrind
     - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
     - mkdir dependencies
     - cd dependencies
