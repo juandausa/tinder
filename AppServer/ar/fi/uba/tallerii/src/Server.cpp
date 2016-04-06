@@ -4,10 +4,10 @@
 
 #include <iostream>
 #include <vector>
-#include <string>
 #include "Mongoose.h"
 #include "Server.h"
 #include "PlusController.h"
+#include "UserController.h"
 
 static const char *s_http_port = "8000";
 static struct mg_serve_http_opts s_http_server_opts;
@@ -25,8 +25,11 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
         case MG_EV_HTTP_REQUEST:
             if (mg_vcmp(&hm->uri, "/api/v1/sum") == 0) {
                 /* Handle RESTful call */
-                PlusController plus;
-                plus.handle_sum_call(nc, hm);
+                PlusController plus_controller;
+                plus_controller.handle_sum_call(nc, hm);
+            } else if (mg_vcmp(&hm->uri, "//register") == 0) {
+                UserController user_controller;
+                user_controller.handle_login(nc, hm);
             } else if (mg_vcmp(&hm->uri, "/printcontent") == 0) {
                 char buf[100] = {0};
                 memcpy(buf, hm->body.p,
