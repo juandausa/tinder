@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include "Mongoose.h"
 #include "Server.h"
 #include "PlusController.h"
