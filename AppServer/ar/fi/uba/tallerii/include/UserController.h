@@ -4,7 +4,7 @@
 
 #ifndef TINDER_USERCONTROLLER_H
 #define TINDER_USERCONTROLLER_H
-
+#include "Mongoose.h"
 
 class UserController {
 public:

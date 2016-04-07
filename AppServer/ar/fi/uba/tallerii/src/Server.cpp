@@ -20,14 +20,13 @@ static void signal_handler(int sig_num) {
 
 static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     struct http_message *hm = (struct http_message *) ev_data;
-
     switch (ev) {
         case MG_EV_HTTP_REQUEST:
             if (mg_vcmp(&hm->uri, "/api/v1/sum") == 0) {
                 /* Handle RESTful call */
                 PlusController plus_controller;
                 plus_controller.handle_sum_call(nc, hm);
-            } else if (mg_vcmp(&hm->uri, "//register") == 0) {
+            } else if ((mg_vcmp(&hm->uri, "/login") == 0) && mg_vcmp(&hm->method, "GET") == 0) {
                 UserController user_controller;
                 user_controller.handle_login(nc, hm);
             } else if (mg_vcmp(&hm->uri, "/printcontent") == 0) {
