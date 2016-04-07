@@ -4,8 +4,10 @@ var massive = require("massive");
 var base64 = require('node-base64-image');
 var keygen = require('keygen');
 var app = express();
-var config      = require('./config.json');
-var connectionString = "postgres://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+"/"+config.postgres.db;
+var config = require('./config.json');
+var localhostString = "postgres://"+config.postgres.user+":"+config.postgres.password+"@"+config.postgres.host+"/"+config.postgres.db;
+var port = (process.env.PORT || 5000); // config.express.port
+var connectionString = (process.env.DATABASE_URL || localhostString);
 var db;
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
@@ -48,6 +50,24 @@ function decodeImage(data, res) {
 
 /************************************************************************/
 /***************				RESTFUL API				*****************/
+/************************************************************************/
+
+// Enable CORS (Cross-over Origins)
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+/************************************************************************/
+/************************************************************************/
+
+// This responds OK for Heroku badges
+app.get('/', function (req, res) {
+    res.sendStatus(200);
+});
+
+/************************************************************************/
 /************************************************************************/
 
 // This responds with a JSON of users
@@ -157,7 +177,7 @@ app.delete('/users/:user_id', function (req, res) {
 /************************************************************************/
 /************************************************************************/
 
-var server = app.listen(config.express.port, function () {
+var server = app.listen(port, function () {
 	var host = server.address().address;
 	var port = server.address().port;
 	massive.connect({connectionString : connectionString}, function(err, database){

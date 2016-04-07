@@ -13,6 +13,12 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 
 `git clone -b SharedServer https://github.com/juandausa/tinder.git SharedServer`
 
+
+### Pushear a Heroku
+
+`git push heroku SharedServer:master`
+
+
 ### Requerimientos para su uso
 
 * Instalar node.js así como su manejador de paquetes, [npm](https://www.npmjs.com/)
