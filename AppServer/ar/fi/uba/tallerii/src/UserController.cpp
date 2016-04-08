@@ -3,20 +3,24 @@
 //
 
 #include "UserController.h"
+#include "Response.h"
 #include <glog/logging.h>
-UserController :: UserController() {}
 
-void UserController :: handle_login(struct mg_connection *nc, struct http_message *hm) {
-    char user_id[255], password[255];
+UserController :: UserController() {
+}
 
-    /* Get form variables */
+void UserController :: handle_login(struct mg_connection *nc, struct http_message *hm, Response response) {
+    char user_id[255];
     mg_get_http_var(&hm->query_string, "userId", user_id, sizeof(user_id));
     LOG(INFO) << "Proccesing login for user: " << user_id << ".";
-    /* Send headers */
-    mg_printf(nc, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
-
-    /* Compute the result and send it back as a JSON object */
-    mg_printf_http_chunk(nc, "{ \"user\": { \"userId\" : \"%s\" } }", user_id, password);
-    mg_send_http_chunk(nc, "", 0);  /* Send empty chunk, the end of response */
+    response.SetCode(200);
+    response.SetBody(this->make_body(user_id));
+    response.Send();
     LOG(INFO) << "Login succeeded for user: " << user_id << ".";
 }
+
+std::string UserController :: make_body(std::string user_id) {
+    std::string body("{ \"user\": { \"userId\" : \"");
+    body.append(user_id).append("\" } }");
+    return body;
+};

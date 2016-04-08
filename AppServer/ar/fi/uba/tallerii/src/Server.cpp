@@ -9,6 +9,7 @@
 #include "Server.h"
 #include "PlusController.h"
 #include "UserController.h"
+#include "Response.h"
 
 static const char *s_http_port = "8000";
 static struct mg_serve_http_opts s_http_server_opts;
@@ -28,8 +29,9 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 PlusController plus_controller;
                 plus_controller.handle_sum_call(nc, hm);
             } else if ((mg_vcmp(&hm->uri, "/login") == 0) && mg_vcmp(&hm->method, "GET") == 0) {
+                Response response(nc);
                 UserController user_controller;
-                user_controller.handle_login(nc, hm);
+                user_controller.handle_login(nc, hm, response);
             } else if (mg_vcmp(&hm->uri, "/printcontent") == 0) {
                 char buf[100] = {0};
                 memcpy(buf, hm->body.p,
