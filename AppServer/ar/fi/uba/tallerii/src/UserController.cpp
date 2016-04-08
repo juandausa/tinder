@@ -5,6 +5,7 @@
 #include "UserController.h"
 #include "Response.h"
 #include <glog/logging.h>
+#include <string>
 
 UserController :: UserController() {
 }
@@ -23,4 +24,4 @@ std::string UserController :: make_body(std::string user_id) {
     std::string body("{ \"user\": { \"userId\" : \"");
     body.append(user_id).append("\" } }");
     return body;
-};
+}

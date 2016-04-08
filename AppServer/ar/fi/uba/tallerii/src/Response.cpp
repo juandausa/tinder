@@ -44,7 +44,7 @@ void Response :: SetBody(std::string body) {
 }
 
 void Response :: Send() {
-    // TODO: AddHeaders
+    // TODO(juandausa): AddHeaders
     std::string header("HTTP/1.1 " + this->statusCodes[this->code] + "\r\nTransfer-Encoding: chunked\r\n\r\n");
     mg_printf(this->connection, "%s", header.c_str());
     mg_printf_http_chunk(this->connection, this->body.c_str());
