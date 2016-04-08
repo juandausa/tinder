@@ -55,6 +55,7 @@ function decodeImage(data, res) {
 // Enable CORS (Cross-over Origins)
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
@@ -65,6 +66,25 @@ app.use(function(req, res, next) {
 // This responds OK for Heroku badges
 app.get('/', function (req, res) {
     res.sendStatus(200);
+});
+
+/************************************************************************/
+/************************************************************************/
+
+// This responds with a JSON of interests
+app.get('/interests', function (req, res) {
+	// TODO
+	var response = {interests: []};
+	db.run("select * from interests", function(err, interests) { 
+		if (checkForError(err, res, "Error at creating new interest")) return;
+		for (i = 0; i < interests.length; i++) {
+			var data = interests[i].data;
+			data.id = interests[i].id;
+			response.interests.push(data);
+		}
+		response.metadata = {version: "0.1", count: interests.length};
+		res.send(response);
+	});
 });
 
 /************************************************************************/
@@ -125,6 +145,20 @@ app.post('/users', function (req, res) {
 	db.users.save({data: user_data}, function(err, saved) {
 		if (checkForError(err, res, "Error at saving user data")) return;
         if (checkIfUndefined(saved, "User not created")) return;
+		res.sendStatus(201);
+	});
+});
+
+/************************************************************************/
+/************************************************************************/
+
+// This create a new user
+app.post('/interests', function (req, res) {
+	var interest_data = req.body.interest;
+	console.log(interest_data)
+	db.interests.save({data: interest_data}, function(err, saved) {
+		if (checkForError(err, res, "Error at saving interest data")) return;
+        if (checkIfUndefined(saved, "interest not created")) return;
 		res.sendStatus(201);
 	});
 });
