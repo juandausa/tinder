@@ -30,7 +30,8 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 plus_controller.handle_sum_call(nc, hm);
             } else if ((mg_vcmp(&hm->uri, "/login") == 0) && mg_vcmp(&hm->method, "GET") == 0) {
                 Response response(nc);
-                UserController user_controller;
+                DataBase database("/tmp/tinder");
+                UserController user_controller(database);
                 user_controller.handle_login(nc, hm, response);
             } else if (mg_vcmp(&hm->uri, "/printcontent") == 0) {
                 char buf[100] = {0};
