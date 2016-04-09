@@ -1,0 +1,7 @@
+{
+  "name": "SharedServer",
+  "description": "Un server en Node.js con operaciones de ABM para usuarios",
+  "repository": "https://git.heroku.com/enigmatic-scrubland-75073",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["node", "express", "static"]
+}
