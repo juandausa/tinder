@@ -16,8 +16,12 @@ DataBase :: DataBase(const std::string & full_path) {
     }
 }
 
-bool DataBase :: Get(const std::string key, std::string *value) {
-    if (this->database == NULL) {
+bool DataBase :: is_open() {
+    return this->database != NULL;
+}
+
+bool DataBase :: get(const std::string key, std::string *value) {
+    if (!this->is_open()) {
         return false;
     }
 
@@ -31,8 +35,8 @@ bool DataBase :: Get(const std::string key, std::string *value) {
     return false;
 }
 
-bool DataBase :: Set(const std::string key, const std::string value) {
-    if (this->database == NULL) {
+bool DataBase :: set(const std::string key, const std::string value) {
+    if (!this->is_open()) {
         return false;
     }
 
@@ -40,8 +44,8 @@ bool DataBase :: Set(const std::string key, const std::string value) {
     return put_opreation_result.ok();
 }
 
-bool DataBase::Delete(const std::string key) {
-    if (this->database == NULL) {
+bool DataBase::remove(const std::string key) {
+    if (!this->is_open()) {
         return false;
     }
 
@@ -50,7 +54,7 @@ bool DataBase::Delete(const std::string key) {
 }
 
 DataBase :: ~DataBase() {
-    if (this->database != NULL) {
+    if (!this->is_open()) {
         delete(this->database);
         this->database = NULL;
     }

@@ -11,9 +11,10 @@
 class DataBase {
 public:
     DataBase(const std::string & full_path);
-    bool Set(const std::string key, const std::string value);
-    bool Get(const std::string key, std::string *value);
-    bool Delete(const std::string key);
+    bool is_open();
+    bool set(const std::string key, const std::string value);
+    bool get(const std::string key, std::string *value);
+    bool remove(const std::string key);
     ~DataBase();
 
 private:
