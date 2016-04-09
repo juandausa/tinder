@@ -155,7 +155,7 @@ app.post('/users', function (req, res) {
 // This create a new user
 app.post('/interests', function (req, res) {
 	var interest_data = req.body.interest;
-	console.log(interest_data)
+	console.log(interest_data);
 	db.interests.save({data: interest_data}, function(err, saved) {
 		if (checkForError(err, res, "Error at saving interest data")) return;
         if (checkIfUndefined(saved, "interest not created")) return;

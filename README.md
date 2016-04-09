@@ -3,9 +3,6 @@
 [![Build Status](https://travis-ci.com/juandausa/tinder.svg?token=BQqpkHq7v8pQHzVJzZjB&branch=SharedServer)](https://travis-ci.com/juandausa/tinder)
 [![Heroku](http://heroku-badge.herokuapp.com/?app=angularjs-crypto&style=flat&svg=1)](https://heroku-badge.herokuapp.com/?app=enigmatic-scrubland-75073)
 
-
-[![Heroku](http://heroku-badge.herokuapp.com/?app=angularjs-crypto&style=flat&svg=1)](https://heroku-badge.herokuapp.com/?app=enigmatic-scrubland-75073)
-
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://git.heroku.com/enigmatic-scrubland-75073)
 
 En este branch se encuentran todos los sources, tests y otros archivos del Shared Server.
@@ -16,7 +13,11 @@ El Shared Server es un servidor desarrollado en [node.js](https://nodejs.org) qu
 Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar en la linea de comandos:
 
 `git clone -b SharedServer https://github.com/juandausa/tinder.git SharedServer`
-<<<<<<< HEAD
+
+### Probar antes de pushear
+
+* Correr el comando `npm test` para probar el código y pasarle pruebas de estilo y chequeo de sintaxis.
+* Correr el comando `npm start` para correr el server y ver que ande normalmente. 
 
 ### Pushear a repositorio
 
