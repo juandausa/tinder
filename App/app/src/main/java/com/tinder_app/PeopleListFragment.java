@@ -1,5 +1,7 @@
 package com.tinder_app;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -12,14 +14,27 @@ import android.view.ViewGroup;
 
 import com.daprlabs.cardstack.SwipeDeck;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import classes.CandidateData;
 import classes.SwipeDeckAdapter;
+import requests.GetCandidatesRequest;
 
 /**
  * Fragment that holds the SwipeDeck of the people to be liked or disliked by the user.
  */
 public class PeopleListFragment extends Fragment {
+
+    private JSONArray mCandidates;
+    private List<String> cardList;
+    private SwipeDeckAdapter mAdapter;
+    private SwipeDeck mCardStack;
+    private ProgressDialog progress;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,22 +43,24 @@ public class PeopleListFragment extends Fragment {
         //CardView cardView = (CardView) inflater.inflate(R.layout.card, container);
         setUpLikeButton(layout);
         setUpDislikeButton(layout);
+        getCandidates();
 
-        SwipeDeck cardStack = (SwipeDeck) layout.findViewById(R.id.swipe_deck);
+
+        mCardStack = (SwipeDeck) layout.findViewById(R.id.swipe_deck);
         //cardStack.setHardwareAccelerationEnabled(true);
 
 
-        final ArrayList<String> testData = new ArrayList<>();
-        testData.add("0");
+        cardList = new ArrayList<String>();
+        /*testData.add("0");
         testData.add("1");
         testData.add("2");
         testData.add("3");
-        testData.add("4");
+        testData.add("4");*/
 
-        final SwipeDeckAdapter adapter = new SwipeDeckAdapter(testData, getActivity());
-        cardStack.setAdapter(adapter);
+        mAdapter = new SwipeDeckAdapter(cardList, getActivity());
+        mCardStack.setAdapter(mAdapter);
 
-        cardStack.setEventCallback(new SwipeDeck.SwipeEventCallback() {
+        mCardStack.setEventCallback(new SwipeDeck.SwipeEventCallback() {
             @Override
             public void cardSwipedLeft(int position) {
                 Log.i("MainActivity", "card was swiped left, position in adapter: " + position);
@@ -68,9 +85,36 @@ public class PeopleListFragment extends Fragment {
             }
         });
 
+        loading();
         return layout;
     }
 
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    private void loading() {
+        progress = new ProgressDialog(getActivity());
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.show();
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    private void getCandidates() {
+        GetCandidatesRequest request = new GetCandidatesRequest(getActivity(),this);
+        try {
+            JSONObject json = new JSONObject();
+            json.put("user_id", ((MainActivity) getActivity()).userId);
+            request.send(json);
+        } catch (JSONException e) {}
+
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     private void setUpLikeButton(ViewGroup layout) {
         FloatingActionButton fab = (FloatingActionButton) layout.findViewById(R.id.main_like_fab);
@@ -87,6 +131,9 @@ public class PeopleListFragment extends Fragment {
         });
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
     private void setUpDislikeButton(ViewGroup layout) {
         FloatingActionButton fab = (FloatingActionButton) layout.findViewById(R.id.main_dislike_fab);
         if (fab == null) {
@@ -102,4 +149,35 @@ public class PeopleListFragment extends Fragment {
         });
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    public void setCandidates(final JSONArray candidates) {
+
+        mCandidates = candidates;
+
+        AsyncTask loadCards = new AsyncTask() {
+            List<CandidateData> cards = new ArrayList<>();
+
+            @Override
+            protected Object doInBackground(Object[] params) {
+                int length = candidates.length();
+                for(int i = 0; i < length; i++) {
+                    try {
+                        cards.add(new CandidateData(candidates.getJSONObject(i)));
+                    } catch (JSONException e) {}
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object param) {
+                // To dismiss the dialog
+                mAdapter.update(cards);
+                mCardStack.invalidate();
+                progress.dismiss();
+            }
+        };
+        loadCards.execute();
+    }
 }

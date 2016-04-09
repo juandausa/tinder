@@ -1,6 +1,7 @@
 package com.tinder_app;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -14,11 +15,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import com.facebook.login.LoginManager;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import classes.CustomViewPager;
+import requests.GetCandidatesRequest;
 
 /**
  * Main Activity of the App. Main screen, where the user will be the mayor part of the time.
@@ -28,11 +36,16 @@ import classes.CustomViewPager;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private JSONObject mCandidates;
+    private JSONObject mUserData;
+    public String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        userId = getIntent().getStringExtra("user_id");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -102,6 +115,17 @@ public class MainActivity extends AppCompatActivity {
      * @param navigationView
      */
     private void setupDrawerContent(NavigationView navigationView) {
+        View header = navigationView.getHeaderView(0);
+        TextView seeProfile = (TextView) header.findViewById(R.id.see_profile);
+        seeProfile.setPaintFlags(seeProfile.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyUserProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -113,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.nav_settings:
                                 intent = new Intent(getApplicationContext(), SettingsActivity.class);
                                 break;
+                            case R.id.nav_exit:
+                                LoginManager.getInstance().logOut();
+                                finish();
+                                return true;
                             default:
                                 mDrawerLayout.closeDrawers();
                                 return true;
