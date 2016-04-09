@@ -11,8 +11,8 @@
 class Server {
 public:
     Server();
+    ~Server();
     void start();
-
 private:
     std::vector<std::string> options;
 };
