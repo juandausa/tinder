@@ -1,23 +1,41 @@
 package com.tinder_app;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.github.akashandroid90.googlesupport.location.AppLocationActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
+
+import classes.Constants;
+import classes.FacebookProxy;
+import requests.LoginRequest;
+import requests.NewRegisterRequest;
+import requests.RegisterRequest;
 
 /**
  * Activity that contains the Login with Facebook API to access the App.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppLocationActivity {
 
     private LoginButton mLoginButton;
     private CallbackManager mCallbackManager;
+    private String mFacebookUserId;
+    private Location mCurrentLocation;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -36,20 +54,17 @@ public class LoginActivity extends AppCompatActivity {
         mCallbackManager = CallbackManager.Factory.create();
         mLoginButton = (LoginButton) findViewById(R.id.login_button);
         if (mLoginButton != null) {
-            mLoginButton.setReadPermissions("user_friends");
-            mLoginButton.setReadPermissions("public_profile");
+            mLoginButton.setReadPermissions(Arrays.asList(
+                    "public_profile", "email", "user_likes", "user_birthday", "user_friends"));
         }
         mLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
+                 loginUser(loginResult);
             }
 
             @Override
             public void onCancel() {
-
             }
 
             @Override
@@ -58,6 +73,37 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (isLoggedIn()) {
+            launchMainActivity();
+            return;
+        }
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    private boolean isLoggedIn() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    public void launchMainActivity() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("user_id", mFacebookUserId);
+        startActivity(intent);
+        finish();
     }
 
     /**********************************************************************************************/
@@ -73,5 +119,44 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    private void loginUser(LoginResult loginResult) {
+        mFacebookUserId = loginResult.getAccessToken().getUserId();
+        final FacebookProxy proxy = new FacebookProxy(mFacebookUserId);
+        AsyncTask task = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                while (!proxy.isInitialized()) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {}
+                }
+                proxy.addLocation(mCurrentLocation);
+                JSONObject data = proxy.toJSON();
+                LoginRequest request = new LoginRequest(LoginActivity.this);
+                //NewRegisterRequest request = new NewRegisterRequest(LoginActivity.this);
+                request.send(data);
+                return null;
+            }
+        };
+        task.execute();
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    @Override
+    public void newLocation(Location location) {}
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    @Override
+    public void myCurrentLocation(Location currentLocation) {
+        mCurrentLocation = currentLocation;
     }
 }
