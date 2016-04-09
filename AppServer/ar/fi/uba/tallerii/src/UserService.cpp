@@ -1,5 +1,5 @@
 //
-// Created by juan on 08/04/16.
+// Copyright 2016 FiUBA
 //
 
 #include <string>

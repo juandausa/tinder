@@ -2,10 +2,10 @@
 // Copyright 2016 FiUBA
 //
 
+#include <glog/logging.h>
 #include <iostream>
 #include <vector>
 #include <string>
-#include <glog/logging.h>
 #include "Mongoose.h"
 #include "Server.h"
 #include "PlusController.h"
