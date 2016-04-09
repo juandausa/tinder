@@ -16,8 +16,8 @@ users.append({
                 "value": "cross-fit" 
             }],
             "location": {
-                "latitude": 132.12356,
-                "longitude": 432.31319 
+                "latitude":-34.617956, 
+                "longitude": -58.368990
             } 
         } 
     })
@@ -35,8 +35,8 @@ users.append({
                 "value": "basket ball" 
             }],
             "location": {
-                "latitude": 474.18394,
-                "longitude": 53.84483 
+                "latitude":-34.617956, 
+                "longitude": -58.368990 
             } 
         } 
     })
@@ -57,8 +57,8 @@ users.append({
                 "value": "Gym" 
             }],
             "location": {
-                "latitude": 121.45356,
-                "longitude": 46.51119 
+                "latitude":-34.617956, 
+                "longitude": -58.368990 
             } 
         } 
     })
@@ -73,8 +73,8 @@ users.append({
                 "value": "radiohead" 
             }],
             "location": {
-                "latitude": 876.89009,
-                "longitude": 879.08119 
+                "latitude":-34.617956, 
+                "longitude": -58.368990 
             } 
         } 
     })
