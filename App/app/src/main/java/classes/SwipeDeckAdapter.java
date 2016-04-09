@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tinder_app.R;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class SwipeDeckAdapter extends BaseAdapter {
 
-    private List<String> mData;
+    private List<CandidateData> mData;
     private Context mContext;
 
     /**
@@ -26,7 +27,7 @@ public class SwipeDeckAdapter extends BaseAdapter {
      * @param data List of objects that will appear in each of the cards of the SwipeDeck view.
      * @param context Context where this adapter is used.
      */
-    public SwipeDeckAdapter(List<String> data, Context context) {
+    public SwipeDeckAdapter(List data, Context context) {
         this.mData = data;
         this.mContext = context;
     }
@@ -54,17 +55,26 @@ public class SwipeDeckAdapter extends BaseAdapter {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             // normally use a viewholder
             v = inflater.inflate(R.layout.card, parent, false);
+
         }
-        ((TextView) v.findViewById(R.id.textView2)).setText(mData.get(position));
+        ((TextView) v.findViewById(R.id.candidate_alias)).setText(mData.get(position).getAlias() + ", ");
+        ((TextView) v.findViewById(R.id.candidate_age)).setText(mData.get(position).getAge());
+        ((ImageView) v.findViewById(R.id.candidate_image)).setImageBitmap(mData.get(position).getPhoto());
 
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String item = (String) getItem(position);
+                String item = ((CandidateData) getItem(position)).getAlias();
                 Log.i("MainActivity", item);
             }
         });
 
         return v;
     }
+
+    public void update(List newValues) {
+        mData = newValues;
+        notifyDataSetChanged();
+    }
+
 }

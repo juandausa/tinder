@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.tinder_app.Cheeses;
+import com.tinder_app.OtherUsersProfileActivity;
 import com.tinder_app.R;
-import com.tinder_app.UserProfileActivity;
 
 import java.util.List;
 
@@ -84,8 +84,8 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<ViewHo
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                Intent intent = new Intent(context, UserProfileActivity.class);
-                intent.putExtra(UserProfileActivity.EXTRA_NAME, holder.getBoundString());
+                Intent intent = new Intent(context, OtherUsersProfileActivity.class);
+                intent.putExtra(OtherUsersProfileActivity.EXTRA_NAME, holder.getBoundString());
 
                 context.startActivity(intent);
             }
