@@ -30,6 +30,13 @@
     <string name="see_profile">Ver perfil</string>
     <string name="discovering_settings">Ajustes de descubrimiento</string>
     <string name="settings">Ajustes</string>
+    <string name="exit">Cerrar sesión</string>
+    <string name="edit_profile">Editar perfil</string>
+    <string name="distance_title">Distancia de búsqueda</string>
+    <string name="show">Mostrarme</string>
+    <string name="men">Hombres</string>
+    <string name="women">Mujeres</string>
+<string name="age_title">Mostrar edades</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

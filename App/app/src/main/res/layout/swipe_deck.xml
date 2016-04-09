@@ -17,18 +17,19 @@
         xmlns:swipedeck="http://schemas.android.com/apk/res-auto"
         android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="380dp"
+        android:layout_height="370dp"
         android:orientation="vertical">
 
         <com.daprlabs.cardstack.SwipeDeck
             android:id="@+id/swipe_deck"
             android:layout_width="match_parent"
-            android:layout_height="380dp"
-            android:padding="20dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
             swipedeck:card_spacing="10dp"
             swipedeck:max_visible="3"
             swipedeck:render_above="true"
-            swipedeck:rotation_degrees="15" />
+            swipedeck:rotation_degrees="15"
+            android:layout_marginBottom="5dp"/>
 
     </com.daprlabs.cardstack.SwipeFrameLayout>
 
@@ -42,9 +43,12 @@
         app:layout_anchorGravity="bottom|right|end"
         android:src="@drawable/ic_favorite_white_24dp"
         android:tint="@android:color/white"
+        android:scaleX="1.4"
+        android:scaleY="1.4"
         android:layout_marginBottom="60dp"
-        android:layout_marginRight="20dp"
-        android:clickable="true"/>
+        android:layout_marginRight="50dp"
+        android:clickable="true"
+        app:borderWidth="6dp"/>
 
 
     <android.support.design.widget.FloatingActionButton
@@ -56,8 +60,11 @@
         android:src="@drawable/ic_close_white_24dp"
         android:tint="@android:color/white"
         android:layout_marginBottom="60dp"
-        android:layout_marginLeft="20dp"
-        android:clickable="true"/>
+        android:layout_marginLeft="50dp"
+        android:clickable="true"
+        android:scaleX="1.4"
+        android:scaleY="1.4"
+        app:borderWidth="6dp"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
