@@ -24,6 +24,9 @@ public class UserProfileActivity extends AppCompatActivity {
      */
     public static final String EXTRA_NAME = "cheese_name";
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,40 +49,11 @@ public class UserProfileActivity extends AppCompatActivity {
             collapsingToolbar.setTitle(cheeseName);
         }
         loadBackdrop();
-        setUpLikeButton();
-        setUpDislikeButton();
     }
 
 
-    private void setUpLikeButton() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.like_fab);
-        if (fab == null) {
-            return;
-        }
-        fab.setBackgroundTintList(getResources().getColorStateList(R.color.light_green));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-
-    private void setUpDislikeButton() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.dislike_fab);
-        if (fab == null) {
-            return;
-        }
-        fab.setBackgroundTintList(getResources().getColorStateList(android.R.color.holo_red_light));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     private void loadBackdrop() {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
@@ -87,6 +61,9 @@ public class UserProfileActivity extends AppCompatActivity {
             Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
         }
     }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
