@@ -34,20 +34,26 @@ TEST(DataBaseWrapper, DeleteString) {
     EXPECT_FALSE(db.get(key, &retrivedValue));
 }
 
-TEST(DataBaseWrapper, WriteStringWithDataBaseCreationFailing) {
-    DataBase db("/noexiste/testdb3");
-    std::string value = "ValorUno", key = "ClaveUno";
-    EXPECT_FALSE(db.set(key, value));
-}
-
-TEST(DataBaseWrapper, ReadStringWithDataBaseCreationFailing) {
-    DataBase db("/noexiste/testdb3");
+TEST(DataBaseWrapper, ReadStringWhichIsNotPresent) {
+    DataBase db("/tmp/testdb4");
     std::string key = "ClaveUno", retrivedValue;
     EXPECT_FALSE(db.get(key, &retrivedValue));
 }
 
 TEST(DataBaseWrapper, DeleteStringWithDataBaseCreationFailing) {
-    DataBase db("/noexiste/testdb3");
+    DataBase db("/noexiste/");
     std::string key = "ClaveUno";
     EXPECT_FALSE(db.remove(key));
+}
+
+TEST(DataBaseWrapper, WriteStringWithDataBaseCreationFailing) {
+    DataBase db("/noexiste/");
+    std::string value = "ValorUno", key = "ClaveUno";
+    EXPECT_FALSE(db.set(key, value));
+}
+
+TEST(DataBaseWrapper, ReadStringWithDataBaseCreationFailing) {
+    DataBase db("/noexiste/");
+    std::string key = "ClaveUno", retrivedValue;
+    EXPECT_FALSE(db.get(key, &retrivedValue));
 }
