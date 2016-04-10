@@ -54,7 +54,7 @@ bool DataBase::remove(const std::string key) {
 }
 
 DataBase :: ~DataBase() {
-    if (!this->is_open()) {
+    if (this->is_open()) {
         delete(this->database);
         this->database = NULL;
     }

@@ -4,7 +4,7 @@
 
 #include "include/database_test.h"
 #include "DataBase.h"
-/*
+
 TEST(DataBaseWrapper, ReadAndWriteString) {
     DataBase db("/tmp/testdb10");
     std::string value = "Valor", key = "Clave", retrivedValue;
@@ -51,5 +51,3 @@ TEST(DataBaseWrapper, DeleteStringWithDataBaseCreationFailing) {
     std::string key = "ClaveUno";
     EXPECT_FALSE(db.remove(key));
 }
-
-*/
