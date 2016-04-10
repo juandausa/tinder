@@ -4,7 +4,7 @@
 
 #include "include/user_service_test.h"
 #include "DataBase.h"
-/*
+
 TEST(UserService, IsUserRegisteredWithNoUsers) {
     DataBase db("/tmp/testuserservicedb");
     if (db.is_open()) {
@@ -14,4 +14,3 @@ TEST(UserService, IsUserRegisteredWithNoUsers) {
         EXPECT_EQ(1, 0);
     }
 }
-*/

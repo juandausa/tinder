@@ -6,10 +6,16 @@
 #include "UserService.h"
 #include "DataBase.h"
 
-UserService :: UserService(DataBase database) : database(database) {
+UserService :: UserService(DataBase & db) : database(&db) {
 }
 
-bool UserService :: is_user_registered(std::string user_id) {
+bool UserService :: is_user_registered(const std::string user_id) {
     std::string value;
-    return this->database.get(user_id, &value);
+    if (this->database->is_open()) {
+        return this->database->get(user_id, &value);
+    }
+    return false;
+}
+
+UserService ::~UserService() {
 }
