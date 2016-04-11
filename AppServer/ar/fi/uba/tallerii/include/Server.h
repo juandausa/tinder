@@ -15,6 +15,7 @@ public:
     void start();
 private:
     std::vector<std::string> options;
+    static void ev_handler(struct mg_connection *nc, int ev, void *ev_data);
 };
 
 #endif //TINDER_SEVER_H

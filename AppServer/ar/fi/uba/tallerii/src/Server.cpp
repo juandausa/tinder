@@ -11,6 +11,7 @@
 #include "PlusController.h"
 #include "UserController.h"
 #include "Response.h"
+#include "DataBase.h"
 
 static const char *s_http_port = "8000";
 static struct mg_serve_http_opts s_http_server_opts;
@@ -21,7 +22,7 @@ static void signal_handler(int sig_num) {
     s_sig_num = sig_num;
 }
 
-static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
+void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     struct http_message *hm = (struct http_message *) ev_data;
     switch (ev) {
         case MG_EV_HTTP_REQUEST:
@@ -30,14 +31,11 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 PlusController plus_controller;
                 plus_controller.handle_sum_call(nc, hm);
             } else if ((mg_vcmp(&hm->uri, "/login") == 0) && mg_vcmp(&hm->method, "GET") == 0) {
-                DataBase database("/tmp/tinderdb");
-                if (!database.is_open()) {
-                    LOG(FATAL) << "Can not create the database.";
-                }
+                DataBase db("/tmp/tinderdb");
+                UserService user_service(db);
                 Response response(nc);
-                UserController user_controller(database);
+                UserController user_controller(user_service);
                 user_controller.handle_login(nc, hm, response);
-                database.~DataBase();
             } else if (mg_vcmp(&hm->uri, "/printcontent") == 0) {
                 char buf[100] = {0};
                 memcpy(buf, hm->body.p,
@@ -103,7 +101,7 @@ void Server :: start() {
     }
 
     /* Set HTTP server options */
-    nc = mg_bind(&mgr, s_http_port, ev_handler);
+    nc = mg_bind(&mgr, s_http_port, Server :: ev_handler);
     if (nc == NULL) {
         fprintf(stderr, "Error starting server on port %s\n", s_http_port);
         exit(1);
@@ -129,13 +127,13 @@ void Server :: start() {
     signal(SIGINT, signal_handler);
     signal(SIGTERM, signal_handler);
     LOG(INFO) << "Starting RESTful server on port " << s_http_port;
-    std::cout << "Starting RESTful server on port " << s_http_port;
+    std::cout << "Starting RESTful server on port " << s_http_port << std::endl;
     while (s_sig_num == 0) {
         mg_mgr_poll(&mgr, 1000);
     }
 
     mg_mgr_free(&mgr);
-
+    std::cout << "Finishing RESTful server on port " << s_http_port << std::endl;
     return;
 }
 
