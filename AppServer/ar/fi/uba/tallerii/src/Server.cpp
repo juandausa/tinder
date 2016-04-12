@@ -12,8 +12,8 @@
 #include "UserController.h"
 #include "Response.h"
 #include "DataBase.h"
+#include "Constant.h"
 
-static const char *s_http_port = "8000";
 static struct mg_serve_http_opts s_http_server_opts;
 static int s_sig_num = 0;
 
@@ -22,25 +22,28 @@ static void signal_handler(int sig_num) {
     s_sig_num = sig_num;
 }
 
+void handle_print_content(struct http_message *hm) {
+    char buf[100] = {0};
+    memcpy(buf, hm->body.p,
+           sizeof(buf) - 1 < hm->body.len? sizeof(buf) - 1 : hm->body.len);
+    printf("%s\n", buf);
+}
+
 void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     struct http_message *hm = (struct http_message *) ev_data;
     switch (ev) {
         case MG_EV_HTTP_REQUEST:
             if (mg_vcmp(&hm->uri, "/api/v1/sum") == 0) {
-                /* Handle RESTful call */
                 PlusController plus_controller;
                 plus_controller.handle_sum_call(nc, hm);
             } else if ((mg_vcmp(&hm->uri, "/login") == 0) && mg_vcmp(&hm->method, "GET") == 0) {
-                DataBase db("/tmp/tinderdb");
+                DataBase db(Constant::database_path);
                 UserService user_service(db);
                 Response response(nc);
                 UserController user_controller(user_service);
                 user_controller.handle_login(nc, hm, response);
             } else if (mg_vcmp(&hm->uri, "/printcontent") == 0) {
-                char buf[100] = {0};
-                memcpy(buf, hm->body.p,
-                       sizeof(buf) - 1 < hm->body.len? sizeof(buf) - 1 : hm->body.len);
-                printf("%s\n", buf);
+                handle_print_content(hm);
             } else {
                 mg_serve_http(nc, hm, s_http_server_opts);  /* Serve static content */
             }
@@ -50,8 +53,10 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     }
 }
 
-Server :: Server() {
-    this->options = std::vector<std::string>();
+Server :: Server(std::vector<std::string> options) : options(options), port(Constant::server_port) {
+}
+
+Server :: Server() : options(std::vector<std::string>()), port(Constant::server_port) {
 }
 
 void Server :: start() {
@@ -59,6 +64,7 @@ void Server :: start() {
     struct mg_connection *nc;
     unsigned int i;
     unsigned int optionsLength = this->options.size();
+    this->port = Constant :: server_port;
 #ifdef MG_ENABLE_SSL
     const char *ssl_cert = NULL;
 #endif
@@ -71,8 +77,6 @@ void Server :: start() {
             mgr.hexdump_file = this->options[++i].c_str();
         } else if (strcmp(this->options[i].c_str(), "-d") == 0 && i + 1 < optionsLength) {
             s_http_server_opts.document_root = this->options[++i].c_str();
-        } else if (strcmp(this->options[i].c_str(), "-p") == 0 && i + 1 < optionsLength) {
-            s_http_port = this->options[++i].c_str();
         } else if (strcmp(this->options[i].c_str(), "-a") == 0 && i + 1 < optionsLength) {
             s_http_server_opts.auth_domain = this->options[++i].c_str();
 #ifdef MG_ENABLE_JAVASCRIPT
@@ -101,9 +105,9 @@ void Server :: start() {
     }
 
     /* Set HTTP server options */
-    nc = mg_bind(&mgr, s_http_port, Server :: ev_handler);
+    nc = mg_bind(&mgr, this->port.c_str(), Server :: ev_handler);
     if (nc == NULL) {
-        fprintf(stderr, "Error starting server on port %s\n", s_http_port);
+        fprintf(stderr, "Error starting server on port %s\n", this->port.c_str());
         exit(1);
     }
 
@@ -126,14 +130,14 @@ void Server :: start() {
 
     signal(SIGINT, signal_handler);
     signal(SIGTERM, signal_handler);
-    LOG(INFO) << "Starting RESTful server on port " << s_http_port;
-    std::cout << "Starting RESTful server on port " << s_http_port << std::endl;
+    LOG(INFO) << "Starting RESTful server on port " << this->port;
+    std::cout << "Starting RESTful server on port " << this->port << std::endl;
     while (s_sig_num == 0) {
         mg_mgr_poll(&mgr, 1000);
     }
 
     mg_mgr_free(&mgr);
-    std::cout << "Finishing RESTful server on port " << s_http_port << std::endl;
+    std::cout << "Finishing RESTful server on port " << this->port << std::endl;
     return;
 }
 

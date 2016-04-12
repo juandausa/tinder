@@ -11,10 +11,12 @@
 class Server {
 public:
     Server();
+    Server(std::vector<std::string> options);
     ~Server();
     void start();
 private:
     std::vector<std::string> options;
+    std::string port;
     static void ev_handler(struct mg_connection *nc, int ev, void *ev_data);
 };
 

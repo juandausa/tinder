@@ -5,7 +5,8 @@
 #include <iostream>
 #include <ctime>
 #include <fstream>
-#include <cstring>
+#include <string>
+#include <vector>
 #include "Server.h"
 
 void printCurrentDir() {
@@ -16,7 +17,17 @@ void printCurrentDir() {
         perror("getcwd() error");
 }
 
-int main(int arg, char** args) {
+std::vector<std::string> convert_parameters(int argc, char** args) {
+    std::vector<std::string> parameters;
+    for (int i = 0; i < argc; i++) {
+        std::string parameter(args[i]);
+        parameters.push_back(parameter);
+    }
+
+    return parameters;
+}
+
+int main(int argc, char** args) {
     google::SetLogDestination(google::GLOG_INFO, "/tmp/tinder.log");
     google::SetLogDestination(google::GLOG_ERROR, "");
     google::SetLogDestination(google::GLOG_FATAL, "");
@@ -25,10 +36,11 @@ int main(int arg, char** args) {
 
     LOG(INFO) << "App Server started.";
     printCurrentDir();
-    Server tinderServer;
+    Server tinderServer(convert_parameters(argc, args));
     tinderServer.start();
     LOG(INFO) << "App Server finished.";
     google::ShutdownGoogleLogging();
     return 0;
 }
+
 
