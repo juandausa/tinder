@@ -15,7 +15,7 @@ TEST(UserService, IsUserRegisteredWithNoUsers) {
     }
 }
 
-TEST(UserService, IsUserRegisteredWithUserPreviouslyRegister) {
+TEST(UserService, IsUserRegisteredWithUserPreviouslyRegistered) {
     DataBase db("/tmp/testuserservicedb2");
     db.set("UserJoaneDoe", "value");
     if (db.is_open()) {
