@@ -14,3 +14,14 @@ TEST(UserService, IsUserRegisteredWithNoUsers) {
         EXPECT_EQ(1, 0);
     }
 }
+
+TEST(UserService, IsUserRegisteredWithUserPreviouslyRegister) {
+    DataBase db("/tmp/testuserservicedb2");
+    db.set("UserJoaneDoe", "value");
+    if (db.is_open()) {
+        UserService user_service(db);
+        EXPECT_TRUE(user_service.is_user_registered("UserJoaneDoe"));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
