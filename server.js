@@ -73,14 +73,11 @@ app.get('/', function (req, res) {
 
 // This responds with a JSON of interests
 app.get('/interests', function (req, res) {
-	// TODO
 	var response = {interests: []};
 	db.run("select * from interests", function(err, interests) { 
 		if (checkForError(err, res, "Error at creating new interest")) return;
 		for (i = 0; i < interests.length; i++) {
-			var data = interests[i].data;
-			data.id = interests[i].id;
-			response.interests.push(data);
+			response.interests.push(interests[i].data);
 		}
 		response.metadata = {version: "0.1", count: interests.length};
 		res.send(response);
@@ -92,7 +89,6 @@ app.get('/interests', function (req, res) {
 
 // This responds with a JSON of users
 app.get('/users', function (req, res) {
-	// TODO
 	var response = {users: []};
 	db.run("select * from users", function(err, users) { 
 		if (checkForError(err, res, "Error at creating new user")) return;

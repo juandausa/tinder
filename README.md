@@ -28,6 +28,18 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 `git push heroku SharedServer:master`
 
 
+## Heroku
+
+### Ver logs
+
+Ejecutar `heroku logs --tail`
+
+### Entrar a postgres desde heroku
+
+Ejecutar en la consola `heroku pg:psql`
+
+
+
 ## Ambiente Local
 
 En esta sección se indica todo lo necesario para probar el server localmente.
@@ -52,7 +64,7 @@ sudo apt-get install postgresql-9.4
 * Crear la base de datos **users**, ejecutando dentro del interprete de postgres
 ```CREATE DATABASE users```
 
-* Crear las tablas necesarias ejecutando el script **create_tables.sql**
+* Crear las tablas necesarias ejecutando el script **create_table.sql**
 
 ### Correr server localmente
 
