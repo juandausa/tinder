@@ -11,6 +11,7 @@ notifications:
     recipients:
       - juandausa@gmail.com
       - zebas.graffe@gmail.com
+      - jasminasf@gmail.com
     on_success: change
     on_failure: always
     
@@ -59,3 +60,7 @@ before_script:
     - ./ar/fi/uba/tallerii/test/runTests
 
 script: valgrind --leak-check=full --error-exitcode=1 ./ar/fi/uba/tallerii/test/runTests
+
+after_success: 
+    - lcov --capture --directory ./ar/fi/uba/tallerii/test/ --output-file coverageTinderTests.info
+    - genhtml coverageTinderTests.info --output-directory coverageHtml
