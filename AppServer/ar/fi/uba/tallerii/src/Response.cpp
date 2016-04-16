@@ -34,13 +34,25 @@ void Response :: SetCode(int code) {
     }
 }
 
+int Response ::GetCode() {
+    return this->code;
+}
+
 void Response :: AddHeader(std::string key, std::string value) {
     std::pair<std::string, std::string> header(key, value);
     this->headers.push_back(header);
 }
 
+std::vector<std::pair<std::string, std::string>> Response ::GetHeaders() {
+    return this->headers;
+}
+
 void Response :: SetBody(std::string body) {
     this->body = body;
+}
+
+std::string Response ::GetBody() {
+    return this->body;
 }
 
 void Response :: Send() {
