@@ -4,6 +4,7 @@
 
 #include "Response.h"
 #include "Mongoose.h"
+#include "Constant.h"
 #include <string>
 #include <utility>
 #include <vector>
@@ -24,6 +25,7 @@ Response :: Response(struct mg_connection *nc) : connection(nc) {
     this->statusCodes[500] = "500 Internal Server Error";
     this->statusCodes[501] = "501 Not Implemented";
     this->statusCodes[503] = "503 Service Unavailable";
+    this->SetCode(DEFAUTLRESPONSE);
 }
 
 void Response :: SetCode(int code) {
@@ -57,8 +59,8 @@ std::string Response ::GetBody() {
 
 void Response :: Send() {
     // TODO(juandausa): AddHeaders
-    std::string header("HTTP/1.1 " + this->statusCodes[this->code] + "\r\nTransfer-Encoding: chunked\r\n\r\n");
+    std::string header("HTTP/1.1 " + this->statusCodes[this->GetCode()] + "\r\nTransfer-Encoding: chunked\r\n\r\n");
     mg_printf(this->connection, "%s", header.c_str());
-    mg_printf_http_chunk(this->connection, this->body.c_str());
+    mg_printf_http_chunk(this->connection, this->GetBody().c_str());
     mg_send_http_chunk(this->connection, "", 0);
 }
