@@ -14,17 +14,17 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 
 ### Requerimientos para su uso
 
-* Ejecutar ./AppServer/install.sh . Eso instalará las herramientas y recursos necesarios.
+* Ejecutar ```./AppServer/install.sh``` . Eso instalará las herramientas y recursos necesarios.
 
 ### Modos de uso
 * Para correr los tests por consola:
-   * Posicionarse sobre la carpeta AppServer y ejecutar ```cmake .```
-   * Luego ejecutar make
-   * Correr los tests mediante ```./ar/fi/uba/tallerii/test/runTests```
-* Para correr el servidor utilizar lo anterior pero iniciar el server mediante ```./ar/fi/uba/tallerii/main/Tinder_main```
-   * El servidor lo pueden finalizar con Ctrl+C o eviandole cualquier señal distinta de ```-9```
+   * Posicionarse sobre la carpeta AppServer y ejecutar ```cmake .``` .
+   * Luego ejecutar make.
+   * Puede correr los tests mediante ```./ar/fi/uba/tallerii/test/runTests``` .
+* Para correr el servidor utilizar lo anterior pero iniciar el server mediante ```./ar/fi/uba/tallerii/main/Tinder_main``` .
+   * El servidor lo puede finalizar con ```Ctrl+C``` o eviandole cualquier señal distinta de ```-9```.
    
 ### Configuración en CLion
-* Importar el proyecto desde los fuentes desde la carpeta AppServer
-* Si le pregunta si desea crear nuevos archivos Cmake indique NO.
+* Importar el proyecto desde los fuentes desde la carpeta AppServer.
+* Si le pregunta si desea crear nuevos archivos Cmake indique ```NO```.
 * Los posibles targets son Tinder_Main y RunTests. El primero lanza el servidor y el segundo corre los tests.
