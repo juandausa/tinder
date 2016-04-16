@@ -9,6 +9,5 @@
 #include "Mongoose.h"
 #include <Constant.h>
 #include <gtest/gtest.h>
-#include <gmock/gmock.h>
 
 #endif //TINDER_RESPONSE_TEST_H
