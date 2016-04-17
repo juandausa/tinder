@@ -29,6 +29,10 @@ void UserController :: handle_login(struct mg_connection *nc, struct http_messag
     }
 }
 
+void UserController :: handle_registration(struct mg_connection *nc, struct http_message *hm, Response response) {
+
+}
+
 std::string UserController :: make_body(std::string user_id) {
     std::string body("{ \"user\": { \"userId\" : \"");
     body.append(user_id).append("\" } }");

@@ -42,6 +42,12 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 Response response(nc);
                 UserController user_controller(user_service);
                 user_controller.handle_login(nc, hm, response);
+            } else if ((mg_vcmp(&hm->uri, "/register") == 0) && mg_vcmp(&hm->method, "POST") == 0) {
+                DataBase db(Constant::database_path);
+                UserService user_service(db);
+                Response response(nc);
+                UserController user_controller(user_service);
+                user_controller.handle_registration(nc, hm, response);
             } else if (mg_vcmp(&hm->uri, "/printcontent") == 0) {
                 handle_print_content(hm);
             } else {
