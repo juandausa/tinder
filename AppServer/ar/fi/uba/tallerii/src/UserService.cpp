@@ -17,5 +17,12 @@ bool UserService :: is_user_registered(const std::string user_id) {
     return false;
 }
 
+bool UserService :: register_user(const std::string user_id, const std::string name,
+                                  const std::string birthday, const std::string alias,
+                                  const std::string email, const std::string photo_profile) {
+    // TODO(jasmina): enviar request con curl a SharedServer
+    return true;
+}
+
 UserService ::~UserService() {
 }
