@@ -35,4 +35,4 @@ RUN wget https://github.com/facebook/rocksdb/archive/rocksdb-4.3.1.tar.gz \
 && sudo make install \
 && sudo ldconfig -v \
 && cd ..
-RUN sudo apt-get install git -y
+RUN sudo apt-get install git valgrind -y
