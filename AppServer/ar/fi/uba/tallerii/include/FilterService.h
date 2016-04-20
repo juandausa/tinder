@@ -8,7 +8,9 @@
 
 class FilterService {
 public:
-    FilterService(DataBase database);
+    FilterService(DataBase & database);
+private:
+    DataBase * database;
 };
 
 #endif //TINDER_FILTERSERVICE_H

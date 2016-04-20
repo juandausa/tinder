@@ -4,5 +4,6 @@
 
 #include "FilterService.h"
 
-FilterService::FilterService(DataBase database) {
+FilterService :: FilterService(DataBase & db) : database(&db) {
 }
+
