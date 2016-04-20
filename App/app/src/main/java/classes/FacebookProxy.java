@@ -50,6 +50,10 @@ public class FacebookProxy {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Initialize the instance of FacebookProxy. Gets the user data from Facebook and stores it in
+     * the current instance.
+     */
     public void initialize() {
         mInterests = new ConcurrentHashMap<>();
         mProfile = new ConcurrentHashMap<>();
@@ -137,11 +141,21 @@ public class FacebookProxy {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Setter of the attribute location.
+     * @param location the location of the user, to be stored.
+     */
     public void addLocation(Location location) {
         mLocation = location;
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
+    /**
+     * Parse the instance of FacebookProxy into a JSONObject.
+     * @return the JSONObject with the data of the FacebookProxy instance.
+     */
     public JSONObject toJSON() {
         try {
             JSONObject json = new JSONObject();
@@ -159,10 +173,12 @@ public class FacebookProxy {
             interests.put(GAMES, getGames());
             json.put("interests", interests);
             json.put("photo_profile", mProfile.get("photo_profile"));
-            JSONObject location = new JSONObject();
-            location.put("latitude", mLocation.getLatitude());
-            location.put("longitude", mLocation.getLongitude());
-            json.put("location", location);
+            if (mLocation != null) {
+                JSONObject location = new JSONObject();
+                location.put("latitude", mLocation.getLatitude());
+                location.put("longitude", mLocation.getLongitude());
+                json.put("location", location);
+            }
             Log.e("JSON", json.toString());
             return json;
         } catch (JSONException e) {
