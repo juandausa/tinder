@@ -9,44 +9,49 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by fabrizio on 04/04/16.
+ * Class that represents a candidate to be a match with the current user.
  */
 public class CandidateData {
 
-    private String userId;
-    private String alias;
-    private Bitmap photo;
-    private JSONArray interests;
-    private String age;
+    private String mUserId;
+    private String mAlias;
+    private Bitmap mPhoto;
+    private JSONArray mInterests;
+    private String mAge;
 
+    /**
+     * Constructor of the class CandidateData, that represents a user that can be a candidadate to
+     * match with the current user.
+     * @param candidate data of the candidate to be builded.
+     */
     public CandidateData(JSONObject candidate) {
         try {
-            userId = candidate.getString("user_id");
-            alias = candidate.getString("alias");
+            mUserId = candidate.getString("user_id");
+            mAlias = candidate.getString("alias");
             byte[] decodedString = Base64.decode(candidate.getString("photo_profile"), Base64.DEFAULT);
-            photo = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            interests = null;
-            age = Integer.toString(candidate.getInt("age"));
-        } catch (JSONException e) {}
+            mPhoto = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            mInterests = null;
+            mAge = Integer.toString(candidate.getInt("age"));
+        } catch (JSONException e) { }
     }
 
     public String getUserId() {
-        return userId;
+        return mUserId;
     }
 
     public String getAlias() {
-        return alias;
+        return mAlias;
     }
 
     public Bitmap getPhoto() {
-        return photo;
+        return mPhoto;
     }
 
     public JSONArray getInterests() {
-        return interests;
+        return mInterests;
     }
 
     public String getAge() {
-        return age;
+        return mAge;
     }
 }
