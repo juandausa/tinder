@@ -32,7 +32,7 @@ Para chequear que todo este correcto antes de subir código al repositorio reali
 
 * Situarse con la consola en `App/app/`
 * Ejecutar el comando `./gradlew build`
-* Verificar si realizó el buil correctamente. De haber fallado, observar que fué lo que falló leyendo el archivo de reportes indicado por la salida del comando que acabamos de ejecutar.
+* Verificar si realizó el build correctamente. De haber fallado, observar que fué lo que falló leyendo el archivo de reportes indicado por la salida del comando que acabamos de ejecutar.
 * Corregir el problema, repetir los pasos anteriores y subir al repositorio.
 
 
