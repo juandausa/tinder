@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import classes.CandidateData;
+import classes.SessionManager;
 import classes.SwipeDeckAdapter;
 import requests.GetCandidatesRequest;
 
@@ -43,6 +44,7 @@ public class PeopleListFragment extends Fragment {
         //CardView cardView = (CardView) inflater.inflate(R.layout.card, container);
         setUpLikeButton(layout);
         setUpDislikeButton(layout);
+        loading();
         getCandidates();
 
 
@@ -84,8 +86,6 @@ public class PeopleListFragment extends Fragment {
             public void cardActionUp() {
             }
         });
-
-        loading();
         return layout;
     }
 
@@ -107,7 +107,8 @@ public class PeopleListFragment extends Fragment {
         GetCandidatesRequest request = new GetCandidatesRequest(getActivity(),this);
         try {
             JSONObject json = new JSONObject();
-            json.put("user_id", ((MainActivity) getActivity()).userId);
+            String userId = SessionManager.getUserId(getActivity());
+            json.put("user_id", userId);
             request.send(json);
         } catch (JSONException e) {}
 
