@@ -2,6 +2,7 @@
 // Copyright 2016 FiUBA
 //
 
+#include <string>
 #include "Mongoose.h"
 #include "FilterController.h"
 #include "Response.h"
