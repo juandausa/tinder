@@ -4,6 +4,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.tinder_app.LoginActivity;
+import com.tinder_app.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +31,7 @@ public class NewRegisterRequest extends JSONRequest {
 
     @Override
     public void send(JSONObject json) {
+        Log.i("user", json.toString());
         super.send(json, Constants.REGISTER_PATH);
     }
 
@@ -43,7 +45,9 @@ public class NewRegisterRequest extends JSONRequest {
             if (response.getInt("status_code") == 200) {
                 launchMainActivity();
             }
-        } catch (JSONException e) {}
+        } catch (JSONException e) {
+            Log.e(mContext.getString(R.string.JSON_ERROR),e.getMessage());
+        }
     }
 
     /**********************************************************************************************/
@@ -51,7 +55,7 @@ public class NewRegisterRequest extends JSONRequest {
 
     @Override
     public void onError(VolleyError error) {
-        Log.e("ERR", error.getMessage());
+        Log.e(mContext.getString(R.string.REQUEST_ERROR)+"1", error.getMessage());
     }
 
     /**********************************************************************************************/

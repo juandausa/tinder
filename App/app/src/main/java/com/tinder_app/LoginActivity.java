@@ -1,6 +1,7 @@
 package com.tinder_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import java.util.concurrent.ExecutionException;
 
 import classes.Constants;
 import classes.FacebookProxy;
+import classes.SessionManager;
 import requests.LoginRequest;
 import requests.NewRegisterRequest;
 import requests.RegisterRequest;
@@ -57,10 +59,13 @@ public class LoginActivity extends AppLocationActivity {
             mLoginButton.setReadPermissions(Arrays.asList(
                     "public_profile", "email", "user_likes", "user_birthday", "user_friends"));
         }
+
+        launchIfLoggedIn();
+
         mLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                 loginUser(loginResult);
+                registerUser(loginResult);
             }
 
             @Override
@@ -79,21 +84,29 @@ public class LoginActivity extends AppLocationActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    @Override
+    /*@Override
     protected void onStart() {
         super.onStart();
         if (isLoggedIn()) {
             launchMainActivity();
             return;
         }
+    }*/
+
+    private void launchIfLoggedIn() {
+        if (isLoggedIn()) {
+            launchMainActivity();
+        }
     }
+
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
     private boolean isLoggedIn() {
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        return accessToken != null;
+        //AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        //return accessToken != null;
+        return SessionManager.isLoggedIn(LoginActivity.this);
     }
 
     /**********************************************************************************************/
@@ -124,7 +137,7 @@ public class LoginActivity extends AppLocationActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    private void loginUser(LoginResult loginResult) {
+    private void registerUser(LoginResult loginResult) {
         mFacebookUserId = loginResult.getAccessToken().getUserId();
         final FacebookProxy proxy = new FacebookProxy(mFacebookUserId);
         AsyncTask task = new AsyncTask() {
@@ -140,6 +153,7 @@ public class LoginActivity extends AppLocationActivity {
                 LoginRequest request = new LoginRequest(LoginActivity.this);
                 //NewRegisterRequest request = new NewRegisterRequest(LoginActivity.this);
                 request.send(data);
+                SessionManager.login(LoginActivity.this, mFacebookUserId);
                 return null;
             }
         };

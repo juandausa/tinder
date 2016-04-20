@@ -4,6 +4,8 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.tinder_app.LoginActivity;
+import com.tinder_app.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import classes.Constants;
@@ -31,9 +33,12 @@ public class LoginRequest extends SimpleRequest {
     public void send(JSONObject json) {
         mUser = json;
         try {
+            Log.i("user_id",json.getString("user_id"));
             String route = Constants.LOGIN_PATH + json.getString("user_id");
             super.send(json, route);
-        } catch (JSONException e) {}
+        } catch (JSONException e) {
+            Log.e(mContext.getString(R.string.JSON_ERROR), e.getMessage());
+        }
     }
 
     /**********************************************************************************************/
@@ -60,7 +65,7 @@ public class LoginRequest extends SimpleRequest {
 
     @Override
     protected void onError(VolleyError error) {
-        Log.e("ERR", error.getMessage());
+        Log.e(mContext.getString(R.string.REQUEST_ERROR)+"2", error.toString());
     }
 
     /**********************************************************************************************/
