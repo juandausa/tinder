@@ -64,6 +64,7 @@ public class GetCandidatesRequest extends JSONRequest {
 
     @Override
     protected void onError(VolleyError error) {
-        Log.e(mContext.getString(R.string.REQUEST_ERROR),error.toString());
+        Log.e(mContext.getString(R.string.REQUEST_ERROR)+" CANDIDATES",error.toString());
+        mFragment.timeoutOnCandidatesRequest();
     }
 }

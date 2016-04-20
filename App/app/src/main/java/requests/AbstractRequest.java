@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
@@ -37,7 +38,30 @@ public abstract class AbstractRequest {
         setErrorListener();
         String path = RequestHandler.getServerUrl() + route;
         Request request = buildRequest(path, json);
+        setRetryPolicy(request);
         requestHandler.addToRequestQueue(request);
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    private void setRetryPolicy(Request request) {
+        request.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
     }
 
     /**********************************************************************************************/
