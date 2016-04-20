@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import classes.CustomViewPager;
+import classes.SessionManager;
 import requests.GetCandidatesRequest;
 
 /**
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.nav_exit:
                                 LoginManager.getInstance().logOut();
+                                SessionManager.logout(MainActivity.this);
                                 finish();
                                 return true;
                             default:
