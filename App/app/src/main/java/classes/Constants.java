@@ -8,7 +8,7 @@ public final class Constants {
     /**
      * Ip of the server. Used to build paths for requests.
      */
-    public static final String IP_SERVER = "http://10.1.105.93:5000"; //"http://10.0.2.2:5000"; //"http://192.168.1.106:5000";
+    public static final String IP_SERVER = "http://192.168.1.106:5000"; //"http://10.0.2.2:5000"; //"http://192.168.1.106:5000";
 
     /**
      * Route for constructing the url path for the request that checks if the user is registered in
