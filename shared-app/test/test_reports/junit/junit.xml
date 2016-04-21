@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="Chrome 49.0.2623 (Linux 0.0.0)" package="unit" timestamp="2016-04-15T00:24:16" id="0" hostname="agu-TWS" tests="2" errors="0" failures="0" time="0.14">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36"/>
+    </properties>
+    <testcase name="debe iniciar con userName en blanco" time="0.129" classname="unit Chrome 49.0.2623 (Linux 0.0.0).unit test valida que LoginService al iniciar"/>
+    <testcase name="debe iniciar con password en blanco" time="0.011" classname="unit Chrome 49.0.2623 (Linux 0.0.0).unit test valida que LoginService al iniciar"/>
+    <system-out><![CDATA[
+]]></system-out>
+    <system-err/>
+  </testsuite>
+</testsuites>

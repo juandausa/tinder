@@ -1,0 +1,28 @@
+<div ng-controller="SettingsController as sc" layout="column" ng-cloak="" class="md-inline-form">
+    <md-button class="md-fab md-fab-bottom-right cm-fab-fixed" aria-label="Add" ng-click="sc.connect()">
+          <md-icon md-svg-icon="content-save"></md-icon>
+    </md-button>
+   
+    <md-card>
+        <md-card-header>
+            <md-card-header-text>
+                <span class="md-title">Settings</span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <md-content layout-padding="">
+                <div>
+                    <form name="settingsForm">
+                        <div layout-gt-sm="column">
+                            <md-input-container class="md-block" flex-gt-sm="">
+                                <label>Server Domain</label>
+                                <md-icon md-svg-src="server" class="domain"></md-icon>
+                                <input ng-model="sc.server.domain" type="text">
+                            </md-input-container>
+                        </div>
+                    </form>
+                </div>
+            </md-content>
+        </md-card-content>
+    </md-card>
+</div>

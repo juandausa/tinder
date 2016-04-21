@@ -1,0 +1,1 @@
+ angular.module('interests', [ 'ngMaterial' ,'ui.router']);

@@ -1,0 +1,1 @@
+var myApp = angular.module('matchApp', ['shared','login','home','users','settings','user','interests','ngMaterial', 'ui.router','ngCookies']);

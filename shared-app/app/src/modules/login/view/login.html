@@ -1,0 +1,32 @@
+<div ng-controller="LoginController as lo" >
+    <md-content id="content" >
+        <md-toolbar layout="row" class="md-whiteframe-z1">
+            <h3>Match</h3>
+        </md-toolbar>
+        <div layout="row" layout-wrap layout-align="center center">
+            <div layout="column" layout-wrap>
+                <div flex="33"></div>
+                <div flex="33">
+                    <md-input-container class="md-icon-float md-block">
+                        <!-- Use floating label instead of placeholder -->
+                        <label>Name</label>
+                        <md-icon md-svg-src="account" class="name"></md-icon>
+                        <input ng-model="lo.data.userName" type="text">
+                    </md-input-container>
+                    <md-input-container class="md-icon-float md-block">
+                        <!-- Use floating label instead of placeholder -->
+                        <label>Password</label>
+                        <md-icon md-svg-src="key" class="name"></md-icon>
+                        <input ng-model="lo.data.password" type="password">
+                    </md-input-container>
+                </div>
+                <div flex="33">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <md-button class="md-raised" ng-click="lo.login()" >Login</md-button>
+                        <md-button class="md-raised md-primary" ng-click="lo.register()">Register</md-button>
+                    </md-input-container>
+                </div>
+            </div>
+        </div>
+    </md-content>
+</div>

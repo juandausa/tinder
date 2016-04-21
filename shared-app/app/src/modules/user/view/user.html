@@ -1,0 +1,98 @@
+<div ng-controller="UserController as uc" layout="column" ng-cloak="" class="md-inline-form userContent" 
+	flow-init
+	flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+	flow-files-submitted="$flow.upload()"
+	flow-name="uc.obj.flow">
+	<md-button class="md-fab md-fab-bottom-right cm-fab-fixed" aria-label="Add" ng-click="uc.save()">
+		<md-icon md-svg-icon="content-save"></md-icon>
+	</md-button>
+	<md-card>
+		<md-card-header>
+			<md-card-header-text>
+				<span class="md-title">{{uc.user.alias}}</span>
+			</md-card-header-text>
+		</md-card-header>
+		<md-card-title>
+
+			<md-card-title-media>
+				<div class="md-media-lg card-media">
+					<img ng-show="uc.photo_profile.showOriginalPhoto" ng-src="{{uc.getPhotoProfile()}}" class="md-media-lg card-media" alt="image caption">
+					<img ng-hide="uc.photo_profile.showOriginalPhoto" ng-src="{{uc.getPhotoProfile()}}" class="md-media-lg card-media" alt="image caption">
+				</div>
+				<div ng-show="uc.showPhotoOptions">
+					<md-button ng-hide="uc.photo_profile.changePhoto" aria-label="new" flow-btn flow-attrs="{accept:'image/*'}"   flow-file-added="uc.selectPhotoProfile( $file, $event, $flow )">
+						<md-icon md-svg-icon="camera"></md-icon>
+					</md-button>
+					<md-button ng-show="uc.photo_profile.changePhoto" aria-label="other" flow-btn flow-attrs="{accept:'image/*'}" >
+						<label>New</label>
+						<md-icon md-svg-icon="camera"></md-icon>
+					</md-button>
+					<md-button ng-show="uc.photo_profile.changePhoto" aria-label="save" ng-click="uc.savePhotoProfile()">
+						<label>Save</label>
+						<md-icon md-svg-icon="content-save"></md-icon>
+					</md-button>
+					<md-button ng-show="uc.photo_profile.changePhoto" aria-label="delete" ng-click="$flow.cancel();uc.cancelSelectPhotoProfile()">
+						<label>Remove</label>
+						<md-icon md-svg-icon="delete"></md-icon>
+					</md-button>
+				</div>
+			</md-card-title-media>
+		</md-card-title>
+		<md-card-content>
+			<md-content layout-padding="">
+				<div>
+					<form name="userForm">
+						<div layout-gt-sm="row">
+							<md-input-container class="md-block" flex-gt-sm="">
+								<label>Alias</label>
+								<md-icon md-svg-icon="emoticon-happy"></md-icon>
+								<input ng-model="uc.user.alias">
+							</md-input-container>
+							<md-input-container class="md-block" flex-gt-sm="">
+								<label>Name</label>
+								<md-icon md-svg-icon="account"></md-icon>
+								<input ng-model="uc.user.name">
+							</md-input-container>
+						</div>
+						<md-input-container class="md-block">
+							<label>Email</label>
+							<md-icon md-svg-icon="email"></md-icon>
+							<input ng-model="uc.user.email" type="email">
+						</md-input-container>
+						<!-- Map -->
+						<div layout-gt-sm="row">
+
+							<h2 class="md-title"><md-icon md-svg-icon="home"></md-icon></h2>								
+							<md-input-container class="md-block">	
+								<input places-auto-complete size=80
+								    ng-model="uc.address"							    
+								    types="{{uc.types}}"
+								    on-place-changed="uc.placeChanged()" /> 
+							</md-input-container>
+						</div>
+						<ng-map zoom="15" ng-click="uc.markerClick()">
+							<marker title="drag me" draggable="true" ></marker>  
+						</ng-map>
+						<!-- Interests -->
+						<div layout-gt-sm="row">
+							<h2 class="md-title">Interests</h2>
+						    <md-chips ng-model="uc.selectedInterests" md-autocomplete-snap="" md-require-match="true">
+						      <md-autocomplete md-selected-item="uc.selectedItem" md-search-text="uc.searchText" md-items="item in uc.querySearch(uc.searchText)" md-item-text="item.category" placeholder="Search for a interest">
+						        <span md-highlight-text="uc.searchText">{{item.category}} :: {{item.value}}</span>
+						      </md-autocomplete>
+						      <md-chip-template >
+						        <span>
+						          <strong>{{$chip.category}}</strong>
+						          <em>({{$chip.value}})</em>
+						        </span>
+						      </md-chip-template>
+						    </md-chips>
+						</div>
+
+					   
+					</form>
+				</div>
+			</md-content>
+		</md-card-content>
+	</md-card>
+</div>

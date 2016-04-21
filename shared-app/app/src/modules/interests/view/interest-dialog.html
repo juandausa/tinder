@@ -1,0 +1,41 @@
+  <script type="text/ng-template" id="dialog1.tmpl.html"><md-dialog aria-label="New Interest"  ng-cloak>
+    <form>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h2>New Interest</h2>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-click="cancel()">
+             <md-icon md-svg-icon="close"></md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+
+      <md-dialog-content>
+        <div class="md-dialog-content">
+          <h2>Enter a category and value</h2>
+              <md-input-container class="md-block" flex-gt-sm="">
+                <label>Category</label>
+                <md-icon md-svg-icon="folder"></md-icon>
+                <input ng-model="interest.category">
+              </md-input-container>
+              <md-input-container class="md-block" flex-gt-sm="">
+                <label>Value</label>
+                <md-icon md-svg-icon="thumb-up"></md-icon>
+                <input ng-model="interest.value">
+              </md-input-container>
+        </div>
+      </md-dialog-content>
+
+      <md-dialog-actions layout="row">
+        
+        <span flex></span>
+        <md-button ng-click="accept()">
+         Accept
+        </md-button>
+        <md-button ng-click="cancel()" style="margin-right:20px;">
+          Cancel
+        </md-button>
+      </md-dialog-actions>
+    </form>
+  </md-dialog>
+  </script>

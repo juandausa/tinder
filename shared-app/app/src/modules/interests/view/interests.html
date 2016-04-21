@@ -1,0 +1,16 @@
+<md-content ng-controller="InterestsController as ic" ng-cloak id="ic"  layout="column" class="gridListdemoDynamicTiles">
+  <md-button class="md-accent md-fab md-fab-bottom-right cm-fab-fixed md-whiteframe-21dp" aria-label="Add" ng-click="ic.newInterest($event)">
+      <md-icon md-svg-icon="plus"></md-icon>
+  </md-button>
+
+   <md-grid-list md-cols-gt-md="10" md-cols="3" md-cols-md="8" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
+    <md-grid-tile layout="column"  class="md-whiteframe-14dp" ng-repeat="interest in ic.data.interests" md-rowspan="{{interest.span.row}}" md-colspan="{{interest.span.col}}" md-colspan-sm="1" md-colspan-xs="1" ng-style="{'background': interest.background}">    
+      <md-grid-tile-header layout-align="center center" >
+        <p class="md-subhead">{{ interest.category | uppercase}}</p>
+      </md-grid-tile-header>
+        <h2 class="md-title">{{interest.value}}</h2>
+    </md-grid-tile>
+  </md-grid-list>
+
+  <ng-include src="'app/src/modules/interests/view/interest-dialog.html'"></ng-include>
+</md-content>

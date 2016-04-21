@@ -1,0 +1,16 @@
+<div id="panel-toolbar" ng-controller="ToolBarController as tb">
+	<md-toolbar class="md-accent">
+      <div class="md-toolbar-tools">
+        <h2>{{tb.data.title}}</h2>
+        <span flex></span>
+        <md-input-container md-no-float class="md-block">
+	      <md-icon md-svg-icon="magnify"></md-icon>
+	      <input ng-model="tb.data.input" type="text" placeholder="Input">
+	   	</md-input-container>
+	   	<md-button class="md-icon-button" aria-label="Search">
+        	<md-icon md-svg-icon="magnify"></md-icon>
+      	</md-button>
+      </div>
+    </md-toolbar>
+</div>
+

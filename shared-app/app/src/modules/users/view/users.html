@@ -1,0 +1,100 @@
+<md-content ng-controller="UsersController as usc" ng-cloak id="ic"  layout="column" class="usersGridView">
+	<md-button class="md-accent md-fab md-fab-bottom-right cm-fab-fixed md-whiteframe-21dp" aria-label="Add" ng-click="usc.newUser()">
+		<md-icon md-svg-icon="plus"></md-icon>
+	</md-button>
+	<md-grid-list md-cols-gt-md="8" md-cols="3" md-cols-md="8" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
+		<md-grid-tile class="gray md-whiteframe-14dp" ng-repeat="userData in usc.data.users" md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1" >
+			<md-grid-tile-header>
+				<md-menu>
+					<md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+						<md-icon md-menu-origin md-svg-icon="menu"></md-icon>
+					</md-button>
+					<md-menu-content>
+						<md-menu-item ng-repeat="item in usc.menuOptions">
+							<md-button ng-click="usc.menuClick(item.action,userData.user)">
+								<md-icon md-svg-icon="{{item.icon}}"></md-icon>
+								{{item.name}}
+							</md-button>
+						</md-menu-item>
+					</md-menu-content>
+				</md-menu>
+			</md-grid-tile-header>
+				<img ng-src="{{userData.user.photo_profile}}"  alt="image caption">
+			<md-grid-tile-footer>        
+				<h2>{{userData.user.alias}}</h2>
+			</md-grid-tile-footer>
+		</md-grid-tile>
+	</md-grid-list>
+</md-content>
+
+<!-- Listado con cards -->
+<!-- <md-content ng-controller="UsersController as usc" ng-cloak id="usc" layout-xs="column" layout="row">
+  
+  
+  <md-button class="md-accent md-fab md-fab-bottom-right cm-fab-fixed" aria-label="Add" ng-click="usc.newUser()">
+      <md-icon md-svg-icon="plus"></md-icon>
+  </md-button>
+  <div flex-xs="" flex-gt-xs="50" layout="column">
+    <md-card ng-repeat="userData in usc.data.users" ng-show="$index <= (usc.data.users.length/2)">
+      <md-menu>
+        <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+        <md-icon md-menu-origin md-svg-icon="menu"></md-icon>
+        </md-button>
+        <md-menu-content width="6">
+          <md-menu-item ng-repeat="item in usc.menuOptions">
+            <md-button ng-click="usc.menuClick(item.action,userData.user)">
+              <md-icon md-menu-align-target md-svg-icon="{{item.icon}}"></md-icon>
+              {{item.name}}
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{userData.user.alias}}</span>
+          <span class="md-subhead">Name: {{userData.user.name}}</span>
+          <span class="md-subhead">Sex: {{userData.user.sex}}</span>
+          <span class="md-subhead">Email: {{userData.user.email}}</span>
+        </md-card-title-text>
+        <md-card-title-media>
+          <div class="md-media-lg card-media">
+            <img ng-src="{{userData.user.photo_profile}}" class="md-media-lg card-media" alt="image caption">
+          </div>
+        </md-card-title-media>
+      </md-card-title>
+    </md-card>
+  </div>
+  <div flex-xs="" flex-gt-xs="50" layout="column">
+    <md-card ng-repeat="userData in usc.data.users" ng-show="$index > (usc.data.users.length/2)"> 
+      <md-menu>
+        <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+        <md-icon md-menu-origin md-svg-icon="menu"></md-icon>
+        </md-button>
+        <md-menu-content width="6">
+          <md-menu-item ng-repeat="item in usc.menuOptions">
+            <md-button ng-click="usc.menuClick(item.action,userData.user)">
+              <md-icon md-menu-align-target md-svg-icon="{{item.icon}}"></md-icon>
+              {{item.name}}
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{userData.user.alias}}</span>
+          <span class="md-subhead">Name: {{userData.user.name}}</span>
+          <span class="md-subhead">Sex: {{userData.user.sex}}</span>
+          <span class="md-subhead">Email: {{userData.user.email}}</span>
+        </md-card-title-text>
+        <md-card-title-media>
+          <div class="md-media-lg card-media">
+            <img ng-src="{{userData.user.photo_profile}}" class="md-media-lg card-media" alt="image caption">
+          </div>
+        </md-card-title-media>
+      </md-card-title>
+    </md-card>
+
+  </div>
+  
+</md-content>
+ -->

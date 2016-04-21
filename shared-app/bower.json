@@ -1,0 +1,19 @@
+{
+  "name": "angular-material",
+  "description": "Match App",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.5.x",
+    "angular-animate": "~1.5.x",
+    "angular-aria": "~1.5.x",
+    "angular-material": "~1.0.x",
+    "angular-mocks": "~1.5.x",
+    "angular-ui-router":"^0.2.14",
+    "angular-cookies":"^1.0.2",
+    "angular-messages": "^1.5.2",
+    "ng-flow": "^2.1.4",
+    "ngmap": "^1.16.7"
+  }
+}
