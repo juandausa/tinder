@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.daprlabs.cardstack.SwipeDeck;
 
@@ -38,29 +39,22 @@ public class PeopleListFragment extends Fragment {
     private SwipeDeckAdapter mAdapter;
     private SwipeDeck mCardStack;
     private ProgressDialog progress;
+    private static int SWIPE_DURATION = 4000;
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         CoordinatorLayout layout = (CoordinatorLayout) inflater.inflate(R.layout.swipe_deck, container, false);
-        //SwipeDeck cardStack = (SwipeDeck) layout.findViewById(R.id.swipe_deck);
-        //CardView cardView = (CardView) inflater.inflate(R.layout.card, container);
         setUpLikeButton(layout);
         setUpDislikeButton(layout);
         loading();
         getCandidates();
 
-
         mCardStack = (SwipeDeck) layout.findViewById(R.id.swipe_deck);
         //cardStack.setHardwareAccelerationEnabled(true);
-
-
-        cardList = new ArrayList<String>();
-        /*testData.add("0");
-        testData.add("1");
-        testData.add("2");
-        testData.add("3");
-        testData.add("4");*/
-
+        cardList = new ArrayList<>();
         mAdapter = new SwipeDeckAdapter(cardList, getActivity());
         mCardStack.setAdapter(mAdapter);
 
@@ -97,8 +91,8 @@ public class PeopleListFragment extends Fragment {
 
     private void loading() {
         progress = new ProgressDialog(getActivity());
-        progress.setTitle("Loading");
-        progress.setMessage("Wait while loading...");
+        progress.setTitle("Buscando");
+        progress.setMessage("Buscando gente cercana...");
         progress.show();
     }
 
@@ -128,8 +122,7 @@ public class PeopleListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                mCardStack.swipeTopCardRight(SWIPE_DURATION);
             }
         });
     }
@@ -146,8 +139,7 @@ public class PeopleListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                mCardStack.swipeTopCardLeft(SWIPE_DURATION);
             }
         });
     }
@@ -191,6 +183,9 @@ public class PeopleListFragment extends Fragment {
         progress.dismiss();
         unableToConnectDialog();
     }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     private void unableToConnectDialog() {
         new AlertDialog.Builder(getActivity())
