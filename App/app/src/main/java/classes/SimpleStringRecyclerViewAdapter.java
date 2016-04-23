@@ -85,7 +85,7 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<ViewHo
             public void onClick(View v) {
                 Context context = v.getContext();
                 Intent intent = new Intent(context, OtherUsersProfileActivity.class);
-                intent.putExtra(OtherUsersProfileActivity.EXTRA_NAME, holder.getBoundString());
+                intent.putExtra(OtherUsersProfileActivity.USER, holder.getBoundString());
 
                 context.startActivity(intent);
             }

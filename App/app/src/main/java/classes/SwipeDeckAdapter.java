@@ -3,6 +3,8 @@ package classes;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tinder_app.OtherUsersProfileActivity;
 import com.tinder_app.R;
+import com.tinder_app.UserProfileActivity;
+
 import java.util.List;
 
 /**
@@ -115,9 +120,11 @@ public class SwipeDeckAdapter extends BaseAdapter {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String item = ((CandidateData) getItem(position)).getAlias();
-                Toast.makeText(mContext, item, Toast.LENGTH_SHORT).show();
-                Log.i("MainActivity", item);
+                CandidateData item = ((CandidateData) getItem(position));
+                Toast.makeText(mContext, item.getAlias(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, OtherUsersProfileActivity.class);
+                intent.putExtra(OtherUsersProfileActivity.USER, item.toString());
+                mContext.startActivity(intent);
             }
         });
     }

@@ -16,6 +16,7 @@ public class OtherUsersProfileActivity extends UserProfileActivity {
         super.onCreate(savedInstance);
         findViewById(R.id.like_fab).setVisibility(View.VISIBLE);
         findViewById(R.id.dislike_fab).setVisibility(View.VISIBLE);
+        findViewById(R.id.edit_profile_fab).setVisibility(View.GONE);
         setUpLikeButton();
         setUpDislikeButton();
     }

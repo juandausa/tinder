@@ -18,6 +18,7 @@ public class MyUserProfileActivity extends UserProfileActivity {
         super.onCreate(savedInstance);
         findViewById(R.id.like_fab).setVisibility(View.GONE);
         findViewById(R.id.dislike_fab).setVisibility(View.GONE);
+        findViewById(R.id.edit_profile_fab).setVisibility(View.VISIBLE);
     }
 
     /**********************************************************************************************/

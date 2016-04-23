@@ -46,4 +46,6 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.github.akashandroid90.googlesupport:google-support-location:1.2'
     compile 'com.joooonho:selectableroundedimageview:1.0.1'
+    compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
+    compile 'com.github.ismaeltoe:flowlayout:1.0'
 }
