@@ -107,7 +107,6 @@ public class PeopleListFragment extends Fragment {
             json.put("user_id", userId);
             request.send(json);
         } catch (JSONException e) {}
-
     }
 
     /**********************************************************************************************/

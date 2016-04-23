@@ -84,7 +84,6 @@
                 android:layout_marginBottom="10dp"/>
 
 
-
             <com.ismaeltoe.FlowLayout
                 xmlns:f="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/interests_layout"

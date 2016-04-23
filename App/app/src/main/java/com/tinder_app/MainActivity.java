@@ -2,6 +2,7 @@ package com.tinder_app;
 
 import android.content.Intent;
 import android.graphics.Paint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -20,14 +21,19 @@ import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import classes.CandidateData;
 import classes.CustomViewPager;
+import classes.MyUserProfileData;
 import classes.SessionManager;
 import requests.GetCandidatesRequest;
+import requests.GetProfileRequest;
 
 /**
  * Main Activity of the App. Main screen, where the user will be the mayor part of the time.
@@ -38,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private JSONObject mCandidates;
-    private JSONObject mUserData;
+    private MyUserProfileData mUserData;
     public String userId;
 
     @Override
@@ -47,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         userId = getIntent().getStringExtra("user_id");
+        getProfile();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -123,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MyUserProfileActivity.class);
+                intent.putExtra("user", mUserData.toString());
                 startActivity(intent);
             }
         });
@@ -155,8 +163,26 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
+    private void getProfile() {
+        GetProfileRequest request = new GetProfileRequest(this);
+        try {
+            JSONObject json = new JSONObject();
+            String userId = SessionManager.getUserId(this);
+            json.put("user_id", userId);
+            request.send(json);
+        } catch (JSONException e) {}
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    public void setProfile(final JSONObject user) {
+        mUserData = new MyUserProfileData(user);
     }
 
     /**********************************************************************************************/
