@@ -3,6 +3,7 @@
 //
 
 #include <glog/logging.h>
+#include <signal.h>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -10,9 +11,12 @@
 #include "Server.h"
 #include "PlusController.h"
 #include "UserController.h"
+#include "FilterController.h"
 #include "Response.h"
 #include "DataBase.h"
 #include "Constant.h"
+#include "UserService.h"
+#include "FilterService.h"
 
 static struct mg_serve_http_opts s_http_server_opts;
 static int s_sig_num = 0;
@@ -48,6 +52,12 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 Response response(nc);
                 UserController user_controller(user_service);
                 user_controller.handle_registration(nc, hm, response);
+            } else if ((mg_vcmp(&hm->uri, "/filters") == 0) && mg_vcmp(&hm->method, "POST") == 0) {
+                DataBase db(Constant::database_path);
+                FilterService filter_service(db);
+                Response response(nc);
+                FilterController filter_controller(filter_service);
+                filter_controller.handle_update_filters(nc, hm, response);
             } else if (mg_vcmp(&hm->uri, "/printcontent") == 0) {
                 handle_print_content(hm);
             } else {
@@ -69,7 +79,6 @@ void Server :: start() {
     struct mg_mgr mgr;
     struct mg_connection *nc;
     unsigned int i;
-    unsigned int optionsLength = this->options.size();
     this->port = Constant :: server_port;
 #ifdef MG_ENABLE_SSL
     const char *ssl_cert = NULL;
@@ -78,30 +87,30 @@ void Server :: start() {
     mg_mgr_init(&mgr, NULL);
 
     /* Process command line options to customize HTTP server */
-    for (i = 1; i < optionsLength; i++) {
-        if (strcmp(this->options[i].c_str(), "-D") == 0 && i + 1 < optionsLength) {
+    for (i = 1; i < this->options.size(); i++) {
+        if (strcmp(this->options[i].c_str(), "-D") == 0 && i + 1 < this->options.size()) {
             mgr.hexdump_file = this->options[++i].c_str();
-        } else if (strcmp(this->options[i].c_str(), "-d") == 0 && i + 1 < optionsLength) {
+        } else if (strcmp(this->options[i].c_str(), "-d") == 0 && i + 1 < this->options.size()) {
             s_http_server_opts.document_root = this->options[++i].c_str();
-        } else if (strcmp(this->options[i].c_str(), "-a") == 0 && i + 1 < optionsLength) {
+        } else if (strcmp(this->options[i].c_str(), "-a") == 0 && i + 1 < this->options.size()) {
             s_http_server_opts.auth_domain = this->options[++i].c_str();
 #ifdef MG_ENABLE_JAVASCRIPT
-            } else if (strcmp(this->options[i].c_str(), "-j") == 0 && i + 1 < optionsLength) {
+            } else if (strcmp(this->options[i].c_str(), "-j") == 0 && i + 1 < this->options.size()) {
       const char *init_file = this->options[++i].c_str();
       mg_enable_javascript(&mgr, v7_create(), init_file);
 #endif
-        } else if (strcmp(this->options[i].c_str(), "-P") == 0 && i + 1 < optionsLength) {
+        } else if (strcmp(this->options[i].c_str(), "-P") == 0 && i + 1 < this->options.size()) {
             s_http_server_opts.global_auth_file = this->options[++i].c_str();
-        } else if (strcmp(this->options[i].c_str(), "-A") == 0 && i + 1 < optionsLength) {
+        } else if (strcmp(this->options[i].c_str(), "-A") == 0 && i + 1 < this->options.size()) {
             s_http_server_opts.per_directory_auth_file = this->options[++i].c_str();
-        } else if (strcmp(this->options[i].c_str(), "-r") == 0 && i + 1 < optionsLength) {
+        } else if (strcmp(this->options[i].c_str(), "-r") == 0 && i + 1 < this->options.size()) {
             s_http_server_opts.url_rewrites = this->options[++i].c_str();
 #ifndef MG_DISABLE_CGI
-        } else if (strcmp(this->options[i].c_str(), "-i") == 0 && i + 1 < optionsLength) {
+        } else if (strcmp(this->options[i].c_str(), "-i") == 0 && i + 1 < this->options.size()) {
             s_http_server_opts.cgi_interpreter = this->options[++i].c_str();
 #endif
 #ifdef MG_ENABLE_SSL
-        } else if (strcmp(this->options[i].c_str(), "-s") == 0 && i + 1 < optionsLength) {
+        } else if (strcmp(this->options[i].c_str(), "-s") == 0 && i + 1 < this->options.size()) {
             ssl_cert = this->options[++i].c_str();
 #endif
         } else {

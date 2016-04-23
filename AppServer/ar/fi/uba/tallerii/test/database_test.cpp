@@ -41,19 +41,19 @@ TEST(DataBaseWrapper, ReadStringWhichIsNotPresent) {
 }
 
 TEST(DataBaseWrapper, DeleteStringWithDataBaseCreationFailing) {
-    DataBase db("/noexiste/");
+    DataBase db("");
     std::string key = "ClaveUno";
     EXPECT_FALSE(db.remove(key));
 }
 
 TEST(DataBaseWrapper, WriteStringWithDataBaseCreationFailing) {
-    DataBase db("/noexiste/");
+    DataBase db("");
     std::string value = "ValorUno", key = "ClaveUno";
     EXPECT_FALSE(db.set(key, value));
 }
 
 TEST(DataBaseWrapper, ReadStringWithDataBaseCreationFailing) {
-    DataBase db("/noexiste/");
+    DataBase db("");
     std::string key = "ClaveUno", retrivedValue;
     EXPECT_FALSE(db.get(key, &retrivedValue));
 }
