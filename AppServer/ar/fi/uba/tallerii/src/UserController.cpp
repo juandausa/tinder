@@ -12,20 +12,24 @@
 UserController :: UserController(UserService user_service) : user_service(user_service) {
 }
 
+/* Private methods declarion */
+std::string make_body_for_login_response(const std::string user_id, const std::string token);
+/* End private methods */
+
 void UserController :: handle_login(struct mg_connection *nc, struct http_message *hm, Response response) {
     char user_id[255];
     mg_get_http_var(&hm->query_string, "userId", user_id, sizeof(user_id));
-    LOG(INFO) << "Proccesing login for user: " << user_id << ".";
+    LOG(INFO) << "Proccesing login for user: " << user_id;
     if (this->user_service.is_user_registered(user_id)) {
         response.SetCode(200);
-        response.SetBody(this->make_body(user_id));
+        std::string token = user_service.get_securiry_token(user_id);
+        response.SetBody(make_body_for_login_response(user_id, token));
         response.Send();
-        LOG(INFO) << "Login succeeded for user: " << user_id << ".";
+        LOG(INFO) << "Login succeeded for user: " << user_id;
     } else {
         response.SetCode(304);
-        response.SetBody(this->make_body(user_id));
         response.Send();
-        LOG(INFO) << "Login failed for user: " << user_id << ".";
+        LOG(INFO) << "Login failed for user: " << user_id;
     }
 }
 
@@ -59,8 +63,9 @@ void UserController :: handle_registration(struct mg_connection *nc, struct http
     }
 }
 
-std::string UserController :: make_body(std::string user_id) {
+std::string make_body_for_login_response(const std::string user_id, const std::string token) {
     std::string body("{ \"user\": { \"userId\" : \"");
-    body.append(user_id).append("\" } }");
+    body.append(user_id).append("\" , \"token\" : \"");
+    body.append(token).append("\" } }");
     return body;
 }
