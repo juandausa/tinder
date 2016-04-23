@@ -15,8 +15,8 @@ public:
     bool register_user(const std::string user_id, const std::string name,
                        const std::string birthday, const std::string alias,
                        const std::string email, const std::string photo_profile);
-    std::string get_securiry_token(std::string username);
-    bool is_token_valid(std::string username, std::string token);
+    std::string get_securiry_token(const std::string username);
+    bool is_token_valid(const std::string username, const std::string token);
 private:
     DataBase* database;
 };

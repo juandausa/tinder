@@ -12,6 +12,7 @@ class Constant {
 public:
     static std::string server_port;
     static std::string database_path;
+    static std::string security_token_prefix;
 private:
     Constant();
 };
