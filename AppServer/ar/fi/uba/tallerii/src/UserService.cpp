@@ -4,6 +4,7 @@
 
 #include <string>
 #include <RandomTextGenerator.h>
+#include <glog/logging.h>
 #include "UserService.h"
 #include "DataBase.h"
 #include "MD5.h"
@@ -13,10 +14,13 @@ UserService :: UserService(DataBase & db) : database(&db) {
 }
 
 bool UserService :: is_user_registered(const std::string user_id) {
+    LOG(INFO) << "Checking whether the user " << user_id << " is registered";
     std::string value;
     if (this->database->is_open()) {
         return this->database->get(user_id, &value);
     }
+
+    LOG(WARNING) << "The database is closed.";
     return false;
 }
 
@@ -27,14 +31,29 @@ bool UserService :: register_user(const std::string user_id, const std::string n
     return true;
 }
 
-std::string UserService :: get_securiry_token(std::string username) {
+std::string UserService :: get_securiry_token(std::string user_id) {
+    LOG(INFO) << "Generating security token for user: " << user_id;
     RandomTextGenerator rnd;
     std::string random_string = rnd.generate();
-    return md5(username.append(random_string));
+    std::string token = md5(user_id + random_string);
+    if (this->database->is_open()) {
+        this->database->set(user_id.append("-token"), token);
+    } else {
+        LOG(WARNING) << "The database is closed.";
+    }
+
+    return token;
 }
 
-bool UserService ::is_token_valid(std::string username, std::string token) {
-    return true;
+bool UserService ::is_token_valid(std::string user_id, std::string token) {
+    std::string retrieved_token;
+    if (this->database->is_open()) {
+        this->database->get(user_id.append("-token"), &retrieved_token);
+    } else {
+        LOG(WARNING) << "The database is closed.";
+    }
+
+    return token.compare(retrieved_token) == 0;
 }
 
 UserService ::~UserService() {
