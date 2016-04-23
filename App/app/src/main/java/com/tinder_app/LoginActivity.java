@@ -84,14 +84,6 @@ public class LoginActivity extends AppLocationActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    /*@Override
-    protected void onStart() {
-        super.onStart();
-        if (isLoggedIn()) {
-            launchMainActivity();
-            return;
-        }
-    }*/
 
     private void launchIfLoggedIn() {
         if (isLoggedIn()) {
