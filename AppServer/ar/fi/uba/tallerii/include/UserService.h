@@ -21,5 +21,4 @@ private:
     DataBase* database;
 };
 
-
 #endif //TINDER_USERSERVICE_H

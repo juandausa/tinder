@@ -48,6 +48,10 @@ std::string UserService::get_securiry_token(const std::string user_id) {
 
 bool UserService::is_token_valid(const std::string user_id, const std::string token) {
     LOG(INFO) << "Checking whether the security token " << token << " for user " << user_id << " is valid";
+    if (user_id.compare("") == 0 || token.compare("") == 0) {
+        return false;
+    }
+
     std::string retrieved_token;
     if (this->database->is_open()) {
         this->database->get(Constant::security_token_prefix + user_id, &retrieved_token);
