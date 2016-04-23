@@ -117,7 +117,7 @@ public class PeopleListFragment extends Fragment {
         if (fab == null) {
             return;
         }
-        fab.setBackgroundTintList(getResources().getColorStateList(R.color.light_green));
+        fab.setBackgroundTintList(getResources().getColorStateList(android.R.color.white));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,7 +134,7 @@ public class PeopleListFragment extends Fragment {
         if (fab == null) {
             return;
         }
-        fab.setBackgroundTintList(getResources().getColorStateList(android.R.color.holo_red_light));
+        fab.setBackgroundTintList(getResources().getColorStateList(android.R.color.white));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

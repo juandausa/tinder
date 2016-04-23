@@ -3,22 +3,16 @@ package com.tinder_app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.flyco.roundview.RoundTextView;
 import com.ismaeltoe.FlowLayout;
 
@@ -26,19 +20,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
-import classes.CandidateData;
+import classes.UserData;
 
 /**
  * Activity that shows the profile information of a determined user.
  */
-public class UserProfileActivity extends AppCompatActivity {
+public abstract class UserProfileActivity extends AppCompatActivity {
 
     /**
      * Hardcoded string for getting the name of the user.
      */
     public static final String USER = "user";
+    protected UserData mUserData;
+    protected TextView mTitleView;
+    protected ImageView mImageView;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -48,7 +43,7 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        final CandidateData candidateData = getDataFromIntent();
+        mUserData = getDataFromIntent();
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,25 +54,25 @@ public class UserProfileActivity extends AppCompatActivity {
         }
 
         loadTitle();
-        loadBackdropImage(candidateData);
-        loadUserData(candidateData);
-        loadUserInterests(candidateData);
+        loadBackdropImage(mUserData);
+        loadUserData(mUserData);
+        loadUserInterests(mUserData);
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    private void loadBackdropImage(CandidateData data) {
-        final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-        if ((imageView != null) && (data != null)) {
-            imageView.setImageBitmap(data.getPhoto());
+    protected void loadBackdropImage(UserData data) {
+        mImageView = (ImageView) findViewById(R.id.backdrop);
+        if ((mImageView != null) && (data != null)) {
+            mImageView.setImageBitmap(data.getPhoto());
         }
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    private void loadTitle() {
+    protected void loadTitle() {
         CollapsingToolbarLayout collapsingToolbar
                 = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         if ((collapsingToolbar != null) /*&& (candidateData != null)*/){
@@ -89,18 +84,22 @@ public class UserProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    private void loadUserData(CandidateData candidateData) {
-        TextView titleView = (TextView) findViewById(R.id.user_title);
-        titleView.setText(candidateData.getAlias() + ", " + candidateData.getAge());
+    protected void loadUserData(UserData userData) {
+        mTitleView = (TextView) findViewById(R.id.user_title);
+        if ((userData != null) && (mTitleView != null)) {
+            String aliasAndAge = userData.getAlias() + ", " + userData.getAge();
+            mTitleView.setText(aliasAndAge);
+        }
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    private void loadUserInterests(CandidateData candidateData) {
+    protected void loadUserInterests(UserData userData) {
         FlowLayout interestsView = (FlowLayout) findViewById(R.id.interests_layout);
+        if (interestsView == null) return;
         LayoutInflater inflater = LayoutInflater.from(this);
-        JSONArray interests = candidateData.getInterests();
+        JSONArray interests = userData.getInterests();
         int size = interests.length();
 
         try {
@@ -116,7 +115,9 @@ public class UserProfileActivity extends AppCompatActivity {
                 params1.setMargins(0, 0, 5, 5);
                 interestsView.addView(view, params1);
             }
-        } catch (JSONException e) {}
+        } catch (JSONException e) {
+            Log.e(getString(R.string.JSON_ERROR)+"USER", e.toString());
+        }
     }
 
     /**********************************************************************************************/
@@ -131,14 +132,19 @@ public class UserProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    protected CandidateData getDataFromIntent() {
+    protected UserData getDataFromIntent() {
         Intent intent = getIntent();
         String data = intent.getStringExtra(USER);
         try {
-            return new CandidateData(new JSONObject(data));
+            return buildUserData(new JSONObject(data));
         } catch (JSONException e) {
             Log.e(getString(R.string.JSON_ERROR), e.toString());
             return null;
         }
     }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    protected abstract UserData buildUserData(JSONObject data);
 }

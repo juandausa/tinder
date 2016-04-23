@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary"> #E61010 #D32F2F</item>
+        <item name="colorPrimaryDark">#263238</item>
+        <item name="colorAccent">#F5C4C4</item>
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:buttonStyle">@style/ButtonText</item>
+    </style>
+ -->
 
 <resources>
 
     <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo"></style>
 
     <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#E61010</item>
-        <item name="colorPrimaryDark">#263238</item>
-        <item name="colorAccent">#F5C4C4</item>
+        <item name="colorPrimary">#F44336</item>
+        <item name="colorPrimaryDark">#D32F2F</item>
+        <item name="colorAccent">#536DFE</item>
         <item name="android:windowBackground">@color/window_background</item>
         <item name="android:buttonStyle">@style/ButtonText</item>
     </style>

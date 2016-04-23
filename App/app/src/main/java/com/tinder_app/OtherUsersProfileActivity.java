@@ -6,6 +6,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import org.json.JSONObject;
+
+import classes.CandidateData;
+import classes.MyUserProfileData;
+import classes.UserData;
+
 /**
  * Created by fabrizio on 28/03/16.
  */
@@ -55,5 +61,13 @@ public class OtherUsersProfileActivity extends UserProfileActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    @Override
+    protected UserData buildUserData(JSONObject data) {
+        return new CandidateData(data);
     }
 }

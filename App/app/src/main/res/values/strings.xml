@@ -40,6 +40,7 @@
 
     <!-- UserProfile strings -->
     <string name="edit_profile">Editar perfil</string>
+    <string name="done">Listo</string>
 
     <!-- Discovering settings strings -->
     <string name="distance_title">Distancia de búsqueda</string>
@@ -56,5 +57,6 @@
     <string name="REQUEST_ERROR">REQUEST</string>
     <string name="JSON_ERROR">JSON</string>
     <string name="PARSE_REQ_BODY">PARSE_REQ_BODY</string>
+    <string name="title_activity_edit_profile">Editar Perfil</string>
 
 </resources>

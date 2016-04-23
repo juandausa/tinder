@@ -39,6 +39,12 @@ public final class Constants {
     public static final String FILTERS_PATH = "/filters/";
 
 
+    /**
+     * Route for constructing the url path for the request that... TODO.
+     */
+    public static final String USER_UPDATE_DATA_PATH = "/user/update/";
+
+
     /**********************************************************************************************/
     /**********************************************************************************************/
 

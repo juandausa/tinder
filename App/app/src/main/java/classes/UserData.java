@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+
 /**
  * Created by fabrizio on 22/04/16.
  */
@@ -36,7 +38,12 @@ public class UserData {
             mPhoto = user.getString("photo_profile");
             mInterests = user.getJSONArray("interests");
             mAge = Integer.toString(user.getInt("age"));
-        } catch (JSONException e) { }
+        } catch (JSONException e) {
+            try {
+                mInterests = new JSONArray(user.getString("interests"));
+                mAge = user.getString("age");
+            } catch (JSONException ex) {}
+        }
     }
 
     /**********************************************************************************************/
@@ -101,5 +108,12 @@ public class UserData {
     @Override
     public String toString() {
         return json.toString();
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    public JSONObject toJSON() {
+        return json;
     }
 }
