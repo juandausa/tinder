@@ -51,7 +51,9 @@ TEST(UserService, GenerateTokenTwoTokensFromOneUsernameShoulReturnDifferentToken
     if (db.is_open()) {
         UserService user_service(db);
         std::string token = user_service.get_securiry_token("UserJoaneDoe");
-        EXPECT_NE(token, user_service.get_securiry_token("UserJoaneDoe"));
+        for (unsigned int i = 0; i < 100; i++) {
+            EXPECT_NE(token, user_service.get_securiry_token("UserJoaneDoe"));
+        }
         EXPECT_NE(user_service.get_securiry_token("UserJoaneDoe"), user_service.get_securiry_token("UserJoaneDoe"));
     } else {
         EXPECT_EQ(1, 0);

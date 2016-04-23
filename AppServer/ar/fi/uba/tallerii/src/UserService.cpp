@@ -35,7 +35,7 @@ bool UserService :: register_user(const std::string user_id, const std::string n
 std::string UserService :: get_securiry_token(const std::string user_id) {
     LOG(INFO) << "Generating security token for user: " << user_id;
     RandomTextGenerator rnd;
-    std::string random_string = rnd.generate();
+    std::string random_string = rnd.generate(Constant :: random_characters_quantity);
     std::string token = md5(user_id + random_string);
     if (this->database->is_open()) {
         this->database->set(Constant :: security_token_prefix + user_id, token);
