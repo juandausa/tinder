@@ -15,3 +15,10 @@ TEST(MD5, GetSameHashFromString) {
     second_hash = md5("this is a test");
     EXPECT_EQ(first_hash, second_hash);
 }
+
+TEST(MD5, GetDifferentHashesFromDifferentsString) {
+    std::string first_hash, second_hash;
+    first_hash = md5("this is a test");
+    second_hash = md5("this is not a test");
+    EXPECT_NE(first_hash, second_hash);
+}
