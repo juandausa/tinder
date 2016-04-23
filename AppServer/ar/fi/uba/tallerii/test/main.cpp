@@ -13,5 +13,7 @@ int main(int argc, char **argv) {
     google::SetLogDestination(google::GLOG_FATAL, "");
     google::SetLogDestination(google::GLOG_WARNING, "");
     google::InitGoogleLogging(argv[0]);
-    return RUN_ALL_TESTS();
+    int result = RUN_ALL_TESTS();
+    google::ShutdownGoogleLogging();
+    return result;
 }
