@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!--
+    rv:layout_height="wrap_content"
+    rv:layout_width="wrap_content"
+
+    xmlns:rv="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rtv_1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:text="TextView Default"
+    android:textColor="#383838"-->
+
+<com.flyco.roundview.RoundTextView
+    xmlns:rv="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:padding="5dp"
+    android:textColor="#E61010"
+    rv:rv_backgroundColor="#ffffff"
+    rv:rv_backgroundPressColor="#383838"
+    rv:rv_strokeColor="#E61010"
+    rv:rv_strokeWidth="1dp"
+    rv:rv_cornerRadius="5dp"
+    rv:paddingStart="5dp"
+    rv:paddingEnd="5dp"
+    rv:rv_textPressColor="#E61010" />
