@@ -11,10 +11,10 @@
 #include "RandomTextGenerator.h"
 #include "Constant.h"
 
-UserService :: UserService(DataBase & db) : database(&db) {
+UserService::UserService(DataBase &db) : database(&db) {
 }
 
-bool UserService :: is_user_registered(const std::string user_id) {
+bool UserService::is_user_registered(const std::string user_id) {
     LOG(INFO) << "Checking whether the user " << user_id << " is registered";
     std::string value;
     if (this->database->is_open()) {
@@ -25,20 +25,20 @@ bool UserService :: is_user_registered(const std::string user_id) {
     return false;
 }
 
-bool UserService :: register_user(const std::string user_id, const std::string name,
-                                  const std::string birthday, const std::string alias,
-                                  const std::string email, const std::string photo_profile) {
+bool UserService::register_user(const std::string user_id, const std::string name,
+                                const std::string birthday, const std::string alias,
+                                const std::string email, const std::string photo_profile) {
     // TODO(jasmina): enviar request con curl a SharedServer
     return true;
 }
 
-std::string UserService :: get_securiry_token(const std::string user_id) {
+std::string UserService::get_securiry_token(const std::string user_id) {
     LOG(INFO) << "Generating security token for user: " << user_id;
     RandomTextGenerator rnd;
-    std::string random_string = rnd.generate(Constant :: random_characters_quantity);
+    std::string random_string = rnd.generate(Constant::random_characters_quantity);
     std::string token = md5(user_id + random_string);
     if (this->database->is_open()) {
-        this->database->set(Constant :: security_token_prefix + user_id, token);
+        this->database->set(Constant::security_token_prefix + user_id, token);
     } else {
         LOG(WARNING) << "The database is closed.";
     }
@@ -46,10 +46,11 @@ std::string UserService :: get_securiry_token(const std::string user_id) {
     return token;
 }
 
-bool UserService ::is_token_valid(const std::string user_id, const std::string token) {
+bool UserService::is_token_valid(const std::string user_id, const std::string token) {
+    LOG(INFO) << "Checking whether the security token " << token << " for user " << user_id << " is valid";
     std::string retrieved_token;
     if (this->database->is_open()) {
-        this->database->get(Constant :: security_token_prefix + user_id, &retrieved_token);
+        this->database->get(Constant::security_token_prefix + user_id, &retrieved_token);
     } else {
         LOG(WARNING) << "The database is closed.";
     }
@@ -57,5 +58,5 @@ bool UserService ::is_token_valid(const std::string user_id, const std::string t
     return token.compare(retrieved_token) == 0;
 }
 
-UserService ::~UserService() {
+UserService::~UserService() {
 }
