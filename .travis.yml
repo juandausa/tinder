@@ -49,7 +49,7 @@ before_install:
     - sudo ldconfig -v
     - cd ..
     - ls
-    - cd AppServer/curl-7.48.0
+    - cd ../AppServer/curl-7.48.0
     - ./configure
     - make
     - sudo make install
