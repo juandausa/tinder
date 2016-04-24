@@ -32,3 +32,8 @@ make static_lib
 sudo make install
 sudo ldconfig -v
 cd ..
+cd curl-7.48.0
+./configure
+make
+sudo make install
+cd ..
