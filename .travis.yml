@@ -48,10 +48,11 @@ before_install:
     - sudo make install
     - sudo ldconfig -v
     - cd ..
-    - cd curl-7.48.0
+    - cd AppServer/curl-7.48.0
     - ./configure
     - make
     - sudo make install
+    - cd ..
     - cd ..
     - cd ..
     - sudo rm -r dependencies
