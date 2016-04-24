@@ -17,6 +17,7 @@
 #include "Constant.h"
 #include "UserService.h"
 #include "FilterService.h"
+#include "SecurityManager.h"
 
 static struct mg_serve_http_opts s_http_server_opts;
 static int s_sig_num = 0;
@@ -37,33 +38,32 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     struct http_message *hm = (struct http_message *) ev_data;
     switch (ev) {
         case MG_EV_HTTP_REQUEST:
+        {
+            DataBase db(Constant::database_path);
+            UserService user_service(db);
+            SecurityManager security(user_service);
+            Response response(nc);
+            security.filter_request(nc, hm, response);
             if (mg_vcmp(&hm->uri, "/api/v1/sum") == 0) {
                 PlusController plus_controller;
                 plus_controller.handle_sum_call(nc, hm);
             } else if ((mg_vcmp(&hm->uri, "/login") == 0) && mg_vcmp(&hm->method, "GET") == 0) {
-                DataBase db(Constant::database_path);
-                UserService user_service(db);
-                Response response(nc);
                 UserController user_controller(user_service);
                 user_controller.handle_login(nc, hm, response);
             } else if ((mg_vcmp(&hm->uri, "/register") == 0) && mg_vcmp(&hm->method, "POST") == 0) {
-                DataBase db(Constant::database_path);
-                UserService user_service(db);
-                Response response(nc);
                 UserController user_controller(user_service);
                 user_controller.handle_registration(nc, hm, response);
             } else if ((mg_vcmp(&hm->uri, "/filters") == 0) && mg_vcmp(&hm->method, "POST") == 0) {
-                DataBase db(Constant::database_path);
                 FilterService filter_service(db);
-                Response response(nc);
                 FilterController filter_controller(filter_service);
                 filter_controller.handle_update_filters(nc, hm, response);
             } else if (mg_vcmp(&hm->uri, "/printcontent") == 0) {
                 handle_print_content(hm);
             } else {
-                mg_serve_http(nc, hm, s_http_server_opts);  /* Serve static content */
+                mg_serve_http(nc, hm, s_http_server_opts);  // Serve static content
             }
             break;
+        }
         default:
             break;
     }

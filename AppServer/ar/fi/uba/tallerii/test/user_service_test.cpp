@@ -81,3 +81,25 @@ TEST(UserService, GenerateTokenAndValidateWithInvalidToken) {
         EXPECT_EQ(1, 0);
     }
 }
+
+TEST(UserService, ValidateNullToken) {
+    DataBase db("/tmp/testuserservicedb6");
+    if (db.is_open()) {
+        UserService user_service(db);
+        std::string token = user_service.get_securiry_token("UserJoaneDoe");
+        EXPECT_FALSE(user_service.is_token_valid("UserJoaneDoe", ""));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, ValidateNullUser) {
+    DataBase db("/tmp/testuserservicedb6");
+    if (db.is_open()) {
+        UserService user_service(db);
+        std::string token = user_service.get_securiry_token("UserJoaneDoe");
+        EXPECT_FALSE(user_service.is_token_valid("", token));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}

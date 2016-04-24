@@ -19,17 +19,17 @@ std::string make_body_for_login_response(const std::string user_id, const std::s
 void UserController :: handle_login(struct mg_connection *nc, struct http_message *hm, Response response) {
     char user_id[255];
     mg_get_http_var(&hm->query_string, "userId", user_id, sizeof(user_id));
-    LOG(INFO) << "Proccesing login for user: " << user_id;
+    LOG(INFO) << "Proccesing login for user: '" << user_id << "'";
     if (this->user_service.is_user_registered(user_id)) {
         response.SetCode(200);
         std::string token = user_service.get_securiry_token(user_id);
         response.SetBody(make_body_for_login_response(user_id, token));
         response.Send();
-        LOG(INFO) << "Login succeeded for user: " << user_id;
+        LOG(INFO) << "Login succeeded for user: '" << user_id << "'";
     } else {
         response.SetCode(304);
         response.Send();
-        LOG(INFO) << "Login failed for user: " << user_id;
+        LOG(INFO) << "Login failed for user: '" << user_id << "'";
     }
 }
 
