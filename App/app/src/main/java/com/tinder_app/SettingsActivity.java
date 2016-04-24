@@ -1,10 +1,6 @@
 package com.tinder_app;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.DragEvent;
@@ -20,6 +16,12 @@ import com.edmodo.rangebar.RangeBar;
  */
 public class SettingsActivity extends AppCompatActivity {
 
+    private static final int MAX_DISTANCE = 100;
+
+    /**
+     * Set up the look and behavior of the activity
+     * @param savedInstanceState saved state of the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,30 +35,44 @@ public class SettingsActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets up the discover distance bar, a seek bar with max range 100.
+     */
     private void discoverDistanceBarSetUp() {
         SeekBar seekBar = (SeekBar) findViewById(R.id.distance);
-        seekBar.setMax(100);
+        if (seekBar == null) return;
+        seekBar.setMax(MAX_DISTANCE);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 TextView rangeDistance = (TextView) findViewById(R.id.distance_label);
-                rangeDistance.setText(Integer.toString(progress) + " km");
+                String selectedDistance = Integer.toString(progress) + " km";
+                if (rangeDistance == null) return;
+                rangeDistance.setText(selectedDistance);
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                //TODO
+            }
+
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //TODO
+            }
         });
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets up the view that allows the user to select the age range
+     * For docs of RangeBar go to https://github.com/edmodo/range-bar/wiki
+     */
     private void ageBarSetUp() {
-        // https://github.com/edmodo/range-bar/wiki
-        // Documentation of RangeBar
         RangeBar rangebar = (RangeBar) findViewById(R.id.age_rangebar);
+        if (rangebar == null) return;
         rangebar.setTickCount(100);
         rangebar.setTickHeight(25);
         rangebar.setBarWeight(6);
@@ -68,6 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
                 TextView distance = (TextView) findViewById(R.id.age_label);
                 String ageRangeLabel = Integer.toString(leftThumbIndex) + " - "
                         + Integer.toString(rightThumbIndex);
+                if (distance == null) return;
                 distance.setText(ageRangeLabel);
             }
         });
@@ -76,6 +93,9 @@ public class SettingsActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets up the switch that indicates that the user is interested in men
+     */
     private void menSwitchSetUp() {
         Switch men = (Switch) findViewById(R.id.men);
         Switch women = (Switch) findViewById(R.id.women);
@@ -88,6 +108,9 @@ public class SettingsActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets up the switch that indicates that the user is interested in women
+     */
     private void womenSwitchSetUp() {
 
     }
@@ -95,14 +118,18 @@ public class SettingsActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets up the switches that indicates in wich gender is the user interested
+     */
     private void genderSwitchesSetUp(final GenderObject gender, final GenderObject oppositeGender) {
-
+        if (gender == null) return;
         gender.getSwitch().setTextOn("");
         gender.getSwitch().setTextOff("");
         gender.getSwitch().setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
                 TextView genderLabel = (TextView) findViewById(R.id.gender_label);
+                if (genderLabel == null) return false;
                 if (gender.getSwitch().isChecked()) {
                     if (oppositeGender.getSwitch().isChecked()) {
                         genderLabel.setText("Hombres y mujeres");
@@ -125,22 +152,25 @@ public class SettingsActivity extends AppCompatActivity {
     /*********************                  AUXILIAR CLASS              ***************************/
     /**********************************************************************************************/
 
+    /**
+     * Class that models a gender with its corresponding switch
+     */
     private class GenderObject {
 
-        private String genderLabel;
-        private Switch genderSwitch;
+        private String mGenderLabel;
+        private Switch mGenderSwitch;
 
         public GenderObject(String genderLabel, Switch genderSwitch) {
-            this.genderLabel = genderLabel;
-            this.genderSwitch = genderSwitch;
+            this.mGenderLabel = genderLabel;
+            this.mGenderSwitch = genderSwitch;
         }
 
         public String getLabel() {
-            return this.genderLabel;
+            return this.mGenderLabel;
         }
 
         public Switch getSwitch() {
-            return this.genderSwitch;
+            return this.mGenderSwitch;
         }
     }
 

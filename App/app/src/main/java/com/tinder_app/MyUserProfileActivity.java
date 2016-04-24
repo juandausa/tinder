@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,16 +20,22 @@ import classes.MyUserProfileData;
 import classes.UserData;
 
 /**
- * Created by fabrizio on 28/03/16.
+ * Activity that shows the data of the user
  */
 public class MyUserProfileActivity extends UserProfileActivity {
 
+    /**
+     * Sets up the activity data and look
+     * @param savedInstance the saved state of the activity
+     */
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-        findViewById(R.id.like_fab).setVisibility(View.GONE);
-        findViewById(R.id.dislike_fab).setVisibility(View.GONE);
+        setButtonInvisible(R.id.like_fab);
+        setButtonInvisible(R.id.dislike_fab);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.edit_profile_fab);
+        if (fab == null) return;
         fab.setVisibility(View.VISIBLE);
         fab.setBackgroundTintList(getResources().getColorStateList(R.color.com_facebook_blue));
         fab.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +49,25 @@ public class MyUserProfileActivity extends UserProfileActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Set visibility of the button with id "resourceId" invisible
+     * @param resourceId the id of the button
+     */
+    private void setButtonInvisible(int resourceId) {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(resourceId);
+        if (fab != null) {
+            fab.setVisibility(View.GONE);
+        }
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Inflates the menu that contains the options available for this activity
+     * @param menu the menu for this activity
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_profile_actions, menu);
@@ -62,7 +84,6 @@ public class MyUserProfileActivity extends UserProfileActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = null;
         switch (item.getItemId()) {
             case R.id.edit_profile:
                 launchEditProfileActivity();
@@ -76,15 +97,24 @@ public class MyUserProfileActivity extends UserProfileActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Launch the EditProfileActivity for editing the profile data
+     */
     private void launchEditProfileActivity() {
         Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
-        intent.putExtra("user", mUserData.toString());
+        intent.putExtra(USER, mUserData.toString());
         startActivityForResult(intent, 1);
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * On result from the EditProfileActivity updates the user data.
+     * @param requestCode the request code sent in the startActivityForResult
+     * @param resultCode the result code sent by the finished activity
+     * @param data the data result of the finished activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
@@ -97,20 +127,35 @@ public class MyUserProfileActivity extends UserProfileActivity {
                 loadUserData(mUserData);
                 mTitleView.invalidate();
                 mImageView.invalidate();
-            } catch (JSONException e) {}
+            } catch (JSONException e) {
+                Log.e(getString(R.string.JSON_ERROR), e.toString());
+            }
         }
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Reads and returns image stored in the path indicated by the filePath
+     * @param filePath the path of the stored image
+     * @return a Bitmap with the image wanted
+     */
     private Bitmap getImage(String filePath) {
         //File sd = Environment.getExternalStorageDirectory();
         File image = new File(filePath);
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        return BitmapFactory.decodeFile(image.getAbsolutePath(),bmOptions);
+        return BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Returns the user data
+     * @param data the data of the user in a JSONObject
+     * @return the user data in an instance of MyUserProfileData
+     */
     @Override
     protected UserData buildUserData(JSONObject data) {
         return new MyUserProfileData(data);

@@ -33,12 +33,12 @@ import requests.GetCandidatesRequest;
  */
 public class PeopleListFragment extends Fragment {
 
+    private static final int SWIPE_DURATION = 4000;
     private JSONArray mCandidates;
-    private List<CandidateData> cardList;
+    private List<CandidateData> mCardList;
     private SwipeDeckAdapter mAdapter;
     private SwipeDeck mCardStack;
-    private ProgressDialog progress;
-    private static int SWIPE_DURATION = 4000;
+    private ProgressDialog mProgress;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -60,8 +60,8 @@ public class PeopleListFragment extends Fragment {
 
         mCardStack = (SwipeDeck) layout.findViewById(R.id.swipe_deck);
         //cardStack.setHardwareAccelerationEnabled(true);
-        cardList = new ArrayList<>();
-        mAdapter = new SwipeDeckAdapter(cardList, getActivity());
+        mCardList = new ArrayList<>();
+        mAdapter = new SwipeDeckAdapter(mCardList, getActivity());
         mCardStack.setAdapter(mAdapter);
 
         mCardStack.setEventCallback(new SwipeDeck.SwipeEventCallback() {
@@ -91,7 +91,6 @@ public class PeopleListFragment extends Fragment {
         return layout;
     }
 
-
     /**********************************************************************************************/
     /**********************************************************************************************/
 
@@ -99,10 +98,10 @@ public class PeopleListFragment extends Fragment {
      * Generates a progress dialog while the candidates cards are loading
      */
     private void loading() {
-        progress = new ProgressDialog(getActivity());
-        progress.setTitle(R.string.searching);
-        progress.setMessage(getString(R.string.searching_for_close_people));
-        progress.show();
+        mProgress = new ProgressDialog(getActivity());
+        mProgress.setTitle(R.string.searching);
+        mProgress.setMessage(getString(R.string.searching_for_close_people));
+        mProgress.show();
     }
 
     /**********************************************************************************************/
@@ -112,7 +111,7 @@ public class PeopleListFragment extends Fragment {
      * Sends a request asking for candidates of match for the user
      */
     private void getCandidates() {
-        GetCandidatesRequest request = new GetCandidatesRequest(getActivity(),this);
+        GetCandidatesRequest request = new GetCandidatesRequest(getActivity(), this);
         try {
             JSONObject json = new JSONObject();
             String userId = SessionManager.getUserId(getActivity());
@@ -177,14 +176,14 @@ public class PeopleListFragment extends Fragment {
         mCandidates = candidates;
 
         AsyncTask loadCards = new AsyncTask() {
-            List<CandidateData> cards = new ArrayList<>();
+            private List<CandidateData> mCards = new ArrayList<>();
 
             @Override
             protected Object doInBackground(Object[] params) {
                 int length = candidates.length();
-                for(int i = 0; i < length; i++) {
+                for (int i = 0; i < length; i++) {
                     try {
-                        cards.add(new CandidateData(candidates.getJSONObject(i)));
+                        mCards.add(new CandidateData(candidates.getJSONObject(i)));
                     } catch (JSONException e) {
                         Log.e(getString(R.string.JSON_ERROR), e.toString());
                     }
@@ -195,9 +194,9 @@ public class PeopleListFragment extends Fragment {
             @Override
             protected void onPostExecute(Object param) {
                 // To dismiss the dialog
-                mAdapter.update(cards);
+                mAdapter.update(mCards);
                 mCardStack.invalidate();
-                progress.dismiss();
+                mProgress.dismiss();
             }
         };
         loadCards.execute();
@@ -211,7 +210,7 @@ public class PeopleListFragment extends Fragment {
      * show a dialog with the message of unable to connect
      */
     public void timeoutOnCandidatesRequest() {
-        progress.dismiss();
+        mProgress.dismiss();
         unableToConnectDialog();
     }
 

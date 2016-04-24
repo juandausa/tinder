@@ -23,6 +23,11 @@
     <string name="login_string">Login con facebook</string>
 
 
+    <!-- MainActivity strings -->
+    <string name="people">Personas</string>
+    <string name="matches">Matches</string>
+
+
     <string name="cheese_ipsum">Jarlsberg lancashire edam. Dolcelatte hard cheese brie st. agur blue
     cheese caerphilly bavarian bergkase cheese and biscuits mascarpone. Cheeseburger swiss bavarian
     bergkase cream cheese fromage frais cheesy feet port-salut airedale. St. agur blue cheese rubber

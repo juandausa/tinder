@@ -32,11 +32,14 @@ import classes.DialogFactory;
 import classes.MyUserProfileData;
 import requests.UpdateProfileRequest;
 
+/**
+ * Activity that allows to edit the profile data of the user
+ */
 public class EditProfileActivity extends AppCompatActivity {
 
-    private int PICK_IMAGE_REQUEST = 1;
-    private final static String USER = "user";
-    private final static String AGE = "Edad: ";
+    private static final String USER = "user";
+    private static final String AGE = "Edad: ";
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     private MyUserProfileData mUserData;
     private String mSelectedGender;
@@ -343,9 +346,9 @@ public class EditProfileActivity extends AppCompatActivity {
      * @return the path where the photo was saved
      */
     private String saveProfilePhoto() {
-        try{
-            String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    "/tinderCloneProfile";
+        try {
+            String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                    + "/tinderCloneProfile";
             File file = new File(filePath);
             FileOutputStream fOut = new FileOutputStream(file);
             mNewProfilePhoto.compress(Bitmap.CompressFormat.JPEG, 85, fOut);

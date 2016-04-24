@@ -2,7 +2,6 @@ package com.tinder_app;
 
 import android.content.Intent;
 import android.graphics.Paint;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -15,24 +14,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import classes.CandidateData;
+import classes.Constants;
 import classes.CustomViewPager;
 import classes.MyUserProfileData;
 import classes.SessionManager;
-import requests.GetCandidatesRequest;
 import requests.GetProfileRequest;
 
 /**
@@ -43,27 +40,27 @@ import requests.GetProfileRequest;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
-    private JSONObject mCandidates;
     private MyUserProfileData mUserData;
-    public String userId;
+    private String mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        userId = getIntent().getStringExtra("user_id");
+        //userId = getIntent().getStringExtra(Constants.USER_ID);
         getProfile();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        ab.setDisplayHomeAsUpEnabled(true);
+        if (ab != null) {
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
@@ -75,9 +72,26 @@ public class MainActivity extends AppCompatActivity {
         }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        setTabLayout(tabLayout, viewPager);
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Set up the Tab Layout, sets the content of each tab
+     * @param tabLayout the layout to be setted
+     * @param viewPager the view pager containig the fragments that will be en each tab
+     */
+    private void setTabLayout(TabLayout tabLayout, CustomViewPager viewPager) {
+        if (tabLayout == null) return;
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_favorite_white_24dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_forum_white_24dp);
+        TabLayout.Tab tab1 = tabLayout.getTabAt(0);
+        TabLayout.Tab tab2 = tabLayout.getTabAt(1);
+        if (tab1 != null)
+            tab1.setIcon(R.drawable.ic_favorite_white_24dp);
+        if (tab2 != null)
+            tab2.setIcon(R.drawable.ic_forum_white_24dp);
     }
 
     /**********************************************************************************************/
@@ -90,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = null;
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
@@ -106,12 +119,12 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Sets the content of the ViewPager.
-     * @param viewPager
+     * @param viewPager the view pager that will have the fragments to be shown in each tab
      */
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new PeopleListFragment(), "Personas");
-        adapter.addFragment(new MatchesFragment(), "Mensajes");
+        adapter.addFragment(new PeopleListFragment());
+        adapter.addFragment(new MatchesFragment());
         viewPager.setAdapter(adapter);
     }
 
@@ -120,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Sets the content of the NavigationDrawer View
-     * @param navigationView
+     * @param navigationView the view that contains the sliding menu that will hold options
      */
     private void setupDrawerContent(NavigationView navigationView) {
         View header = navigationView.getHeaderView(0);
@@ -172,15 +185,21 @@ public class MainActivity extends AppCompatActivity {
         GetProfileRequest request = new GetProfileRequest(this);
         try {
             JSONObject json = new JSONObject();
-            String userId = SessionManager.getUserId(this);
-            json.put("user_id", userId);
+            mUserId = SessionManager.getUserId(this);
+            json.put(Constants.USER_ID, mUserId);
             request.send(json);
-        } catch (JSONException e) {}
+        } catch (JSONException e) {
+            Log.e(getString(R.string.JSON_ERROR), e.toString());
+        }
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Set the profile data of the user
+     * @param user a JSONObject with the profile data of the user
+     */
     public void setProfile(final JSONObject user) {
         mUserData = new MyUserProfileData(user);
     }
@@ -193,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
      */
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragments = new ArrayList<>();
-        private final List<String> mFragmentTitles = new ArrayList<>();
+        //private final List<String> mFragmentTitles = new ArrayList<>();
 
         /**
          * Constructor of the class Adapter.
@@ -206,23 +225,37 @@ public class MainActivity extends AppCompatActivity {
         /**
          * Adds a fragment to the Adapter.
          * @param fragment fragment to be added to the Adapter.
-         * @param title Title to be shown of the section that represents the Fragment.
          */
-        public void addFragment(Fragment fragment, String title) {
+        public void addFragment(Fragment fragment) {
             mFragments.add(fragment);
             //mFragmentTitles.add(title);
         }
 
+        /**
+         * Returns the item at the position "position"
+         * @param position of the element to the returned
+         * @return the item at the position "position"
+         */
         @Override
         public Fragment getItem(int position) {
             return mFragments.get(position);
         }
 
+        /**
+         * Returns the count of items in the adapter
+         * @return the count of items in the adapter
+         */
         @Override
         public int getCount() {
             return mFragments.size();
         }
 
+        /**
+         * Returns the page title to show on the Tab that is related with the fragment on the
+         * Pager Adapter
+         * @param position of the item in the adapter
+         * @return the title of the item
+         */
         @Override
         public CharSequence getPageTitle(int position) {
             //return mFragmentTitles.get(position);

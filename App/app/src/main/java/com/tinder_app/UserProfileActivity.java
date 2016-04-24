@@ -38,6 +38,10 @@ public abstract class UserProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets up the activity data and look
+     * @param savedInstanceState the saved state of the activity
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +66,10 @@ public abstract class UserProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Load the image of the user
+     * @param data the profile data of the user
+     */
     protected void loadBackdropImage(UserData data) {
         mImageView = (ImageView) findViewById(R.id.backdrop);
         if ((mImageView != null) && (data != null)) {
@@ -72,10 +80,13 @@ public abstract class UserProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Set the title of the toolbar
+     */
     protected void loadTitle() {
         CollapsingToolbarLayout collapsingToolbar
                 = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        if ((collapsingToolbar != null) /*&& (candidateData != null)*/){
+        if ((collapsingToolbar != null) /*&& (candidateData != null)*/) {
             //collapsingToolbar.setTitle(candidateData.getAlias());
             collapsingToolbar.setTitle(" ");
         }
@@ -84,6 +95,10 @@ public abstract class UserProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Set the alias and age of the user in the view that has to show them
+     * @param userData the data of the user
+     */
     protected void loadUserData(UserData userData) {
         mTitleView = (TextView) findViewById(R.id.user_title);
         if ((userData != null) && (mTitleView != null)) {
@@ -95,6 +110,10 @@ public abstract class UserProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Loads and displays the user interests
+     * @param userData the user data
+     */
     protected void loadUserInterests(UserData userData) {
         FlowLayout interestsView = (FlowLayout) findViewById(R.id.interests_layout);
         if (interestsView == null) return;
@@ -116,13 +135,18 @@ public abstract class UserProfileActivity extends AppCompatActivity {
                 interestsView.addView(view, params1);
             }
         } catch (JSONException e) {
-            Log.e(getString(R.string.JSON_ERROR)+"USER", e.toString());
+            Log.e(getString(R.string.JSON_ERROR) + "USER", e.toString());
         }
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Inflates the menu of the activity with it's options
+     * @param menu the menu of the activity
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.sample_actions, menu);
@@ -132,6 +156,10 @@ public abstract class UserProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Gets the user data from the intent sent by the father activity
+     * @return the user data
+     */
     protected UserData getDataFromIntent() {
         Intent intent = getIntent();
         String data = intent.getStringExtra(USER);
@@ -146,5 +174,10 @@ public abstract class UserProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Returns the user data
+     * @param data the data of the user in a JSONObject
+     * @return the user data in an instance of a subclass of UserData
+     */
     protected abstract UserData buildUserData(JSONObject data);
 }
