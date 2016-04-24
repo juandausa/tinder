@@ -55,7 +55,6 @@ before_install:
     - sudo make install
     - cd ..
     - cd ..
-    - cd ..
     - sudo rm -r dependencies
     
 before_script:
