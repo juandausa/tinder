@@ -1,5 +1,7 @@
 package classes;
 
+import android.content.Context;
+
 /**
  * Class that contains configuration constants.
  */
@@ -7,8 +9,9 @@ public final class Constants {
 
     /**
      * Ip of the server. Used to build paths for requests.
+     * Other ips used "http://10.0.2.2:5000"; //"http://192.168.1.106:5000";
      */
-    public static final String IP_SERVER = "http://192.168.1.106:5000"; //"http://10.0.2.2:5000"; //"http://192.168.1.106:5000";
+    public static final String IP_SERVER = "http://192.168.1.106:5000";
 
     /**
      * Route for constructing the url path for the request that checks if the user is registered in
@@ -28,7 +31,7 @@ public final class Constants {
     public static final String CANDIDATES_PATH = "/candidates/";
 
     /**
-     * Route for constructing the url path for the request that... TODO.
+     * Route for constructing the url path for the request that gets the user data
      */
     public static final String USER_DATA_PATH = "/user/";
 
@@ -38,12 +41,138 @@ public final class Constants {
      */
     public static final String FILTERS_PATH = "/filters/";
 
-
     /**
-     * Route for constructing the url path for the request that... TODO.
+     * Route for constructing the url path for the request that updates the user data in the server
      */
     public static final String USER_UPDATE_DATA_PATH = "/user/update/";
 
+    /**********************************************************************************************/
+    /**********************     FACEBOOK INTERESTS STRING CONSTANTS     ***************************/
+    /**********************************************************************************************/
+
+    /**
+     * Name of the "likes" interest
+     */
+    public static final String LIKES = "likes";
+
+    /**
+     * Name of the "books" interest
+     */
+    public static final String BOOKS = "books";
+
+    /**
+     * Name of the "games" interest
+     */
+    public static final String MOVIES = "movies";
+
+    /**
+     * Name of the "games" interest
+     */
+    public static final String GAMES = "games";
+
+    /**
+     * Name of the "music" interest
+     */
+    public static final String MUSIC = "music";
+
+    /**
+     * Name of the "television" interest
+     */
+    public static final String TV = "television";
+
+    /**
+     * Count of facebook categories of interests
+     */
+    public static final int CATEGORIES_COUNT = 6;
+
+
+    /**********************************************************************************************/
+    /**********************             USER STRING CONSTANTS           ***************************/
+    /**********************************************************************************************/
+
+    /**
+     * Name of the "user_id" user field
+     */
+    public static final String USER_ID = "user_id";
+
+    /**
+     * Name of the "alias" user field
+     */
+    public static final String ALIAS = "alias";
+
+    /**
+     * Name of the "name" user field
+     */
+    public static final String NAME = "name";
+
+    /**
+     * Name of the "age" user field
+     */
+    public static final String AGE = "age";
+
+    /**
+     * Name of the "birthday" user field
+     */
+    public static final String BIRTHDAY = "birthday";
+
+    /**
+     * Name of the "photo_profile" user field
+     */
+    public static final String PHOTO_PROFILE = "photo_profile";
+
+    /**
+     * Name of the "gender" user field
+     */
+    public static final String GENDER = "gender";
+
+    /**
+     * Name of the "email" user field
+     */
+    public static final String EMAIL = "email";
+
+    /**
+     * Name of the "location" user field
+     */
+    public static final String LOCATION = "location";
+
+    /**
+     * Name of the "latitude" user field
+     */
+    public static final String LATITUDE = "latitude";
+
+    /**
+     * Name of the "longitude" user field
+     */
+    public static final String LONGITUDE = "longitude";
+
+    /**
+     * Name of the "interests" user field
+     */
+    public static final String INTERESTS = "interests";
+
+
+    /**********************************************************************************************/
+    /**********************          SESSION STRING CONSTANTS           ***************************/
+    /**********************************************************************************************/
+
+    /**
+     * Name of the "session" field
+     */
+    public static final String SESSION = "session";
+
+    /**
+     * Name of the "logged_in" field
+     */
+    public static final String LOGGED_IN = "logged_in";
+
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Application context
+     */
+    private static Context cONTEXT;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -53,4 +182,25 @@ public final class Constants {
      */
     private Constants() { }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Returns the application context
+     * @return the application context
+     */
+    public static final Context getContext() {
+        return cONTEXT;
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Sets the application context
+     * @param context the application context
+     */
+    public static void setContext(Context context) {
+        cONTEXT = context;
+    }
 }

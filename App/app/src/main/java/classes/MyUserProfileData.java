@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by fabrizio on 22/04/16.
+ * Class that contains the data of the current user
  */
 public class MyUserProfileData extends UserData {
 
@@ -20,18 +20,26 @@ public class MyUserProfileData extends UserData {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Constructor of the class MyUserProfileData
+     * @param user the JSONObject containing the data of the user
+     */
     public MyUserProfileData(JSONObject user) {
         super(user);
         try {
             mName = user.getString("name");
             mEmail = user.getString("email");
             mGender = user.getString("gender");
-        } catch (JSONException e) {}
+        } catch (JSONException e) { }
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Returns the name of the user
+     * @return the name of the user
+     */
     public String getName() {
         return mName;
     }
@@ -39,6 +47,10 @@ public class MyUserProfileData extends UserData {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Returns the email of the user
+     * @return the email of the user
+     */
     public String getEmail() {
         return mEmail;
     }
@@ -46,6 +58,10 @@ public class MyUserProfileData extends UserData {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Returns the gender of the user
+     * @return the gender of the user
+     */
     public String getGender() {
         return mGender;
     }
@@ -53,6 +69,10 @@ public class MyUserProfileData extends UserData {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets a new alias to the user
+     * @param alias the new alias of the user
+     */
     public void setAlias(String alias) {
         mAlias = alias;
     }
@@ -60,10 +80,14 @@ public class MyUserProfileData extends UserData {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets a new photo to the user
+     * @param photo the new photo of the user
+     */
     public void setPhoto(Bitmap photo) {
         if (photo == null) {
             mPhoto = null;
-            if (json.has("photo_profile")) json.remove("photo_profile");
+            if (mJson.has("photo_profile")) mJson.remove("photo_profile");
             return;
         }
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -71,13 +95,17 @@ public class MyUserProfileData extends UserData {
         byte[] byteArray = byteArrayOutputStream .toByteArray();
         mPhoto = Base64.encodeToString(byteArray, Base64.DEFAULT);
         try {
-            json.put("photo_profile", mPhoto);
-        } catch (JSONException e) {}
+            mJson.put("photo_profile", mPhoto);
+        } catch (JSONException e) { }
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets a new age to the user
+     * @param age the new age of the user
+     */
     public void setAge(String age) {
         mAge = age;
     }
@@ -85,6 +113,10 @@ public class MyUserProfileData extends UserData {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets a new gender to the user
+     * @param gender the new gender of the user
+     */
     public void setGender(String gender) {
         mGender = gender;
     }
@@ -92,6 +124,10 @@ public class MyUserProfileData extends UserData {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Converts the instance of MyUserProfileData to a string
+     * @return a string with the data of the user
+     */
     @Override
     public String toString() {
         this.toJSON();
@@ -101,14 +137,18 @@ public class MyUserProfileData extends UserData {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Converts the instance of MyUserProfileData to a string
+     * @return a string with the data of the user
+     */
     @Override
     public JSONObject toJSON() {
         try {
-            json.put("gender", mGender);
-            json.put("age", (int) Integer.valueOf(mAge));
-            json.put("alias", mAlias);
-            json.put("photo_profile", mPhoto);
-        } catch (JSONException e) {}
-        return json;
+            mJson.put("gender", mGender);
+            mJson.put("age", (int) Integer.valueOf(mAge));
+            mJson.put("alias", mAlias);
+            mJson.put("photo_profile", mPhoto);
+        } catch (JSONException e) { }
+        return mJson;
     }
 }

@@ -22,17 +22,9 @@ public class FacebookProxy {
 
     private String mFacebookUserId;
     private FacebookInterestParser mParser;
-    private ConcurrentMap<String,JSONObject> mInterests;
-    private ConcurrentMap<String,JSONObject> mProfile;
+    private ConcurrentMap<String, JSONObject> mInterests;
+    private ConcurrentMap<String, JSONObject> mProfile;
     private Location mLocation;
-
-    private static final String LIKES = "likes";
-    private static final String BOOKS = "books";
-    private static final String MOVIES = "movies";
-    private static final String GAMES = "games";
-    private static final String MUSIC = "music";
-    private static final String TV = "television";
-    private static final int CATEGORIES_COUNT = 6;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -69,7 +61,7 @@ public class FacebookProxy {
      * @return True if it is initialized, false otherwise.
      */
     public boolean isInitialized() {
-        return mInterests.size() >= CATEGORIES_COUNT;
+        return mInterests.size() >= Constants.CATEGORIES_COUNT;
     }
 
     /**********************************************************************************************/
@@ -80,7 +72,7 @@ public class FacebookProxy {
      * @return a JSON Array with the name of the interests as value
      */
     public JSONArray getLikes() {
-        return mParser.parseInterests(mInterests.get(LIKES), LIKES);
+        return mParser.parseInterests(mInterests.get(Constants.LIKES), Constants.LIKES);
     }
 
     /**********************************************************************************************/
@@ -91,7 +83,7 @@ public class FacebookProxy {
      * @return a JSON Array with the name of the interests as value
      */
     public JSONArray getMovies() {
-        return mParser.parseInterests(mInterests.get(MOVIES), MOVIES);
+        return mParser.parseInterests(mInterests.get(Constants.MOVIES), Constants.MOVIES);
     }
 
     /**********************************************************************************************/
@@ -102,7 +94,7 @@ public class FacebookProxy {
      * @return a JSON Array with the name of the interests as value
      */
     public JSONArray getBooks() {
-        return mParser.parseInterests(mInterests.get(BOOKS), BOOKS);
+        return mParser.parseInterests(mInterests.get(Constants.BOOKS), Constants.BOOKS);
     }
 
     /**********************************************************************************************/
@@ -113,7 +105,7 @@ public class FacebookProxy {
      * @return a JSON Array with the name of the interests as value
      */
     public JSONArray getTVShows() {
-        return mParser.parseInterests(mInterests.get(TV), TV);
+        return mParser.parseInterests(mInterests.get(Constants.TV), Constants.TV);
     }
 
     /**********************************************************************************************/
@@ -124,7 +116,7 @@ public class FacebookProxy {
      * @return a JSON Array with the name of the interests as value
      */
     public JSONArray getMusic() {
-        return mParser.parseInterests(mInterests.get(MUSIC), MUSIC);
+        return mParser.parseInterests(mInterests.get(Constants.MUSIC), Constants.MUSIC);
     }
 
     /**********************************************************************************************/
@@ -135,7 +127,7 @@ public class FacebookProxy {
      * @return a JSONArray with  the name of the interests as value
      */
     public JSONArray getGames() {
-        return mParser.parseInterests(mInterests.get(GAMES), GAMES);
+        return mParser.parseInterests(mInterests.get(Constants.GAMES), Constants.GAMES);
     }
 
     /**********************************************************************************************/
@@ -159,25 +151,25 @@ public class FacebookProxy {
     public JSONObject toJSON() {
         try {
             JSONObject json = new JSONObject();
-            json.put("user_id", this.mFacebookUserId);
-            json.put("name", mProfile.get("name"));
-            json.put("alias", mProfile.get("alias"));
-            json.put("email", mProfile.get("email"));
-            json.put("birthday", mProfile.get("birthday"));
+            json.put(Constants.USER_ID, this.mFacebookUserId);
+            json.put(Constants.NAME, mProfile.get(Constants.NAME));
+            json.put(Constants.ALIAS, mProfile.get(Constants.ALIAS));
+            json.put(Constants.EMAIL, mProfile.get(Constants.EMAIL));
+            json.put(Constants.BIRTHDAY, mProfile.get(Constants.BIRTHDAY));
             JSONObject interests = new JSONObject();
-            interests.put(LIKES, getLikes());
-            interests.put(MOVIES, getMovies());
-            interests.put(MUSIC, getMusic());
-            interests.put(TV, getTVShows());
-            interests.put(BOOKS, getBooks());
-            interests.put(GAMES, getGames());
-            json.put("interests", interests);
-            json.put("photo_profile", mProfile.get("photo_profile"));
+            interests.put(Constants.LIKES, getLikes());
+            interests.put(Constants.MOVIES, getMovies());
+            interests.put(Constants.MUSIC, getMusic());
+            interests.put(Constants.TV, getTVShows());
+            interests.put(Constants.BOOKS, getBooks());
+            interests.put(Constants.GAMES, getGames());
+            json.put(Constants.INTERESTS, interests);
+            json.put(Constants.PHOTO_PROFILE, mProfile.get(Constants.PHOTO_PROFILE));
             if (mLocation != null) {
                 JSONObject location = new JSONObject();
-                location.put("latitude", mLocation.getLatitude());
-                location.put("longitude", mLocation.getLongitude());
-                json.put("location", location);
+                location.put(Constants.LATITUDE, mLocation.getLatitude());
+                location.put(Constants.LONGITUDE, mLocation.getLongitude());
+                json.put(Constants.LOCATION, location);
             }
             Log.e("JSON", json.toString());
             return json;

@@ -1,13 +1,11 @@
 package com.tinder_app;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -16,18 +14,15 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.github.akashandroid90.googlesupport.location.AppLocationActivity;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
 
 import classes.Constants;
 import classes.FacebookProxy;
 import classes.SessionManager;
 import requests.LoginRequest;
-import requests.NewRegisterRequest;
-import requests.RegisterRequest;
+
 
 /**
  * Activity that contains the Login with Facebook API to access the App.
@@ -51,6 +46,7 @@ public class LoginActivity extends AppLocationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.setContext(getApplicationContext());
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
         mCallbackManager = CallbackManager.Factory.create();
@@ -80,21 +76,25 @@ public class LoginActivity extends AppLocationActivity {
 
     }
 
-
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-
+    /**
+     * Launch main activity if the user is loged in
+     */
     private void launchIfLoggedIn() {
         if (isLoggedIn()) {
             launchMainActivity();
         }
     }
 
-
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Checks if the user is loged in
+     * @return true if the user is loged in, false otherwise
+     */
     private boolean isLoggedIn() {
         //AccessToken accessToken = AccessToken.getCurrentAccessToken();
         //return accessToken != null;
@@ -104,9 +104,12 @@ public class LoginActivity extends AppLocationActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Launch main activity
+     */
     public void launchMainActivity() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra("user_id", mFacebookUserId);
+        intent.putExtra(Constants.USER_ID, mFacebookUserId);
         startActivity(intent);
         finish();
     }
@@ -129,6 +132,11 @@ public class LoginActivity extends AppLocationActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sends request for checking if the user is registered, if not sends a request to register and
+     * login the user
+     * @param loginResult the result from the login
+     */
     private void registerUser(LoginResult loginResult) {
         mFacebookUserId = loginResult.getAccessToken().getUserId();
         final FacebookProxy proxy = new FacebookProxy(mFacebookUserId);
@@ -138,7 +146,9 @@ public class LoginActivity extends AppLocationActivity {
                 while (!proxy.isInitialized()) {
                     try {
                         Thread.sleep(500);
-                    } catch (InterruptedException e) {}
+                    } catch (InterruptedException e) {
+                        Log.e(getString(R.string.REQUEST_ERROR), e.toString());
+                    }
                 }
                 proxy.addLocation(mCurrentLocation);
                 JSONObject data = proxy.toJSON();
@@ -155,12 +165,20 @@ public class LoginActivity extends AppLocationActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * On change of location executes the code in this function
+     * @param location the new location
+     */
     @Override
-    public void newLocation(Location location) {}
+    public void newLocation(Location location) { }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Get the current location of the user
+     * @param currentLocation the current location of the user
+     */
     @Override
     public void myCurrentLocation(Location currentLocation) {
         mCurrentLocation = currentLocation;

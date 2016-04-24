@@ -1,31 +1,40 @@
 package classes;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import com.tinder_app.EditProfileActivity;
+import com.tinder_app.R;
 
 /**
- * Created by fabrizio on 23/04/16.
+ * Factory class that builds different types of dialogs
  */
-public class DialogFactory {
+public final class DialogFactory {
+
+    private static final int MAX_AGE = 100;
+    private static final int MIN_AGE = 18;
+    /**
+     * Private constructor of the DialogFactory class
+     */
+    private DialogFactory() {
+    }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    private DialogFactory() {}
-
-    /**********************************************************************************************/
-    /**********************************************************************************************/
-
-    public static AlertDialog getNumberPickerDialog(final EditProfileActivity context, final String initValue) {
+    /**
+     * Builds a dialog with a number picker.
+     * @param context The context where the dialog is used
+     * @param initValue initial value of the number picker
+     * @return an AlertDialog with a number picker
+     */
+    public static AlertDialog getNumberPickerDialog(final EditProfileActivity context,
+                                                    final String initValue) {
         NumberPicker picker = new NumberPicker(context);
         picker.setValue(Integer.valueOf(initValue));
-        picker.setMaxValue(100);
-        picker.setMinValue(18);
+        picker.setMaxValue(MAX_AGE);
+        picker.setMinValue(MIN_AGE);
         picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
@@ -34,11 +43,11 @@ public class DialogFactory {
         });
 
         return new AlertDialog.Builder(context)
-                .setTitle("Elegir edad")
+                .setTitle(R.string.select_age)
                 .setView(picker)
                 .setCancelable(false)
-                .setPositiveButton("ok", null)
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.OK, null)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         context.updateAgeView(initValue);
@@ -49,17 +58,22 @@ public class DialogFactory {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Builds a dialog with a message that asks to exit without save.
+     * @param context The context where the dialog is used
+     * @return an AlertDialog with a meessage that asks to exit without save
+     */
     public static AlertDialog getExitWithoutSaveDialog(final EditProfileActivity context) {
         return new AlertDialog.Builder(context)
-                .setTitle("Cambios sin guardar")
-                .setMessage("¿Desea salir sin guardar los cambios?")
+                .setTitle(R.string.changes_not_saved)
+                .setMessage(R.string.save_changes)
                 .setCancelable(false)
-                .setPositiveButton("si", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         context.finish();
                     }
                 })
-                .setNegativeButton("no", null).create();
+                .setNegativeButton(R.string.no, null).create();
     }
 }

@@ -24,7 +24,6 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,6 +47,13 @@ public class EditProfileActivity extends AppCompatActivity {
     private TextView mAgeView;
     private EditText mText;
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Set up the activity for edit user profile
+     * @param savedInstanceState object for saving the state of the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +80,9 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Initialize the state of the activity
+     */
     private void initialize() {
         mNewAge = mUserData.getAge();
         mNewAlias = mUserData.getAlias();
@@ -82,6 +91,10 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Get data from the intent that started this activity
+     * @return the profile data of the user sent by the father activity
+     */
     protected MyUserProfileData getDataFromIntent() {
         Intent intent = getIntent();
         String data = intent.getStringExtra(USER);
@@ -96,6 +109,11 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Set the profile photo and the behaviour of it, so it can be edited. Starts an activity that
+     * allows the user to choose an image from the gallery
+     * @param data the profile data of the user
+     */
     private void setEditablePhoto(MyUserProfileData data) {
         final ImageView imageView = (ImageView) findViewById(R.id.editable_profile_picture);
         if ((imageView != null) && (data != null)) {
@@ -117,6 +135,13 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * On result from the activity that gets an image from the gallery, stores that image in an
+     * attribute of the activity
+     * @param requestCode the request code of the started activity
+     * @param resultCode the resulting code from the activity
+     * @param data the data sent as result of the activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -138,6 +163,10 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets the edit text that holds the alias
+     * @param data the user profile data
+     */
     private void setEditableAlias(MyUserProfileData data) {
         mText = (EditText) findViewById(R.id.editable_profile_alias);
         if (mText == null) return;
@@ -147,6 +176,10 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets the radio buttons that shows the gender of the user
+     * @param data the user profile data
+     */
     private void setEditableGender(MyUserProfileData data) {
         RadioGroup gender = (RadioGroup) findViewById(R.id.editable_profile_gender);
         if ((data == null) || (gender == null)) return;
@@ -172,6 +205,10 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets the button and the dialog that contains a number picker for the user age
+     * @param userData the user profile data
+     */
     private void setEditableAge(MyUserProfileData userData) {
         Button button = (Button) findViewById(R.id.editable_profile_age_button);
         mAgeView = (TextView) findViewById(R.id.editable_profile_age_view);
@@ -188,6 +225,10 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Update the view that shows the age of the user
+     * @param newVal the new value of the user age
+     */
     public void updateAgeView(String newVal) {
         String ageString = AGE + newVal;
         mNewAge = newVal;
@@ -198,6 +239,11 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Inflates the option menu of the activity
+     * @param menu the menu of the activity
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_done_actions, menu);
@@ -207,6 +253,11 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * When back is pressed, it shows a dialog asking if the user is sure to exit without saving.
+     * If he selects "yes", the user finishes this activity and returns to the father activity. If
+     * he selects "no" the user remains in this activity.
+     */
     @Override
     public void onBackPressed() {
         exitWithoutSaveDialog();
@@ -215,6 +266,11 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Generates a dialog that asks to the user if he is sure to exit without saving.
+     * If he selects "yes", the user finishes this activity and returns to the father activity. If
+     * he selects "no" the user remains in this activity.
+     */
     private void exitWithoutSaveDialog() {
         DialogFactory.getExitWithoutSaveDialog(this).show();
     }
@@ -245,6 +301,9 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Updates the user data and sends this updated data to a server
+     */
     public void updateUserData() {
         mNewAlias = mText.getText().toString();
         mUserData.setAlias(mNewAlias);
@@ -256,13 +315,18 @@ public class EditProfileActivity extends AppCompatActivity {
             mUserData.setPhoto(null);   // Avoid sending large amount of data in an intent
             UpdateProfileRequest request = new UpdateProfileRequest(this);
             request.send(updatedData);
-        } catch (JSONException e) {}
+        } catch (JSONException e) {
+            Log.e(getString(R.string.JSON_ERROR), e.toString());
+        }
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-
+    /**
+     * Saves the result of this activity (the updated user data) and returns to the father activity
+     * with this result.
+     */
     public void saveChanges() {
         Intent intent = new Intent();
         intent.putExtra(UserProfileActivity.USER, mUserData.toString());
@@ -274,6 +338,10 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Stores in the external storage the profile photo of the user
+     * @return the path where the photo was saved
+     */
     private String saveProfilePhoto() {
         try{
             String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() +

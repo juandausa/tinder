@@ -3,15 +3,15 @@ package classes;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 
 /**
- * Created by fabrizio on 22/04/16.
+ * Class that cointains the data of a user
  */
 public class UserData {
 
@@ -20,7 +20,7 @@ public class UserData {
     protected String mPhoto;
     protected JSONArray mInterests;
     protected String mAge;
-    protected JSONObject json;
+    protected JSONObject mJson;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -31,7 +31,7 @@ public class UserData {
      * @param user data of the candidate to be builded.
      */
     public UserData(JSONObject user) {
-        json = user;
+        mJson = user;
         try {
             mUserId = user.getString("user_id");
             mAlias = user.getString("alias");
@@ -42,7 +42,9 @@ public class UserData {
             try {
                 mInterests = new JSONArray(user.getString("interests"));
                 mAge = user.getString("age");
-            } catch (JSONException ex) {}
+            } catch (JSONException ex) {
+                Log.e("JSON ERROR", e.toString());
+            }
         }
     }
 
@@ -105,15 +107,23 @@ public class UserData {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Converts the instance of MyUserProfileData to a string
+     * @return a string with the data of the user
+     */
     @Override
     public String toString() {
-        return json.toString();
+        return mJson.toString();
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Converts the instance of MyUserProfileData to a string
+     * @return a string with the data of the user
+     */
     public JSONObject toJSON() {
-        return json;
+        return mJson;
     }
 }
