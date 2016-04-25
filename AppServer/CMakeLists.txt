@@ -9,7 +9,7 @@ include(cmake-modules/Findrocksdb.cmake)
 SET(GCC_ROCKSDB_LINK_FLAGS "-lz -lpthread -lrt")
 SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_ROCKSDB_LINK_FLAGS}" )
 
-set(NOMBRE_LIBS rocksdb z snappy bz2 pthread rt gtest glog)
+set(NOMBRE_LIBS rocksdb z snappy bz2 pthread rt gtest glog curl)
 foreach(LIB ${NOMBRE_LIBS})
     find_library(LIBRERIA${LIB} NAMES ${LIB} )
     if (LIBRERIA${LIB}) #False si es 0, OFF, NO, FALSE, N, IGNORE, NOTFOUND, vacio, o si termina en "-NOTFOUND". Caso contrario es TRUE.

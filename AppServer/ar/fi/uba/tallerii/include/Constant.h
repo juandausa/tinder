@@ -14,6 +14,7 @@ public:
     static std::string database_path;
     static std::string security_token_prefix;
     static std::size_t random_characters_quantity;
+    static std::string filters_prefix;
 private:
     Constant();
 };
