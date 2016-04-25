@@ -13,6 +13,8 @@ class FilterController {
 public:
     FilterController(FilterService filter_service);
     virtual void handle_update_filters(struct mg_connection *nc, struct http_message *hm, Response response);
+private:
+    FilterService filter_service;
 };
 
 #endif //TINDER_FILTERCONTROLLER_H
