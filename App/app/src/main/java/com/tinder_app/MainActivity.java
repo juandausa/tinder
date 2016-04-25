@@ -43,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
     private MyUserProfileData mUserData;
     private String mUserId;
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Set up the mainAcivity
+     * @param savedInstanceState the saved state of the acivity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,14 +91,18 @@ public class MainActivity extends AppCompatActivity {
      * @param viewPager the view pager containig the fragments that will be en each tab
      */
     private void setTabLayout(TabLayout tabLayout, CustomViewPager viewPager) {
-        if (tabLayout == null) return;
+        if (tabLayout == null) {
+            return;
+        }
         tabLayout.setupWithViewPager(viewPager);
         TabLayout.Tab tab1 = tabLayout.getTabAt(0);
         TabLayout.Tab tab2 = tabLayout.getTabAt(1);
-        if (tab1 != null)
+        if (tab1 != null) {
             tab1.setIcon(R.drawable.ic_favorite_white_24dp);
-        if (tab2 != null)
+        }
+        if (tab2 != null) {
             tab2.setIcon(R.drawable.ic_forum_white_24dp);
+        }
     }
 
     /**********************************************************************************************/

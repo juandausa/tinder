@@ -1,37 +1,37 @@
 package requests;
 
 import android.content.Context;
-import android.content.Intent;
-import android.telecom.Call;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.tinder_app.MainActivity;
 
 import org.json.JSONObject;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
-
-import classes.Constants;
 
 /**
- * Created by fabrizio on 03/04/16.
+ * Abstract class that sets the shape of a Request that sends and receives a JSONObject
  */
 public abstract class JSONRequest extends AbstractRequest {
 
-
     /**
-     * @param context
+     * Constructor of the class JSONRequest
+     * @param context the context from where this request is being constructed
      **/
-    public JSONRequest(Context context) {
+    protected JSONRequest(Context context) {
         super(context);
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Builds the request. Generates the path and sets the data to be sent from the json.
+     * @param path the path used to send the request
+     * @param json the data to be sent
+     * @return the generated request
+     */
     @Override
     protected Request buildRequest(String path, JSONObject json) {
         return new JsonObjectRequest(mMethod, path, json, mResponseListener, mErrorListener);
@@ -40,6 +40,9 @@ public abstract class JSONRequest extends AbstractRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets a response listener on the request that will call to onResponse
+     */
     @Override
     protected void setResponseListener() {
         mResponseListener = new Response.Listener<JSONObject>() {
@@ -53,6 +56,9 @@ public abstract class JSONRequest extends AbstractRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets an error listener on the request that will call to OnError.
+     */
     @Override
     protected void setErrorListener() {
         mErrorListener = new Response.ErrorListener() {
@@ -66,6 +72,10 @@ public abstract class JSONRequest extends AbstractRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Callback function that has the logic for handling the response
+     * @param response the response of the request in format JSONObject
+     */
     protected abstract void onResponse(JSONObject response);
 
 }

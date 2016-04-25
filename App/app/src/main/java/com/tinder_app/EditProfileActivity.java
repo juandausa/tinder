@@ -123,7 +123,9 @@ public class EditProfileActivity extends AppCompatActivity {
             imageView.setImageBitmap(data.getPhoto());
         }
         Button editPhoto = (Button) findViewById(R.id.edit_photo_button);
-        if (editPhoto == null) return;
+        if (editPhoto == null) {
+            return;
+        }
         editPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,10 +157,12 @@ public class EditProfileActivity extends AppCompatActivity {
                 mNewProfilePhoto = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 // Log.d(TAG, String.valueOf(bitmap));
                 ImageView imageView = (ImageView) findViewById(R.id.editable_profile_picture);
-                if (imageView == null) return;
+                if (imageView == null) {
+                    return;
+                }
                 imageView.setImageBitmap(mNewProfilePhoto);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("IO ERROR", e.toString());
             }
         }
     }
@@ -172,7 +176,9 @@ public class EditProfileActivity extends AppCompatActivity {
      */
     private void setEditableAlias(MyUserProfileData data) {
         mText = (EditText) findViewById(R.id.editable_profile_alias);
-        if (mText == null) return;
+        if (mText == null) {
+            return;
+        }
         mText.setText(data.getAlias());
     }
 
@@ -185,7 +191,9 @@ public class EditProfileActivity extends AppCompatActivity {
      */
     private void setEditableGender(MyUserProfileData data) {
         RadioGroup gender = (RadioGroup) findViewById(R.id.editable_profile_gender);
-        if ((data == null) || (gender == null)) return;
+        if ((data == null) || (gender == null)) {
+            return;
+        }
 
         Log.i("GENDER", data.getGender());
         if (data.getGender().equals("Hombre")) {
@@ -215,7 +223,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private void setEditableAge(MyUserProfileData userData) {
         Button button = (Button) findViewById(R.id.editable_profile_age_button);
         mAgeView = (TextView) findViewById(R.id.editable_profile_age_view);
-        if ((userData == null) || (button == null) || (mAgeView == null)) return;
+        if ((userData == null) || (button == null) || (mAgeView == null)) {
+            return;
+        }
         String ageString = AGE + userData.getAge();
         mAgeView.setText(ageString);
         final AlertDialog ageDialog = DialogFactory.getNumberPickerDialog(this, userData.getAge());
@@ -227,6 +237,9 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     /**
      * Update the view that shows the age of the user
@@ -356,7 +369,7 @@ public class EditProfileActivity extends AppCompatActivity {
             fOut.close();
             return filePath;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("FILE ERROR", e.toString());
             Log.e(null, "Save file error!");
             return null;
         }

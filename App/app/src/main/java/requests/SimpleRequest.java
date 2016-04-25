@@ -9,20 +9,27 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 /**
- * Created by fabrizio on 03/04/16.
+ * Abstract class that sets the shape of a Request that sends nothing and receives a response code
  */
 public abstract class SimpleRequest extends AbstractRequest {
 
     /**
-     * @param context
+     * Constructor of the class SimpleRequest
+     * @param context the context from where this request is being constructed
     **/
-    public SimpleRequest(Context context) {
+    protected SimpleRequest(Context context) {
         super(context);
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Builds the request. Generates the path and sets the data to be sent from the json.
+     * @param path the path used to send the request
+     * @param json the data to be sent
+     * @return the generated request
+     */
     @Override
     protected Request buildRequest(String path, JSONObject json) {
         return new StatusRequest(mMethod, path, mResponseListener, mErrorListener);
@@ -31,6 +38,9 @@ public abstract class SimpleRequest extends AbstractRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets a response listener on the request that will call to onResponse
+     */
     @Override
     protected void setResponseListener() {
         mResponseListener = new Response.Listener<Integer>() {
@@ -44,6 +54,9 @@ public abstract class SimpleRequest extends AbstractRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets an error listener on the request that will call to OnError.
+     */
     @Override
     protected void setErrorListener() {
         mErrorListener = new Response.ErrorListener() {
@@ -57,6 +70,10 @@ public abstract class SimpleRequest extends AbstractRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Callback function that has the logic for handling the response
+     * @param response the response of the request in format JSONObject
+     */
     protected abstract void onResponse(Integer response);
 
 }

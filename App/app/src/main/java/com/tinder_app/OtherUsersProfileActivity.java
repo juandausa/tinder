@@ -52,7 +52,9 @@ public class OtherUsersProfileActivity extends UserProfileActivity {
      */
     private void setUpLikeButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.like_fab);
-        if (fab == null) return;
+        if (fab == null) {
+            return;
+        }
         fab.setBackgroundTintList(getResources().getColorStateList(R.color.light_green));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +73,9 @@ public class OtherUsersProfileActivity extends UserProfileActivity {
      */
     private void setUpDislikeButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.dislike_fab);
-        if (fab == null) return;
+        if (fab == null) {
+            return;
+        }
         fab.setBackgroundTintList(getResources().getColorStateList(android.R.color.holo_red_light));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

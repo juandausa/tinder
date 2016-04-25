@@ -40,14 +40,18 @@ public class SettingsActivity extends AppCompatActivity {
      */
     private void discoverDistanceBarSetUp() {
         SeekBar seekBar = (SeekBar) findViewById(R.id.distance);
-        if (seekBar == null) return;
+        if (seekBar == null) {
+            return;
+        }
         seekBar.setMax(MAX_DISTANCE);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 TextView rangeDistance = (TextView) findViewById(R.id.distance_label);
                 String selectedDistance = Integer.toString(progress) + " km";
-                if (rangeDistance == null) return;
+                if (rangeDistance == null) {
+                    return;
+                }
                 rangeDistance.setText(selectedDistance);
             }
 
@@ -72,7 +76,9 @@ public class SettingsActivity extends AppCompatActivity {
      */
     private void ageBarSetUp() {
         RangeBar rangebar = (RangeBar) findViewById(R.id.age_rangebar);
-        if (rangebar == null) return;
+        if (rangebar == null) {
+            return;
+        }
         rangebar.setTickCount(100);
         rangebar.setTickHeight(25);
         rangebar.setBarWeight(6);
@@ -84,7 +90,9 @@ public class SettingsActivity extends AppCompatActivity {
                 TextView distance = (TextView) findViewById(R.id.age_label);
                 String ageRangeLabel = Integer.toString(leftThumbIndex) + " - "
                         + Integer.toString(rightThumbIndex);
-                if (distance == null) return;
+                if (distance == null) {
+                    return;
+                }
                 distance.setText(ageRangeLabel);
             }
         });
@@ -122,14 +130,18 @@ public class SettingsActivity extends AppCompatActivity {
      * Sets up the switches that indicates in wich gender is the user interested
      */
     private void genderSwitchesSetUp(final GenderObject gender, final GenderObject oppositeGender) {
-        if (gender == null) return;
+        if (gender == null) {
+            return;
+        }
         gender.getSwitch().setTextOn("");
         gender.getSwitch().setTextOff("");
         gender.getSwitch().setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
                 TextView genderLabel = (TextView) findViewById(R.id.gender_label);
-                if (genderLabel == null) return false;
+                if (genderLabel == null) {
+                    return false;
+                }
                 if (gender.getSwitch().isChecked()) {
                     if (oppositeGender.getSwitch().isChecked()) {
                         genderLabel.setText("Hombres y mujeres");

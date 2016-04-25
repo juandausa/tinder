@@ -1,4 +1,4 @@
-package facebook_data;
+package facebookdata;
 
 import android.util.Log;
 

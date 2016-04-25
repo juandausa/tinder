@@ -10,6 +10,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import classes.Constants;
 
+/**
+ * Request that asks if a user is registered or not. If not, the user is registered.
+ */
 public class LoginRequest extends SimpleRequest {
 
     private static final int REGISTERED = 200;
@@ -20,6 +23,10 @@ public class LoginRequest extends SimpleRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Constructor of the class LoginRequest
+     * @param context the context from where this request is being constructed
+     */
     public LoginRequest(LoginActivity context) {
         super(context);
         mMethod = Request.Method.GET;
@@ -29,12 +36,16 @@ public class LoginRequest extends SimpleRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Send a request using the data of the json passed as parameter
+     * @param json this parameter has the data that has to be used in the sending of the request
+     */
     @Override
     public void send(JSONObject json) {
         mUser = json;
         try {
-            Log.i("user_id",json.getString("user_id"));
-            String route = Constants.LOGIN_PATH + json.getString("user_id");
+            Log.i(Constants.USER_ID, json.getString(Constants.USER_ID));
+            String route = Constants.LOGIN_PATH + json.getString(Constants.USER_ID);
             super.send(json, route);
         } catch (JSONException e) {
             Log.e(mContext.getString(R.string.JSON_ERROR), e.getMessage());
@@ -44,10 +55,14 @@ public class LoginRequest extends SimpleRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Callback function that has the logic for handling the response
+     * @param response the response of the request in format JSONObject
+     */
     @Override
     protected void onResponse(Integer response) {
         Log.i("RESPONSE", response.toString());
-        switch (response.intValue()) {
+        switch (response) {
             case REGISTERED:
                 launchMainActivity();
                 break;
@@ -56,21 +71,28 @@ public class LoginRequest extends SimpleRequest {
                 req.send(mUser);
                 break;
             default:
-                return;
         }
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Callback function that has the logic for handling errors
+     * @param error belonging to the request sent
+     */
     @Override
     protected void onError(VolleyError error) {
-        Log.e(mContext.getString(R.string.REQUEST_ERROR)+"2", error.toString());
+        Log.e(mContext.getString(R.string.REQUEST_ERROR) + "2", error.toString());
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Method that wraps a call to launchMainActivity of the activity LoginActivity and is called
+     * from onResponse
+     */
     private void launchMainActivity() {
         mContext.launchMainActivity();
     }

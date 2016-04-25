@@ -10,9 +10,9 @@ import org.json.JSONObject;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import facebook_data.FacebookDataAsyncTask;
-import facebook_data.FacebookInterestParser;
-import facebook_data.FacebookProfileAsyncTask;
+import facebookdata.FacebookDataAsyncTask;
+import facebookdata.FacebookInterestParser;
+import facebookdata.FacebookProfileAsyncTask;
 
 /**
  * Class that is an intermediator between the facebook Graph API and the rest of the app.

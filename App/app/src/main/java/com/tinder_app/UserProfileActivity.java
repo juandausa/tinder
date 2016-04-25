@@ -116,7 +116,9 @@ public abstract class UserProfileActivity extends AppCompatActivity {
      */
     protected void loadUserInterests(UserData userData) {
         FlowLayout interestsView = (FlowLayout) findViewById(R.id.interests_layout);
-        if (interestsView == null) return;
+        if (interestsView == null) {
+            return;
+        }
         LayoutInflater inflater = LayoutInflater.from(this);
         JSONArray interests = userData.getInterests();
         int size = interests.length();

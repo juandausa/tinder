@@ -8,25 +8,36 @@ import com.android.volley.toolbox.Volley;
 
 import classes.Constants;
 
-
+/**
+ * Class that wraps the logic and use of the Volley Library for sending Request.
+ */
 public final class RequestHandler {
 
     private static RequestHandler singleton;
     private static String serverUrl = Constants.IP_SERVER;
-    private RequestQueue requestQueue;
-    private static Context context;
+    private Context mContext;
+    private RequestQueue mRequestQueue;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Constructor of the class RequestHandler
+     * @param context the context from where the request is being constructed
+     */
     private RequestHandler(Context context) {
-        RequestHandler.context = context;
-        requestQueue = getRequestQueue();
+        mContext = context;
+        mRequestQueue = getRequestQueue();
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     *
+     * @param context the context from where the instance is being required
+     * @return an instance of RequestHandler
+     */
     public static synchronized RequestHandler getInstance(Context context) {
         if (singleton == null) {
             singleton = new RequestHandler(context);
@@ -37,6 +48,10 @@ public final class RequestHandler {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Gets the server url
+     * @return the server url
+     */
     public static String getServerUrl() {
         return RequestHandler.serverUrl;
     }
@@ -44,30 +59,46 @@ public final class RequestHandler {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Returns the context from where this handler is being used
+     * @return the context from where this handler is being used
+     */
     public Context getContext() {
-        return context;
+        return mContext;
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Returns the request queue, where the requests are queued for sending
+     * @return the request queue
+     */
     public RequestQueue getRequestQueue() {
-        if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
         }
-        return requestQueue;
+        return mRequestQueue;
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sets the context from where this handler is being used
+     * @param context the context to be setted
+     */
     public void setContext(Context context) {
-        RequestHandler.context= context;
+        mContext = context;
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Adds a new request to the request's queue
+     * @param req the new request to be added to the queue
+     */
     public void addToRequestQueue(Request req) {
         getRequestQueue().add(req);
     }

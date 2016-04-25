@@ -5,7 +5,6 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.tinder_app.EditProfileActivity;
-import com.tinder_app.LoginActivity;
 import com.tinder_app.R;
 
 import org.json.JSONException;
@@ -14,7 +13,7 @@ import org.json.JSONObject;
 import classes.Constants;
 
 /**
- * Created by fabrizio on 23/04/16.
+ * Request that sends the updated data of the user
  */
 public class UpdateProfileRequest extends JSONRequest {
 
@@ -23,6 +22,10 @@ public class UpdateProfileRequest extends JSONRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Constructor of the class UpdateProfileRequest
+     * @param context the context from where this request is being constructed
+     */
     public UpdateProfileRequest(EditProfileActivity context) {
         super(context);
         mMethod = Request.Method.POST;
@@ -32,20 +35,28 @@ public class UpdateProfileRequest extends JSONRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Send a request using the data of the json passed as parameter
+     * @param json this parameter has the data that has to be used in the sending of the request
+     */
     @Override
     public void send(JSONObject json) {
         Log.i("user", json.toString());
         try {
-            String path = Constants.USER_UPDATE_DATA_PATH + json.getString("user_id");
+            String path = Constants.USER_UPDATE_DATA_PATH + json.getString(Constants.USER_ID);
             super.send(json, path);
         } catch (JSONException e) {
-            Log.e(mContext.getString(R.string.JSON_ERROR)+"_UPDATE", e.toString());
+            Log.e(mContext.getString(R.string.JSON_ERROR) + "_UPDATE", e.toString());
         }
     }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Callback function that has the logic for handling the response
+     * @param response the response of the request in format JSONObject
+     */
     @Override
     public void onResponse(JSONObject response) {
         Log.i("RESPONSE2", response.toString());
@@ -61,6 +72,10 @@ public class UpdateProfileRequest extends JSONRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Callback function that has the logic for handling errors
+     * @param error belonging to the request sent
+     */
     @Override
     public void onError(VolleyError error) {
         Log.e(mContext.getString(R.string.REQUEST_ERROR) + "1", error.getMessage());
@@ -69,6 +84,9 @@ public class UpdateProfileRequest extends JSONRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Method that wraps a call to the mehod saveChanges of EditProfileActivity
+     */
     private void saveChanges() {
         mContext.saveChanges();
     }

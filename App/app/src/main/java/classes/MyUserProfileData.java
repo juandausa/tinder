@@ -87,7 +87,9 @@ public class MyUserProfileData extends UserData {
     public void setPhoto(Bitmap photo) {
         if (photo == null) {
             mPhoto = null;
-            if (mJson.has("photo_profile")) mJson.remove("photo_profile");
+            if (mJson.has(Constants.PHOTO_PROFILE)) {
+                mJson.remove(Constants.PHOTO_PROFILE);
+            }
             return;
         }
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -95,7 +97,7 @@ public class MyUserProfileData extends UserData {
         byte[] byteArray = byteArrayOutputStream .toByteArray();
         mPhoto = Base64.encodeToString(byteArray, Base64.DEFAULT);
         try {
-            mJson.put("photo_profile", mPhoto);
+            mJson.put(Constants.PHOTO_PROFILE, mPhoto);
         } catch (JSONException e) { }
     }
 
@@ -144,10 +146,11 @@ public class MyUserProfileData extends UserData {
     @Override
     public JSONObject toJSON() {
         try {
-            mJson.put("gender", mGender);
-            mJson.put("age", (int) Integer.valueOf(mAge));
-            mJson.put("alias", mAlias);
-            mJson.put("photo_profile", mPhoto);
+            mJson.put(Constants.GENDER, mGender);
+            int value = Integer.parseInt(mAge);
+            mJson.put(Constants.AGE, value);
+            mJson.put(Constants.ALIAS, mAlias);
+            mJson.put(Constants.PHOTO_PROFILE, mPhoto);
         } catch (JSONException e) { }
         return mJson;
     }

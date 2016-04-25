@@ -12,7 +12,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import java.util.Map;
 
 /**
- * Created by fabrizio on 04/04/16.
+ * Request that sends nothing and receives a response code
  */
 public class StatusRequest extends Request<Integer> {
 
@@ -21,7 +21,15 @@ public class StatusRequest extends Request<Integer> {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    public StatusRequest(int method, String url, Response.Listener listener, Response.ErrorListener errorListener) {
+    /**
+     * Constructor of the class StatusRequest
+     * @param method the method to be used in the request (GET, POST, PUT, etc)
+     * @param url the url where the request will be sent
+     * @param listener the response listener
+     * @param errorListener the error listener
+     */
+    public StatusRequest(int method, String url, Response.Listener listener,
+                         Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         this.mListener = listener;
     }
@@ -29,8 +37,13 @@ public class StatusRequest extends Request<Integer> {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Parse the the response of the request and returns it.
+     * @param response the response of the request
+     * @return the status code of the response to the request
+     */
     @Override
-    protected Response<Integer> parseNetworkResponse(NetworkResponse response) {;
+    protected Response<Integer> parseNetworkResponse(NetworkResponse response) {
         try {
             Log.d("HEADERS", "Response Header = " + response.headers);
             Log.d("STATUS CODE", Integer.toString(response.statusCode));
@@ -46,19 +59,24 @@ public class StatusRequest extends Request<Integer> {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Deliver the response to the response listener
+     * @param response the response to the request sent
+     */
     @Override
     protected void deliverResponse(Integer response) {
         mListener.onResponse(response);
     }
 
-
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     /**
-            * Extracts a {@link Cache.Entry} from a {@link NetworkResponse}.
-            * Cache-control headers are ignored. SoftTtl == 3 mins, ttl == 24 hours.
-    * @param response The network response to parse headers from
-    * @return a cache entry for the given response, or null if the response is not cacheable.
-    */
+     * Extracts a {@link Cache.Entry} from a {@link NetworkResponse}.
+     * Cache-control headers are ignored. SoftTtl == 3 mins, ttl == 24 hours.
+     * @param response The network response to parse headers from
+     * @return a cache entry for the given response, or null if the response is not cacheable.
+     */
     public static Cache.Entry parseIgnoreCacheHeaders(NetworkResponse response) {
         long now = System.currentTimeMillis();
 
@@ -74,8 +92,10 @@ public class StatusRequest extends Request<Integer> {
 
         serverEtag = headers.get("ETag");
 
-        final long cacheHitButRefreshed = 3 * 60 * 1000; // in 3 minutes cache will be hit, but also refreshed on background
-        final long cacheExpired = 24 * 60 * 60 * 1000; // in 24 hours this cache entry expires completely
+        // in 3 minutes cache will be hit, but also refreshed on background
+        final long cacheHitButRefreshed = 3 * 60 * 1000;
+        // in 24 hours this cache entry expires completely
+        final long cacheExpired = 24 * 60 * 60 * 1000;
         final long softExpire = now + cacheHitButRefreshed;
         final long ttl = now + cacheExpired;
 

@@ -32,7 +32,8 @@ public final class DialogFactory {
     public static AlertDialog getNumberPickerDialog(final EditProfileActivity context,
                                                     final String initValue) {
         NumberPicker picker = new NumberPicker(context);
-        picker.setValue(Integer.valueOf(initValue));
+        int value = Integer.parseInt(initValue);
+        picker.setValue(value);
         picker.setMaxValue(MAX_AGE);
         picker.setMinValue(MIN_AGE);
         picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {

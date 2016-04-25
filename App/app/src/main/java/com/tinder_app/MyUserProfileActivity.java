@@ -35,7 +35,9 @@ public class MyUserProfileActivity extends UserProfileActivity {
         setButtonInvisible(R.id.dislike_fab);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.edit_profile_fab);
-        if (fab == null) return;
+        if (fab == null) {
+            return;
+        }
         fab.setVisibility(View.VISIBLE);
         fab.setBackgroundTintList(getResources().getColorStateList(R.color.com_facebook_blue));
         fab.setOnClickListener(new View.OnClickListener() {

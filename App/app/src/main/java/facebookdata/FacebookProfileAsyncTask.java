@@ -1,4 +1,4 @@
-package facebook_data;
+package facebookdata;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.util.Log;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,9 +15,9 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Created by fabrizio on 02/04/16.
+ * AsyncTask that gets the facebook profile information of the user
  */
-public class FacebookProfileAsyncTask extends AsyncTask<Void,Void,Void> {
+public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private String mUserId;
     private ConcurrentMap mProfile;
@@ -32,6 +31,11 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void,Void,Void> {
     private final String mPhoto = "photo_profile";
     private Bundle mParams;
 
+    /**
+     * Constructor of the class FacebookProfileAsyncTask
+     * @param userId the user id of the user
+     * @param profile the profile to be filled with info
+     */
     public FacebookProfileAsyncTask(String userId, ConcurrentMap profile) {
         mUserId = userId;
         mProfile = profile;
@@ -42,6 +46,11 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void,Void,Void> {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Gets the user data from facebook
+     * @param params none
+     * @return null
+     */
     @Override
     protected Void doInBackground(Void... params) {
         final AtomicBoolean ready = new AtomicBoolean(false);
@@ -54,6 +63,9 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void,Void,Void> {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Gets the user profile data from facebook using the Facebook Graph API
+     */
     private void getUserData() {
         GraphRequest request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken(),
@@ -71,8 +83,11 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void,Void,Void> {
                             mProfile.putIfAbsent(mAlias, user.getString(mFirstName));
                             mProfile.putIfAbsent(mGender, user.getString(mGender));
                             mProfile.putIfAbsent(mUser, mUserId);
-                            mProfile.putIfAbsent(mPhoto, user.getJSONObject("picture").getJSONObject("data").getString("url"));
-                        } catch (JSONException e) {}
+                            mProfile.putIfAbsent(mPhoto, user.getJSONObject("picture").
+                                    getJSONObject("data").getString("url"));
+                        } catch (JSONException e) {
+                            Log.e("JSON ERROR", e.toString());
+                        }
                     }
                 });
         request.setParameters(mParams);
