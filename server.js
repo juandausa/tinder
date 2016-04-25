@@ -12,7 +12,7 @@ var db;
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true})); // for parsing application/x-www-form-urlencoded
-
+app.use(express.static(__dirname + '/shared-app'));
 
 /************************************************************************/
 /******************					AUX				 ********************/
@@ -65,7 +65,7 @@ app.use(function(req, res, next) {
 
 // This responds OK for Heroku badges
 app.get('/', function (req, res) {
-    res.sendStatus(200);
+    res.sendFile('index.html');
 });
 
 /************************************************************************/

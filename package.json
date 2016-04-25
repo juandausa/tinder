@@ -16,7 +16,8 @@
     "postgresql": "0.0.1",
     "massive": "~2.1.0",
     "node-base64-image": "~0.1.2",
-    "keygen": "~0.2.1"
+    "keygen": "~0.2.1",
+    "jade": "~1.11.0"
   },
   "devDependencies": {
     "jshint": "~2.9.1"
