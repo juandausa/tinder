@@ -23,3 +23,12 @@ void FilterController :: handle_update_filters(struct mg_connection *nc, struct 
     response.SetBody(body);
     response.Send();
 }
+
+void FilterController :: handle_get_filters(struct mg_connection *nc, struct http_message *hm, Response response) {
+    char user_id[255];
+    mg_get_http_var(&hm->query_string, "userId", user_id, sizeof(user_id));
+    std::string body = this->filter_service.get_filters(user_id);
+    response.SetCode(200);
+    response.SetBody(body);
+    response.Send();
+}

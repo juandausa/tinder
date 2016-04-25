@@ -57,6 +57,10 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 FilterService filter_service(db);
                 FilterController filter_controller(filter_service);
                 filter_controller.handle_update_filters(nc, hm, response);
+            } else if ((mg_vcmp(&hm->uri, "/filters") == 0) && mg_vcmp(&hm->method, "GET") == 0) {
+                FilterService filter_service(db);
+                FilterController filter_controller(filter_service);
+                filter_controller.handle_get_filters(nc, hm, response);
             } else if (mg_vcmp(&hm->uri, "/printcontent") == 0) {
                 handle_print_content(hm);
             } else {

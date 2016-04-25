@@ -9,8 +9,8 @@
 class FilterService {
 public:
     FilterService(DataBase & database);
-    bool update_filters(const std::string user_id, const std::string filters);
-    std::string get_filters(const std::string user_id);
+    virtual bool update_filters(const std::string user_id, const std::string filters);
+    virtual std::string get_filters(const std::string user_id);
 private:
     DataBase * database;
 };
