@@ -4,7 +4,6 @@
 //
 
 #include "CurlWrapper.h"
-#include <string>
 
 
 /* <DESC>
@@ -27,14 +26,14 @@ void CurlWrapper::set_post_url(const std::string url) {
         /* First set the URL that is about to receive our POST. This URL can
            just as well be a https:// URL if that is what should receive the
            data. */
-        curl_easy_setopt(curl, CURLOPT_URL, url);
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     }
 }
 
 void CurlWrapper::set_post_data(const std::string data) {
     if (curl) {
         /* Now specify the POST data */
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data.c_str());
     }
 }
 
