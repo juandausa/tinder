@@ -45,11 +45,11 @@ void UserController :: handle_registration(struct mg_connection *nc, struct http
     bool res = curlWrapper.perform_request();
     curlWrapper.clean();
     LOG(INFO) << "Proccesing registration for user: ";
-    if (res){
+    if (res) {
         response.SetCode(200);
         response.Send();
         LOG(INFO) << "Login succeeded";
-    }else{
+    } else {
         response.SetCode(304);
         response.Send();
         LOG(INFO) << "Login failed";

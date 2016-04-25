@@ -4,12 +4,7 @@
 //
 
 #include "CurlWrapper.h"
-
-
-/* <DESC>
- * simple HTTP POST using the easy interface
- * </DESC>
- */
+#include <string>
 
 CurlWrapper::CurlWrapper() {
     /* In windows, this will init the winsock stuff */
