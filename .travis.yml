@@ -55,6 +55,7 @@ before_install:
     - sudo make install
     - cd ..
     - cd ..
+    - sudo apt-get install -y  libjsoncpp-dev
     - sudo rm -r dependencies
     
 before_script:

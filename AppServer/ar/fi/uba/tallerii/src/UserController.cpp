@@ -2,6 +2,7 @@
 // Copyright 2016 FiUBA
 //
 
+#include <jsoncpp/json/json.h>
 #include "UserController.h"
 #include "CurlWrapper.h"
 #include "Response.h"
