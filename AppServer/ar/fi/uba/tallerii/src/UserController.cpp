@@ -72,6 +72,18 @@ void UserController :: handle_registration(struct mg_connection *nc, struct http
 //    }
 }
 
+void UserController :: handle_update_user_info(struct mg_connection *nc, struct http_message *hm, Response response) {
+    response.SetCode(200);
+    response.SetBody("Not implemented");
+    response.Send();
+}
+
+void UserController :: handle_get_user_info(struct mg_connection *nc, struct http_message *hm, Response response) {
+    response.SetCode(200);
+    response.SetBody("Not implemented");
+    response.Send();
+}
+
 std::string make_body_for_login_response(const std::string user_id, const std::string token) {
     std::string body("{ \"user\": { \"userId\" : \"");
     body.append(user_id).append("\" , \"token\" : \"");
