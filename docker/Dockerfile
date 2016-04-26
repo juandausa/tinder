@@ -35,4 +35,13 @@ RUN wget https://github.com/facebook/rocksdb/archive/rocksdb-4.3.1.tar.gz \
 && sudo make install \
 && sudo ldconfig -v \
 && cd ..
-RUN sudo apt-get install git valgrind -y
+RUN sudo apt-get install libssl-dev -y
+RUN wget https://github.com/curl/curl/archive/curl-7_48_0.tar.gz \
+&& tar xf curl-7_48_0.tar.gz \
+&& cd curl-curl-7_48_0/ \
+&& cmake . \
+&& make \
+&& sudo make install \
+&& sudo ldconfig -v \
+&& cd ..
+RUN sudo apt-get install git valgrind lcov -y

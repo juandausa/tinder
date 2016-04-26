@@ -34,7 +34,7 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 ### Políticas de Commit
 * Correr valgrind sobre los tests, utilizando los flags --leak-check=full.
 * Correr cpplint para verificar los estilos de codificación. Desde la carpeta AppServer ejecute los siguientes comando y verifique que no hay errores:
-   * ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/src/[^Mongoose.cpp]*
+   * ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/src/*
    * ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/main/*
 
 ## Usuarios
