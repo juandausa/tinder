@@ -17,6 +17,7 @@ make
 sudo make install
 sudo ldconfig -v | grep glog
 cd ..
+# # Install gflags-
 wget https://github.com/schuhschuh/gflags/archive/v2.1.2.tar.gz
 tar xf v2.1.2.tar.gz
 cd gflags-2.1.2/
@@ -25,6 +26,7 @@ make
 sudo make install
 sudo ldconfig -v
 cd ..
+# # Install rocksdb
 wget https://github.com/facebook/rocksdb/archive/rocksdb-4.3.1.tar.gz
 tar xf rocksdb-4.3.1.tar.gz
 cd rocksdb-rocksdb-4.3.1/
@@ -32,8 +34,11 @@ make static_lib
 sudo make install
 sudo ldconfig -v
 cd ..
+# # Install curl
 cd curl-7.48.0
 ./configure
 make
 sudo make install
 cd ..
+# Install jsoncpp
+sudo apt-get install -y  libjsoncpp-dev

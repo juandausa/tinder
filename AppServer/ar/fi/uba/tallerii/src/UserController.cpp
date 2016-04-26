@@ -8,6 +8,7 @@
 #include "DataBase.h"
 #include <glog/logging.h>
 #include <string>
+#include <jsoncpp/json/json.h>
 
 
 UserController :: UserController(UserService user_service) : user_service(user_service) {
