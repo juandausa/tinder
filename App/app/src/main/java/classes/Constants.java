@@ -11,7 +11,7 @@ public final class Constants {
      * Ip of the server. Used to build paths for requests.
      * Other ips used "http://10.0.2.2:5000"; //"http://192.168.1.106:5000";
      */
-    public static final String IP_SERVER = "http://192.168.1.106:5000";
+    public static final String IP_SERVER = "http://10.0.2.2:5000"; //"http://192.168.1.106:5000";
 
     /**
      * Route for constructing the url path for the request that checks if the user is registered in
@@ -29,6 +29,12 @@ public final class Constants {
      * discovery filters.
      */
     public static final String CANDIDATES_PATH = "/candidates/";
+
+    /**
+     * Route for constructing the url path for the request that gets the people that matched with
+     * the user.
+     */
+    public static final String MATCHES_PATH = "/matches/";
 
     /**
      * Route for constructing the url path for the request that gets the user data
@@ -168,6 +174,11 @@ public final class Constants {
 
     /**********************************************************************************************/
     /**********************************************************************************************/
+
+    /**
+     * String for intent for starting MatchesActivity
+     */
+    public static final String CONVERSATION = "conversation";
 
     /**
      * Application context

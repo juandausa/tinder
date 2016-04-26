@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.tinder_app.Cheeses;
+import com.tinder_app.MatchChatActivity;
 import com.tinder_app.OtherUsersProfileActivity;
 import com.tinder_app.R;
 
@@ -18,21 +19,21 @@ import java.util.List;
 /**
  * ViewHolder for the RecyclerView that holds String elements.
  */
-public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class MatchesViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private final TypedValue mTypedValue = new TypedValue();
     private int mBackground;
-    private List<String> mValues;
+    private List<MatchData> mValues;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
     /**
-     * Constructor of the class SimpleStringRecyclerViewAdapter.
+     * Constructor of the class MatchesViewAdapter.
      * @param context Context where this object is instanced.
      * @param items List of elements that will be added to the ViewAdapter
      */
-    public SimpleStringRecyclerViewAdapter(Context context, List<String> items) {
+    public MatchesViewAdapter(Context context, List<MatchData> items) {
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
         mBackground = mTypedValue.resourceId;
         mValues = items;
@@ -47,7 +48,7 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<ViewHo
      * @return the value of the element queried.
      */
     public String getValueAt(int position) {
-        return mValues.get(position);
+        return mValues.get(position).getAlias();
     }
 
     /**********************************************************************************************/
@@ -77,24 +78,27 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<ViewHo
      */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.setBoundString(mValues.get(position));
-        holder.getTextView().setText(mValues.get(position));
+        final MatchData currMatch = mValues.get(position);
+        holder.setBoundString(currMatch.getAlias());
+        holder.getTextView().setText(currMatch.getAlias());
 
         holder.getView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                Intent intent = new Intent(context, OtherUsersProfileActivity.class);
-                intent.putExtra(OtherUsersProfileActivity.USER, holder.getBoundString());
+                Intent intent = new Intent(context, MatchChatActivity.class);
+                intent.putExtra(Constants.ALIAS, holder.getBoundString());
+                intent.putExtra(Constants.CONVERSATION, currMatch.getConversation().toString());
 
                 context.startActivity(intent);
             }
         });
 
-        Glide.with(holder.getImageView().getContext())
+        holder.getImageView().setImageBitmap(currMatch.getPhoto());
+        /*Glide.with(holder.getImageView().getContext())
                 .load(Cheeses.getRandomCheeseDrawable())
                 .fitCenter()
-                .into(holder.getImageView());
+                .into(holder.getImageView());*/
     }
 
     /**********************************************************************************************/
@@ -107,5 +111,18 @@ public class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<ViewHo
     @Override
     public int getItemCount() {
         return mValues.size();
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Update the values stored in the Adapter and notify the view so it also will update it's
+     * data.
+     * @param newValues a List with the new values to be added to the adapter.
+     */
+    public void update(List<MatchData> newValues) {
+        mValues = newValues;
+        notifyDataSetChanged();
     }
 }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
+<?xml version="1.0" encoding="utf-8"?><!-- <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary"> #E61010 #D32F2F</item>
         <item name="colorPrimaryDark">#263238</item>
         <item name="colorAccent">#F5C4C4</item>

@@ -48,4 +48,5 @@ dependencies {
     compile 'com.joooonho:selectableroundedimageview:1.0.1'
     compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     compile 'com.github.ismaeltoe:flowlayout:1.0'
+    compile 'me.himanshusoni.chatmessageview:chat-message-view:1.0.3'
 }
