@@ -2,13 +2,13 @@
 // Copyright 2016 FiUBA
 //
 
+#include <jsoncpp/json/json.h>
 #include "UserController.h"
 #include "CurlWrapper.h"
 #include "Response.h"
 #include "DataBase.h"
 #include <glog/logging.h>
 #include <string>
-#include <jsoncpp/json/json.h>
 
 
 UserController :: UserController(UserService user_service) : user_service(user_service) {
