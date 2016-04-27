@@ -12,4 +12,4 @@ add_executable(Tinder_main main.cpp ${SOURCE_FILES})
 
 #copy files folder to build destination
 file(COPY ../files DESTINATION ..)
-target_link_libraries(Tinder_main ${NOMBRE_LIBS} pthread ${CMAKE_INCLUDE_PATH} curl)
+target_link_libraries(Tinder_main ${NOMBRE_LIBS} pthread ${CMAKE_INCLUDE_PATH} curl jsoncpp)
