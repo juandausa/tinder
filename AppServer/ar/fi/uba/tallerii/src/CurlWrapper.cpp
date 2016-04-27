@@ -5,6 +5,7 @@
 
 #include "CurlWrapper.h"
 #include <string>
+#include <iostream>
 
 CurlWrapper::CurlWrapper() {
     curl_global_init(CURL_GLOBAL_ALL);
@@ -27,6 +28,10 @@ void CurlWrapper::set_post_url(const std::string url) {
 void CurlWrapper::set_post_data(const std::string data) {
     if (curl) {
         /* Now specify the POST data */
+        struct curl_slist *headers = NULL;
+        headers = curl_slist_append(headers, "Accept: application/json");
+        headers = curl_slist_append(headers, "Content-Type: application/json");
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data.c_str());
     }
 }

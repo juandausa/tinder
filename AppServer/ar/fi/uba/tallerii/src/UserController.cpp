@@ -9,7 +9,6 @@
 #include "Response.h"
 #include "DataBase.h"
 #include <glog/logging.h>
-#include <string>
 
 
 UserController :: UserController(UserService user_service) : user_service(user_service) {
@@ -53,7 +52,8 @@ void UserController :: handle_registration(struct mg_connection *nc, struct http
     std::string data = fastWriter.write(event);
     std::cout << data << std::endl;
     CurlWrapper curlWrapper = CurlWrapper();
-    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
+//    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
+    std::string url = "localhost:5000/users";
     curlWrapper.set_post_url(url);
     curlWrapper.set_post_data(data);
     bool res = curlWrapper.perform_request();
@@ -91,9 +91,7 @@ std::string make_body_for_login_response(const std::string user_id, const std::s
 }
 
 Json::Value make_body_for_registration_post(Json::Value root) {
-    std::string user_id = root.get("user_id", "").asString();
     std::string name = root.get("name", "").asString();
-    std::string birthday = root.get("birthday", "").asString();
     std::string alias = root.get("alias", "").asString();
     std::string email = root.get("email", "").asString();
     std::string photo_profile = root.get("photo_profile", "").asString();
@@ -108,20 +106,32 @@ Json::Value make_body_for_registration_post(Json::Value root) {
     double longitude = root["location"].get("longitude", 0).asDouble();
 
     Json::Value event;
-    event["user_id"] = user_id;
-    event["name"] = name;
-    event["birthday"] = birthday;
-    event["alias"] = alias;
-    event["email"] = email;
-    event["photo_profile"] = photo_profile;
-    event["interest"]["music"] = create_json_array(music);
-    event["interest"]["movies"] = create_json_array(movies);
-    event["interest"]["likes"] = create_json_array(likes);
-    event["interest"]["television"] = create_json_array(television);
-    event["interest"]["games"] = create_json_array(games);
-    event["interest"]["books"] = create_json_array(books);
-    event["location"]["latitude"] = latitude;
-    event["location"]["longitude"] = longitude;
+    Json::Value user;
+    Json::Value interest;
+    Json::Value interests;
+
+    user["name"] = name;
+    user["alias"] = alias;
+    user["email"] = email;
+    user["photo_profile"] = photo_profile;
+    user["location"]["latitude"] = latitude;
+    user["location"]["longitude"] = longitude;
+//    for (unsigned int i = 0; i < music.size(); ++i){
+//        std::cout << music[i] << std::endl;
+//        interest["music"]
+//        interests.append();
+//    }
+
+
+
+    // user["interests"]["music"] = create_json_array(music);
+    // user["interests"]["movies"] = create_json_array(movies);
+    // user["interests"]["likes"] = create_json_array(likes);
+    // user["interests"]["television"] = create_json_array(television);
+    // user["interests"]["games"] = create_json_array(games);
+    // user["interests"]["books"] = create_json_array(books);
+
+    event["user"] = user;
     return event;
 }
 
