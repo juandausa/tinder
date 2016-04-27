@@ -12,8 +12,10 @@
 class UserController {
 public:
     UserController(UserService user_service);
-    void handle_login(struct mg_connection *nc, struct http_message *hm, Response response);
-    void handle_registration(struct mg_connection *nc, struct http_message *hm, Response response);
+    virtual void handle_login(struct mg_connection *nc, struct http_message *hm, Response response);
+    virtual void handle_registration(struct mg_connection *nc, struct http_message *hm, Response response);
+    virtual void handle_get_user_info(struct mg_connection *nc, struct http_message *hm, Response response);
+    virtual void handle_update_user_info(struct mg_connection *nc, struct http_message *hm, Response response);
 private:
     bool is_user_registered(std::string user_id);
     UserService user_service;

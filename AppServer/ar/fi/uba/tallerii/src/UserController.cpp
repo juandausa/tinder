@@ -2,6 +2,7 @@
 // Copyright 2016 FiUBA
 //
 
+#include <jsoncpp/json/json.h>
 #include "UserController.h"
 #include "CurlWrapper.h"
 #include <jsoncpp/json/json.h>
@@ -9,7 +10,6 @@
 #include "DataBase.h"
 #include <glog/logging.h>
 #include <string>
-
 
 
 UserController :: UserController(UserService user_service) : user_service(user_service) {
@@ -137,6 +137,18 @@ void UserController :: handle_registration(struct mg_connection *nc, struct http
         response.Send();
         LOG(INFO) << "Login failed";
     }
+}
+
+void UserController :: handle_update_user_info(struct mg_connection *nc, struct http_message *hm, Response response) {
+    response.SetCode(200);
+    response.SetBody("Not implemented");
+    response.Send();
+}
+
+void UserController :: handle_get_user_info(struct mg_connection *nc, struct http_message *hm, Response response) {
+    response.SetCode(200);
+    response.SetBody("Not implemented");
+    response.Send();
 }
 
 std::string make_body_for_login_response(const std::string user_id, const std::string token) {
