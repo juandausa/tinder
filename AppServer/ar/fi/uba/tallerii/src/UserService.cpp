@@ -62,5 +62,9 @@ bool UserService::is_token_valid(const std::string user_id, const std::string to
     return token.compare(retrieved_token) == 0;
 }
 
+std::string UserService::get_external_user_id(std::string user_id) {
+    return "0";
+}
+
 UserService::~UserService() {
 }

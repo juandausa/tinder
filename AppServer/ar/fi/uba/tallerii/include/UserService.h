@@ -17,6 +17,7 @@ public:
                        const std::string email, const std::string photo_profile);
     std::string get_securiry_token(const std::string username);
     bool is_token_valid(const std::string username, const std::string token);
+    std::string get_external_user_id(std::string user_id);
 private:
     DataBase* database;
 };
