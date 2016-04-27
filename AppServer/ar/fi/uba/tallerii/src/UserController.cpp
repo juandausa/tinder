@@ -42,7 +42,7 @@ void UserController :: handle_login(struct mg_connection *nc, struct http_messag
 void UserController :: handle_registration(struct mg_connection *nc, struct http_message *hm, Response response) {
     Json::Value root;
     Json::Reader reader;
-
+    Json::FastWriter fastWriter;
     bool parsingSuccessful = reader.parse(hm->body.p, root, true);
     if (!parsingSuccessful) {
         std::cout  << "Failed to parse configuration\n";
@@ -50,11 +50,12 @@ void UserController :: handle_registration(struct mg_connection *nc, struct http
     }
 
     Json::Value event = make_body_for_registration_post(root);
-    std::cout << event << std::endl;
+    std::string data = fastWriter.write(event);
+    std::cout << data << std::endl;
     CurlWrapper curlWrapper = CurlWrapper();
     std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
     curlWrapper.set_post_url(url);
-    curlWrapper.set_post_data("");
+    curlWrapper.set_post_data(data);
     bool res = curlWrapper.perform_request();
     curlWrapper.clean();
     LOG(INFO) << "Proccesing registration for user: ";
