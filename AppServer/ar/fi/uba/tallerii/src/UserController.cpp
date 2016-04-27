@@ -2,36 +2,25 @@
 // Copyright 2016 FiUBA
 //
 
-#include <jsoncpp/json/json.h>
+
 #include "UserController.h"
-#include "CurlWrapper.h"
-#include "Response.h"
-#include "DataBase.h"
-#include <glog/logging.h>
 
 
 UserController :: UserController(UserService userService) : userService(userService) {
 }
 
 /* Private methods declaration */
-Json::Value make_body_for_login_response(const std::string user_id, const std::string token);
-Json::Value make_body_for_registration_post(Json::Value root);
-Json::Value create_json_array(Json::Value array);
 
 /* End private methods */
 
 void UserController :: handle_login(struct mg_connection *nc, struct http_message *hm, Response response) {
     std::string userId;
-    Json::Value root;
-    Json::Reader reader;
     Json::FastWriter fastWriter;
     mg_get_http_var(&hm->query_string, "userId",(char*)userId.c_str(), sizeof(userId));
     LOG(INFO) << "Proccesing login for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);
-        std::string token = userService.getSecurityToken(userId);
-        Json::Value event = make_body_for_login_response(userId, token);
-
+        Json::Value event = this->makeBodyForLoginResponse(userId);
         std::string data = fastWriter.write(event);
         response.SetBody(data);
         response.Send();
@@ -43,7 +32,7 @@ void UserController :: handle_login(struct mg_connection *nc, struct http_messag
     }
 }
 
-void UserController :: handle_registration(struct mg_connection *nc, struct http_message *hm, Response response) {
+void UserController::handle_registration(struct mg_connection *nc, struct http_message *hm, Response response) {
     Json::Value root;
     Json::Reader reader;
     Json::FastWriter fastWriter;
@@ -53,7 +42,7 @@ void UserController :: handle_registration(struct mg_connection *nc, struct http
         return;
     }
 
-    Json::Value event = make_body_for_registration_post(root);
+    Json::Value event = this->makeBodyForRegistrationPost(root);
     std::string data = fastWriter.write(event);
     CurlWrapper curlWrapper = CurlWrapper();
 //    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
@@ -87,12 +76,13 @@ void UserController :: handle_get_user_info(struct mg_connection *nc, struct htt
     response.Send();
 }
 
-Json::Value make_body_for_login_response(const std::string user_id, const std::string token) {
+Json::Value UserController::makeBodyForLoginResponse(const std::string userId) {
     Json::Value event;
+    std::string token = this->userService.getSecurityToken(userId);
     return event;
 }
 
-Json::Value make_body_for_registration_post(Json::Value root) {
+Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
     std::string name = root.get("name", "").asString();
     std::string alias = root.get("alias", "").asString();
     std::string email = root.get("email", "").asString();
