@@ -89,7 +89,7 @@ std::string make_body_for_login_response(const std::string user_id, const std::s
     return body;
 }
 
-Json::Value make_body_for_registration_post(Json::Value root){
+Json::Value make_body_for_registration_post(Json::Value root) {
     std::string user_id = root.get("user_id", "").asString();
     std::string name = root.get("name", "").asString();
     std::string birthday = root.get("birthday", "").asString();
