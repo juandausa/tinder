@@ -5,7 +5,6 @@
 #include <jsoncpp/json/json.h>
 #include "UserController.h"
 #include "CurlWrapper.h"
-#include <jsoncpp/json/json.h>
 #include "Response.h"
 #include "DataBase.h"
 #include <glog/logging.h>
