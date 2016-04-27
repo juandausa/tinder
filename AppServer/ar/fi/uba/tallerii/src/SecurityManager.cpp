@@ -23,7 +23,7 @@ void SecurityManager::filter_request(struct mg_connection *nc, struct http_messa
             char user_id[255], token[255];
             mg_get_http_var(&hm->query_string, "userId", user_id, sizeof(user_id));
             mg_get_http_var(&hm->query_string, "token", token, sizeof(token));
-            if (this->user_service.is_token_valid(user_id, token)) {
+            if (this->user_service.isTokenValid(user_id, token)) {
                 LOG(INFO) << "User '" << user_id << "' has been authorized";
                 return;
             } else {

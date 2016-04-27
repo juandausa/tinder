@@ -10,30 +10,36 @@
 #include <glog/logging.h>
 
 
-UserController :: UserController(UserService user_service) : user_service(user_service) {
+UserController :: UserController(UserService userService) : userService(userService) {
 }
 
 /* Private methods declaration */
-std::string make_body_for_login_response(const std::string user_id, const std::string token);
+Json::Value make_body_for_login_response(const std::string user_id, const std::string token);
 Json::Value make_body_for_registration_post(Json::Value root);
 Json::Value create_json_array(Json::Value array);
 
 /* End private methods */
 
 void UserController :: handle_login(struct mg_connection *nc, struct http_message *hm, Response response) {
-    char user_id[255];
-    mg_get_http_var(&hm->query_string, "userId", user_id, sizeof(user_id));
-    LOG(INFO) << "Proccesing login for user: '" << user_id << "'";
-    if (this->user_service.is_user_registered(user_id)) {
+    std::string userId;
+    Json::Value root;
+    Json::Reader reader;
+    Json::FastWriter fastWriter;
+    mg_get_http_var(&hm->query_string, "userId",(char*)userId.c_str(), sizeof(userId));
+    LOG(INFO) << "Proccesing login for user: '" << userId << "'";
+    if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);
-        std::string token = user_service.get_securiry_token(user_id);
-        response.SetBody(make_body_for_login_response(user_id, token));
+        std::string token = userService.getSecurityToken(userId);
+        Json::Value event = make_body_for_login_response(userId, token);
+
+        std::string data = fastWriter.write(event);
+        response.SetBody(data);
         response.Send();
-        LOG(INFO) << "Login succeeded for user: '" << user_id << "'";
+        LOG(INFO) << "Login succeeded for user: '" << userId<< "'";
     } else {
         response.SetCode(304);
         response.Send();
-        LOG(INFO) << "Login failed for user: '" << user_id << "'";
+        LOG(INFO) << "Login failed for user: '" << userId<< "'";
     }
 }
 
@@ -49,7 +55,6 @@ void UserController :: handle_registration(struct mg_connection *nc, struct http
 
     Json::Value event = make_body_for_registration_post(root);
     std::string data = fastWriter.write(event);
-    std::cout << data << std::endl;
     CurlWrapper curlWrapper = CurlWrapper();
 //    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
     std::string url = "localhost:5000/users";
@@ -82,11 +87,9 @@ void UserController :: handle_get_user_info(struct mg_connection *nc, struct htt
     response.Send();
 }
 
-std::string make_body_for_login_response(const std::string user_id, const std::string token) {
-    std::string body("{ \"user\": { \"userId\" : \"");
-    body.append(user_id).append("\" , \"token\" : \"");
-    body.append(token).append("\" } }");
-    return body;
+Json::Value make_body_for_login_response(const std::string user_id, const std::string token) {
+    Json::Value event;
+    return event;
 }
 
 Json::Value make_body_for_registration_post(Json::Value root) {
@@ -115,32 +118,41 @@ Json::Value make_body_for_registration_post(Json::Value root) {
     user["photo_profile"] = photo_profile;
     user["location"]["latitude"] = latitude;
     user["location"]["longitude"] = longitude;
-//    for (unsigned int i = 0; i < music.size(); ++i){
-//        std::cout << music[i] << std::endl;
-//        interest["music"]
-//        interests.append();
-//    }
 
+    for (unsigned int i = 0; i < music.size(); ++i){
+        interest["category"] = "music";
+        interest["value"] = music[i];
+        interests.append(interest);
+    }
+    for (unsigned int i = 0; i < movies.size(); ++i){
+        interest["category"] = "movies";
+        interest["value"] = movies[i];
+        interests.append(interest);
+    }
+    for (unsigned int i = 0; i < likes.size(); ++i){
+        interest["category"] = "likes";
+        interest["value"] = likes[i];
+        interests.append(interest);
+    }
+    for (unsigned int i = 0; i < television.size(); ++i){
+        interest["category"] = "television";
+        interest["value"] = television[i];
+        interests.append(interest);
+    }
+    for (unsigned int i = 0; i < games.size(); ++i){
+        interest["category"] = "games";
+        interest["value"] = games[i];
+        interests.append(interest);
+    }
+    for (unsigned int i = 0; i < books.size(); ++i){
+        interest["category"] = "books";
+        interest["value"] = books[i];
+        interests.append(interest);
+    }
 
-
-    // user["interests"]["music"] = create_json_array(music);
-    // user["interests"]["movies"] = create_json_array(movies);
-    // user["interests"]["likes"] = create_json_array(likes);
-    // user["interests"]["television"] = create_json_array(television);
-    // user["interests"]["games"] = create_json_array(games);
-    // user["interests"]["books"] = create_json_array(books);
-
+    user["interests"] = interests;
     event["user"] = user;
     return event;
 }
 
-Json::Value create_json_array(Json::Value array) {
-    Json::Value json_array((Json::Value) Json::arrayValue);
-    for (unsigned int i = 0; i < array.size(); i++) {
-        Json::Value value = array[i];
-        std::string str_value = value.asString();
-        json_array.append(Json::Value(str_value));
-    }
-    return json_array;
-}
 

@@ -11,13 +11,13 @@ class UserService {
 public:
     UserService(DataBase & db);
     ~UserService();
-    bool is_user_registered(const std::string user_id);
-    bool register_user(const std::string user_id, const std::string name,
+    bool isUserRegistered(const std::string userId);
+    bool registerUser(const std::string userId, const std::string name,
                        const std::string birthday, const std::string alias,
-                       const std::string email, const std::string photo_profile);
-    std::string get_securiry_token(const std::string username);
-    bool is_token_valid(const std::string username, const std::string token);
-    std::string get_external_user_id(std::string user_id);
+                       const std::string email, const std::string photoProfile);
+    std::string getSecurityToken(const std::string userName);
+    bool isTokenValid(const std::string userName, const std::string token);
+    std::string getExternalUserId(std::string userId);
 private:
     DataBase* database;
 };
