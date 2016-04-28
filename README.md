@@ -13,6 +13,17 @@ El cliente es una aplicación desarrollada en [android](https://www.android.com)
 * Ver y editar el perfil del usuario.
 
 
+### Como ejecutar y probar la aplicación
+La aplicación android se ha probado bajo las siguientes condiciones:
+* Corriendo en un smartphone con Android con una versión igual o superior a la 4.0. (Cerca del 90% de los teléfonos en el mercado cumplen con esto según la documentación de Android).
+* El teléfono sobre el que se corre la aplicación tiene una conexión a internet disponible.
+* El teléfono está conectado a la misma red wifi que la computadora donde se está corriendo el servidor al que le envía requests.
+* El servidor al que le envía requests es un MockServer que corre en localhost y tiene respuestas predefinidas para probar la aplicación. 
+* Para poder correr este servidor se necesita instalar las dependencias, por lo que dentro de la carpeta /MockServer se debe ejecutar el comando sudo npm install.
+* El servidor debe estar corriendo en la dirección ip de la red 192.168.1.106 o en su defecto, se deberá cambiar dicha dirección ip en el archivo Constants.java en el atributo publico IP_SERVER. (Esto se debe hacer así por el momento debido a la falta de conocimiento de cómo tener un archivo de configuración para la aplicación).
+
+Para instalar y correr la aplicación en un teléfono, se debe copiar el apk disponible en el repositorio a alguna carpeta del teléfono e instalarlo.
+
 
 ### Clonar branch
 
