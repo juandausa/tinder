@@ -26,6 +26,7 @@ private:
     Json::Value makeBodyForRegistrationPost(const Json::Value root);
     void postInterests(Json::Value root);
     std::string fakeResponseForUserInfo(std::string userId);
+    std::string fakeResponseForUserMatches();
 };
 
 
