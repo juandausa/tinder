@@ -19,9 +19,10 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 * Ejecutar ```./AppServer/curl_install.sh``` . Eso instalará las herramientas y recursos necesarios para usar curl.
 
 ### Modos de uso
+* Generar los ejecutables:
+   * Posicionarse sobre la carpeta AppServer/AppServer y ejecutar ```cmake .```.
+   * Luego ejecutar ```make```.
 * Para correr los tests por consola:
-   * Posicionarse sobre la carpeta AppServer y ejecutar ```cmake .``` .
-   * Luego ejecutar make.
    * Puede correr los tests mediante ```./ar/fi/uba/tallerii/test/runTests``` .
 * Para correr el servidor utilizar lo anterior pero iniciar el server mediante ```./ar/fi/uba/tallerii/main/Tinder_main``` .
    * El servidor lo puede finalizar con ```Ctrl+C``` o eviandole cualquier señal distinta de ```-9```.
@@ -39,8 +40,8 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 
 ## Usuarios
 ### Ejecutar utilizando Docker
-* Instale docker.
+* Instale [Docker](https://www.docker.com/).
 * Descargue una copia del repositirio mediante ```git clone -b AppServer https://github.com/juandausa/tinder.git AppServer```.
 * En la raiz ejecute el script ```startDocker.sh``` .
    * Esto le abrirar una terminal con todas las dependencias necesarias para ejecutar el servidor.
-   * Descargue los fuentes del proyecto y ejecute la aplicación mediante lo descrito en [Modos de Uso](https://github.com/juandausa/tinder/tree/AppServer#modos-de-uso) .
+   * Descargue el último release mediante ```wget https://github.com/juandausa/tinder/archive/v0.1AppServer.tar.gz``` y ejecute la aplicación mediante lo descrito en [Modos de Uso](https://github.com/juandausa/tinder/tree/AppServer#modos-de-uso) .
