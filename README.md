@@ -38,7 +38,12 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
    * ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/src/*
    * ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/main/*
 
+### API Web
+
+* Consultar [interfaz](https://docs.google.com/document/d/1lUKozaD6EfZabGmE2GwwCftcE25IU0Tyd3ERx7IhXPM/edit?usp=sharing) web.
+
 ## Usuarios
+
 ### Ejecutar utilizando Docker
 * Instale [Docker](https://www.docker.com/).
 * Descargue una copia del repositirio mediante ```git clone -b AppServer https://github.com/juandausa/tinder.git AppServer```.
