@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by fabrizio on 25/04/16.
+ * Class that contains the data of a match of the user
  */
 public class MatchData extends UserData {
 
@@ -28,6 +28,10 @@ public class MatchData extends UserData {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Gets the conversation of the user with this match
+     * @return the conversation
+     */
     public Conversation getConversation() {
         return mConversation;
     }

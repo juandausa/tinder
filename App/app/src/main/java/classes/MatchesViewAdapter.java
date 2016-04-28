@@ -8,10 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
-import com.tinder_app.Cheeses;
 import com.tinder_app.MatchChatActivity;
-import com.tinder_app.OtherUsersProfileActivity;
 import com.tinder_app.R;
 
 import java.util.List;

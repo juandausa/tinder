@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import classes.CandidateData;
 import classes.Constants;
 import classes.MatchData;
 import classes.MatchesViewAdapter;

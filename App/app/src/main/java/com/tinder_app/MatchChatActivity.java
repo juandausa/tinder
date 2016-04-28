@@ -1,21 +1,14 @@
 package com.tinder_app;
 
 import android.content.Intent;
-import android.graphics.CornerPathEffect;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -23,8 +16,10 @@ import classes.ChatMessage;
 import classes.ChatMessageAdapter;
 import classes.Constants;
 import classes.Conversation;
-import me.himanshusoni.chatmessageview.ChatMessageView;
 
+/**
+ * Chat Activity of the user with other
+ */
 public class MatchChatActivity extends AppCompatActivity {
 
     private Conversation mConversation;
@@ -34,6 +29,10 @@ public class MatchChatActivity extends AppCompatActivity {
     private Button mButtonSend;
     private EditText mEditTextMessage;
 
+    /**
+     * Sets the activity data and views
+     * @param savedInstanceState the saved state of the activity to be restored
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,31 +69,47 @@ public class MatchChatActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * The user sends a message
+     * @param message the message to be sent
+     */
     private void sendMessage(String message) {
         ChatMessage chatMessage = new ChatMessage(message, true, false);
         mAdapter.add(chatMessage);
         mAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * The other user sends a message
+     * @param message the message to be sent
+     */
     private void mimicOtherMessage(String message) {
         ChatMessage chatMessage = new ChatMessage(message, false, false);
         mAdapter.add(chatMessage);
         mAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Send a message from both of the users
+     */
     private void sendMessage() {
         ChatMessage chatMessage = new ChatMessage(null, true, true);
         mAdapter.add(chatMessage);
         mimicOtherMessage();
     }
 
+    /**
+     * Send a message from the other user
+     */
     private void mimicOtherMessage() {
         ChatMessage chatMessage = new ChatMessage(null, false, true);
         mAdapter.add(chatMessage);
     }
 
 
-
+    /**
+     * Show a conversation
+     */
     private void showConversation() {
         //LinearLayout layout = (LinearLayout) findViewById(R.id.chat_layout);
         int index = 0;

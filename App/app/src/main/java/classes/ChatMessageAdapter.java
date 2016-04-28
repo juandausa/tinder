@@ -13,33 +13,64 @@ import com.tinder_app.R;
 import java.util.List;
 
 /**
- * Created by himanshusoni on 06/09/15.
+ * Adapter for the Chat view
  */
 public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
-    private static final int MY_MESSAGE = 0, OTHER_MESSAGE = 1, MY_IMAGE = 2, OTHER_IMAGE = 3;
 
+    private static final int MY_MESSAGE = 0;
+    private static final int OTHER_MESSAGE = 1;
+    private static final int MY_IMAGE = 2;
+    private static final int OTHER_IMAGE = 3;
+
+    /**
+     * Constructor for the ChatMessageAdapter
+     * @param context the context where it is used
+     * @param data the data to be stored
+     */
     public ChatMessageAdapter(Context context, List<ChatMessage> data) {
         super(context, R.layout.item_mine_message, data);
     }
 
+    /**
+     * Returns the count of data types in the adapter
+     * @return the count of data types in the adapter
+     */
     @Override
     public int getViewTypeCount() {
         // my message, other message, my image, other image
         return 4;
     }
 
+    /**
+     * Returns the type of the data at position 'position'
+     * @param position the position of the data selected
+     * @return the type of the data at position 'position'
+     */
     @Override
     public int getItemViewType(int position) {
         ChatMessage item = getItem(position);
 
-        if (item.isMine() && !item.isImage()) return MY_MESSAGE;
-        else if (!item.isMine() && !item.isImage()) return OTHER_MESSAGE;
-        else if (item.isMine() && item.isImage()) return MY_IMAGE;
-        else return OTHER_IMAGE;
+        if (item.isMine() && !item.ismIsImage()) {
+            return MY_MESSAGE;
+        } else if (!item.isMine() && !item.ismIsImage()) {
+            return OTHER_MESSAGE;
+        } else if (item.isMine() && item.ismIsImage()) {
+            return MY_IMAGE;
+        } else {
+            return OTHER_IMAGE;
+        }
     }
 
+    /**
+     * Gets the view whit all the messages generated from the data stored in the adapter
+     * @param position position of the data that will be procesed to generate it's view
+     * @param otherView the view
+     * @param parent the parent view
+     * @return the generated view
+     */
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View otherView, ViewGroup parent) {
+        View convertView = otherView;
         int viewType = getItemViewType(position);
         if (viewType == MY_MESSAGE) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_mine_message, parent, false);
