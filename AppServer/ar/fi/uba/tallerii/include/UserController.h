@@ -19,6 +19,7 @@ public:
     virtual void handle_registration(struct mg_connection *nc, struct http_message *hm, Response response);
     virtual void handle_get_user_info(struct mg_connection *nc, struct http_message *hm, Response response);
     virtual void handle_update_user_info(struct mg_connection *nc, struct http_message *hm, Response response);
+    virtual void handle_get_matches(struct mg_connection *nc, struct http_message *hm, Response response);
 private:
     UserService userService;
     Json::Value makeBodyForLoginResponse(const std::string userId);

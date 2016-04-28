@@ -79,6 +79,12 @@ void UserController :: handle_get_user_info(struct mg_connection *nc, struct htt
     response.Send();
 }
 
+void UserController :: handle_get_matches(struct mg_connection *nc, struct http_message *hm, Response response) {
+    response.SetCode(200);
+    response.SetBody("Not implemented");
+    response.Send();
+}
+
 Json::Value UserController::makeBodyForLoginResponse(const std::string userId) {
     Json::Value event;
     std::string token = this->userService.getSecurityToken(userId);
