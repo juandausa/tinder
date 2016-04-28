@@ -8,6 +8,14 @@
 En este branch se encuentran todos los sources, tests y otros archivos del Shared Server.
 El Shared Server es un servidor desarrollado en [node.js](https://nodejs.org) que ofrece las operaciones de alta, baja, modificación y consulta de usuarios. Consta de una base de datos relacional para la cual se usa [postgreSQL](http://www.postgresql.org/) como administrador de base de datos.
 
+
+### Como probar el Shared Server
+Actualmente se encuentra subido y corriendo en heroku.
+Se puede correr tambien de manera local como está indicado en el item "Ambiente local" de este archivo.
+Se puede probar utilizando la API establecida en el enunciado del trabajo, o se puede tambien, probar utilizando el front end realizado (justamente para probar la API). A dicho front end se puede llegar con la ruta “/”.
+Entonces, para acceder al frontend del shared server subido a Heroku basta con acceder a:
+https://enigmatic-scrubland-75073.herokuapp.com/
+
 ### Clonar branch
 
 Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar en la linea de comandos:

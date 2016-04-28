@@ -168,9 +168,9 @@ app.post('/users', function (req, res) {
 app.post('/interests', function (req, res) {
 	var interest_data = req.body.interest;
 	console.log(interest_data.value);
-	db.run("select count(*) from interests where data->>'category' = '" 
-		+ String(interest_data.category) + "' and data->>'value' = '" 
-		+ String(interest_data.value) + "'", function(err, found) {
+	db.run("select count(*) from interests where data->>'category' = '" +
+		String(interest_data.category) + "' and data->>'value' = '" +
+		String(interest_data.value) + "'", function(err, found) {
 		console.log("Count founded", found);
 		var count = found[0].count;
 		if (count > 0) {
