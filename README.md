@@ -44,4 +44,4 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 * Descargue una copia del repositirio mediante ```git clone -b AppServer https://github.com/juandausa/tinder.git AppServer```.
 * En la raiz ejecute el script ```startDocker.sh``` .
    * Esto le abrirar una terminal con todas las dependencias necesarias para ejecutar el servidor.
-   * Descargue el último release mediante ```wget https://github.com/juandausa/tinder/archive/v0.1AppServer.tar.gz``` y ejecute la aplicación mediante lo descrito en [Modos de Uso](https://github.com/juandausa/tinder/tree/AppServer#modos-de-uso) .
+   * Descargue el último release mediante ```wget https://github.com/juandausa/tinder/archive/v0.1.1AppServer.tar.gz``` y ejecute la aplicación mediante lo descrito en [Modos de Uso](https://github.com/juandausa/tinder/tree/AppServer#modos-de-uso) .
