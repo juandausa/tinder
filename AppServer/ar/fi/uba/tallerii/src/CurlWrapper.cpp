@@ -7,6 +7,11 @@
 #include <string>
 #include <iostream>
 
+static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
+    ((std::string*)userp)->append((char*)contents, size * nmemb);
+    return size * nmemb;
+}
+
 CurlWrapper::CurlWrapper() {
     curl_global_init(CURL_GLOBAL_ALL);
     /* get a curl handle */
@@ -33,6 +38,18 @@ void CurlWrapper::set_post_data(const std::string data) {
         headers = curl_slist_append(headers, "Content-Type: application/json");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data.c_str());
+    }
+}
+
+
+void CurlWrapper::set_get_buffer(const std::string readBuffer) {
+    if (curl) {
+        struct curl_slist *headers = NULL;
+        headers = curl_slist_append(headers, "Accept: application/json");
+        headers = curl_slist_append(headers, "Content-Type: application/json");
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     }
 }
 
