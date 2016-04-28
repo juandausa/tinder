@@ -45,3 +45,4 @@ RUN wget https://github.com/curl/curl/archive/curl-7_48_0.tar.gz \
 && sudo ldconfig -v \
 && cd ..
 RUN sudo apt-get install git valgrind lcov -y
+RUN sudo apt-get install -y libjsoncpp-dev

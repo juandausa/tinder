@@ -2,7 +2,22 @@
 // Copyright 2016 FiUBA
 //
 
+#include <glog/logging.h>
+#include <signal.h>
+#include <iostream>
+#include <vector>
+#include <string>
+#include "Mongoose.h"
 #include "Server.h"
+#include "PlusController.h"
+#include "UserController.h"
+#include "FilterController.h"
+#include "Response.h"
+#include "DataBase.h"
+#include "Constant.h"
+#include "UserService.h"
+#include "FilterService.h"
+#include "SecurityManager.h"
 
 static struct mg_serve_http_opts s_http_server_opts;
 static int s_sig_num = 0;
@@ -43,6 +58,9 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
             } else if (requestParser.isUserInfoRequest()){
                 UserController user_controller(user_service);
                 user_controller.handleGetUserInfo(nc, hm, response);
+            } else if (requestParser.isCandidatesGetRequest()) {
+                UserController user_controller(user_service);
+                user_controller.handleShowCandidates(nc, hm, response);
             } else if (requestParser.isUserUpdateRequest()){
                 UserController user_controller(user_service);
                 user_controller.handleUpdateUserInfo(nc, hm, response);
@@ -50,6 +68,9 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 FilterService filter_service(db);
                 FilterController filter_controller(filter_service);
                 filter_controller.handle_update_filters(nc, hm, response);
+            } else if (requestParser.isMatchesGetRequest()) {
+                UserController user_controller(user_service);
+                user_controller.handleGetMatches(nc, hm, response);
             } else if (requestParser.isFiltersGetRequest()){
                 FilterService filter_service(db);
                 FilterController filter_controller(filter_service);
@@ -83,6 +104,16 @@ void Server :: start() {
         fprintf(stderr, "Error starting server on port %s\n", this->port.c_str());
         exit(1);
     }
+
+#ifdef MG_ENABLE_SSL
+    if (ssl_cert != NULL) {
+    const char *err_str = mg_set_ssl(nc, ssl_cert, NULL);
+    if (err_str != NULL) {
+      fprintf(stderr, "Error loading SSL cert: %s\n", err_str);
+      exit(1);
+    }
+  }
+#endif
 
     mg_set_protocol_http_websocket(nc);
     s_http_server_opts.document_root = ".";

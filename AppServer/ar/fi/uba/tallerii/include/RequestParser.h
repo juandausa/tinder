@@ -25,6 +25,8 @@ public:
     bool isUserUpdateRequest();
     bool isFiltersGetRequest();
     bool isFiltersPostRequest();
+    bool isCandidatesGetRequest();
+    bool isMatchesGetRequest();
 private:
     std::string uri;
     std::string resourceId;

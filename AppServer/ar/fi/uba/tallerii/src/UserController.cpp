@@ -9,15 +9,13 @@
 UserController :: UserController(UserService userService) : userService(userService) {
 }
 
-/* Private methods declaration */
 
-/* End private methods */
 
 void UserController :: handleLogin(struct mg_connection *nc, struct http_message *hm, Response response) {
     std::cout << "handle_login" << std::endl;;
     std::string userId;
     Json::FastWriter fastWriter;
-    mg_get_http_var(&hm->query_string, "userId",(char*)userId.c_str(), sizeof(userId));
+    mg_get_http_var(&hm->query_string, "userId", (char*) userId.c_str(), sizeof(userId));
     LOG(INFO) << "Proccesing login for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);
@@ -58,13 +56,33 @@ void UserController::handleRegistration(struct mg_connection *nc, struct http_me
         response.SetCode(200);
         response.SetBody("");
         response.Send();
-        LOG(INFO) << "Login succeeded";
+        LOG(INFO) << "Registration succeeded";
     } else {
         response.SetCode(304);
         response.Send();
-        LOG(INFO) << "Login failed";
+        LOG(INFO) << "Registration failed";
     }
 }
+
+void UserController::handleShowCandidates(struct mg_connection *nc, struct http_message *hm, Response response) {
+    std::string userId;
+    Json::FastWriter fastWriter;
+    mg_get_http_var(&hm->query_string, "userId", (char*) userId.c_str(), sizeof(userId));
+    LOG(INFO) << "Proccesing login for user: '" << userId << "'";
+    if (this->userService.isUserRegistered(userId)) {
+        response.SetCode(200);
+        Json::Value event = this->makeBodyForShowCandidatesResponse();
+        std::string data = fastWriter.write(event);
+        response.SetBody(data);
+        response.Send();
+        LOG(INFO) << "Show Candidates succeeded for user: '" << userId<< "'";
+    } else {
+        response.SetCode(304);
+        response.Send();
+        LOG(INFO) << "Show Candidates failed for user: '" << userId<< "'";
+    }
+}
+
 
 void UserController :: handleUpdateUserInfo(struct mg_connection *nc, struct http_message *hm, Response response) {
     response.SetCode(200);
@@ -73,8 +91,16 @@ void UserController :: handleUpdateUserInfo(struct mg_connection *nc, struct htt
 }
 
 void UserController :: handleGetUserInfo(struct mg_connection *nc, struct http_message *hm, Response response) {
+    char userId[255];
+    mg_get_http_var(&hm->query_string, "userId", userId, sizeof(userId));
     response.SetCode(200);
-    response.SetBody("Not implemented");
+    response.SetBody(this->fakeResponseForUserInfo(userId));
+    response.Send();
+}
+
+void UserController :: handleGetMatches(struct mg_connection *nc, struct http_message *hm, Response response) {
+    response.SetCode(200);
+    response.SetBody(this->fakeResponseForUserMatches());
     response.Send();
 }
 
@@ -83,6 +109,24 @@ Json::Value UserController::makeBodyForLoginResponse(const std::string userId) {
     std::string token = this->userService.getSecurityToken(userId);
     event["user"]["userId"] = userId;
     event["user"]["token"] = token;
+    return event;
+}
+
+Json::Value UserController::makeBodyForShowCandidatesResponse() {
+    Json::Value event;
+    Json::Value arrayUsers(Json::arrayValue);
+    std::string readBuffer;
+
+    CurlWrapper curlWrapper = CurlWrapper();
+    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
+    curlWrapper.set_post_url(url);
+    // TODO(jasmina): ver si funciona el GET asi configurado.
+    curlWrapper.set_get_buffer(readBuffer);
+    bool res = curlWrapper.perform_request();
+    curlWrapper.clean();
+    std::cout << readBuffer << std::endl;
+    // TODO(jasmina): armar el json que tenga adentro de candidates la lista de usuarios.
+    event["candidates"] = arrayUsers;
     return event;
 }
 
@@ -113,32 +157,32 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
     user["location"]["latitude"] = latitude;
     user["location"]["longitude"] = longitude;
 
-    for (unsigned int i = 0; i < music.size(); ++i){
+    for (unsigned int i = 0; i < music.size(); ++i) {
         interest["category"] = "music";
         interest["value"] = music[i];
         interests.append(interest);
     }
-    for (unsigned int i = 0; i < movies.size(); ++i){
+    for (unsigned int i = 0; i < movies.size(); ++i) {
         interest["category"] = "movies";
         interest["value"] = movies[i];
         interests.append(interest);
     }
-    for (unsigned int i = 0; i < likes.size(); ++i){
+    for (unsigned int i = 0; i < likes.size(); ++i) {
         interest["category"] = "likes";
         interest["value"] = likes[i];
         interests.append(interest);
     }
-    for (unsigned int i = 0; i < television.size(); ++i){
+    for (unsigned int i = 0; i < television.size(); ++i) {
         interest["category"] = "television";
         interest["value"] = television[i];
         interests.append(interest);
     }
-    for (unsigned int i = 0; i < games.size(); ++i){
+    for (unsigned int i = 0; i < games.size(); ++i) {
         interest["category"] = "games";
         interest["value"] = games[i];
         interests.append(interest);
     }
-    for (unsigned int i = 0; i < books.size(); ++i){
+    for (unsigned int i = 0; i < books.size(); ++i) {
         interest["category"] = "books";
         interest["value"] = books[i];
         interests.append(interest);
@@ -150,3 +194,74 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
 }
 
 
+void UserController::postInterests(Json::Value root) {
+    Json::FastWriter fastWriter;
+    Json::Value interests = root["user"]["interests"];
+    for (unsigned int i = 0; i < interests.size(); i++) {
+        Json::Value postData;
+        postData["interest"] = interests[i];
+        postData["metadata"]["version"] = "0.1";
+        postData["metadata"]["count"] = "1";
+        std::string data = fastWriter.write(postData);
+        std::cout << data << std::endl;
+        CurlWrapper curlWrapper = CurlWrapper();
+        std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/interests";
+//        std::string url = "10.1.86.224:5000/interests";
+//        std::string url = "190.244.18.3:5000/interests";
+        curlWrapper.set_post_url(url);
+        curlWrapper.set_post_data(data);
+        bool res = curlWrapper.perform_request();
+        if (!res) {
+            std::cout << "Failed to post new interests\n";
+        }
+        curlWrapper.clean();
+    }
+}
+
+std::string UserController::fakeResponseForUserInfo(std::string userId) {
+    Json::FastWriter fastWriter;
+    Json::Value fakeInfo;
+    fakeInfo["user_id"] = userId;
+    fakeInfo["name"] = "NombreMock";
+    fakeInfo["alias"] = "AliasMock";
+    fakeInfo["age"] = "1";
+    fakeInfo["gender"] = "male";
+    fakeInfo["photo_profile"] = "";
+    fakeInfo["interests"]= Json::arrayValue;
+    Json::Value fakeLocation;
+    fakeLocation["latitude"] = -121.45356;
+    fakeLocation["longitude"] = 46.51119;
+    fakeInfo["location"] = fakeLocation;
+    return fastWriter.write(fakeInfo);
+}
+
+std::string UserController::fakeResponseForUserMatches() {
+    Json::FastWriter fastWriter;
+    Json::Value fakeInfo;
+    Json::Value match, otherMatch;
+    Json::Value message1, message2, message3, message4;
+    match["user_id"] = "22";
+    match["alias"] = "Josecito";
+    match["age"] = "25";
+    match["photo_profile"] = "";
+    match["interests"] = Json::arrayValue;
+    match["messages"] = Json::arrayValue;
+    message1["0"] = "Hola, como estas?";
+    message2["1"] = "Bien, y tu?";
+    message3["1"] = "Que frio no?";
+    match["messages"][0] = message1;
+    match["messages"][1] = message2;
+    match["messages"][2] = message3,
+    otherMatch["user_id"] = "111";
+    otherMatch["alias"] = "Juanita";
+    otherMatch["age"] = "32";
+    otherMatch["photo_profile"] = "";
+    otherMatch["interests"] = Json::arrayValue;
+    otherMatch["messages"] = Json::arrayValue;
+    message4["0"] = "Hola, alguien ahi?";
+    otherMatch["messages"][0] = message4;
+    fakeInfo["matches"] = Json::arrayValue;
+    fakeInfo["matches"][0] = match;
+    fakeInfo["matches"][1] = otherMatch;
+    return fastWriter.write(fakeInfo);
+}

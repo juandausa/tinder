@@ -51,4 +51,13 @@ bool RequestParser::isFiltersGetRequest(){
 
 bool RequestParser::isFiltersPostRequest(){
     return (this->uri == "/filters" && this->method == "POST");
+
+}
+
+bool RequestParser::isCandidatesGetRequest(){
+    return (this->uri == "/candidates" && this->method == "GET");
+}
+
+bool RequestParser::isMatchesGetRequest(){
+    return (this->uri == "/matches" && this->method == "GET");
 }
