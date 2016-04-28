@@ -7,5 +7,6 @@
         "user"     : "postgres",
         "password" : "",
         "host"     : "localhost"
-    }
+    },
+    "version": "0.1"
 }

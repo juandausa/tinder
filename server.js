@@ -49,6 +49,17 @@ function decodeImage(data, res) {
 }
 
 /************************************************************************/
+/************************************************************************/
+
+function getMetadata(collection) {
+	var metadata = {version: config.version};
+	if (collection !== null) {
+		metadata.count = collection.length;
+	}
+	return metadata;
+}
+
+/************************************************************************/
 /***************				RESTFUL API				*****************/
 /************************************************************************/
 
@@ -79,7 +90,7 @@ app.get('/interests', function (req, res) {
 		for (i = 0; i < interests.length; i++) {
 			response.interests.push(interests[i].data);
 		}
-		response.metadata = {version: "0.1", count: interests.length};
+		response.metadata = getMetadata(interests);
 		res.send(response);
 	});
 });
@@ -97,7 +108,7 @@ app.get('/users', function (req, res) {
 			data.id = users[i].id;
 			response.users.push({user: data});
 		}
-		response.metadata = {version: "0.1", count: users.length};
+		response.metadata = getMetadata(users);
 		res.send(response);
 	});
 });
@@ -107,13 +118,14 @@ app.get('/users', function (req, res) {
 
 // This responds with a JSON of users
 app.get('/users/:user_id', function (req, res) {
-	var response = {metadata: {version: "0.1"}};
+	var response = {};
 	db.users.findOne({id: req.params.user_id}, function(err, user) { 
 		if (checkForError(err, res, "Error at creating new user")) return;
         if (user !== undefined) {
 			user.data.id = user.id;
 			response.user = user.data;
-		} 
+		}
+		response.metadata = getMetadata(null);
 		res.send(response);
 	});
 });
@@ -136,12 +148,16 @@ app.get('/users/:user_id/photo', function (req, res) {
 
 // This create a new user
 app.post('/users', function (req, res) {
+	var response = {};
 	var user_data = req.body.user;
 	user_data.photo_profile = '';
 	db.users.save({data: user_data}, function(err, saved) {
 		if (checkForError(err, res, "Error at saving user data")) return;
         if (checkIfUndefined(saved, "User not created")) return;
-		res.sendStatus(201);
+		saved.data.id = saved.id;
+		response.user = saved.data;
+		response.metadata = getMetadata(null);
+        res.status(201).send(response);
 	});
 });
 
