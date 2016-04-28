@@ -35,7 +35,6 @@ void handle_print_content(struct http_message *hm) {
 }
 
 void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
-
     struct http_message *hm = (struct http_message *) ev_data;
     switch (ev) {
         case MG_EV_HTTP_REQUEST:
@@ -49,29 +48,29 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
             std::cout << "Url: " << requestParser.getUrl() << "Method: " << requestParser.getMethod() << std::endl;
 
             security.filter_request(nc, hm, response);
-            if (requestParser.isUserLoginRequest()){
+            if (requestParser.isUserLoginRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleLogin(nc, hm, response);
-            } else if (requestParser.isUserRegisterRequest()){
+            } else if (requestParser.isUserRegisterRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleRegistration(nc, hm, response);
-            } else if (requestParser.isUserInfoRequest()){
+            } else if (requestParser.isUserInfoRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleGetUserInfo(nc, hm, response);
             } else if (requestParser.isCandidatesGetRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleShowCandidates(nc, hm, response);
-            } else if (requestParser.isUserUpdateRequest()){
+            } else if (requestParser.isUserUpdateRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleUpdateUserInfo(nc, hm, response);
-            } else if (requestParser.isFiltersPostRequest()){
+            } else if (requestParser.isFiltersPostRequest()) {
                 FilterService filter_service(db);
                 FilterController filter_controller(filter_service);
                 filter_controller.handle_update_filters(nc, hm, response);
             } else if (requestParser.isMatchesGetRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleGetMatches(nc, hm, response);
-            } else if (requestParser.isFiltersGetRequest()){
+            } else if (requestParser.isFiltersGetRequest()) {
                 FilterService filter_service(db);
                 FilterController filter_controller(filter_service);
                 filter_controller.handle_get_filters(nc, hm, response);

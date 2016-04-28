@@ -3,7 +3,7 @@
 //
 
 #include "UserService.h"
-
+#include <string>
 
 UserService::UserService(DataBase &db) : database(&db) {
 }
