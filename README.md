@@ -80,3 +80,6 @@ Para correr el server localmente se debe ejecutar el comando:
 
 `heroku local`
 
+### API Web
+* Consultar [interfaz](https://docs.google.com/document/d/1xRC2wTo4CRqe-7736FFCgLUOsSzKJn2EOubYEawvf50/edit?usp=sharing) web.
+
