@@ -15,7 +15,7 @@ void UserController :: handleLogin(struct mg_connection *nc, struct http_message
     std::cout << "handle_login" << std::endl;;
     std::string userId;
     Json::FastWriter fastWriter;
-    mg_get_http_var(&hm->query_string, "userId", reinterpret_cast<char*> userId.c_str(), sizeof(userId));
+    mg_get_http_var(&hm->query_string, "userId", reinterpret_cast<char*>((char*)userId.c_str()), sizeof(userId));
     LOG(INFO) << "Proccesing login for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);
@@ -67,7 +67,7 @@ void UserController::handleRegistration(struct mg_connection *nc, struct http_me
 void UserController::handleShowCandidates(struct mg_connection *nc, struct http_message *hm, Response response) {
     std::string userId;
     Json::FastWriter fastWriter;
-    mg_get_http_var(&hm->query_string, "userId", reinterpret_cast<char*> userId.c_str(), sizeof(userId));
+    mg_get_http_var(&hm->query_string, "userId", reinterpret_cast<char*>((char*)userId.c_str()), sizeof(userId));
     LOG(INFO) << "Proccesing login for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);
@@ -122,7 +122,7 @@ Json::Value UserController::makeBodyForShowCandidatesResponse() {
     curlWrapper.set_post_url(url);
     // TODO(jasmina): ver si funciona el GET asi configurado.
     curlWrapper.set_get_buffer(readBuffer);
-    bool res = curlWrapper.perform_request();
+    // bool res = curlWrapper.perform_request();
     curlWrapper.clean();
     std::cout << readBuffer << std::endl;
     // TODO(jasmina): armar el json que tenga adentro de candidates la lista de usuarios.

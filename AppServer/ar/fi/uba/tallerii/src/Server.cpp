@@ -92,7 +92,6 @@ Server :: Server() : options(std::vector<std::string>()), port(Constant::server_
 void Server :: start() {
     struct mg_mgr mgr;
     struct mg_connection *nc;
-    unsigned int i;
     this->port = Constant :: server_port;
 
     mg_mgr_init(&mgr, NULL);
