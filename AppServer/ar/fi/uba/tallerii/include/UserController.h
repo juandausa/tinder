@@ -21,10 +21,12 @@ public:
     virtual void handle_get_user_info(struct mg_connection *nc, struct http_message *hm, Response response);
     virtual void handle_update_user_info(struct mg_connection *nc, struct http_message *hm, Response response);
     virtual void handle_get_matches(struct mg_connection *nc, struct http_message *hm, Response response);
+    virtual void handle_show_candidates(struct mg_connection *nc, struct http_message *hm, Response response);
 private:
     UserService userService;
     Json::Value makeBodyForLoginResponse(const std::string userId);
     Json::Value makeBodyForRegistrationPost(const Json::Value root);
+    Json::Value makeBodyForShowCandidatesResponse();
     void postInterests(Json::Value root);
     std::string fakeResponseForUserInfo(std::string userId);
     std::string fakeResponseForUserMatches();

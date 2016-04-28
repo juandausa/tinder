@@ -53,6 +53,9 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
             } else if ((mg_vcmp(&hm->uri, "/register") == 0) && mg_vcmp(&hm->method, "POST") == 0) {
                 UserController user_controller(user_service);
                 user_controller.handle_registration(nc, hm, response);
+            } else if ((mg_vcmp(&hm->uri, "/candidates") == 0) && mg_vcmp(&hm->method, "GET") == 0) {
+                UserController user_controller(user_service);
+                user_controller.handle_show_candidates(nc, hm, response);
             } else if ((mg_vcmp(&hm->uri, "/user") == 0) && mg_vcmp(&hm->method, "GET") == 0) {
                 UserController user_controller(user_service);
                 user_controller.handle_get_user_info(nc, hm, response);

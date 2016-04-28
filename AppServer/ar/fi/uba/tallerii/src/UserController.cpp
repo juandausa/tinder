@@ -61,6 +61,26 @@ void UserController::handle_registration(struct mg_connection *nc, struct http_m
     }
 }
 
+void UserController::handle_show_candidates(struct mg_connection *nc, struct http_message *hm, Response response) {
+    std::string userId;
+    Json::FastWriter fastWriter;
+    mg_get_http_var(&hm->query_string, "userId", (char*) userId.c_str(), sizeof(userId));
+    LOG(INFO) << "Proccesing login for user: '" << userId << "'";
+    if (this->userService.isUserRegistered(userId)) {
+        response.SetCode(200);
+        Json::Value event = this->makeBodyForShowCandidatesResponse();
+        std::string data = fastWriter.write(event);
+        response.SetBody(data);
+        response.Send();
+        LOG(INFO) << "Show Candidates succeeded for user: '" << userId<< "'";
+    } else {
+        response.SetCode(304);
+        response.Send();
+        LOG(INFO) << "Show Candidates failed for user: '" << userId<< "'";
+    }
+}
+
+
 void UserController :: handle_update_user_info(struct mg_connection *nc, struct http_message *hm, Response response) {
     response.SetCode(200);
     response.SetBody("Not implemented");
@@ -84,6 +104,24 @@ void UserController :: handle_get_matches(struct mg_connection *nc, struct http_
 Json::Value UserController::makeBodyForLoginResponse(const std::string userId) {
     Json::Value event;
     std::string token = this->userService.getSecurityToken(userId);
+    return event;
+}
+
+Json::Value UserController::makeBodyForShowCandidatesResponse() {
+    Json::Value event;
+    Json::Value arrayUsers(Json::arrayValue);
+    std::string readBuffer;
+
+    CurlWrapper curlWrapper = CurlWrapper();
+    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
+    curlWrapper.set_post_url(url);
+    // TODO(jasmina): ver si funciona el GET asi configurado.
+    curlWrapper.set_get_buffer(readBuffer);
+    bool res = curlWrapper.perform_request();
+    curlWrapper.clean();
+    std::cout << readBuffer << std::endl;
+    // TODO(jasmina): armar el json que tenga adentro de candidates la lista de usuarios.
+    event["candidates"] = arrayUsers;
     return event;
 }
 
