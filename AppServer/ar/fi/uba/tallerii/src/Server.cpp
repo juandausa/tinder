@@ -59,7 +59,7 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 user_controller.handleGetUserInfo(nc, hm, response);
             } else if (requestParser.isCandidatesGetRequest()) {
                 UserController user_controller(user_service);
-                user_controller.handleShowCandidates(nc, hm, response);
+                user_controller.handleShowCandidates(nc, hm, response,requestParser.getResourceId());
             } else if (requestParser.isUserUpdateRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleUpdateUserInfo(nc, hm, response);
