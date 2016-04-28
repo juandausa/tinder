@@ -3,13 +3,7 @@
 //
 
 #include "UserService.h"
-#include <glog/logging.h>
-#include <string>
-#include "RandomTextGenerator.h"
-#include "DataBase.h"
-#include "MD5.h"
-#include "RandomTextGenerator.h"
-#include "Constant.h"
+
 
 UserService::UserService(DataBase &db) : database(&db) {
 }

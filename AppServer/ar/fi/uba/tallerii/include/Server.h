@@ -6,14 +6,23 @@
 #define TINDER_SEVER_H
 #include <vector>
 #include <cstring>
+#include <glog/logging.h>
+#include <signal.h>
+#include <iostream>
+#include "RequestParser.h"
+#include "PlusController.h"
+#include "UserController.h"
+#include "FilterController.h"
+#include "Constant.h"
+#include "SecurityManager.h"
 #include "Mongoose.h"
 
 class Server {
 public:
     Server();
     Server(std::vector<std::string> options);
-    ~Server();
     void start();
+    ~Server();
 private:
     std::vector<std::string> options;
     std::string port;

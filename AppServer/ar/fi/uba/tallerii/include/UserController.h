@@ -15,10 +15,10 @@
 class UserController {
 public:
     UserController(UserService user_service);
-    virtual void handle_login(struct mg_connection *nc, struct http_message *hm, Response response);
-    virtual void handle_registration(struct mg_connection *nc, struct http_message *hm, Response response);
-    virtual void handle_get_user_info(struct mg_connection *nc, struct http_message *hm, Response response);
-    virtual void handle_update_user_info(struct mg_connection *nc, struct http_message *hm, Response response);
+    virtual void handleLogin(struct mg_connection *nc, struct http_message *hm, Response response);
+    virtual void handleRegistration(struct mg_connection *nc, struct http_message *hm, Response response);
+    virtual void handleGetUserInfo(struct mg_connection *nc, struct http_message *hm, Response response);
+    virtual void handleUpdateUserInfo(struct mg_connection *nc, struct http_message *hm, Response response);
 private:
     UserService userService;
     Json::Value makeBodyForLoginResponse(const std::string userId);

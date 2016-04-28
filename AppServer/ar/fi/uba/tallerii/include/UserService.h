@@ -6,6 +6,13 @@
 #define TINDER_USERSERVICE_H
 #include <string>
 #include "DataBase.h"
+#include <glog/logging.h>
+#include <string>
+#include "RandomTextGenerator.h"
+#include "DataBase.h"
+#include "MD5.h"
+#include "RandomTextGenerator.h"
+#include "Constant.h"
 
 class UserService {
 public:

@@ -13,7 +13,8 @@ UserController :: UserController(UserService userService) : userService(userServ
 
 /* End private methods */
 
-void UserController :: handle_login(struct mg_connection *nc, struct http_message *hm, Response response) {
+void UserController :: handleLogin(struct mg_connection *nc, struct http_message *hm, Response response) {
+    std::cout << "handle_login" << std::endl;;
     std::string userId;
     Json::FastWriter fastWriter;
     mg_get_http_var(&hm->query_string, "userId",(char*)userId.c_str(), sizeof(userId));
@@ -32,7 +33,8 @@ void UserController :: handle_login(struct mg_connection *nc, struct http_messag
     }
 }
 
-void UserController::handle_registration(struct mg_connection *nc, struct http_message *hm, Response response) {
+void UserController::handleRegistration(struct mg_connection *nc, struct http_message *hm, Response response) {
+    std::cout << "handleRegistration" << std::endl;;
     Json::Value root;
     Json::Reader reader;
     Json::FastWriter fastWriter;
@@ -64,13 +66,13 @@ void UserController::handle_registration(struct mg_connection *nc, struct http_m
     }
 }
 
-void UserController :: handle_update_user_info(struct mg_connection *nc, struct http_message *hm, Response response) {
+void UserController :: handleUpdateUserInfo(struct mg_connection *nc, struct http_message *hm, Response response) {
     response.SetCode(200);
     response.SetBody("Not implemented");
     response.Send();
 }
 
-void UserController :: handle_get_user_info(struct mg_connection *nc, struct http_message *hm, Response response) {
+void UserController :: handleGetUserInfo(struct mg_connection *nc, struct http_message *hm, Response response) {
     response.SetCode(200);
     response.SetBody("Not implemented");
     response.Send();
@@ -79,6 +81,8 @@ void UserController :: handle_get_user_info(struct mg_connection *nc, struct htt
 Json::Value UserController::makeBodyForLoginResponse(const std::string userId) {
     Json::Value event;
     std::string token = this->userService.getSecurityToken(userId);
+    event["user"]["userId"] = userId;
+    event["user"]["token"] = token;
     return event;
 }
 
