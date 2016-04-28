@@ -4,7 +4,7 @@
 
 
 #include "UserController.h"
-
+#include <string>
 
 UserController :: UserController(UserService userService) : userService(userService) {
 }
@@ -72,8 +72,10 @@ void UserController :: handle_update_user_info(struct mg_connection *nc, struct 
 }
 
 void UserController :: handle_get_user_info(struct mg_connection *nc, struct http_message *hm, Response response) {
+    char userId[255];
+    mg_get_http_var(&hm->query_string, "userId", userId, sizeof(userId));
     response.SetCode(200);
-    response.SetBody("Not implemented");
+    response.SetBody(this->fakeResponseForUserInfo(userId));
     response.Send();
 }
 
@@ -170,3 +172,19 @@ void UserController::postInterests(Json::Value root) {
     }
 }
 
+std::string UserController::fakeResponseForUserInfo(std::string userId) {
+    Json::FastWriter fastWriter;
+    Json::Value fakeInfo;
+    fakeInfo["user_id"] = userId;
+    fakeInfo["name"] = "NombreMock";
+    fakeInfo["alias"] = "AliasMock";
+    fakeInfo["age"] = "1";
+    fakeInfo["gender"] = "male";
+    fakeInfo["photo_profile"] = "";
+    fakeInfo["interests"]= Json::arrayValue;
+    Json::Value fakeLocation;
+    fakeLocation["latitude"] = -121.45356;
+    fakeLocation["longitude"] = 46.51119;
+    fakeInfo["location"] = fakeLocation;
+    return fastWriter.write(fakeInfo);
+}
