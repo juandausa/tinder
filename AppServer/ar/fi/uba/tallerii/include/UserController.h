@@ -23,6 +23,7 @@ private:
     UserService userService;
     Json::Value makeBodyForLoginResponse(const std::string userId);
     Json::Value makeBodyForRegistrationPost(const Json::Value root);
+    void postInterests(Json::Value root);
 };
 
 

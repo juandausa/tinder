@@ -44,6 +44,7 @@ void UserController::handle_registration(struct mg_connection *nc, struct http_m
 
     Json::Value event = this->makeBodyForRegistrationPost(root);
     std::string data = fastWriter.write(event);
+    postInterests(event);
     CurlWrapper curlWrapper = CurlWrapper();
 //    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
     std::string url = "localhost:5000/users";
@@ -145,4 +146,27 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
     return event;
 }
 
+
+void UserController::postInterests(Json::Value root) {
+    Json::FastWriter fastWriter;
+    Json::Value interests = root["user"]["interests"];
+    for (unsigned int i = 0; i < interests.size(); i++) {
+        Json::Value postData;
+        postData["interest"] = interests[i];
+        postData["metadata"]["version"] = "0.1";
+        postData["metadata"]["count"] = "1";
+        std::string data = fastWriter.write(postData);
+        std::cout << data << std::endl;
+        CurlWrapper curlWrapper = CurlWrapper();
+//    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
+        std::string url = "10.1.86.224:5000/interests";
+        curlWrapper.set_post_url(url);
+        curlWrapper.set_post_data(data);
+        bool res = curlWrapper.perform_request();
+        if (!res) {
+            std::cout << "Failed to post new interests\n";
+        }
+        curlWrapper.clean();
+    }
+}
 
