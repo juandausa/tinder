@@ -35,7 +35,7 @@ bool UserService::registerUser(const std::string user_id, const std::string name
 }
 
 std::string UserService::getSecurityToken(const std::string userId) {
-    LOG(INFO) << "Generating security token for user: '" << userId<<"'";
+    LOG(INFO) << "Generating security token for user: '" << userId <<"'";
     RandomTextGenerator rnd;
     std::string random_string = rnd.generate(Constant::random_characters_quantity);
     std::string token = md5(userId + random_string);
