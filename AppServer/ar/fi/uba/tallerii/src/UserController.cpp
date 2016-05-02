@@ -13,9 +13,10 @@ UserController :: UserController(UserService userService) : userService(userServ
 
 void UserController :: handleLogin(struct mg_connection *nc, struct http_message *hm, Response response) {
     std::cout << "handle_login" << std::endl;;
-    std::string userId;
     Json::FastWriter fastWriter;
-    mg_get_http_var(&hm->query_string, "userId", reinterpret_cast<char*>((char*)userId.c_str()), sizeof(userId));
+    char temporalUserId[255];
+    mg_get_http_var(&hm->query_string, "userId", temporalUserId, sizeof(temporalUserId));
+    std::string userId(temporalUserId);
     LOG(INFO) << "Proccesing login for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);

@@ -7,9 +7,9 @@
 
 
 void RequestParser::parse(struct http_message *hm) {
-    this->method = std::string(reinterpret_cast<char*>((char*)hm->method.p)).substr(0 , hm->method.len);
-    this->body = std::string(reinterpret_cast<char*>((char*)hm->body.p)).substr(0 , hm->body.len);
-    std::string completeUrl = std::string(reinterpret_cast<char*>((char*)hm->uri.p)).substr(0 , hm->uri.len);
+    this->method = std::string(reinterpret_cast<const char*>(hm->method.p)).substr(0 , hm->method.len);
+    this->body = std::string(reinterpret_cast<const char*>(hm->body.p)).substr(0 , hm->body.len);
+    std::string completeUrl = std::string(reinterpret_cast<const char*>(hm->uri.p)).substr(0 , hm->uri.len);
     this->uri = completeUrl.substr(0 , completeUrl.find("/" , 1));
     this->resourceId = completeUrl.substr(completeUrl.find("/" , 1)+1, completeUrl.length());
     return;
