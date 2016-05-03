@@ -19,6 +19,7 @@ CurlWrapper::CurlWrapper() {
 }
 
 CurlWrapper::~CurlWrapper() {
+    this->clean();
 }
 
 void CurlWrapper::set_post_url(const std::string url) {
