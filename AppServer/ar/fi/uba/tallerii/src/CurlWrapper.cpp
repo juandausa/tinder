@@ -19,6 +19,7 @@ CurlWrapper::CurlWrapper() {
 }
 
 CurlWrapper::~CurlWrapper() {
+    this->clean();
 }
 
 void CurlWrapper::set_post_url(const std::string url) {
@@ -38,6 +39,7 @@ void CurlWrapper::set_post_data(const std::string data) {
         headers = curl_slist_append(headers, "Content-Type: application/json");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data.c_str());
+        curl_slist_free_all(headers);
     }
 }
 
@@ -61,12 +63,16 @@ bool CurlWrapper::perform_request() {
         if (res != CURLE_OK) {
             fprintf(stderr, "curl_easy_perform() failed: %s\n",
                     curl_easy_strerror(res));
+
+            curl_easy_cleanup(curl);
             return false;
         }
         /* always cleanup */
         curl_easy_cleanup(curl);
         return true;
     }
+
+    curl_easy_cleanup(curl);
     return false;
 }
 
