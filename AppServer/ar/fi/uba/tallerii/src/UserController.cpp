@@ -11,11 +11,11 @@ UserController :: UserController(UserService userService) : userService(userServ
 
 
 
-void UserController :: handleLogin(struct mg_connection *nc, struct http_message *hm, Response response) {
-    std::cout << "handle_login" << std::endl;;
-    std::string userId;
+void UserController :: handleLogin(struct mg_connection *nc, struct http_message *hm, Response response, std::string userId) {
+    std::cout << "handle_login" << std::endl;
+//    std::string userId;
     Json::FastWriter fastWriter;
-    mg_get_http_var(&hm->query_string, "userId", reinterpret_cast<char*>((char*)userId.c_str()), sizeof(userId));
+//    mg_get_http_var(&hm->query_string, "userId", reinterpret_cast<char*>((char*)userId.c_str()), sizeof(userId));
     LOG(INFO) << "Proccesing login for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);
@@ -45,8 +45,8 @@ void UserController::handleRegistration(struct mg_connection *nc, struct http_me
     Json::Value event = this->makeBodyForRegistrationPost(root);
     std::string data = fastWriter.write(event);
     CurlWrapper curlWrapper = CurlWrapper();
-//    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
-    std::string url = "localhost:5000/users";
+    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
+//    std::string url = "localhost:5000/users";
     curlWrapper.set_post_url(url);
     curlWrapper.set_post_data(data);
     bool res = curlWrapper.perform_request();
@@ -120,10 +120,11 @@ Json::Value UserController::makeBodyForShowCandidatesResponse() {
     curlWrapper.set_post_url(url);
     // TODO(jasmina): ver si funciona el GET asi configurado.
     curlWrapper.set_get_buffer(readBuffer);
-    // bool res = curlWrapper.perform_request();
+    bool res = curlWrapper.perform_request();
     curlWrapper.clean();
     std::cout << readBuffer << std::endl;
     // TODO(jasmina): armar el json que tenga adentro de candidates la lista de usuarios.
+    // arrayUsers["algo"] = algo;
     event["candidates"] = arrayUsers;
     return event;
 }

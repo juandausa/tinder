@@ -15,7 +15,7 @@
 class UserController {
 public:
     UserController(UserService user_service);
-    virtual void handleLogin(struct mg_connection *nc, struct http_message *hm, Response response);
+    virtual void handleLogin(struct mg_connection *nc, struct http_message *hm, Response response, std::string userId);
     virtual void handleRegistration(struct mg_connection *nc, struct http_message *hm, Response response);
     virtual void handleGetUserInfo(struct mg_connection *nc, struct http_message *hm, Response response);
     virtual void handleUpdateUserInfo(struct mg_connection *nc, struct http_message *hm, Response response);
