@@ -1,5 +1,5 @@
 //
-// Created by juan on 04/05/16.
+// Copyright 2016 FiUBA
 //
 
 #ifndef TINDER_EASY_CURL_TEST_H
@@ -7,5 +7,6 @@
 
 #include "EasyCurl.h"
 #include <gtest/gtest.h>
+#include <string>
 
 #endif //TINDER_EASY_CURL_TEST_H
