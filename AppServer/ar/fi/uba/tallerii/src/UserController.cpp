@@ -6,16 +6,16 @@
 #include "UserController.h"
 #include <string>
 
+
 UserController :: UserController(UserService userService) : userService(userService) {
 }
 
 
 
-void UserController :: handleLogin(struct mg_connection *nc, struct http_message *hm, Response response, std::string userId) {
+void UserController :: handleLogin(RequestParser requestParser, Response response) {
     std::cout << "handle_login" << std::endl;
-//    std::string userId;
+    std::string userId = requestParser.getResourceId();
     Json::FastWriter fastWriter;
-//    mg_get_http_var(&hm->query_string, "userId", reinterpret_cast<char*>((char*)userId.c_str()), sizeof(userId));
     LOG(INFO) << "Proccesing login for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);
@@ -31,12 +31,12 @@ void UserController :: handleLogin(struct mg_connection *nc, struct http_message
     }
 }
 
-void UserController::handleRegistration(struct mg_connection *nc, struct http_message *hm, Response response) {
+void UserController::handleRegistration(RequestParser requestParser, Response response) {
     std::cout << "handleRegistration" << std::endl;;
     Json::Value root;
     Json::Reader reader;
     Json::FastWriter fastWriter;
-    bool parsingSuccessful = reader.parse(hm->body.p, root, true);
+    bool parsingSuccessful = reader.parse(requestParser.getBody(), root, true);
     if (!parsingSuccessful) {
         std::cout  << "Failed to parse configuration\n";
         return;
@@ -64,8 +64,9 @@ void UserController::handleRegistration(struct mg_connection *nc, struct http_me
     }
 }
 
-void UserController::handleShowCandidates(struct mg_connection *nc, struct http_message *hm, Response response, std::string userId) {
+void UserController::handleShowCandidates(RequestParser requestParser, Response response) {
     Json::FastWriter fastWriter;
+    std::string userId = requestParser.getResourceId();
     LOG(INFO) << "Proccesing show candidates for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);
@@ -82,21 +83,20 @@ void UserController::handleShowCandidates(struct mg_connection *nc, struct http_
 }
 
 
-void UserController :: handleUpdateUserInfo(struct mg_connection *nc, struct http_message *hm, Response response) {
+void UserController :: handleUpdateUserInfo(RequestParser requestParser, Response response) {
     response.SetCode(200);
     response.SetBody("Not implemented");
     response.Send();
 }
 
-void UserController :: handleGetUserInfo(struct mg_connection *nc, struct http_message *hm, Response response) {
-    char userId[255];
-    mg_get_http_var(&hm->query_string, "userId", userId, sizeof(userId));
+void UserController :: handleGetUserInfo(RequestParser requestParser, Response response) {
     response.SetCode(200);
+    std::string userId = requestParser.getResourceId();
     response.SetBody(this->fakeResponseForUserInfo(userId));
     response.Send();
 }
 
-void UserController :: handleGetMatches(struct mg_connection *nc, struct http_message *hm, Response response) {
+void UserController :: handleGetMatches(RequestParser requestParser, Response response) {
     response.SetCode(200);
     response.SetBody(this->fakeResponseForUserMatches());
     response.Send();

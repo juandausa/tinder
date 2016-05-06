@@ -10,11 +10,10 @@
 FilterController :: FilterController(FilterService filter_service) : filter_service(filter_service) {
 }
 
-void FilterController :: handle_update_filters(struct mg_connection *nc, struct http_message *hm, Response response) {
-    char user_id[255];
-    mg_get_http_var(&hm->query_string, "userId", user_id, sizeof(user_id));
-    std::string body(hm->body.p);
-    if (this->filter_service.update_filters(user_id, body)) {
+void FilterController :: handle_update_filters(RequestParser requestParser, Response response) {
+    std::string userId = requestParser.getResourceId();
+    std::string body = requestParser.getBody();
+    if (this->filter_service.update_filters(userId, body)) {
         response.SetCode(200);
     } else {
         response.SetCode(500);
@@ -24,10 +23,9 @@ void FilterController :: handle_update_filters(struct mg_connection *nc, struct 
     response.Send();
 }
 
-void FilterController :: handle_get_filters(struct mg_connection *nc, struct http_message *hm, Response response) {
-    char user_id[255];
-    mg_get_http_var(&hm->query_string, "userId", user_id, sizeof(user_id));
-    std::string body = this->filter_service.get_filters(user_id);
+void FilterController :: handle_get_filters(RequestParser requestParser, Response response) {
+    std::string userId = requestParser.getResourceId();
+    std::string body = this->filter_service.get_filters(userId);
     response.SetCode(200);
     response.SetBody(body);
     response.Send();

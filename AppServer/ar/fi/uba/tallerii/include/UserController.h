@@ -11,16 +11,16 @@
 #include "DataBase.h"
 #include "UserService.h"
 #include "CurlWrapper.h"
-
+#include <RequestParser.h>
 class UserController {
 public:
     UserController(UserService user_service);
-    virtual void handleLogin(struct mg_connection *nc, struct http_message *hm, Response response, std::string userId);
-    virtual void handleRegistration(struct mg_connection *nc, struct http_message *hm, Response response);
-    virtual void handleGetUserInfo(struct mg_connection *nc, struct http_message *hm, Response response);
-    virtual void handleUpdateUserInfo(struct mg_connection *nc, struct http_message *hm, Response response);
-    virtual void handleShowCandidates(struct mg_connection *nc, struct http_message *hm, Response response, std::string userId);
-    virtual void handleGetMatches(struct mg_connection *nc, struct http_message *hm, Response response);
+    virtual void handleLogin(RequestParser requestParser,Response response);
+    virtual void handleRegistration(RequestParser requestParser, Response response);
+    virtual void handleGetUserInfo(RequestParser requestParser, Response response);
+    virtual void handleUpdateUserInfo(RequestParser requestParser, Response response);
+    virtual void handleShowCandidates(RequestParser requestParser, Response response);
+    virtual void handleGetMatches(RequestParser requestParser, Response response);
 private:
     UserService userService;
     std::string fakeResponseForUserInfo(const std::string userId);

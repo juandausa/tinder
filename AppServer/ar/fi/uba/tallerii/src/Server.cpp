@@ -27,12 +27,6 @@ static void signal_handler(int sig_num) {
     s_sig_num = sig_num;
 }
 
-void handle_print_content(struct http_message *hm) {
-    char buf[100] = {0};
-    memcpy(buf, hm->body.p,
-           sizeof(buf) - 1 < hm->body.len? sizeof(buf) - 1 : hm->body.len);
-    printf("%s\n", buf);
-}
 
 void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     struct http_message *hm = (struct http_message *) ev_data;
@@ -50,30 +44,30 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
             security.filter_request(nc, hm, response);
             if (requestParser.isUserLoginRequest()) {
                 UserController user_controller(user_service);
-                user_controller.handleLogin(nc, hm, response, requestParser.getResourceId());
+                user_controller.handleLogin(requestParser, response);
             } else if (requestParser.isUserRegisterRequest()) {
                 UserController user_controller(user_service);
-                user_controller.handleRegistration(nc, hm, response);
+                user_controller.handleRegistration(requestParser, response);
             } else if (requestParser.isUserInfoRequest()) {
                 UserController user_controller(user_service);
-                user_controller.handleGetUserInfo(nc, hm, response);
+                user_controller.handleGetUserInfo(requestParser, response);
             } else if (requestParser.isCandidatesGetRequest()) {
                 UserController user_controller(user_service);
-                user_controller.handleShowCandidates(nc, hm, response, requestParser.getResourceId());
+                user_controller.handleShowCandidates(requestParser, response);
             } else if (requestParser.isUserUpdateRequest()) {
                 UserController user_controller(user_service);
-                user_controller.handleUpdateUserInfo(nc, hm, response);
+                user_controller.handleUpdateUserInfo(requestParser, response);
             } else if (requestParser.isFiltersPostRequest()) {
                 FilterService filter_service(db);
                 FilterController filter_controller(filter_service);
-                filter_controller.handle_update_filters(nc, hm, response);
+                filter_controller.handle_update_filters(requestParser, response);
             } else if (requestParser.isMatchesGetRequest()) {
                 UserController user_controller(user_service);
-                user_controller.handleGetMatches(nc, hm, response);
+                user_controller.handleGetMatches(requestParser, response);
             } else if (requestParser.isFiltersGetRequest()) {
                 FilterService filter_service(db);
                 FilterController filter_controller(filter_service);
-                filter_controller.handle_get_filters(nc, hm, response);
+                filter_controller.handle_get_filters(requestParser, response);
             }
 
             break;
