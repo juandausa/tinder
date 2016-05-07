@@ -9,11 +9,6 @@ TEST(EasyCurl, GetOnNotExistingSiteShouldNotWork) {
     EXPECT_FALSE(curl.Perform());
 }
 
-TEST(EasyCurl, GetOnExistingSite) {
-    EasyCurl curl("www.google.com");
-    EXPECT_TRUE(curl.Perform());
-}
-
 TEST(EasyCurl, GetContentOfExistingSite) {
     EasyCurl curl("www.google.com");
     std::string content = curl.StringPerform();
