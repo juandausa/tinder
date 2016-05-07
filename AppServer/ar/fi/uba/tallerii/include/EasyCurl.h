@@ -250,6 +250,10 @@ public:
         return curl_easy_setopt(m_curl, CURLOPT_POST, 1) == CURLE_OK;
     }
 
+    bool ForcePut() {
+        return curl_easy_setopt(m_curl, CURLOPT_CUSTOMREQUEST, "PUT") == CURLE_OK;
+    }
+
     bool Perform() {
         return curl_easy_perform(m_curl) == CURLE_OK;
     }
