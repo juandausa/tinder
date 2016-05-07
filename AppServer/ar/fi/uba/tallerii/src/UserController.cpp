@@ -90,9 +90,27 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
 }
 
 void UserController :: handleGetUserInfo(RequestParser requestParser, Response response) {
-    response.SetCode(200);
     std::string userId = requestParser.getResourceId();
-    response.SetBody(this->fakeResponseForUserInfo(userId));
+    std::string externalUserId = userId;
+    // TODO(juandausa): Solicitar el id externo.
+    LOG(INFO) << "Retrieving user info for user: '" << userId<< "'";
+    if ((userId.compare("") == 0) || (externalUserId.compare("") == 0)) {
+        response.SetCode(400);
+        response.SetBody("Bad Request, no userId detected.");
+    } else {
+        std::string url = Constant::get_user_info_url + externalUserId;
+        LOG(INFO) << "Requesting url: " << url;
+        EasyCurl curl(url);
+        std::string content = curl.StringPerform();
+        if (content.compare("") != 0) {
+            response.SetCode(200);
+            response.SetBody(content);
+        } else {
+            response.SetCode(400);
+            response.SetBody("Bad Request");
+        }
+    }
+
     response.Send();
 }
 
@@ -120,7 +138,7 @@ Json::Value UserController::makeBodyForShowCandidatesResponse() {
     curlWrapper.set_post_url(url);
     // TODO(jasmina): ver si funciona el GET asi configurado.
     curlWrapper.set_get_buffer(readBuffer);
-    bool res = curlWrapper.perform_request();
+    curlWrapper.perform_request();
     curlWrapper.clean();
     std::cout << readBuffer << std::endl;
     // TODO(jasmina): armar el json que tenga adentro de candidates la lista de usuarios.
@@ -215,23 +233,6 @@ void UserController::postInterests(Json::Value root) {
         }
         curlWrapper.clean();
     }
-}
-
-std::string UserController::fakeResponseForUserInfo(std::string userId) {
-    Json::FastWriter fastWriter;
-    Json::Value fakeInfo;
-    fakeInfo["user_id"] = userId;
-    fakeInfo["name"] = "NombreMock";
-    fakeInfo["alias"] = "AliasMock";
-    fakeInfo["age"] = "1";
-    fakeInfo["gender"] = "male";
-    fakeInfo["photo_profile"] = "";
-    fakeInfo["interests"]= Json::arrayValue;
-    Json::Value fakeLocation;
-    fakeLocation["latitude"] = -121.45356;
-    fakeLocation["longitude"] = 46.51119;
-    fakeInfo["location"] = fakeLocation;
-    return fastWriter.write(fakeInfo);
 }
 
 std::string UserController::fakeResponseForUserMatches() {

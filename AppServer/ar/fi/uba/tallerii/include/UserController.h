@@ -11,6 +11,8 @@
 #include "DataBase.h"
 #include "UserService.h"
 #include "CurlWrapper.h"
+#include "EasyCurl.h"
+#include "Constant.h"
 #include <RequestParser.h>
 class UserController {
 public:
@@ -23,7 +25,6 @@ public:
     virtual void handleGetMatches(RequestParser requestParser, Response response);
 private:
     UserService userService;
-    std::string fakeResponseForUserInfo(const std::string userId);
     std::string fakeResponseForUserMatches();
     Json::Value makeBodyForLoginResponse(const std::string userId);
     Json::Value makeBodyForRegistrationPost(const Json::Value root);
