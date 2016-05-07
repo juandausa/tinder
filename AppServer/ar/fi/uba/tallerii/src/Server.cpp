@@ -39,7 +39,7 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
             Response response(nc);
             RequestParser requestParser;
             requestParser.parse(hm);
-            std::cout << "Url: " << requestParser.getUrl() << "Method: " << requestParser.getMethod() << std::endl;
+            std::cout << "Url: " << requestParser.getUrl() << " Method: " << requestParser.getMethod() << std::endl;
 
             security.filter_request(nc, hm, response);
             if (requestParser.isUserLoginRequest()) {
