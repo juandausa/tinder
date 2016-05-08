@@ -14,6 +14,7 @@ bool UserService::isUserRegistered(const std::string userId) {
     if (this->database->is_open()) {
         return this->database->get(userId, &value);
     }
+//
     LOG(WARNING) << "The database is closed.";
     return false;
 }

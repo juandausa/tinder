@@ -6,13 +6,15 @@
 #include "UserController.h"
 #include <string>
 
+
 UserController :: UserController(UserService userService) : userService(userService) {
 }
 
 
 
-void UserController :: handleLogin(struct mg_connection *nc, struct http_message *hm, Response response, std::string userId) {
+void UserController :: handleLogin(RequestParser requestParser, Response response) {
     std::cout << "handle_login" << std::endl;
+    std::string userId = requestParser.getResourceId();
     Json::FastWriter fastWriter;
     LOG(INFO) << "Proccesing login for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
@@ -29,12 +31,12 @@ void UserController :: handleLogin(struct mg_connection *nc, struct http_message
     }
 }
 
-void UserController::handleRegistration(struct mg_connection *nc, struct http_message *hm, Response response) {
+void UserController::handleRegistration(RequestParser requestParser, Response response) {
     std::cout << "handleRegistration" << std::endl;;
     Json::Value root;
     Json::Reader reader;
     Json::FastWriter fastWriter;
-    bool parsingSuccessful = reader.parse(hm->body.p, root, true);
+    bool parsingSuccessful = reader.parse(requestParser.getBody(), root, true);
     if (!parsingSuccessful) {
         std::cout  << "Failed to parse configuration\n";
         return;
@@ -62,8 +64,9 @@ void UserController::handleRegistration(struct mg_connection *nc, struct http_me
     }
 }
 
-void UserController::handleShowCandidates(struct mg_connection *nc, struct http_message *hm, Response response, std::string userId) {
+void UserController::handleShowCandidates(RequestParser requestParser, Response response) {
     Json::FastWriter fastWriter;
+    std::string userId = requestParser.getResourceId();
     LOG(INFO) << "Proccesing show candidates for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);
@@ -80,21 +83,38 @@ void UserController::handleShowCandidates(struct mg_connection *nc, struct http_
 }
 
 
-void UserController :: handleUpdateUserInfo(struct mg_connection *nc, struct http_message *hm, Response response) {
+void UserController :: handleUpdateUserInfo(RequestParser requestParser, Response response) {
     response.SetCode(200);
     response.SetBody("Not implemented");
     response.Send();
 }
 
-void UserController :: handleGetUserInfo(struct mg_connection *nc, struct http_message *hm, Response response) {
-    char userId[255];
-    mg_get_http_var(&hm->query_string, "userId", userId, sizeof(userId));
-    response.SetCode(200);
-    response.SetBody(this->fakeResponseForUserInfo(userId));
+void UserController :: handleGetUserInfo(RequestParser requestParser, Response response) {
+    std::string userId = requestParser.getResourceId();
+    std::string externalUserId = userId;
+    // TODO(juandausa): Solicitar el id externo.
+    LOG(INFO) << "Retrieving user info for user: '" << userId<< "'";
+    if ((userId.compare("") == 0) || (externalUserId.compare("") == 0)) {
+        response.SetCode(400);
+        response.SetBody("Bad Request, no userId detected.");
+    } else {
+        std::string url = Constant::get_user_info_url + externalUserId;
+        LOG(INFO) << "Requesting url: " << url;
+        EasyCurl curl(url);
+        std::string content = curl.StringPerform();
+        if (content.compare("") != 0) {
+            response.SetCode(200);
+            response.SetBody(content);
+        } else {
+            response.SetCode(400);
+            response.SetBody("Bad Request");
+        }
+    }
+
     response.Send();
 }
 
-void UserController :: handleGetMatches(struct mg_connection *nc, struct http_message *hm, Response response) {
+void UserController :: handleGetMatches(RequestParser requestParser, Response response) {
     response.SetCode(200);
     response.SetBody(this->fakeResponseForUserMatches());
     response.Send();
@@ -118,7 +138,7 @@ Json::Value UserController::makeBodyForShowCandidatesResponse() {
     curlWrapper.set_post_url(url);
     // TODO(jasmina): ver si funciona el GET asi configurado.
     curlWrapper.set_get_buffer(readBuffer);
-    bool res = curlWrapper.perform_request();
+    curlWrapper.perform_request();
     curlWrapper.clean();
     std::cout << readBuffer << std::endl;
     // TODO(jasmina): armar el json que tenga adentro de candidates la lista de usuarios.
@@ -213,23 +233,6 @@ void UserController::postInterests(Json::Value root) {
         }
         curlWrapper.clean();
     }
-}
-
-std::string UserController::fakeResponseForUserInfo(std::string userId) {
-    Json::FastWriter fastWriter;
-    Json::Value fakeInfo;
-    fakeInfo["user_id"] = userId;
-    fakeInfo["name"] = "NombreMock";
-    fakeInfo["alias"] = "AliasMock";
-    fakeInfo["age"] = "1";
-    fakeInfo["gender"] = "male";
-    fakeInfo["photo_profile"] = "";
-    fakeInfo["interests"]= Json::arrayValue;
-    Json::Value fakeLocation;
-    fakeLocation["latitude"] = -121.45356;
-    fakeLocation["longitude"] = 46.51119;
-    fakeInfo["location"] = fakeLocation;
-    return fastWriter.write(fakeInfo);
 }
 
 std::string UserController::fakeResponseForUserMatches() {
