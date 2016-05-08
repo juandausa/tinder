@@ -89,13 +89,13 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
     std::string externalUserId = userId;
     // TODO(juandausa): Solicitar el id externo.
     LOG(INFO) << "Updating user info for user: '" << userId<< "'";
-    bool parsingSuccessful = this->parseUserInfoForUpdate(requestParser.getBody(), body);
+    bool parsingSuccessful = this->parseUserInfoForUpdate(requestParser.getBody(), externalUserId, body);
     if ((userId.compare("") == 0) || (externalUserId.compare("") == 0) || !parsingSuccessful) {
         response.SetCode(400);
         response.SetBody("Bad Request.");
     } else {
         // std::string url = Constant::update_user_info_url + externalUserId;
-        std::string url = "zaraz";
+        /*std::string url = "zaraz";
         LOG(INFO) << "Requesting url: " << url;
         EasyCurl curl(url);
         curl.SetParms("");
@@ -107,7 +107,8 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
         } else {
             response.SetCode(400);
             response.SetBody("Bad Request");
-        }
+        }*/
+        response.SetBody(body);
     }
 
     response.Send();
@@ -290,12 +291,18 @@ std::string UserController::fakeResponseForUserMatches() {
     return fastWriter.write(fakeInfo);
 }
 
-bool UserController ::parseUserInfoForUpdate(std::string info, std::string body) {
+bool UserController :: parseUserInfoForUpdate(const std::string info, const std::string userId, std::string & body) {
     Json::Value root;
     Json::Reader reader;
-    // Json::FastWriter fastWriter;
+    Json::FastWriter fastWriter;
     bool parsingSuccessful = reader.parse(info, root, true);
+    if (!parsingSuccessful) {
+        return parsingSuccessful;
+    }
 
+    // Json::Value parsedUserInfo = this->makeBodyForRegistrationPost(root);
+    root["user"]["id"] = userId;
+    body = fastWriter.write(root);
     return parsingSuccessful;
 }
 
