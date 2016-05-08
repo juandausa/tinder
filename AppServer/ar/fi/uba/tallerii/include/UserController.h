@@ -26,7 +26,8 @@ public:
 private:
     UserService userService;
     std::string fakeResponseForUserMatches();
-    Json::Value makeBodyForLoginResponse(const std::string userId);
+    Json::Value makeBodyAndTokenForLoginResponse(const std::string userId);
+    Json::Value makeBodyAndTokenForRegistrationResponse(const std::string userId);
     Json::Value makeBodyForRegistrationPost(const Json::Value root);
     Json::Value makeBodyForShowCandidatesResponse();
     void postInterests(const Json::Value root);
