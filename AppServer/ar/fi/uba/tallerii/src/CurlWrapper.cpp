@@ -39,7 +39,7 @@ void CurlWrapper::set_post_data(const std::string data) {
         headers = curl_slist_append(headers, "Content-Type: application/json");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data.c_str());
-        curl_slist_free_all(headers);
+        // curl_slist_free_all(headers);  //NO! ROMPE EL CURL y tira SEG FAULT!
     }
 }
 

@@ -19,7 +19,7 @@ void UserController :: handleLogin(RequestParser requestParser, Response respons
     LOG(INFO) << "Proccesing login for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);
-        Json::Value event = this->makeBodyForLoginResponse(userId);
+        Json::Value event = this->makeBodyAndTokenForLoginResponse(userId);
         std::string data = fastWriter.write(event);
         response.SetBody(data);
         response.Send();
@@ -43,6 +43,8 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     }
 
     Json::Value event = this->makeBodyForRegistrationPost(root);
+    std::string userId = root.get("user_id", "").asString();
+
     std::string data = fastWriter.write(event);
     CurlWrapper curlWrapper = CurlWrapper();
     std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
@@ -50,11 +52,12 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     curlWrapper.set_post_url(url);
     curlWrapper.set_post_data(data);
     bool res = curlWrapper.perform_request();
-    curlWrapper.clean();
     LOG(INFO) << "Proccesing registration for user: ";
     if (res) {
+        Json::Value response_body = this->makeBodyAndTokenForRegistrationResponse(userId);
+        std::string body = fastWriter.write(response_body);
         response.SetCode(200);
-        response.SetBody("");
+        response.SetBody(body);
         response.Send();
         LOG(INFO) << "Registration succeeded";
     } else {
@@ -145,7 +148,14 @@ void UserController :: handleGetMatches(RequestParser requestParser, Response re
     response.Send();
 }
 
-Json::Value UserController::makeBodyForLoginResponse(const std::string userId) {
+Json::Value UserController::makeBodyAndTokenForLoginResponse(const std::string userId) {
+    Json::Value event;
+    std::string token = this->userService.getSecurityToken(userId);
+    event["user"]["token"] = token;
+    return event;
+}
+
+Json::Value UserController::makeBodyAndTokenForRegistrationResponse(const std::string userId) {
     Json::Value event;
     std::string token = this->userService.getSecurityToken(userId);
     event["user"]["userId"] = userId;
