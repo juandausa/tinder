@@ -88,12 +88,12 @@ void UserController::handleShowCandidates(RequestParser requestParser, Response 
 
 void UserController :: handleUpdateUserInfo(RequestParser requestParser, Response response) {
     std::string userId = requestParser.getResourceId();
-    std::string body;
+
     std::string externalUserId = userId;
     // TODO(juandausa): Solicitar el id externo.
     LOG(INFO) << "Updating user info for user: '" << userId<< "'";
-    bool parsingSuccessful = this->parseUserInfoForUpdate(requestParser.getBody(), externalUserId, body);
-    if ((userId.compare("") == 0) || (externalUserId.compare("") == 0) || !parsingSuccessful) {
+    std::string body = this->makeBodyUserInfoForUpdate(requestParser.getBody(), externalUserId);
+    if ((userId.compare("") == 0) || (externalUserId.compare("") == 0) || (body.compare("") == 0)) {
         response.SetCode(400);
         response.SetBody("Bad Request.");
     } else {
@@ -301,19 +301,18 @@ std::string UserController::fakeResponseForUserMatches() {
     return fastWriter.write(fakeInfo);
 }
 
-bool UserController :: parseUserInfoForUpdate(const std::string info, const std::string userId, std::string & body) {
+std::string UserController :: makeBodyUserInfoForUpdate(const std::string info, const std::string userId) {
     Json::Value root;
     Json::Reader reader;
     Json::FastWriter fastWriter;
     bool parsingSuccessful = reader.parse(info, root, true);
     if (!parsingSuccessful) {
-        return parsingSuccessful;
+        return "";
     }
 
     // Json::Value parsedUserInfo = this->makeBodyForRegistrationPost(root);
     root["user"]["id"] = userId;
-    body = fastWriter.write(root);
-    return parsingSuccessful;
+    return fastWriter.write(root);
 }
 
 std::string UserController :: makeBodyForUserInfoResponse(const std::string userId, const std::string userInfo) {
