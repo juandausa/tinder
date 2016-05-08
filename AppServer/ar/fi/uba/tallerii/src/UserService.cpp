@@ -12,18 +12,18 @@ bool UserService::isUserRegistered(const std::string userId) {
     LOG(INFO) << "Checking whether the user '" << userId << "' is registered";
     std::string value;
     if (this->database->is_open()) {
-        return this->database->get(userId, &value);
+        return this->database->get(Constant::security_token_prefix + userId, &value);
     }
 //
     LOG(WARNING) << "The database is closed.";
     return false;
 }
 
-bool UserService::registerUser(const std::string user_id, const std::string name,
-                                const std::string birthday, const std::string alias,
-                                const std::string email, const std::string photo_profile) {
-    // TODO(jasmina): enviar request con curl a SharedServer
-    return true;
+bool UserService::registerUser(const std::string userId, const std::string token) {
+    if (this->database->is_open()) {
+        return this->database->set(Constant::security_token_prefix + userId, token);
+    }
+    return false;
 }
 
 std::string UserService::getSecurityToken(const std::string userId) {
