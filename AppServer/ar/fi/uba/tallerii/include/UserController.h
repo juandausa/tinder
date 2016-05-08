@@ -29,6 +29,8 @@ private:
     Json::Value makeBodyForLoginResponse(const std::string userId);
     Json::Value makeBodyForRegistrationPost(const Json::Value root);
     Json::Value makeBodyForShowCandidatesResponse();
+    std::string makeBodyForUserInfoResponse(const std::string userId, const std::string userInfo);
+    bool parseUserInfoForUpdate(std::string info, std::string body);
     void postInterests(const Json::Value root);
 };
 
