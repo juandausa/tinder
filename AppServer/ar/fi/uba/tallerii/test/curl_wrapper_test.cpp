@@ -10,5 +10,5 @@ TEST(CurlWrapper, PostNotExistingSiteReturnFalse) {
     curl_wrapper.set_post_data("");
     EXPECT_FALSE(curl_wrapper.perform_request());
     curl_wrapper.clean();
-    //// curl_global_cleanup();
+    curl_global_cleanup();
 }
