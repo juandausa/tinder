@@ -48,6 +48,7 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     std::string appUserId = root.get("user_id", "").asString();
 
     std::string data = fastWriter.write(event);
+    postInterests(event);
     CurlWrapper curlWrapper = CurlWrapper();
     std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
 //    std::string url = "localhost:5000/users";
