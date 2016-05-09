@@ -94,8 +94,33 @@ void UserController::handleShowCandidates(RequestParser requestParser, Response 
 
 
 void UserController :: handleUpdateUserInfo(RequestParser requestParser, Response response) {
-    response.SetCode(200);
-    response.SetBody("Not implemented");
+    std::string userId = requestParser.getResourceId();
+
+    std::string externalUserId = userId;
+    // TODO(juandausa): Solicitar el id externo.
+    LOG(INFO) << "Updating user info for user: '" << userId<< "'";
+    std::string body = this->makeBodyUserInfoForUpdate(requestParser.getBody(), externalUserId);
+    if ((userId.compare("") == 0) || (externalUserId.compare("") == 0) || (body.compare("") == 0)) {
+        response.SetCode(400);
+        response.SetBody("Bad Request.");
+    } else {
+        // std::string url = Constant::update_user_info_url + externalUserId;
+        /*std::string url = "zaraz";
+        LOG(INFO) << "Requesting url: " << url;
+        EasyCurl curl(url);
+        curl.SetParms("");
+        curl.ForcePut();
+        std::string content = curl.StringPerform();
+        if (content.compare("") != 0) {
+            response.SetCode(200);
+            response.SetBody(content);
+        } else {
+            response.SetCode(400);
+            response.SetBody("Bad Request");
+        }*/
+        response.SetBody(body);
+    }
+
     response.Send();
 }
 
@@ -114,7 +139,7 @@ void UserController :: handleGetUserInfo(RequestParser requestParser, Response r
         std::string content = curl.StringPerform();
         if (content.compare("") != 0) {
             response.SetCode(200);
-            response.SetBody(content);
+            response.SetBody(this->makeBodyForUserInfoResponse(userId, content));
         } else {
             response.SetCode(400);
             response.SetBody("Bad Request");
@@ -282,4 +307,31 @@ std::string UserController::fakeResponseForUserMatches() {
     fakeInfo["matches"][0] = match;
     fakeInfo["matches"][1] = otherMatch;
     return fastWriter.write(fakeInfo);
+}
+
+std::string UserController :: makeBodyUserInfoForUpdate(const std::string info, const std::string userId) {
+    Json::Value root;
+    Json::Reader reader;
+    Json::FastWriter fastWriter;
+    bool parsingSuccessful = reader.parse(info, root, true);
+    if (!parsingSuccessful) {
+        return "";
+    }
+
+    // Json::Value parsedUserInfo = this->makeBodyForRegistrationPost(root);
+    root["user"]["id"] = userId;
+    return fastWriter.write(root);
+}
+
+std::string UserController :: makeBodyForUserInfoResponse(const std::string userId, const std::string userInfo) {
+    Json::Value root;
+    Json::Reader reader;
+    Json::FastWriter fastWriter;
+    bool parsingSuccessful = reader.parse(userInfo, root, true);
+    if (!parsingSuccessful) {
+        return "Error parsing result";
+    }
+
+    root["user"]["user_id"] = userId;
+    return fastWriter.write(root["user"]);
 }
