@@ -32,7 +32,7 @@ private:
     Json::Value makeBodyAndTokenForRegistrationResponse(const std::string userId);
     Json::Value makeBodyForRegistrationPost(const Json::Value root);
     Json::Value makeBodyForShowCandidatesResponse();
-    std::string makeBodyForUserInfoResponse(const std::string userId, const std::string userInfo);
+    std::string makeBodyForUserInfoResponse(const std::string appUserId, const std::string userInfo);
     std::string makeBodyUserInfoForUpdate(const std::string info, const std::string userId);
     void postInterests(const Json::Value root);
 };

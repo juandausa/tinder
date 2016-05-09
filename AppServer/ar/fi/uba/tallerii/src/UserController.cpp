@@ -55,6 +55,7 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     reader.parse(readBuffer, responseShared, true);
     Json::Value sharedUserId = responseShared["user"].get("id", "");
     std::string sharedUserIdString = fastWriter.write(sharedUserId);
+    sharedUserIdString.erase(sharedUserIdString.size() - 1);
 
     LOG(INFO) << "Proccesing registration for user: ";
     if (res) {
@@ -120,20 +121,27 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
 }
 
 void UserController :: handleGetUserInfo(RequestParser requestParser, Response response) {
+    std::string readBuffer;
     std::string userId = requestParser.getResourceId();
-    std::string externalUserId = this->userService.getExternalUserId(userId);
+//    std::string externalUserId = this->userService.getExternalUserId(userId);
+    std::string externalUserId = "49";
     LOG(INFO) << "Retrieving user info for user: '" << userId<< "'";
     if ((userId.compare("") == 0) || (externalUserId.compare("") == 0)) {
         response.SetCode(400);
         response.SetBody("Bad Request, no userId detected.");
     } else {
-        std::string url = Constant::get_user_info_url + externalUserId;
-        LOG(INFO) << "Requesting url: " << url;
-        EasyCurl curl(url);
-        std::string content = curl.StringPerform();
-        if (content.compare("") != 0) {
+//        std::string url = Constant::get_user_info_url + externalUserId;
+//        LOG(INFO) << "Requesting url: " << url;
+//        EasyCurl curl(url);
+//        std::string content = curl.StringPerform();
+        CurlWrapper curlWrapper = CurlWrapper();
+        std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users/" + externalUserId;
+        curlWrapper.set_post_url(url);
+        curlWrapper.set_get_buffer(readBuffer);
+        bool res = curlWrapper.perform_request();
+        if (res) {
             response.SetCode(200);
-            response.SetBody(this->makeBodyForUserInfoResponse(userId, content));
+            response.SetBody(this->makeBodyForUserInfoResponse(userId, readBuffer));
         } else {
             response.SetCode(400);
             response.SetBody("Bad Request");
@@ -328,13 +336,25 @@ std::string UserController :: makeBodyUserInfoForUpdate(const std::string info, 
     return fastWriter.write(root);
 }
 
-std::string UserController :: makeBodyForUserInfoResponse(const std::string userId, const std::string userInfo) {
-    Json::Value root;
-    bool parsingSuccessful = reader.parse(userInfo, root, true);
+std::string UserController :: makeBodyForUserInfoResponse(const std::string appUserId, const std::string userInfo) {
+    Json::Value rootShared;
+    Json::Value rootApp;
+    Json::Value arrayInterests;
+    bool parsingSuccessful = reader.parse(userInfo, rootShared, true);
     if (!parsingSuccessful) {
         return "Error parsing result";
     }
-
-    root["user"]["user_id"] = userId;
-    return fastWriter.write(root["user"]);
+    rootApp["user_id"] = appUserId;
+    rootApp["name"] = rootShared["user"].get("name", "");
+    rootApp["alias"] = rootShared["user"].get("alias", "");
+    rootApp["age"] = rootShared["user"].get("age", ""); //NO ESTA
+    rootApp["gender"] = rootShared["user"].get("gender", ""); //NO ESTA
+    rootApp["photo_profile"] = rootShared["user"].get("photo_profile", "");
+    Json::Value interests = rootShared["user"].get("interests", "");
+    for (unsigned int j = 0; j < interests.size(); j++) {
+        arrayInterests.append(interests[j]["value"]);
+    }
+    rootApp["interests"] = arrayInterests;
+    rootApp["location"] = rootShared["user"].get("location", "");
+    return fastWriter.write(rootApp);
 }
