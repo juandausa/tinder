@@ -25,6 +25,8 @@ public:
     virtual void handleGetMatches(RequestParser requestParser, Response response);
 private:
     UserService userService;
+    Json::Reader reader;
+    Json::FastWriter fastWriter;
     std::string fakeResponseForUserMatches();
     Json::Value makeBodyAndTokenForLoginResponse(const std::string userId);
     Json::Value makeBodyAndTokenForRegistrationResponse(const std::string userId);
