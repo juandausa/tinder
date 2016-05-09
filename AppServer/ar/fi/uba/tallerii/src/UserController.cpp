@@ -167,8 +167,7 @@ Json::Value UserController::makeBodyAndTokenForRegistrationResponse(const std::s
 Json::Value UserController::makeBodyForShowCandidatesResponse() {
     Json::Value event;
     Json::Value root;
-    Json::Value arrayUsers(Json::arrayValue);
-    Json::Value arrayInterests(Json::arrayValue);
+    Json::Value arrayUsers;
     std::string readBuffer;
 
     CurlWrapper curlWrapper = CurlWrapper();
@@ -181,7 +180,9 @@ Json::Value UserController::makeBodyForShowCandidatesResponse() {
     Json::Value users = root["users"];
     for (unsigned int i = 0; i < users.size(); i++) {
         Json::Value user;
-        user["user_id"] = users[i]["user"].get("id", "");
+        Json::Value arrayInterests;
+        std::string sharedUserId = fastWriter.write(users[i]["user"].get("id", ""));
+        user["user_id"] = this->userService.getAppUserId(sharedUserId);
         user["alias"] = users[i]["user"].get("alias", "");
         user["age"] = users[i]["user"].get("age", "");
         user["photo_profile"] = users[i]["user"].get("photo_profile", "");

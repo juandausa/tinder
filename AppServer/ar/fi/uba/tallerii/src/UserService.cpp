@@ -22,7 +22,7 @@ bool UserService::isUserRegistered(const std::string userId) {
 
 bool UserService::registerUser(const std::string appUserId, const std::string sharedUserId) {
     if (this->database->is_open()) {
-        return this->database->set(appUserId, sharedUserId);
+        return this->database->set(appUserId, sharedUserId) && this->database->set(sharedUserId, appUserId);
     }
     return false;
 }
@@ -65,6 +65,16 @@ std::string UserService::getExternalUserId(std::string userId) {
         LOG(WARNING) << "The database is closed.";
     }
     return sharedUserId;
+}
+
+std::string UserService::getAppUserId(std::string sharedUserId) {
+    std::string appUserId;
+    if (this->database->is_open()) {
+        this->database->get(sharedUserId, &appUserId);
+    } else {
+        LOG(WARNING) << "The database is closed.";
+    }
+    return appUserId;
 }
 
 UserService::~UserService() {

@@ -23,6 +23,7 @@ public:
     std::string getSecurityToken(const std::string userName);
     bool isTokenValid(const std::string userName, const std::string token);
     std::string getExternalUserId(std::string userId);
+    std::string getAppUserId(std::string sharedUserId);
 private:
     DataBase* database;
 };
