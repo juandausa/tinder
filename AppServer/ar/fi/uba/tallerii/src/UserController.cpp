@@ -95,9 +95,7 @@ void UserController::handleShowCandidates(RequestParser requestParser, Response 
 
 void UserController :: handleUpdateUserInfo(RequestParser requestParser, Response response) {
     std::string userId = requestParser.getResourceId();
-
-    std::string externalUserId = userId;
-    // TODO(juandausa): Solicitar el id externo.
+    std::string externalUserId = this->userService.getExternalUserId(userId);
     LOG(INFO) << "Updating user info for user: '" << userId<< "'";
     std::string body = this->makeBodyUserInfoForUpdate(requestParser.getBody(), externalUserId);
     if ((userId.compare("") == 0) || (externalUserId.compare("") == 0) || (body.compare("") == 0)) {
@@ -126,8 +124,7 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
 
 void UserController :: handleGetUserInfo(RequestParser requestParser, Response response) {
     std::string userId = requestParser.getResourceId();
-    std::string externalUserId = userId;
-    // TODO(juandausa): Solicitar el id externo.
+    std::string externalUserId = this->userService.getExternalUserId(userId);
     LOG(INFO) << "Retrieving user info for user: '" << userId<< "'";
     if ((userId.compare("") == 0) || (externalUserId.compare("") == 0)) {
         response.SetCode(400);

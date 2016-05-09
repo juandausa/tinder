@@ -58,7 +58,13 @@ bool UserService::isTokenValid(const std::string userId, const std::string token
 }
 
 std::string UserService::getExternalUserId(std::string userId) {
-    return "0";
+    std::string sharedUserId;
+    if (this->database->is_open()) {
+        this->database->get(userId, &sharedUserId);
+    } else {
+        LOG(WARNING) << "The database is closed.";
+    }
+    return sharedUserId;
 }
 
 UserService::~UserService() {
