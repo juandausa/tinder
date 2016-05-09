@@ -3,6 +3,7 @@
 //
 
 #include "UserService.h"
+#include <string>
 
 
 UserService::UserService(DataBase &db) : database(&db) {
@@ -19,9 +20,9 @@ bool UserService::isUserRegistered(const std::string userId) {
     return false;
 }
 
-bool UserService::registerUser(const std::string userId, const std::string token) {
+bool UserService::registerUser(const std::string appUserId, const std::string sharedUserId) {
     if (this->database->is_open()) {
-        return this->database->set(Constant::security_token_prefix + userId, token);
+        return this->database->set(appUserId, sharedUserId);
     }
     return false;
 }
