@@ -45,7 +45,7 @@ void CurlWrapper::set_post_data(const std::string data, std::string &readBuffer)
     }
 }
 
-void CurlWrapper::set_get_buffer(const std::string readBuffer) {
+void CurlWrapper::set_get_buffer(const std::string &readBuffer) {
     if (curl) {
         struct curl_slist *headers = NULL;
         headers = curl_slist_append(headers, "Accept: application/json");
