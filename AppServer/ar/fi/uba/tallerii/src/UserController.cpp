@@ -342,8 +342,8 @@ std::string UserController :: makeBodyForUserInfoResponse(const std::string appU
     rootApp["user_id"] = appUserId;
     rootApp["name"] = rootShared["user"].get("name", "");
     rootApp["alias"] = rootShared["user"].get("alias", "");
-    rootApp["age"] = rootShared["user"].get("age", "");  // NO ESTA
-    rootApp["gender"] = rootShared["user"].get("gender", "");  // NO ESTA
+//    rootApp["age"] = rootShared["user"].get("age", "");  // NO ESTA
+//    rootApp["gender"] = rootShared["user"].get("gender", "");  // NO ESTA
     rootApp["photo_profile"] = rootShared["user"].get("photo_profile", "");
     Json::Value interests = rootShared["user"].get("interests", "");
     for (unsigned int j = 0; j < interests.size(); j++) {
