@@ -15,7 +15,6 @@ UserController :: UserController(UserService userService) : userService(userServ
 void UserController :: handleLogin(RequestParser requestParser, Response response) {
     std::cout << "handle_login" << std::endl;
     std::string userId = requestParser.getResourceId();
-    Json::FastWriter fastWriter;
     LOG(INFO) << "Proccesing login for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);
@@ -35,8 +34,6 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     std::cout << "handleRegistration" << std::endl;;
     Json::Value root;
     Json::Value responseShared;
-    Json::Reader reader;
-    Json::FastWriter fastWriter;
     std::string readBuffer;
     bool parsingSuccessful = reader.parse(requestParser.getBody(), root, true);
     if (!parsingSuccessful) {
@@ -76,7 +73,6 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
 }
 
 void UserController::handleShowCandidates(RequestParser requestParser, Response response) {
-    Json::FastWriter fastWriter;
     std::string userId = requestParser.getResourceId();
     LOG(INFO) << "Proccesing show candidates for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
@@ -170,20 +166,33 @@ Json::Value UserController::makeBodyAndTokenForRegistrationResponse(const std::s
 
 Json::Value UserController::makeBodyForShowCandidatesResponse() {
     Json::Value event;
+    Json::Value root;
     Json::Value arrayUsers(Json::arrayValue);
+    Json::Value arrayInterests(Json::arrayValue);
     std::string readBuffer;
 
     CurlWrapper curlWrapper = CurlWrapper();
     std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
     curlWrapper.set_post_url(url);
-    // TODO(jasmina): ver si funciona el GET asi configurado.
     curlWrapper.set_get_buffer(readBuffer);
     curlWrapper.perform_request();
-    curlWrapper.clean();
+    reader.parse(readBuffer, root, true);
     std::cout << readBuffer << std::endl;
-    // TODO(jasmina): armar el json que tenga adentro de candidates la lista de usuarios.
-    // arrayUsers["algo"] = algo;
-    event["candidates"] = arrayUsers;
+    Json::Value users = root["users"];
+    for (unsigned int i = 0; i < users.size(); i++) {
+        Json::Value user;
+        user["user_id"] = users[i]["user"].get("id", "");
+        user["alias"] = users[i]["user"].get("alias", "");
+        user["age"] = users[i]["user"].get("age", "");
+        user["photo_profile"] = users[i]["user"].get("photo_profile", "");
+        Json::Value interests = users[i]["user"].get("interests", "");
+        for (unsigned int j = 0; j < interests.size(); j++) {
+            arrayInterests.append(interests[j]["value"]);
+        }
+        user["interests"] = arrayInterests;
+        arrayUsers.append(user);
+    }
+     event["candidates"] = arrayUsers;
     return event;
 }
 
@@ -252,7 +261,6 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
 
 
 void UserController::postInterests(Json::Value root) {
-    Json::FastWriter fastWriter;
     std::string readBuffer;
     Json::Value interests = root["user"]["interests"];
     for (unsigned int i = 0; i < interests.size(); i++) {
@@ -277,7 +285,6 @@ void UserController::postInterests(Json::Value root) {
 }
 
 std::string UserController::fakeResponseForUserMatches() {
-    Json::FastWriter fastWriter;
     Json::Value fakeInfo;
     Json::Value match, otherMatch;
     Json::Value message1, message2, message3, message4;
@@ -310,7 +317,6 @@ std::string UserController::fakeResponseForUserMatches() {
 std::string UserController :: makeBodyUserInfoForUpdate(const std::string info, const std::string userId) {
     Json::Value root;
     Json::Reader reader;
-    Json::FastWriter fastWriter;
     bool parsingSuccessful = reader.parse(info, root, true);
     if (!parsingSuccessful) {
         return "";
@@ -323,8 +329,6 @@ std::string UserController :: makeBodyUserInfoForUpdate(const std::string info, 
 
 std::string UserController :: makeBodyForUserInfoResponse(const std::string userId, const std::string userInfo) {
     Json::Value root;
-    Json::Reader reader;
-    Json::FastWriter fastWriter;
     bool parsingSuccessful = reader.parse(userInfo, root, true);
     if (!parsingSuccessful) {
         return "Error parsing result";
