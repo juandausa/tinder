@@ -34,8 +34,10 @@ void UserController :: handleLogin(RequestParser requestParser, Response respons
 void UserController::handleRegistration(RequestParser requestParser, Response response) {
     std::cout << "handleRegistration" << std::endl;;
     Json::Value root;
+    Json::Value responseShared;
     Json::Reader reader;
     Json::FastWriter fastWriter;
+    std::string readBuffer;
     bool parsingSuccessful = reader.parse(requestParser.getBody(), root, true);
     if (!parsingSuccessful) {
         std::cout  << "Failed to parse configuration\n";
@@ -43,18 +45,23 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     }
 
     Json::Value event = this->makeBodyForRegistrationPost(root);
-    std::string userId = root.get("user_id", "").asString();
+    std::string appUserId = root.get("user_id", "").asString();
 
     std::string data = fastWriter.write(event);
     CurlWrapper curlWrapper = CurlWrapper();
     std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
 //    std::string url = "localhost:5000/users";
     curlWrapper.set_post_url(url);
-    curlWrapper.set_post_data(data);
+    curlWrapper.set_post_data(data, readBuffer);
     bool res = curlWrapper.perform_request();
+    reader.parse(readBuffer, responseShared, true);
+    Json::Value sharedUserId = responseShared["user"].get("id", "");
+    std::string sharedUserIdString = fastWriter.write(sharedUserId);
+
     LOG(INFO) << "Proccesing registration for user: ";
     if (res) {
-        Json::Value response_body = this->makeBodyAndTokenForRegistrationResponse(userId);
+        Json::Value response_body = this->makeBodyAndTokenForRegistrationResponse(appUserId);
+        this->userService.registerUser(appUserId, sharedUserIdString);
         std::string body = fastWriter.write(response_body);
         response.SetCode(200);
         response.SetBody(body);
@@ -223,6 +230,7 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
 
 void UserController::postInterests(Json::Value root) {
     Json::FastWriter fastWriter;
+    std::string readBuffer;
     Json::Value interests = root["user"]["interests"];
     for (unsigned int i = 0; i < interests.size(); i++) {
         Json::Value postData;
@@ -236,7 +244,7 @@ void UserController::postInterests(Json::Value root) {
 //        std::string url = "10.1.86.224:5000/interests";
 //        std::string url = "190.244.18.3:5000/interests";
         curlWrapper.set_post_url(url);
-        curlWrapper.set_post_data(data);
+        curlWrapper.set_post_data(data, readBuffer);
         bool res = curlWrapper.perform_request();
         if (!res) {
             std::cout << "Failed to post new interests\n";
