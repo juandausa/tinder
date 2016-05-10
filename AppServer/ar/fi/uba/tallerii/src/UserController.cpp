@@ -90,7 +90,6 @@ void UserController::handleShowCandidates(RequestParser requestParser, Response 
     }
 }
 
-
 void UserController :: handleUpdateUserInfo(RequestParser requestParser, Response response) {
     std::string userId = requestParser.getResourceId();
     std::string externalUserId = this->userService.getExternalUserId(userId);
@@ -326,9 +325,12 @@ std::string UserController :: makeBodyUserInfoForUpdate(const std::string info, 
         return "";
     }
 
-    // Json::Value parsedUserInfo = this->makeBodyForRegistrationPost(root);
-    root["user"]["id"] = userId;
-    return fastWriter.write(root);
+    Json::Value parsedUserInfo;
+    parsedUserInfo = this->makeBodyForRegistrationPost(root);
+    parsedUserInfo["user"]["id"] = userId;
+    parsedUserInfo["metadata"]["version"] = "0.1";
+    parsedUserInfo["metadata"]["count"] = "1";
+    return fastWriter.write(parsedUserInfo);
 }
 
 std::string UserController :: makeBodyForUserInfoResponse(const std::string appUserId, const std::string userInfo) {
