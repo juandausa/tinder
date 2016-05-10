@@ -45,6 +45,19 @@ void CurlWrapper::set_post_data(const std::string data, std::string &readBuffer)
     }
 }
 
+void CurlWrapper::set_put_data(const std::string data, std::string &readBuffer) {
+    if (curl) {
+        struct curl_slist *headers = NULL;
+        headers = curl_slist_append(headers, "Accept: application/json");
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data.c_str());
+        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        // curl_slist_free_all(headers);  //NO! ROMPE EL CURL y tira SEG FAULT!
+    }
+}
+
 void CurlWrapper::set_get_buffer(const std::string &readBuffer) {
     if (curl) {
         struct curl_slist *headers = NULL;
