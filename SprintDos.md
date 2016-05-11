@@ -1,7 +1,13 @@
-# [Sprint 1](https://github.com/juandausa/tinder/milestones/Sprint%202)
+# [Sprint 2](https://github.com/juandausa/tinder/milestones/Sprint%202)
 
 ## Objetivos del Sprint
- * 
+ * Integrar las distintas partes del sistema. App, AppServer y SharedServer.
+ * Completar la edición de los datos de usuario.
+ * Realizar el ABM de preferencias de usuario.
+ * Agregar datos de usuario faltantes.
+ * Permitir la visualizaión de personas cercanas a traves de los filtros y preferencias.
+ * Almacenar likes.
+ * Proveer al usuario el listado de sus 'Matches'.
 
 ## Calendario
 Duración del Sprint: 4 semanas.
