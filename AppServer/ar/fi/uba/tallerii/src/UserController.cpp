@@ -99,21 +99,23 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
         response.SetCode(400);
         response.SetBody("Bad Request.");
     } else {
-        // std::string url = Constant::update_user_info_url + externalUserId;
-        /*std::string url = "zaraz";
+        std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users/" + externalUserId;
         LOG(INFO) << "Requesting url: " << url;
-        EasyCurl curl(url);
-        curl.SetParms("");
-        curl.ForcePut();
-        std::string content = curl.StringPerform();
-        if (content.compare("") != 0) {
-            response.SetCode(200);
-            response.SetBody(content);
+        CurlWrapper curlWrapper = CurlWrapper();
+        std::string readBuffer;
+        curlWrapper.set_post_url(url);
+        curlWrapper.set_put_data(body, readBuffer);
+        bool requestResult = curlWrapper.perform_request();
+        if (!requestResult) {
+            LOG(WARNING) << "Error requesting url: '" << url << "' whith body: " << body << ". Response: " << readBuffer;
+            response.SetCode(500);
+            response.SetBody("{\"status_code\": 500}");
         } else {
-            response.SetCode(400);
-            response.SetBody("Bad Request");
-        }*/
-        response.SetBody(body);
+            LOG(INFO) << "Requesting url: '" << url << " ' has respond: " << readBuffer;
+            response.SetCode(200);
+            response.SetBody("{\"status_code\": 200}");
+        }
+        curlWrapper.clean();
     }
 
     response.Send();
@@ -125,7 +127,7 @@ void UserController :: handleGetUserInfo(RequestParser requestParser, Response r
     std::string externalUserId = this->userService.getExternalUserId(userId);
     LOG(INFO) << "Retrieving user info for user: '" << userId<< "'";
     if ((userId.compare("") == 0) || (externalUserId.compare("") == 0)) {
-        response.SetCode(400);
+        response.SetCode(500);
         response.SetBody("Bad Request, no userId detected.");
     } else {
         CurlWrapper curlWrapper = CurlWrapper();
@@ -137,7 +139,7 @@ void UserController :: handleGetUserInfo(RequestParser requestParser, Response r
             response.SetCode(200);
             response.SetBody(this->makeBodyForUserInfoResponse(userId, readBuffer));
         } else {
-            response.SetCode(400);
+            response.SetCode(500);
             response.SetBody("Bad Request");
         }
     }
@@ -327,9 +329,13 @@ std::string UserController :: makeBodyUserInfoForUpdate(const std::string info, 
 
     Json::Value parsedUserInfo;
     parsedUserInfo = this->makeBodyForRegistrationPost(root);
-    parsedUserInfo["user"]["id"] = userId;
+    try {
+        parsedUserInfo["user"]["id"] = std::atoi(userId.c_str());
+    } catch(std::exception const & e) {
+        LOG(WARNING) << "Error parsing user extrenal id, which is: '" << userId << "'";
+        return "";
+    }
     parsedUserInfo["metadata"]["version"] = "0.1";
-    parsedUserInfo["metadata"]["count"] = "1";
     return fastWriter.write(parsedUserInfo);
 }
 
