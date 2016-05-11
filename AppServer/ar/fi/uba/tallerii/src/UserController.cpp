@@ -99,7 +99,7 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
         response.SetCode(400);
         response.SetBody("Bad Request.");
     } else {
-        std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users/" + externalUserId;
+        std::string url = "http://enigmatic-scrubland-75073.herokuapp.com/users/" + externalUserId;
         LOG(INFO) << "Requesting url: " << url;
         CurlWrapper curlWrapper = CurlWrapper();
         std::string readBuffer;
