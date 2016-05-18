@@ -24,6 +24,10 @@ public:
     bool isTokenValid(const std::string userName, const std::string token);
     std::string getExternalUserId(std::string userId);
     std::string getAppUserId(std::string sharedUserId);
+    std::vector<std::string> getLikes(const std::string userId);
+    bool addLike(const std::string fromUserId, const std::string toUserId);
+    std::vector<std::string> getMatches(const std::string userId);
+
 private:
     DataBase* database;
 };

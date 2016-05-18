@@ -77,5 +77,17 @@ std::string UserService::getAppUserId(std::string sharedUserId) {
     return appUserId;
 }
 
+bool UserService::addLike(const std::string fromUserId, const std::string toUserId) {
+    return true;
+}
+
+std::vector<std::string> UserService::getLikes(const std::string userId) {
+    return std::vector<std::string>();
+}
+
+std::vector<std::string> UserService::getMatches(const std::string userId) {
+    return std::vector<std::string>();
+}
+
 UserService::~UserService() {
 }
