@@ -10,5 +10,7 @@ std::string Constant :: database_path = "/tmp/tinderdb";
 std::string Constant :: security_token_prefix = "token-";
 std::size_t Constant :: random_characters_quantity = 5;
 std::string Constant :: filters_prefix = "preferences-";
+std::string Constant :: likes_prefix = "likes-";
+char Constant :: likes_separator = ' ';
 std::string Constant :: update_user_info_url = "http://enigmatic-scrubland-75073.herokuapp.com/users/";
 std::string Constant :: get_user_info_url = "http://enigmatic-scrubland-75073.herokuapp.com/users/";

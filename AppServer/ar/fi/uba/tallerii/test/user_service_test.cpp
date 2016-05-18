@@ -104,3 +104,69 @@ TEST(UserService, ValidateNullUser) {
         EXPECT_EQ(1, 0);
     }
 }
+
+TEST(UserService, GetLikesWhithNoLike) {
+    DataBase db("/tmp/testuserservicedb7");
+    if (db.is_open()) {
+        UserService user_service(db);
+        std::vector<std::string> likes = user_service.getLikes("JohnDoe");
+        EXPECT_TRUE(likes.size() == 0);
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, AddLikeReturnTrue) {
+    DataBase db("/tmp/testuserservicedb8");
+    if (db.is_open()) {
+        UserService user_service(db);
+        std::vector<std::string> likes = user_service.getLikes("JohnDoe");
+        EXPECT_TRUE(user_service.addLike("JohnDoe", "Josi"));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, AddLikeReturnFalseIfDbIsClose) {
+    DataBase db("/tmp/testuserservicedb9");
+    if (db.is_open()) {
+        UserService user_service(db);
+        db.~DataBase();
+        std::vector<std::string> likes = user_service.getLikes("JohnDoe");
+        EXPECT_FALSE(user_service.addLike("JohnDoe", "Josi"));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, AddLikeShouldAddLikeToTheUser) {
+    removeDataBase("/tmp/testuserservicedb10");
+    DataBase db("/tmp/testuserservicedb10");
+    if (db.is_open()) {
+        UserService user_service(db);
+        std::vector<std::string> likes = user_service.getLikes("JohnDoe");
+        EXPECT_TRUE(likes.size() == 0);
+        user_service.addLike("JohnDoe", "Josi");
+        likes = user_service.getLikes("JohnDoe");
+        EXPECT_TRUE(likes.size() == 1);
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, AddSeveralLikesShouldAddLikesToTheUser) {
+    removeDataBase("/tmp/testuserservicedb11");
+    DataBase db("/tmp/testuserservicedb11");
+    if (db.is_open()) {
+        UserService user_service(db);
+        std::vector<std::string> likes = user_service.getLikes("JohnDoe");
+        EXPECT_TRUE(likes.size() == 0);
+        user_service.addLike("JohnDoe", "Josi");
+        user_service.addLike("JohnDoe", "Carmen");
+        user_service.addLike("JohnDoe", "Lara");
+        likes = user_service.getLikes("JohnDoe");
+        EXPECT_TRUE(likes.size() == 3);
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}

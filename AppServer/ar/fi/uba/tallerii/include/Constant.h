@@ -15,6 +15,8 @@ public:
     static std::string security_token_prefix;
     static std::size_t random_characters_quantity;
     static std::string filters_prefix;
+    static std::string likes_prefix;
+    static char likes_separator;
     static std::string update_user_info_url;
     static std::string get_user_info_url;
 private:
