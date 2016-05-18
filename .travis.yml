@@ -64,9 +64,8 @@ before_script:
     - ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/main/*
     - cmake .
     - make
-    - ./ar/fi/uba/tallerii/test/runTests
 
-script: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 -v ./ar/fi/uba/tallerii/test/runTests
+script: ./ar/fi/uba/tallerii/test/runTests
 
 after_success: 
     - lcov --capture --directory ./ar/fi/uba/tallerii/test/ --output-file coverageTinderTests.info
