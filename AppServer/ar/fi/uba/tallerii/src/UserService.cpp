@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 
-
 UserService::UserService(DataBase &db) : database(&db) {
 }
 
@@ -109,17 +108,28 @@ std::string UserService::getAppUserId(std::string sharedUserId) {
     return appUserId;
 }
 
+bool UserService::hasLike(std::string fromUserId, std::string toUserId) {
+    std::vector<std::string> likes = this->getLikes(fromUserId);
+    if (std::find(likes.begin(), likes.end(), toUserId) != likes.end()) {
+        return true;
+    }
+
+    return false;
+}
+
 bool UserService::addLike(const std::string fromUserId, const std::string toUserId) {
     if (this->database->is_open()) {
-        std::string previousLikes("");
-        this->database->get(Constant::likes_prefix + fromUserId, &previousLikes);
-        if (previousLikes.length() != 0) {
-            previousLikes += Constant::likes_separator;
-            // Because likes_separator is a char.
-            previousLikes.append(toUserId);
-            return this->database->set(Constant::likes_prefix + fromUserId, previousLikes);
-        } else {
-            return this->database->set(Constant::likes_prefix + fromUserId, toUserId);
+        if (!hasLike(fromUserId, toUserId)) {
+            std::string previousLikes("");
+            this->database->get(Constant::likes_prefix + fromUserId, &previousLikes);
+            if (previousLikes.length() != 0) {
+                previousLikes += Constant::likes_separator;
+                // Because likes_separator is a char.
+                previousLikes.append(toUserId);
+                return this->database->set(Constant::likes_prefix + fromUserId, previousLikes);
+            } else {
+                return this->database->set(Constant::likes_prefix + fromUserId, toUserId);
+            }
         }
     } else {
         LOG(WARNING) << "The database is closed.";

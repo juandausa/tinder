@@ -155,8 +155,8 @@ TEST(UserService, AddLikeShouldAddLikeToTheUser) {
 }
 
 TEST(UserService, AddSeveralLikesShouldAddLikesToTheUser) {
-    removeDataBase("/tmp/testuserservicedb11");
-    DataBase db("/tmp/testuserservicedb11");
+    removeDataBase("/tmp/testuserservicedb12");
+    DataBase db("/tmp/testuserservicedb12");
     if (db.is_open()) {
         UserService user_service(db);
         std::vector<std::string> likes = user_service.getLikes("JohnDoe");
@@ -166,6 +166,50 @@ TEST(UserService, AddSeveralLikesShouldAddLikesToTheUser) {
         user_service.addLike("JohnDoe", "Lara");
         likes = user_service.getLikes("JohnDoe");
         EXPECT_TRUE(likes.size() == 3);
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, AddSameLikeTwiceShouldAddLikeOnce) {
+    removeDataBase("/tmp/testuserservicedb13");
+    DataBase db("/tmp/testuserservicedb13");
+    if (db.is_open()) {
+        UserService user_service(db);
+        std::vector<std::string> likes = user_service.getLikes("JohnDoe");
+        EXPECT_TRUE(likes.size() == 0);
+        user_service.addLike("JohnDoe", "Josi");
+        likes = user_service.getLikes("JohnDoe");
+        EXPECT_TRUE(likes.size() == 1);
+        user_service.addLike("JohnDoe", "Josi");
+        likes = user_service.getLikes("JohnDoe");
+        EXPECT_TRUE(likes.size() == 1);
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, HasLikeAfterAddShouldReturnTrue) {
+    removeDataBase("/tmp/testuserservicedb14");
+    DataBase db("/tmp/testuserservicedb14");
+    if (db.is_open()) {
+        UserService user_service(db);
+        std::vector<std::string> likes = user_service.getLikes("JohnDoe");
+        EXPECT_TRUE(likes.size() == 0);
+        user_service.addLike("JohnDoe", "Josi");
+        likes = user_service.getLikes("JohnDoe");
+        EXPECT_TRUE(user_service.hasLike("JohnDoe", "Josi"));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, HasLikeBeforeAddShouldReturnFalse) {
+    removeDataBase("/tmp/testuserservicedb15");
+    DataBase db("/tmp/testuserservicedb15");
+    if (db.is_open()) {
+        UserService user_service(db);
+        EXPECT_FALSE(user_service.hasLike("JohnDoe", "Josi"));
     } else {
         EXPECT_EQ(1, 0);
     }

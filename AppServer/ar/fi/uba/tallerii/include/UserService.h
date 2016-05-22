@@ -8,6 +8,7 @@
 #include "DataBase.h"
 #include <glog/logging.h>
 #include <string>
+#include <algorithm>
 #include "RandomTextGenerator.h"
 #include "DataBase.h"
 #include "MD5.h"
@@ -26,6 +27,7 @@ public:
     std::string getAppUserId(std::string sharedUserId);
     std::vector<std::string> getLikes(const std::string userId);
     bool addLike(const std::string fromUserId, const std::string toUserId);
+    bool hasLike(const std::string fromUserId, const std::string toUserId);
     std::vector<std::string> getMatches(const std::string userId);
 
 private:
