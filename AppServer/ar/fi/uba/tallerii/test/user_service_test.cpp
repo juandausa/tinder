@@ -214,3 +214,33 @@ TEST(UserService, HasLikeBeforeAddShouldReturnFalse) {
         EXPECT_EQ(1, 0);
     }
 }
+
+TEST(UserService, AddLikeBetweenUsersShouldAddMatch) {
+    removeDataBase("/tmp/testuserservicedb16");
+    DataBase db("/tmp/testuserservicedb16");
+    if (db.is_open()) {
+        UserService user_service(db);
+        user_service.addLike("JohnDoe", "Josi");
+        EXPECT_TRUE(user_service.hasLike("JohnDoe", "Josi"));
+        user_service.addLike("Josi", "JohnDoe");
+        EXPECT_TRUE(user_service.hasLike("Josi", "JohnDoe"));
+        EXPECT_TRUE(user_service.hasMatch("Josi", "JohnDoe"));
+        EXPECT_TRUE(user_service.hasMatch("JohnDoe", "Josi"));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, AddLikeUserShouldNotAddMatch) {
+    removeDataBase("/tmp/testuserservicedb17");
+    DataBase db("/tmp/testuserservicedb17");
+    if (db.is_open()) {
+        UserService user_service(db);
+        user_service.addLike("JohnDoe", "Josi");
+        EXPECT_TRUE(user_service.hasLike("JohnDoe", "Josi"));
+        EXPECT_FALSE(user_service.hasMatch("Josi", "JohnDoe"));
+        EXPECT_FALSE(user_service.hasMatch("JohnDoe", "Josi"));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}

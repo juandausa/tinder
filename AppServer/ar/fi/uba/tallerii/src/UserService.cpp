@@ -117,26 +117,41 @@ bool UserService::hasLike(std::string fromUserId, std::string toUserId) {
     return false;
 }
 
+bool UserService::hasMatch(std::string fromUserId, std::string toUserId) {
+    std::vector<std::string> matches = this->getMatches(fromUserId);
+    if (std::find(matches.begin(), matches.end(), toUserId) != matches.end()) {
+        return true;
+    }
+
+    return false;
+}
+
 bool UserService::addLike(const std::string fromUserId, const std::string toUserId) {
     if (this->database->is_open()) {
-        if (!hasLike(fromUserId, toUserId)) {
+        if (!this->hasLike(fromUserId, toUserId)) {
             std::string previousLikes("");
             this->database->get(Constant::likes_prefix + fromUserId, &previousLikes);
+            bool result;
             if (previousLikes.length() != 0) {
                 previousLikes += Constant::likes_separator;
                 // Because likes_separator is a char.
                 previousLikes.append(toUserId);
-                return this->database->set(Constant::likes_prefix + fromUserId, previousLikes);
+                result = this->database->set(Constant::likes_prefix + fromUserId, previousLikes);
             } else {
-                return this->database->set(Constant::likes_prefix + fromUserId, toUserId);
+                result = this->database->set(Constant::likes_prefix + fromUserId, toUserId);
             }
+            if (result && this->hasLike(toUserId, fromUserId)) {
+                return this->addMatch(fromUserId, toUserId) && this->addMatch(toUserId, fromUserId);
+            }
+
+            return result;
         }
+
+        return true;
     } else {
         LOG(WARNING) << "The database is closed.";
         return false;
     }
-
-    return true;
 }
 
 std::vector<std::string> UserService::getLikes(const std::string userId) {
@@ -151,7 +166,39 @@ std::vector<std::string> UserService::getLikes(const std::string userId) {
 }
 
 std::vector<std::string> UserService::getMatches(const std::string userId) {
-    return std::vector<std::string>();
+    std::string match;
+    this->database->get(Constant::matches_prefix + userId, &match);
+    if (match.length() != 0) {
+        return convertInVector(match);
+    }
+
+    std::vector<std::string> matches;
+    return matches;
+}
+
+bool UserService::addMatch(const std::string fromUserId, const std::string toUserId) {
+    if (this->database->is_open()) {
+        if (!this->hasMatch(fromUserId, toUserId)) {
+            std::string previousMatches("");
+            this->database->get(Constant::matches_prefix + fromUserId, &previousMatches);
+            bool result;
+            if (previousMatches.length() != 0) {
+                previousMatches += Constant::likes_separator;
+                // Because likes_separator is a char.
+                previousMatches.append(toUserId);
+                result = this->database->set(Constant::matches_prefix + fromUserId, previousMatches);
+            } else {
+                result = this->database->set(Constant::matches_prefix + fromUserId, toUserId);
+            }
+
+            return result;
+        }
+
+        return true;
+    } else {
+        LOG(WARNING) << "The database is closed.";
+        return false;
+    }
 }
 
 UserService::~UserService() {

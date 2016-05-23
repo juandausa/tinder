@@ -26,12 +26,14 @@ public:
     std::string getExternalUserId(std::string userId);
     std::string getAppUserId(std::string sharedUserId);
     std::vector<std::string> getLikes(const std::string userId);
+    std::vector<std::string> getMatches(const std::string userId);
     bool addLike(const std::string fromUserId, const std::string toUserId);
     bool hasLike(const std::string fromUserId, const std::string toUserId);
-    std::vector<std::string> getMatches(const std::string userId);
+    bool hasMatch(const std::string fromUserId, const std::string toUserId);
 
 private:
     DataBase* database;
+    bool addMatch(const std::string fromUserId, const std::string toUserId);
 };
 
 #endif //TINDER_USERSERVICE_H
