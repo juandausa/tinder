@@ -68,6 +68,9 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 FilterService filter_service(db);
                 FilterController filter_controller(filter_service);
                 filter_controller.handle_get_filters(requestParser, response);
+            } else if (requestParser.isAddLikeRequest()) {
+                UserController user_controller(user_service);
+                user_controller.handleAddLike(requestParser, response);
             }
 
             break;

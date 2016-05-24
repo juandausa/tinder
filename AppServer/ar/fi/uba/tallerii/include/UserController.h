@@ -23,6 +23,7 @@ public:
     virtual void handleUpdateUserInfo(RequestParser requestParser, Response response);
     virtual void handleShowCandidates(RequestParser requestParser, Response response);
     virtual void handleGetMatches(RequestParser requestParser, Response response);
+    virtual void handleAddLike(RequestParser requestParser, Response response);
 private:
     UserService userService;
     Json::Reader reader;
@@ -35,6 +36,7 @@ private:
     std::string makeBodyForUserInfoResponse(const std::string appUserId, const std::string userInfo);
     std::string makeBodyUserInfoForUpdate(const std::string info, const std::string userId);
     void postInterests(const Json::Value root);
+    std::string getUserTo(const std::string body);
 };
 
 

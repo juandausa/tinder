@@ -13,6 +13,7 @@
 
 SecurityManager::SecurityManager(UserService user_service) : user_service(user_service) {
     this->secure_paths.push_back("/filters");
+    this->secure_paths.push_back("/likes");
 }
 
 void SecurityManager::filter_request(struct mg_connection *nc, struct http_message *hm, Response response) {
