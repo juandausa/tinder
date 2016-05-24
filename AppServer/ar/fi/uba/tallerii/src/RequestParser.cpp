@@ -31,8 +31,6 @@ std::string RequestParser::getBody() {
     return this->body;
 }
 
-
-
 bool RequestParser::isUserLoginRequest() {
     return (this->uri == "/login" && this->method == "GET");
 }
@@ -63,4 +61,8 @@ bool RequestParser::isCandidatesGetRequest() {
 
 bool RequestParser::isMatchesGetRequest() {
     return (this->uri == "/matches" && this->method == "GET");
+}
+
+bool RequestParser::isAddLikeRequest() {
+    return (this->uri == "/likes" && this->method == "POST");
 }
