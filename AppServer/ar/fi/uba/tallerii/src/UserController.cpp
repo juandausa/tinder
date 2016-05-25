@@ -27,6 +27,17 @@ std::string validateGenderOrReturnDefault(std::string gender) {
     return Constant::male;
 }
 
+std::string calculateAge(std::string birthday) {
+    struct tm timeStruct;
+    time_t t = time(NULL);
+    tm* timePtr = localtime(&t);
+    if (strptime(birthday.c_str(), "%d/%m/%Y", &timeStruct)) {
+        return static_cast<std::ostringstream*>(&(std::ostringstream() << (timePtr->tm_year - timeStruct.tm_year)))->str();
+    }
+
+    return "0";
+}
+
 void UserController :: handleLogin(RequestParser requestParser, Response response) {
     std::cout << "handle_login" << std::endl;
     std::string userId = requestParser.getResourceId();
@@ -419,8 +430,10 @@ std::string UserController :: makeBodyForUserInfoResponse(const std::string appU
     rootApp["user_id"] = appUserId;
     rootApp["name"] = rootShared["user"].get("name", "");
     rootApp["alias"] = rootShared["user"].get("alias", "");
-//    rootApp["age"] = rootShared["user"].get("age", "");  // NO ESTA
-//    rootApp["gender"] = rootShared["user"].get("gender", "");  // NO ESTA
+    std::string birthday = validateTimeOrReturnDefault(rootShared["user"].get("birthday", "").asString());
+    rootApp["birthday"] = birthday;
+    rootApp["age"] = calculateAge(birthday);
+    rootApp["gender"] = validateGenderOrReturnDefault(rootShared["user"].get("gender", "").asString());
     rootApp["photo_profile"] = rootShared["user"].get("photo_profile", "");
     Json::Value interests = rootShared["user"].get("interests", "");
     for (unsigned int j = 0; j < interests.size(); j++) {
