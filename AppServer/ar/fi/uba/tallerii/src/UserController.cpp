@@ -2,15 +2,30 @@
 // Copyright 2016 FiUBA
 //
 
-
 #include "UserController.h"
 #include <string>
+#include <time.h>
 
 
 UserController :: UserController(UserService userService) : userService(userService) {
 }
 
+std::string validateTimeOrReturnDefault(std::string time) {
+    struct tm tm;;
+    if (strptime(time.c_str(), "%d/%m/%Y", &tm)) {
+        return time;
+    } else {
+        return "01/01/1970";
+    }
+}
 
+std::string validateGenderOrReturnDefault(std::string gender) {
+    if (gender.compare(Constant::female) == 0) {
+        return gender;
+    }
+
+    return Constant::male;
+}
 
 void UserController :: handleLogin(RequestParser requestParser, Response response) {
     std::cout << "handle_login" << std::endl;
@@ -47,7 +62,7 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     std::string data = fastWriter.write(event);
     postInterests(event);
     CurlWrapper curlWrapper = CurlWrapper();
-    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
+    std::string url = "http://enigmatic-scrubland-75073.herokuapp.com/users";
 //    std::string url = "localhost:5000/users";
     curlWrapper.set_post_url(url);
     curlWrapper.set_post_data(data, readBuffer);
@@ -129,7 +144,7 @@ void UserController :: handleGetUserInfo(RequestParser requestParser, Response r
         response.SetBody("Bad Request, no userId detected.");
     } else {
         CurlWrapper curlWrapper = CurlWrapper();
-        std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users/" + externalUserId;
+        std::string url = "http://enigmatic-scrubland-75073.herokuapp.com/users/" + externalUserId;
         curlWrapper.set_post_url(url);
         curlWrapper.set_get_buffer(readBuffer);
         bool res = curlWrapper.perform_request();
@@ -255,6 +270,8 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
     std::string name = root.get("name", "").asString();
     std::string alias = root.get("alias", "").asString();
     std::string email = root.get("email", "").asString();
+    std::string birthday = validateTimeOrReturnDefault(root.get("birthday", "").asString());
+    std::string gender = validateGenderOrReturnDefault(root.get("gender", Constant::male).asString());
     std::string photo_profile = root.get("photo_profile", "").asString();
     Json::Value music = root["interests"]["music"];
     Json::Value movies = root["interests"]["movies"];
@@ -274,6 +291,8 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
     user["name"] = name;
     user["alias"] = alias;
     user["email"] = email;
+    user["birthday"] = birthday;
+    user["gender"] = gender;
     user["photo_profile"] = photo_profile;
     user["location"]["latitude"] = latitude;
     user["location"]["longitude"] = longitude;

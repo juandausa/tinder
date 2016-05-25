@@ -21,6 +21,8 @@ public:
     static char likes_separator;
     static std::string update_user_info_url;
     static std::string get_user_info_url;
+    static std::string male;
+    static std::string female;
 private:
     Constant();
 };
