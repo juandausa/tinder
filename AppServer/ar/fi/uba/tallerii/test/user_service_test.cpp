@@ -244,3 +244,79 @@ TEST(UserService, AddLikeUserShouldNotAddMatch) {
         EXPECT_EQ(1, 0);
     }
 }
+
+TEST(UserService, AddDislikeShouldAddLikeToTheUser) {
+    removeDataBase("/tmp/testuserservicedb18");
+    DataBase db("/tmp/testuserservicedb18");
+    if (db.is_open()) {
+        UserService user_service(db);
+        std::vector<std::string> dislikes = user_service.getDislikes("JohnDoe");
+        EXPECT_TRUE(dislikes.size() == 0);
+        user_service.addDislike("JohnDoe", "Josi");
+        dislikes = user_service.getDislikes("JohnDoe");
+        EXPECT_TRUE(dislikes.size() == 1);
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, AddSeveralDislikesShouldAddDislikesToTheUser) {
+    removeDataBase("/tmp/testuserservicedb19");
+    DataBase db("/tmp/testuserservicedb19");
+    if (db.is_open()) {
+        UserService user_service(db);
+        std::vector<std::string> dislikes = user_service.getDislikes("JohnDoe");
+        EXPECT_TRUE(dislikes.size() == 0);
+        user_service.addDislike("JohnDoe", "Josi");
+        user_service.addDislike("JohnDoe", "Carmen");
+        user_service.addDislike("JohnDoe", "Lara");
+        dislikes = user_service.getDislikes("JohnDoe");
+        EXPECT_TRUE(dislikes.size() == 3);
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, AddSameDislikeTwiceShouldAddDislikeOnce) {
+    removeDataBase("/tmp/testuserservicedb20");
+    DataBase db("/tmp/testuserservicedb20");
+    if (db.is_open()) {
+        UserService user_service(db);
+        std::vector<std::string> dislikes = user_service.getDislikes("JohnDoe");
+        EXPECT_TRUE(dislikes.size() == 0);
+        user_service.addDislike("JohnDoe", "Josi");
+        dislikes = user_service.getDislikes("JohnDoe");
+        EXPECT_TRUE(dislikes.size() == 1);
+        user_service.addDislike("JohnDoe", "Josi");
+        dislikes = user_service.getDislikes("JohnDoe");
+        EXPECT_TRUE(dislikes.size() == 1);
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, HasDislikeAfterAddDislikeShouldReturnTrue) {
+    removeDataBase("/tmp/testuserservicedb21");
+    DataBase db("/tmp/testuserservicedb21");
+    if (db.is_open()) {
+        UserService user_service(db);
+        std::vector<std::string> dislikes = user_service.getDislikes("JohnDoe");
+        EXPECT_TRUE(dislikes.size() == 0);
+        user_service.addDislike("JohnDoe", "Josi");
+        dislikes = user_service.getDislikes("JohnDoe");
+        EXPECT_TRUE(user_service.hasDislike("JohnDoe", "Josi"));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, HasDislikeBeforeAddDislikeShouldReturnFalse) {
+    removeDataBase("/tmp/testuserservicedb22");
+    DataBase db("/tmp/testuserservicedb22");
+    if (db.is_open()) {
+        UserService user_service(db);
+        EXPECT_FALSE(user_service.hasDislike("JohnDoe", "Josi"));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}

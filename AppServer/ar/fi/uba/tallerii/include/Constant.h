@@ -16,6 +16,7 @@ public:
     static std::size_t random_characters_quantity;
     static std::string filters_prefix;
     static std::string likes_prefix;
+    static std::string dislikes_prefix;
     static std::string matches_prefix;
     static char likes_separator;
     static std::string update_user_info_url;

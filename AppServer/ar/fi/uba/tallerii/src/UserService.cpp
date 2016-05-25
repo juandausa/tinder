@@ -20,20 +20,6 @@ std::vector<std::string> split(const std::string &s, char delim) {
     return elems;
 }
 
-std::string convertInString(std::vector<std::string> vector) {
-    std::string out("");
-    if (vector.size() != 0) {
-        out.append(vector[0]);
-        for (size_t i = 1; i < vector.size(); i++) {
-            out += Constant::likes_separator;
-            // Because likes_separator is a char.
-            out.append(vector[i]);
-        }
-    }
-
-    return out;
-}
-
 std::vector<std::string> convertInVector(std::string in) {
     std::vector<std::string> out = split(in, Constant::likes_separator);
 
@@ -93,7 +79,7 @@ std::string UserService::getExternalUserId(std::string userId) {
     if (this->database->is_open()) {
         this->database->get(userId, &sharedUserId);
     } else {
-        LOG(WARNING) << "The database is closed.";
+        LOG(WARNING) << "Getting external user Id. The database is closed.";
     }
     return sharedUserId;
 }
@@ -103,7 +89,7 @@ std::string UserService::getAppUserId(std::string sharedUserId) {
     if (this->database->is_open()) {
         this->database->get(sharedUserId, &appUserId);
     } else {
-        LOG(WARNING) << "The database is closed.";
+        LOG(WARNING) << "Getting user Id. The database is closed.";
     }
     return appUserId;
 }
@@ -149,7 +135,7 @@ bool UserService::addLike(const std::string fromUserId, const std::string toUser
 
         return true;
     } else {
-        LOG(WARNING) << "The database is closed.";
+        LOG(WARNING) << "Adding like. The database is closed.";
         return false;
     }
 }
@@ -196,22 +182,54 @@ bool UserService::addMatch(const std::string fromUserId, const std::string toUse
 
         return true;
     } else {
-        LOG(WARNING) << "The database is closed.";
+        LOG(WARNING) << "Adding match. The database is closed.";
         return false;
     }
 }
 
 std::vector<std::string> UserService::getDislikes(const std::string userId) {
-    std::vector<std::string> dislikes;
-    return dislikes;
+    std::string dislikes;
+    this->database->get(Constant::dislikes_prefix + userId, &dislikes);
+    if (dislikes.length() != 0) {
+        return convertInVector(dislikes);
+    }
+
+    std::vector<std::string> emptyVector;
+    return emptyVector;
 }
 
 bool UserService::addDislike(const std::string fromUserId, const std::string toUserId) {
-    return true;
+    if (this->database->is_open()) {
+        if (!this->hasDislike(fromUserId, toUserId)) {
+            std::string previousDislikes("");
+            this->database->get(Constant::dislikes_prefix + fromUserId, &previousDislikes);
+            bool result;
+            if (previousDislikes.length() != 0) {
+                previousDislikes += Constant::likes_separator;
+                // Because likes_separator is a char.
+                previousDislikes.append(toUserId);
+                result = this->database->set(Constant::dislikes_prefix + fromUserId, previousDislikes);
+            } else {
+                result = this->database->set(Constant::dislikes_prefix + fromUserId, toUserId);
+            }
+
+            return result;
+        }
+
+        return true;
+    } else {
+        LOG(WARNING) << "Adding dislike. The database is closed.";
+        return false;
+    }
 }
 
 bool UserService::hasDislike(const std::string fromUserId, const std::string toUserId) {
-    return true;
+    std::vector<std::string> dislikes = this->getDislikes(fromUserId);
+    if (std::find(dislikes.begin(), dislikes.end(), toUserId) != dislikes.end()) {
+        return true;
+    }
+
+    return false;
 }
 
 UserService::~UserService() {
