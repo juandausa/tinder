@@ -11,7 +11,7 @@ public final class Constants {
      * Ip of the server. Used to build paths for requests.
      * Localhost is "http://10.0.2.2:5000";;
      */
-    public static final String IP_SERVER = "http://192.168.1.106:5000";
+    public static final String IP_SERVER = "http://192.168.1.108:5000";
 
     /**
      * Route for constructing the url path for the request that checks if the user is registered in
@@ -171,6 +171,40 @@ public final class Constants {
      */
     public static final String LOGGED_IN = "logged_in";
 
+
+    /**********************************************************************************************/
+    /**********************          SETTINGS STRING CONSTANTS           ***************************/
+    /**********************************************************************************************/
+
+    /**
+     * Name of the "settings" field
+     */
+    public static final String SETTINGS = "settings";
+
+    /**
+     * Name of the "distance" field
+     */
+    public static final String DISTANCE = "distance";
+
+    /**
+     * Name of the "men" field
+     */
+    public static final String MEN_INTEREST = "men";
+
+    /**
+     * Name of the "women" field
+     */
+    public static final String WOMEN_INTEREST = "women";
+
+    /**
+     * Name of field "show_gender" of the json sent in setting request
+     */
+    public static final String SHOW_GENDER = "show_gender";
+
+    /**
+     * Name of field "discovering_distance" of the json sent in setting request
+     */
+    public static final String DISCOVERING_DISTANCE = "discovering_distance";
 
     /**********************************************************************************************/
     /**********************************************************************************************/
