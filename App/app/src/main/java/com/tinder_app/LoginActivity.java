@@ -21,6 +21,7 @@ import java.util.Arrays;
 import classes.Constants;
 import classes.FacebookProxy;
 import classes.SessionManager;
+import classes.SettingsManager;
 import requests.LoginRequest;
 
 
@@ -156,6 +157,7 @@ public class LoginActivity extends AppLocationActivity {
                 //NewRegisterRequest request = new NewRegisterRequest(LoginActivity.this);
                 request.send(data);
                 SessionManager.login(LoginActivity.this, mFacebookUserId);
+                SettingsManager.setDefaultValues(LoginActivity.this);
                 return null;
             }
         };

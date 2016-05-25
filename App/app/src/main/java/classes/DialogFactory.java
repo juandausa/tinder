@@ -6,6 +6,7 @@ import android.widget.NumberPicker;
 
 import com.tinder_app.EditProfileActivity;
 import com.tinder_app.R;
+import com.tinder_app.SettingsActivity;
 
 /**
  * Factory class that builds different types of dialogs
@@ -76,5 +77,20 @@ public final class DialogFactory {
                     }
                 })
                 .setNegativeButton(R.string.no, null).create();
+    }
+
+
+    /**
+     * Builds a dialog with a message that informs that the user can leave the activity without
+     * selecting one or more genders.
+     * @param context The context where the dialog is used
+     * @return an AlertDialog with a meessage that informs the situation
+     */
+    public static AlertDialog exitWithoutSelectingGenderDialog(final SettingsActivity context) {
+        return new AlertDialog.Builder(context)
+                .setTitle(R.string.gender_not_selected)
+                .setMessage(R.string.select_one_or_more_genders)
+                .setCancelable(false)
+                .setPositiveButton(R.string.OK, null).create();
     }
 }

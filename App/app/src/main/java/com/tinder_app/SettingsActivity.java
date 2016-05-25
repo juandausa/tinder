@@ -3,13 +3,19 @@ package com.tinder_app;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.DragEvent;
-import android.view.View;
+import android.util.Log;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import com.edmodo.rangebar.RangeBar;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import classes.Constants;
+import classes.DialogFactory;
+import classes.SettingsManager;
+import requests.ChangeSettingsRequest;
 
 /**
  * This Activity holds the settings controls that allows the user customize some features.
@@ -17,6 +23,15 @@ import com.edmodo.rangebar.RangeBar;
 public class SettingsActivity extends AppCompatActivity {
 
     private static final int MAX_DISTANCE = 100;
+    private int mDistance;
+    private boolean mMenChecked;
+    private boolean mWomenChecked;
+    private String mMenString;
+    private String mWomenString;
+    private TextView mGenderLabel;
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     /**
      * Set up the look and behavior of the activity
@@ -29,7 +44,13 @@ public class SettingsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         discoverDistanceBarSetUp();
-        ageBarSetUp();
+        setUpGenderInterestCheckboxes();
+        mMenChecked = SettingsManager.getInterestedInMen(SettingsActivity.this);
+        mWomenChecked = SettingsManager.getInterestedInWomen(SettingsActivity.this);
+        mDistance = SettingsManager.getDistance(SettingsActivity.this);
+        TextView rangeDistance = (TextView) findViewById(R.id.distance_label);
+        rangeDistance.setText(Integer.toString(mDistance));
+        //ageBarSetUp();
     }
 
     /**********************************************************************************************/
@@ -44,6 +65,7 @@ public class SettingsActivity extends AppCompatActivity {
             return;
         }
         seekBar.setMax(MAX_DISTANCE);
+        seekBar.setProgress(SettingsManager.getDistance(SettingsActivity.this));
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -53,16 +75,15 @@ public class SettingsActivity extends AppCompatActivity {
                     return;
                 }
                 rangeDistance.setText(selectedDistance);
+                mDistance = progress;
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                //TODO
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //TODO
             }
         });
     }
@@ -70,30 +91,38 @@ public class SettingsActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    /**
-     * Sets up the view that allows the user to select the age range
-     * For docs of RangeBar go to https://github.com/edmodo/range-bar/wiki
-     */
-    private void ageBarSetUp() {
-        RangeBar rangebar = (RangeBar) findViewById(R.id.age_rangebar);
-        if (rangebar == null) {
+    private void setUpGenderInterestCheckboxes() {
+        mGenderLabel = (TextView) findViewById(R.id.gender_label);
+        setBehaviorToMenCheckbox();
+        setBehaviorToWomenCheckbox();
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    private void setBehaviorToMenCheckbox() {
+        CheckBox men = (CheckBox) findViewById(R.id.men);
+        final CheckBox women = (CheckBox) findViewById(R.id.women);
+        if ((women == null) || (men == null)) {
             return;
         }
-        rangebar.setTickCount(100);
-        rangebar.setTickHeight(25);
-        rangebar.setBarWeight(6);
-        rangebar.setBarColor(android.R.color.holo_red_light);
-        rangebar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+        men.setChecked(SettingsManager.getInterestedInMen(SettingsActivity.this));
+        mMenString = getString(R.string.men);
+        setGenderLabel(mGenderLabel, men.isChecked(), women.isChecked(), mMenString, mWomenString);
+        men.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onIndexChangeListener(RangeBar rangeBar, int leftThumbIndex, int rightThumbIndex) {
-                //Code using the leftThumbIndex and rightThumbIndex to update the index values.
-                TextView distance = (TextView) findViewById(R.id.age_label);
-                String ageRangeLabel = Integer.toString(leftThumbIndex) + " - "
-                        + Integer.toString(rightThumbIndex);
-                if (distance == null) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mMenChecked = isChecked;
+                if (mGenderLabel == null) {
                     return;
                 }
-                distance.setText(ageRangeLabel);
+                setGenderLabel(
+                        mGenderLabel,
+                        isChecked,
+                        women.isChecked(),
+                        mMenString,
+                        mWomenString
+                );
             }
         });
     }
@@ -101,89 +130,94 @@ public class SettingsActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    /**
-     * Sets up the switch that indicates that the user is interested in men
-     */
-    private void menSwitchSetUp() {
-        Switch men = (Switch) findViewById(R.id.men);
-        Switch women = (Switch) findViewById(R.id.women);
-        GenderObject menObject = new GenderObject("Hombres", men);
-        GenderObject womenObject = new GenderObject("mujeres", women);
-        genderSwitchesSetUp(menObject, womenObject);
-        genderSwitchesSetUp(womenObject, menObject);
-    }
-
-    /**********************************************************************************************/
-    /**********************************************************************************************/
-
-    /**
-     * Sets up the switch that indicates that the user is interested in women
-     */
-    private void womenSwitchSetUp() {
-
-    }
-
-    /**********************************************************************************************/
-    /**********************************************************************************************/
-
-    /**
-     * Sets up the switches that indicates in wich gender is the user interested
-     */
-    private void genderSwitchesSetUp(final GenderObject gender, final GenderObject oppositeGender) {
-        if (gender == null) {
+    private void setBehaviorToWomenCheckbox() {
+        CheckBox women = (CheckBox) findViewById(R.id.women);
+        final CheckBox men = (CheckBox) findViewById(R.id.men);
+        if ((women == null) || (men == null)) {
             return;
         }
-        gender.getSwitch().setTextOn("");
-        gender.getSwitch().setTextOff("");
-        gender.getSwitch().setOnDragListener(new View.OnDragListener() {
+        women.setChecked(SettingsManager.getInterestedInWomen(SettingsActivity.this));
+        mWomenString = getString(R.string.women);
+        setGenderLabel(mGenderLabel, women.isChecked(), men.isChecked(), mWomenString, mMenString);
+        women.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @Override
-            public boolean onDrag(View v, DragEvent event) {
-                TextView genderLabel = (TextView) findViewById(R.id.gender_label);
-                if (genderLabel == null) {
-                    return false;
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mWomenChecked = isChecked;
+                if (mGenderLabel == null) {
+                    return;
                 }
-                if (gender.getSwitch().isChecked()) {
-                    if (oppositeGender.getSwitch().isChecked()) {
-                        genderLabel.setText("Hombres y mujeres");
-
-                    } else {
-                        genderLabel.setText(gender.getLabel());
-                    }
-                }
-                else if (oppositeGender.getSwitch().isChecked()) {
-                    genderLabel.setText(oppositeGender.getLabel());
-
-                }
-                genderLabel.invalidate();
-                return true;
+                setGenderLabel(
+                        mGenderLabel,
+                        isChecked,
+                        men.isChecked(),
+                        mWomenString,
+                        mMenString
+                );
             }
         });
     }
 
     /**********************************************************************************************/
-    /*********************                  AUXILIAR CLASS              ***************************/
+    /**********************************************************************************************/
+
+    private void setGenderLabel(TextView genderLabel, boolean genderChecked,
+                        boolean otherGenderChecked, String genderString, String otherGenderString) {
+        if ((genderChecked) && (otherGenderChecked)) {
+            String label = genderString + " y " + otherGenderString;
+            genderLabel.setText(label);
+        } else if (genderChecked) {
+            genderLabel.setText(genderString);
+        } else if (otherGenderChecked) {
+            genderLabel.setText(otherGenderString);
+        } else {
+            genderLabel.setText("");
+        }
+    }
+
+    /**********************************************************************************************/
     /**********************************************************************************************/
 
     /**
-     * Class that models a gender with its corresponding switch
+     * When back is pressed, it shows a dialog asking if the user is sure to exit without saving.
+     * If he selects "yes", the user finishes this activity and returns to the father activity. If
+     * he selects "no" the user remains in this activity.
      */
-    private class GenderObject {
+    @Override
+    public void onBackPressed() {
 
-        private String mGenderLabel;
-        private Switch mGenderSwitch;
-
-        public GenderObject(String genderLabel, Switch genderSwitch) {
-            this.mGenderLabel = genderLabel;
-            this.mGenderSwitch = genderSwitch;
+        if ((!mMenChecked) && (!mWomenChecked)) {
+            DialogFactory.exitWithoutSelectingGenderDialog(SettingsActivity.this).show();
+            return;
         }
 
-        public String getLabel() {
-            return this.mGenderLabel;
+        ChangeSettingsRequest request = new ChangeSettingsRequest(SettingsActivity.this);
+        JSONObject filters = new JSONObject();
+        String genderString = "";
+        if ((mMenChecked) && (mWomenChecked)) {
+            genderString = "Male,Female";
+        } else if (mWomenChecked) {
+            genderString = "Female";
+        } else {
+            genderString = "Male";
         }
+        try {
+            filters.put(Constants.SHOW_GENDER, genderString);
+            filters.put(Constants.DISCOVERING_DISTANCE, mDistance);
+            request.send(filters);
+        } catch (JSONException e) {
+            Log.e(getString(R.string.JSON_ERROR), e.toString());
+        }
+        finish();
+    }
 
-        public Switch getSwitch() {
-            return this.mGenderSwitch;
-        }
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    public void saveChanges() {
+        SettingsManager.changeDistance(SettingsActivity.this, mDistance);
+        SettingsManager.changeInterestOnMen(SettingsActivity.this, mMenChecked);
+        SettingsManager.changeInterestOnWomen(SettingsActivity.this, mWomenChecked);
     }
 
 }
