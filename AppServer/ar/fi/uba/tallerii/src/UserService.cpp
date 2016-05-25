@@ -201,5 +201,19 @@ bool UserService::addMatch(const std::string fromUserId, const std::string toUse
     }
 }
 
+std::vector<std::string> UserService::getDislikes(const std::string userId) {
+    std::vector<std::string> dislikes;
+    return dislikes;
+}
+
+bool UserService::addDislike(const std::string fromUserId, const std::string toUserId) {
+    return true;
+}
+
+bool UserService::hasDislike(const std::string fromUserId, const std::string toUserId) {
+    return true;
+}
+
 UserService::~UserService() {
+
 }

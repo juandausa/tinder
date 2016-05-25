@@ -26,9 +26,12 @@ public:
     std::string getExternalUserId(std::string userId);
     std::string getAppUserId(std::string sharedUserId);
     std::vector<std::string> getLikes(const std::string userId);
+    std::vector<std::string> getDislikes(const std::string userId);
     std::vector<std::string> getMatches(const std::string userId);
     bool addLike(const std::string fromUserId, const std::string toUserId);
     bool hasLike(const std::string fromUserId, const std::string toUserId);
+    bool addDislike(const std::string fromUserId, const std::string toUserId);
+    bool hasDislike(const std::string fromUserId, const std::string toUserId);
     bool hasMatch(const std::string fromUserId, const std::string toUserId);
 
 private:
