@@ -215,5 +215,4 @@ bool UserService::hasDislike(const std::string fromUserId, const std::string toU
 }
 
 UserService::~UserService() {
-
 }
