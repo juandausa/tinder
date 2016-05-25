@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
@@ -371,9 +370,9 @@ public class EditProfileActivity extends AppCompatActivity {
      */
     private String saveProfilePhoto() {
         verifyStoragePermissions(this);
+        //Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         try {
-            String filePath = Environment.
-                    getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            String filePath = getCacheDir()
                     + "/" + Constants.PHOTO_PROFILE + ".jpg";
 
             /*String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
