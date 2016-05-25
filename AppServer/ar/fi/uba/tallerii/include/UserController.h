@@ -24,6 +24,7 @@ public:
     virtual void handleShowCandidates(RequestParser requestParser, Response response);
     virtual void handleGetMatches(RequestParser requestParser, Response response);
     virtual void handleAddLike(RequestParser requestParser, Response response);
+    virtual void handleAddDislike(RequestParser requestParser, Response response);
 private:
     UserService userService;
     Json::Reader reader;

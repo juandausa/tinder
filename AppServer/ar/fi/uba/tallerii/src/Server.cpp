@@ -71,6 +71,9 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
             } else if (requestParser.isAddLikeRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleAddLike(requestParser, response);
+            } else if (requestParser.isAddDislikeRequest()) {
+                UserController user_controller(user_service);
+                user_controller.handleAddDislike(requestParser, response);
             }
 
             break;
