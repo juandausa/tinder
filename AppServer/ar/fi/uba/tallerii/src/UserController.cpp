@@ -3,19 +3,19 @@
 //
 
 #include "UserController.h"
-#include <string>
 #include <time.h>
+#include <string>
 
 
 UserController :: UserController(UserService userService) : userService(userService) {
 }
 
 std::string validateTimeOrReturnDefault(std::string time) {
-    struct tm tm;;
-    if (strptime(time.c_str(), "%d/%m/%Y", &tm)) {
+    struct tm convertedTime;;
+    if (strptime(time.c_str(), "%d/%m/%Y", &convertedTime)) {
         return time;
     } else {
-        return "01/01/1970";
+        return Constant::defaultBirthday;
     }
 }
 
@@ -28,14 +28,14 @@ std::string validateGenderOrReturnDefault(std::string gender) {
 }
 
 std::string calculateAge(std::string birthday) {
-    struct tm timeStruct;
+    struct tm convertedTime, localTime;
     time_t t = time(NULL);
-    tm* timePtr = localtime(&t);
-    if (strptime(birthday.c_str(), "%d/%m/%Y", &timeStruct)) {
-        return static_cast<std::ostringstream*>(&(std::ostringstream() << (timePtr->tm_year - timeStruct.tm_year)))->str();
+    localtime_r(&t, &localTime);
+    if (strptime(birthday.c_str(), "%d/%m/%Y", &convertedTime)) {
+        return static_cast<std::ostringstream*>(&(std::ostringstream() << (localTime.tm_year - convertedTime.tm_year)))->str();
     }
 
-    return "0";
+    return Constant::defaultAge;
 }
 
 void UserController :: handleLogin(RequestParser requestParser, Response response) {
@@ -73,7 +73,7 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     std::string data = fastWriter.write(event);
     postInterests(event);
     CurlWrapper curlWrapper = CurlWrapper();
-    std::string url = "http://enigmatic-scrubland-75073.herokuapp.com/users";
+    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
 //    std::string url = "localhost:5000/users";
     curlWrapper.set_post_url(url);
     curlWrapper.set_post_data(data, readBuffer);
@@ -155,7 +155,7 @@ void UserController :: handleGetUserInfo(RequestParser requestParser, Response r
         response.SetBody("Bad Request, no userId detected.");
     } else {
         CurlWrapper curlWrapper = CurlWrapper();
-        std::string url = "http://enigmatic-scrubland-75073.herokuapp.com/users/" + externalUserId;
+        std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users/" + externalUserId;
         curlWrapper.set_post_url(url);
         curlWrapper.set_get_buffer(readBuffer);
         bool res = curlWrapper.perform_request();
@@ -264,7 +264,10 @@ Json::Value UserController::makeBodyForShowCandidatesResponse() {
         std::string sharedUserId = fastWriter.write(users[i]["user"].get("id", ""));
         user["user_id"] = this->userService.getAppUserId(sharedUserId);
         user["alias"] = users[i]["user"].get("alias", "");
-        user["age"] = users[i]["user"].get("age", "");
+        std::string birthday = validateTimeOrReturnDefault(users[i]["user"].get("birthday", "").asString());
+        user["birthday"] = birthday;
+        user["age"] = calculateAge(birthday);
+        user["gender"] = validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString());
         user["photo_profile"] = users[i]["user"].get("photo_profile", "");
         Json::Value interests = users[i]["user"].get("interests", "");
         for (unsigned int j = 0; j < interests.size(); j++) {

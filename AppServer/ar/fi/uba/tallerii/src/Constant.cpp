@@ -18,3 +18,5 @@ std::string Constant :: update_user_info_url = "http://enigmatic-scrubland-75073
 std::string Constant :: get_user_info_url = "http://enigmatic-scrubland-75073.herokuapp.com/users/";
 std::string Constant :: male = "M";
 std::string Constant :: female = "F";
+std::string Constant :: defaultAge = "0";
+std::string Constant :: defaultBirthday = "01/01/1970";

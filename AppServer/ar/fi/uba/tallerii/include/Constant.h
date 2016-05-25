@@ -23,6 +23,8 @@ public:
     static std::string get_user_info_url;
     static std::string male;
     static std::string female;
+    static std::string defaultAge;
+    static std::string defaultBirthday;
 private:
     Constant();
 };
