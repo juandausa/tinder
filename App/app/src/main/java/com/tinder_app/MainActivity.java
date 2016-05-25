@@ -165,8 +165,6 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         Intent intent = null;
                         switch (menuItem.getItemId()) {
-                            case R.id.nav_discover_settings:
-                                break;
                             case R.id.nav_settings:
                                 intent = new Intent(getApplicationContext(), SettingsActivity.class);
                                 break;
