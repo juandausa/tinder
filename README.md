@@ -15,8 +15,7 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 
 ### Requerimientos para su uso
 
-* Ejecutar ```./AppServer/install.sh``` . Eso instalará las herramientas y recursos necesarios.
-* Ejecutar ```./AppServer/curl_install.sh``` . Eso instalará las herramientas y recursos necesarios para usar curl.
+* Posicionarse en la carpeta AppServer/AppServer y ejecutar ```sudo install.sh``` . Eso instalará las herramientas y recursos necesarios.
 
 ### Modos de uso
 * Generar los ejecutables:
