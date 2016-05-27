@@ -9,12 +9,12 @@
 #include "RequestParser.h"
 #include "Response.h"
 
-class MatchController {
+class MatchesController {
 public:
-    MatchController(MatchService match_service, UserService user_service);
+    MatchesController(MatchesService matches_service, UserService user_service);
     virtual void handleGetCandidates(RequestParser requestParser, Response response);
 private:
-    MatchService matchService;
+    MatchesService matchesService;
     UserService userService;
 };
 

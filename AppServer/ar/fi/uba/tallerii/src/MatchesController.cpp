@@ -2,14 +2,14 @@
 // Copyright 2016 FiUBA
 //
 
-#include "MatchController.h"
+#include "MatchesController.h"
 #include <string>
 
-MatchController ::MatchController(MatchService match_service, UserService user_service) :
-        matchService(match_service), userService(user_service) {
+MatchesController ::MatchesController(MatchesService matches_service, UserService user_service) :
+        matchesService(matches_service), userService(user_service) {
 }
 
-void MatchController :: handleGetCandidates(RequestParser requestParser, Response response) {
+void MatchesController :: handleGetCandidates(RequestParser requestParser, Response response) {
     std::string userId = requestParser.getResourceId();
     LOG(INFO) << "Proccesing show candidates for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {

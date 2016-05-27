@@ -12,7 +12,7 @@
 #include "PlusController.h"
 #include "UserController.h"
 #include "FilterController.h"
-#include "MatchController.h"
+#include "MatchesController.h"
 #include "Response.h"
 #include "DataBase.h"
 #include "Constant.h"
@@ -55,8 +55,8 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 UserController user_controller(user_service);
                 user_controller.handleGetUserInfo(requestParser, response);
             } else if (requestParser.isCandidatesGetRequest()) {
-                MatchController match_controller(matches_service, user_service);
-                match_controller.handleGetCandidates(requestParser, response);
+                MatchesController matches_controller(matches_service, user_service);
+                matches_controller.handleGetCandidates(requestParser, response);
             } else if (requestParser.isUserUpdateRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleUpdateUserInfo(requestParser, response);
