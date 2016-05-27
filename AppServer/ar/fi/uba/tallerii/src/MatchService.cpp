@@ -1,5 +1,5 @@
 //
-// Created by juan on 26/05/16.
+// Copyright 2016 FiUBA
 //
 
 #include "MatchService.h"

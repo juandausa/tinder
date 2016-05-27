@@ -1,10 +1,12 @@
 //
-// Created by juan on 26/05/16.
+// Copyright 2016 FiUBA
 //
 
 #include "MatchController.h"
+#include <string>
 
-MatchController ::MatchController(MatchService match_service, UserService user_service) : matchService(match_service), userService(user_service) {
+MatchController ::MatchController(MatchService match_service, UserService user_service) :
+        matchService(match_service), userService(user_service) {
 }
 
 void MatchController :: handleGetCandidates(RequestParser requestParser, Response response) {
