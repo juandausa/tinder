@@ -18,7 +18,7 @@
 #include "Constant.h"
 #include "UserService.h"
 #include "FilterService.h"
-#include "MatchService.h"
+#include "MatchesService.h"
 #include "SecurityManager.h"
 
 static struct mg_serve_http_opts s_http_server_opts;
@@ -37,7 +37,7 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
         {
             DataBase db(Constant::database_path);
             UserService user_service(db);
-            MatchService match_service(db);
+            MatchesService matches_service(db);
             SecurityManager security(user_service);
             Response response(nc);
             RequestParser requestParser;
@@ -55,7 +55,7 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 UserController user_controller(user_service);
                 user_controller.handleGetUserInfo(requestParser, response);
             } else if (requestParser.isCandidatesGetRequest()) {
-                MatchController match_controller(match_service, user_service);
+                MatchController match_controller(matches_service, user_service);
                 match_controller.handleGetCandidates(requestParser, response);
             } else if (requestParser.isUserUpdateRequest()) {
                 UserController user_controller(user_service);

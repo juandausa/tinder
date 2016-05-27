@@ -4,7 +4,7 @@
 
 #ifndef TINDER_MATCHCONTROLLER_H
 #define TINDER_MATCHCONTROLLER_H
-#include "MatchService.h"
+#include "MatchesService.h"
 #include "UserService.h"
 #include "RequestParser.h"
 #include "Response.h"

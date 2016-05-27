@@ -6,10 +6,10 @@
 #define TINDER_MATCHSERVICE_H
 #include "DataBase.h"
 
-class MatchService {
+class MatchesService {
 public:
-    MatchService(DataBase & db);
-    ~MatchService();
+    MatchesService(DataBase & db);
+    ~MatchesService();
 
 private:
     DataBase* database;
