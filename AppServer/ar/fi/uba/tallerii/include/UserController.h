@@ -21,7 +21,6 @@ public:
     virtual void handleRegistration(RequestParser requestParser, Response response);
     virtual void handleGetUserInfo(RequestParser requestParser, Response response);
     virtual void handleUpdateUserInfo(RequestParser requestParser, Response response);
-    virtual void handleShowCandidates(RequestParser requestParser, Response response);
     virtual void handleGetMatches(RequestParser requestParser, Response response);
     virtual void handleAddLike(RequestParser requestParser, Response response);
     virtual void handleAddDislike(RequestParser requestParser, Response response);
@@ -33,7 +32,6 @@ private:
     Json::Value makeBodyAndTokenForLoginResponse(const std::string userId);
     Json::Value makeBodyAndTokenForRegistrationResponse(const std::string userId);
     Json::Value makeBodyForRegistrationPost(const Json::Value root);
-    Json::Value makeBodyForShowCandidatesResponse();
     std::string makeBodyForUserInfoResponse(const std::string appUserId, const std::string userInfo);
     std::string makeBodyUserInfoForUpdate(const std::string info, const std::string userId);
     void postInterests(const Json::Value root);

@@ -12,10 +12,10 @@
 class MatchController {
 public:
     MatchController(MatchService match_service, UserService user_service);
-    virtual void handle_get_candidates(RequestParser requestParser, Response response);
+    virtual void handleGetCandidates(RequestParser requestParser, Response response);
 private:
-    MatchService match_service;
-    UserService user_service;
+    MatchService matchService;
+    UserService userService;
 };
 
 
