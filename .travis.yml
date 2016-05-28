@@ -69,4 +69,5 @@ script: ./ar/fi/uba/tallerii/test/runTests
 
 after_success: 
     - lcov --capture --directory ./ar/fi/uba/tallerii/test/ --output-file coverageTinderTests.info
-    - genhtml coverageTinderTests.info --output-directory coverageHtml
+    - lcov --remove coverageTinderTests.info '/usr/include/*' '/usr/lib/*' 'src/Mongoose.cpp' --output-file coverageTinderTestsWithoutLibs.info
+    - genhtml coverageTinderTestsWithoutLibs.info --output-directory coverageHtml
