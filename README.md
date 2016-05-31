@@ -17,7 +17,6 @@ Actualmente hay 4 branches en el repositorio. Los cuales son:
 * **AppServer:** branch que contiene el proyecto del servidor C++ que posee la lógica de negocio.
 * **SharedServer:** branch que contiene el proyecto del servidor node.js el cual es un ABM de usuarios.
 
-
 ## Clonar proyecto
 
 Esta es una recomendación de como clonar los branches de manera de tenerlos organizados localmente.
@@ -59,3 +58,5 @@ Para pullear desde un branch basta con ejecutar, desde el directorio donde se en
 Para push desde un branch basta con ejecutar, desde el directorio donde se encuentran los archivos del branch:
 `git push`
 
+### Acceso a la Documentación 
+En cada rama del proyecto existe un instructivo para construir el ambiente de desarrollo. A su vez se volcó este contenido e información técnica adicional en un [documento](https://github.com/juandausa/tinder/blob/master/documentacion/index.rst) único para mayor comodidad. El mismo se encuentra en formato [Sphinx](http://www.sphinx-doc.org/en/stable/) y puede ser compilado en diversos formatos.

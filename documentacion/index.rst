@@ -95,8 +95,34 @@ API Web
 
 * Consultar `interfaz web App Server <https://docs.google.com/document/d/1lUKozaD6EfZabGmE2GwwCftcE25IU0Tyd3ERx7IhXPM/edit?usp=sharing>`_ .
 
+================================
 Documentación Técnica
 ================================
+Cómo se dijo anteriormente el App Server está integramente desarrollado en `C++ <http://www.cplusplus.com>`_. A continuación de listan todas las librerias de terceros utilizadas:
+
+============   ============   ========================
+Herramientas   Versión        Url de Descarga
+============   ============   ========================
+Mongoose       6.4            https://github.com/cesanta/mongoose/archive/6.4.tar.gz
+GLog           0.3.4          https://github.com/google/glog/archive/v0.3.4.tar.gz
+GTest          1.7            https://github.com/google/googletest/archive/release-1.7.0.tar.gz
+GFlags         2.1.2          https://github.com/schuhschuh/gflags/archive/v2.1.2.tar.gz
+RocksDB        4.3.1          https://github.com/facebook/rocksdb/archive/rocksdb-4.3.1.tar.gz
+LibCurl        7.48           https://curl.haxx.se/download/curl-7.48.0.tar.gz
+LibJsonCpp     1.7.2          https://launchpad.net/ubuntu/+archive/primary/+files/libjsoncpp_1.7.2.orig.tar.gz
+============   ============   ========================
+
+-----------------------
+Diagrama de Clases
+-----------------------
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Descripción de Responsabilidades
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+-----------------------
+Diagrama de Flujo
+-----------------------
 
 #################################
 Shared Server
