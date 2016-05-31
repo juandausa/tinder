@@ -116,6 +116,10 @@ LibJsonCpp     1.7.2          https://launchpad.net/ubuntu/+archive/primary/+fil
 Diagrama de Clases
 -----------------------
 
+.. image:: ./images/AppServer-Clases.png
+   :align: center
+
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Descripción de Responsabilidades
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
