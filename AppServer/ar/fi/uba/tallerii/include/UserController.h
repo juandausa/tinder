@@ -14,6 +14,8 @@
 #include "EasyCurl.h"
 #include "Constant.h"
 #include <RequestParser.h>
+#include "CandidatesService.h"
+
 class UserController {
 public:
     UserController(UserService user_service);

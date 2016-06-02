@@ -38,5 +38,5 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
 FILE(GLOB CPP_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/../src/*.cpp)
 
 # Link runTests with what we want to test and the GTest and pthread library
-add_executable(runTests ${CPP_SOURCE_TEST} ${CPP_SOURCE})
+add_executable(runTests ${CPP_SOURCE_TEST} ${CPP_SOURCE} ../src/CandidatesService.cpp ../include/CandidatesService.h)
 target_link_libraries(runTests ${NOMBRE_LIBS} pthread ${CMAKE_INCLUDE_PATH} )

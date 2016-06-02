@@ -8,7 +8,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
 # Locate all .cpp files in this src folder
 FILE(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/../src/*.cpp)
 
-add_executable(Tinder_main main.cpp ${SOURCE_FILES})
+add_executable(Tinder_main main.cpp ${SOURCE_FILES} ../src/CandidatesService.cpp ../include/CandidatesService.h)
 
 #copy files folder to build destination
 file(COPY ../files DESTINATION ..)
