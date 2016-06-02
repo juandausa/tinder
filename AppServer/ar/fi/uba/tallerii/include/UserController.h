@@ -21,7 +21,7 @@ public:
     UserController(UserService user_service);
     virtual void handleLogin(RequestParser requestParser,Response response);
     virtual void handleRegistration(RequestParser requestParser, Response response);
-    virtual void handleGetUserInfo(RequestParser requestParser, Response response, bool send);
+    virtual std::string handleGetUserInfo(RequestParser requestParser, Response response, bool send);
     virtual void handleUpdateUserInfo(RequestParser requestParser, Response response);
     virtual void handleGetCandidates(RequestParser requestParser, Response response);
     virtual void handleGetMatches(RequestParser requestParser, Response response);
