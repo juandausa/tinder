@@ -11,10 +11,9 @@ Contenidos:
 .. toctree::
    :maxdepth: 2
 
-Indices and tables
-==================
+Página de Búsquedas
+==============================================
 
-* :ref:`genindex`
 * :ref:`search`
 
 ################
@@ -123,10 +122,20 @@ Diagrama de Clases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Descripción de Responsabilidades
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* Server: Este es el encargo de levantar el servidor y capturar los request. Además ofrece clases base para el manejo de response, estas fueron adaptadas para un manejo más simple y adecuado a las necesidades del proyecto.
+* RequestParser: Inspecciona los request y expone información como la url, el verbo y los parámetros. Esto es utilizado en el Server para decidir a donde derivar la solicitud.
+* UserController: Encapsula todo el comportamiento necesario para el manejo de la información del usuario. También se encarga de disparar las llamadas al Shared Server en el caso de ser necesarias.
+* FilterController: En sintonía con el anterior, este encapsula el comportamiento para el manejo de las preferencias del usuario.
+* MatchesController: Este controlador provee lo necesario para la gestión de los likes y matches del usuario.
+* SecurityManager: Este servicio es transversal a todos los controladores. Está diseñado para detectar si el usuario se encuentra autenticado al momento de realizar un request.
+* UserService: Maneja el acceso a la información del usuario.
+* FilterService: Contiene el comportamiento para la gestión de las preferencias del usuario.
+* MatchesService: Encapsula el comportamiento que sugiere a los usuarios sus posibles candidatos.
 
 -----------------------
 Diagrama de Flujo
 -----------------------
+* No disponible.
 
 #################################
 Shared Server
