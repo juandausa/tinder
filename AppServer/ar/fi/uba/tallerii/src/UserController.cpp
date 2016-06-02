@@ -128,7 +128,7 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
     response.Send();
 }
 
-void UserController :: handleGetUserInfo(RequestParser requestParser, Response response) {
+void UserController :: handleGetUserInfo(RequestParser requestParser, Response response, bool send) {
     std::string readBuffer;
     std::string userId = requestParser.getResourceId();
     std::string externalUserId = this->userService.getExternalUserId(userId);
@@ -150,11 +150,46 @@ void UserController :: handleGetUserInfo(RequestParser requestParser, Response r
             response.SetBody("Bad Request");
         }
     }
-
-    response.Send();
+    if (send) {
+        response.Send();
+    }
 }
 
-void UserController :: handleGetMatches(RequestParser requestParser, Response response) {
+void UserController :: handleGetCandidates(RequestParser requestParser, Response response) {
+    Json::Value rootShared;
+    Json::Value myArrayOfInterests;
+    std::string userId = requestParser.getResourceId();
+    LOG(INFO) << "Proccesing show candidates for user: '" << userId << "'";
+    if (this->userService.isUserRegistered(userId)) {
+        handleGetUserInfo(requestParser, response, false);
+        bool parsingSuccessful = reader.parse(response.GetBody(), rootShared, true);
+        if (!parsingSuccessful) {
+            std::cout << "Error parsing result" << std::endl;
+        }
+        std::string myGender = validateGenderOrReturnDefault(
+                rootShared["user"].get("gender", Constant::male).asString());
+        std::string genderOfMyInterest = Constant::male;
+        Json::Value interests = rootShared["user"].get("interests", "");
+        for (unsigned int j = 0; j < interests.size(); j++) {
+            if ((fastWriter.write(interests[j]["category"])).compare("sex") == 0) {
+                genderOfMyInterest = fastWriter.write(interests[j]["value"]);
+            } else {
+                myArrayOfInterests.append(interests[j]["value"]);
+            }
+        }
+        Json::Value body = makeBodyForShowCandidatesResponse(genderOfMyInterest, myArrayOfInterests);
+        response.SetCode(200);
+        response.SetBody(fastWriter.write(body));
+        response.Send();
+    }else {
+        response.SetCode(400);
+        response.SetBody("{ \"response\": \"DummyUserNotRegistered\" }");
+        response.Send();
+        LOG(INFO) << "Show Candidates failed for user: '" << userId<< "'";
+    }
+}
+
+void UserController::handleGetMatches(RequestParser requestParser, Response response) {
     response.SetCode(200);
     response.SetBody(this->fakeResponseForUserMatches());
     response.Send();
@@ -402,4 +437,59 @@ std::string UserController::getUserTo(const std::string body) {
     }
 
     return userInfo.get("to_user_id", "").asString();
+}
+
+
+Json::Value UserController::makeBodyForShowCandidatesResponse(std::string genderOfInterest, Json::Value myArrayOfInterests) {
+    Json::Value event;
+    Json::Value root;
+    Json::Value arrayUsers;
+    std::string readBuffer;
+
+    CurlWrapper curlWrapper = CurlWrapper();
+    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
+    curlWrapper.set_post_url(url);
+    curlWrapper.set_get_buffer(readBuffer);
+    curlWrapper.perform_request();
+    reader.parse(readBuffer, root, true);
+    std::cout << readBuffer << std::endl;
+
+    Json::Value users = root["users"];
+    for (unsigned int i = 0; i < users.size(); i++) {
+        int interestInCommon = 0;
+        if (genderOfInterest.compare(validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString())) == 0){
+            Json::Value user;
+            Json::Value arrayInterests;
+            std::string sharedUserId = fastWriter.write(users[i]["user"].get("id", ""));
+            user["user_id"] = this->userService.getAppUserId(sharedUserId);
+            user["alias"] = users[i]["user"].get("alias", "");
+            std::string birthday = validateTimeOrReturnDefault(users[i]["user"].get("birthday", "").asString());
+            user["birthday"] = birthday;
+            user["age"] = calculateAge(birthday);
+            user["gender"] = validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString());
+            user["photo_profile"] = users[i]["user"].get("photo_profile", "");
+            Json::Value interests = users[i]["user"].get("interests", "");
+            for (unsigned int j = 0; j < interests.size(); j++) {
+                arrayInterests.append(interests[j]["value"]);
+                if (isInMyArrayOfInterest(interests[j]["value"], myArrayOfInterests)){
+                    interestInCommon++;
+                }
+            }
+            user["interests"] = arrayInterests;
+            if (interestInCommon >= 1) {
+                arrayUsers.append(user);
+            }
+        }
+    }
+    event["candidates"] = arrayUsers;
+    return event;
+}
+
+bool UserController::isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests){
+    for (unsigned int i = 0; i < myArrayOfInterests.size(); i++){
+        if (interest.compare(myArrayOfInterests[i]["value"]) == 0){
+            return true;
+        }
+    }
+    return false;
 }

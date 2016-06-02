@@ -53,10 +53,10 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 user_controller.handleRegistration(requestParser, response);
             } else if (requestParser.isUserInfoRequest()) {
                 UserController user_controller(user_service);
-                user_controller.handleGetUserInfo(requestParser, response);
+                user_controller.handleGetUserInfo(requestParser, response, true);
             } else if (requestParser.isCandidatesGetRequest()) {
-                MatchesController matches_controller(matches_service, user_service);
-                matches_controller.handleGetCandidates(requestParser, response);
+                UserController user_controller(user_service);
+                user_controller.handleGetCandidates(requestParser, response);
             } else if (requestParser.isUserUpdateRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleUpdateUserInfo(requestParser, response);
