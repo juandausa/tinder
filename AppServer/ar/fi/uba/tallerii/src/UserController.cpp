@@ -173,7 +173,7 @@ void UserController :: handleGetCandidates(RequestParser requestParser, Response
         std::cout << "fast: " << fastWriter.write(rootShared) << std::endl;
         std::string genderOfMyInterest = Constant::male;
         myArrayOfInterests = rootShared.get("interests", "");
-        Json::Value body = makeBodyForShowCandidatesResponse(genderOfMyInterest, myArrayOfInterests);
+        Json::Value body = makeBodyForShowCandidatesResponse(rootShared, genderOfMyInterest, myArrayOfInterests);
         response.SetCode(200);
         response.SetBody(fastWriter.write(body));
         response.Send();
@@ -436,7 +436,7 @@ std::string UserController::getUserTo(const std::string body) {
 }
 
 
-Json::Value UserController::makeBodyForShowCandidatesResponse(std::string genderOfMyInterest, Json::Value myArrayOfInterests) {
+Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userData ,std::string genderOfMyInterest, Json::Value myArrayOfInterests) {
     Json::Value event;
     Json::Value root;
     Json::Value arrayUsers;
@@ -452,6 +452,7 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(std::string gender
     std::cout << readBuffer << std::endl;
 
     Json::Value users = root["users"];
+    CandidatesService candidatesService;
     for (unsigned int i = 0; i < users.size(); i++) {
         int interestInCommon = 0;
         std::string gender = fastWriter.write(users[i]["user"].get("gender", "male"));
@@ -468,6 +469,11 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(std::string gender
             user["gender"] = validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString());
             user["photo_profile"] = users[i]["user"].get("photo_profile", "");
             Json::Value interests = users[i]["user"].get("interests", "");
+            /* TODO: Cuando se solucione el problema en CandidatesService usar esto*/
+//            if (candidatesService.filterCandidates(userData,user, interests,myArrayOfInterests)) {
+//                user["interests"] = candidatesService.getArrayInterests();
+//                arrayUsers.append(user);
+//            }
             for (unsigned int j = 0; j < interests.size(); j++) {
                 arrayInterests.append(interests[j]["value"]);
                 if (isInMyArrayOfInterest(interests[j]["value"], myArrayOfInterests)) {
