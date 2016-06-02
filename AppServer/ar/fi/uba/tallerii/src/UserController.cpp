@@ -128,8 +128,9 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
     response.Send();
 }
 
-void UserController :: handleGetUserInfo(RequestParser requestParser, Response response, bool send) {
+std::string UserController :: handleGetUserInfo(RequestParser requestParser, Response response, bool send) {
     std::string readBuffer;
+    std::string body;
     std::string userId = requestParser.getResourceId();
     std::string externalUserId = this->userService.getExternalUserId(userId);
     LOG(INFO) << "Retrieving user info for user: '" << userId<< "'";
@@ -144,7 +145,8 @@ void UserController :: handleGetUserInfo(RequestParser requestParser, Response r
         bool res = curlWrapper.perform_request();
         if (res) {
             response.SetCode(200);
-            response.SetBody(this->makeBodyForUserInfoResponse(userId, readBuffer));
+            body = this->makeBodyForUserInfoResponse(userId, readBuffer);
+            response.SetBody(body);
         } else {
             response.SetCode(500);
             response.SetBody("Bad Request");
@@ -153,6 +155,7 @@ void UserController :: handleGetUserInfo(RequestParser requestParser, Response r
     if (send) {
         response.Send();
     }
+    return body;
 }
 
 void UserController :: handleGetCandidates(RequestParser requestParser, Response response) {
@@ -161,22 +164,15 @@ void UserController :: handleGetCandidates(RequestParser requestParser, Response
     std::string userId = requestParser.getResourceId();
     LOG(INFO) << "Proccesing show candidates for user: '" << userId << "'";
     if (this->userService.isUserRegistered(userId)) {
-        handleGetUserInfo(requestParser, response, false);
-        bool parsingSuccessful = reader.parse(response.GetBody(), rootShared, true);
+        std::string responseBody = handleGetUserInfo(requestParser, response, false);
+        bool parsingSuccessful = reader.parse(responseBody, rootShared, true);
         if (!parsingSuccessful) {
             std::cout << "Error parsing result" << std::endl;
         }
-        std::string myGender = validateGenderOrReturnDefault(
-                rootShared["user"].get("gender", Constant::male).asString());
+        std::string myGender = fastWriter.write(rootShared.get("gender", "male"));
+        std::cout << "fast: " << fastWriter.write(rootShared) << std::endl;
         std::string genderOfMyInterest = Constant::male;
-        Json::Value interests = rootShared["user"].get("interests", "");
-        for (unsigned int j = 0; j < interests.size(); j++) {
-            if ((fastWriter.write(interests[j]["category"])).compare("sex") == 0) {
-                genderOfMyInterest = fastWriter.write(interests[j]["value"]);
-            } else {
-                myArrayOfInterests.append(interests[j]["value"]);
-            }
-        }
+        myArrayOfInterests = rootShared.get("interests", "");
         Json::Value body = makeBodyForShowCandidatesResponse(genderOfMyInterest, myArrayOfInterests);
         response.SetCode(200);
         response.SetBody(fastWriter.write(body));
@@ -418,7 +414,7 @@ std::string UserController :: makeBodyForUserInfoResponse(const std::string appU
     std::string birthday = validateTimeOrReturnDefault(rootShared["user"].get("birthday", "").asString());
     rootApp["birthday"] = birthday;
     rootApp["age"] = calculateAge(birthday);
-    rootApp["gender"] = validateGenderOrReturnDefault(rootShared["user"].get("gender", "").asString());
+    rootApp["gender"] = rootShared["user"].get("gender", "male");
     rootApp["photo_profile"] = rootShared["user"].get("photo_profile", "");
     Json::Value interests = rootShared["user"].get("interests", "");
     for (unsigned int j = 0; j < interests.size(); j++) {
@@ -440,11 +436,12 @@ std::string UserController::getUserTo(const std::string body) {
 }
 
 
-Json::Value UserController::makeBodyForShowCandidatesResponse(std::string genderOfInterest, Json::Value myArrayOfInterests) {
+Json::Value UserController::makeBodyForShowCandidatesResponse(std::string genderOfMyInterest, Json::Value myArrayOfInterests) {
     Json::Value event;
     Json::Value root;
     Json::Value arrayUsers;
     std::string readBuffer;
+    std::string genderOfInterest;
 
     CurlWrapper curlWrapper = CurlWrapper();
     std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
@@ -457,7 +454,9 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(std::string gender
     Json::Value users = root["users"];
     for (unsigned int i = 0; i < users.size(); i++) {
         int interestInCommon = 0;
-        if (genderOfInterest.compare(validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString())) == 0){
+        std::string gender = fastWriter.write(users[i]["user"].get("gender", "male"));
+        gender = gender.substr(1, gender.size()-3);
+        if (genderOfMyInterest.compare(gender) == 0){
             Json::Value user;
             Json::Value arrayInterests;
             std::string sharedUserId = fastWriter.write(users[i]["user"].get("id", ""));
@@ -486,8 +485,10 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(std::string gender
 }
 
 bool UserController::isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests){
+    std::string theirInterest = fastWriter.write(interest);
     for (unsigned int i = 0; i < myArrayOfInterests.size(); i++){
-        if (interest.compare(myArrayOfInterests[i]["value"]) == 0){
+        std::string myInterest = fastWriter.write(myArrayOfInterests[i]);
+        if (theirInterest.compare(myInterest) == 0){
             return true;
         }
     }
