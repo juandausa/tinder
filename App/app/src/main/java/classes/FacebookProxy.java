@@ -156,6 +156,7 @@ public class FacebookProxy {
             json.put(Constants.ALIAS, mProfile.get(Constants.ALIAS));
             json.put(Constants.EMAIL, mProfile.get(Constants.EMAIL));
             json.put(Constants.BIRTHDAY, mProfile.get(Constants.BIRTHDAY));
+            json.put(Constants.GENDER, mProfile.get(Constants.GENDER));
             JSONObject interests = new JSONObject();
             interests.put(Constants.LIKES, getLikes());
             interests.put(Constants.MOVIES, getMovies());
