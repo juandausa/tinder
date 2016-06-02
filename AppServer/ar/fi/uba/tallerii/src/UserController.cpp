@@ -177,7 +177,7 @@ void UserController :: handleGetCandidates(RequestParser requestParser, Response
         response.SetCode(200);
         response.SetBody(fastWriter.write(body));
         response.Send();
-    }else {
+    } else {
         response.SetCode(400);
         response.SetBody("{ \"response\": \"DummyUserNotRegistered\" }");
         response.Send();
@@ -456,7 +456,7 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(std::string gender
         int interestInCommon = 0;
         std::string gender = fastWriter.write(users[i]["user"].get("gender", "male"));
         gender = gender.substr(1, gender.size()-3);
-        if (genderOfMyInterest.compare(gender) == 0){
+        if (genderOfMyInterest.compare(gender) == 0) {
             Json::Value user;
             Json::Value arrayInterests;
             std::string sharedUserId = fastWriter.write(users[i]["user"].get("id", ""));
@@ -470,7 +470,7 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(std::string gender
             Json::Value interests = users[i]["user"].get("interests", "");
             for (unsigned int j = 0; j < interests.size(); j++) {
                 arrayInterests.append(interests[j]["value"]);
-                if (isInMyArrayOfInterest(interests[j]["value"], myArrayOfInterests)){
+                if (isInMyArrayOfInterest(interests[j]["value"], myArrayOfInterests)) {
                     interestInCommon++;
                 }
             }
@@ -484,11 +484,11 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(std::string gender
     return event;
 }
 
-bool UserController::isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests){
+bool UserController::isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests) {
     std::string theirInterest = fastWriter.write(interest);
-    for (unsigned int i = 0; i < myArrayOfInterests.size(); i++){
+    for (unsigned int i = 0; i < myArrayOfInterests.size(); i++) {
         std::string myInterest = fastWriter.write(myArrayOfInterests[i]);
-        if (theirInterest.compare(myInterest) == 0){
+        if (theirInterest.compare(myInterest) == 0) {
             return true;
         }
     }
