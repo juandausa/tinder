@@ -135,7 +135,10 @@ Descripción de Responsabilidades
 -----------------------
 Diagrama de Flujo
 -----------------------
-* No disponible.
+* Diagrama de Flujo de Control de Sesión
+
+.. image:: ./images/AppServer-ControlSesion.png
+   :align: center
 
 #################################
 Shared Server
