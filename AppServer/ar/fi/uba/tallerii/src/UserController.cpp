@@ -435,8 +435,8 @@ std::string UserController::getUserTo(const std::string body) {
     return userInfo.get("to_user_id", "").asString();
 }
 
-
-Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userData ,std::string genderOfMyInterest, Json::Value myArrayOfInterests) {
+Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userData, std::string genderOfMyInterest,
+                                                              Json::Value myArrayOfInterests) {
     Json::Value event;
     Json::Value root;
     Json::Value arrayUsers;

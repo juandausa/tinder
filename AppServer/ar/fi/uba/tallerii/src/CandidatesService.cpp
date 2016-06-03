@@ -1,13 +1,13 @@
 //
-// Created by agu on 02/06/16.
+// Copyright 2016 FiUBA
 //
 
 #include "CandidatesService.h"
 
 /* TODO: Ver porque se rompe en esta funcion */
-bool CandidatesService::isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests){
-    for (unsigned int i = 0; i < myArrayOfInterests.size(); i++){
-        if (interest.compare(myArrayOfInterests[i]["value"]) == 0){
+bool CandidatesService::isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests) {
+    for (unsigned int i = 0; i < myArrayOfInterests.size(); i++) {
+        if (interest.compare(myArrayOfInterests[i]["value"]) == 0) {
             return true;
         }
     }
@@ -41,7 +41,7 @@ bool CandidatesService::filterByLocationRule(Json::Value myUser, Json::Value use
     double userLongitude = user["location"].get("longitude", 0).asDouble();
     double myUserLatitude = myUser["location"].get("latitude", 0).asDouble();
     double myUserLongitude = myUser["location"].get("longitude", 0).asDouble();
-    double distancia = sqrt(pow(myUserLatitude - userLatitude,2) + pow(myUserLongitude - userLongitude,2));
+    double distancia = sqrt(pow(myUserLatitude - userLatitude, 2) + pow(myUserLongitude - userLongitude, 2));
     if (distancia >= this->MIN_DISTANCE) {
         return false;
     }
@@ -50,27 +50,25 @@ bool CandidatesService::filterByLocationRule(Json::Value myUser, Json::Value use
 
 
 // Tanto el usuario como el candidato deben compartir algún interés en común
-bool CandidatesService::filterByInterestsRule(Json::Value interests, Json::Value myArrayOfInterests ){
+bool CandidatesService::filterByInterestsRule(Json::Value interests, Json::Value myArrayOfInterests ) {
     int interestInCommon = 0;
     for (unsigned int j = 0; j < interests.size(); j++) {
         this->arrayInterests.append(interests[j]["value"]);
-        if (this->isInMyArrayOfInterest(interests[j]["value"], myArrayOfInterests)){
+        if (this->isInMyArrayOfInterest(interests[j]["value"], myArrayOfInterests)) {
             interestInCommon++;
         }
     }
     return (interestInCommon >= 1);
 }
 
-
-
 bool CandidatesService::filterCandidates(Json::Value myUser, Json::Value user, Json::Value interests, Json::Value myArrayOfInterests ) {
-    return (this->filterByInterestsRule(interests,myArrayOfInterests) &&
+    return (this->filterByInterestsRule(interests, myArrayOfInterests) &&
             this->filterByMatchesRule(myUser, user) &&
             this->filterByOnePercentRule(myUser, user) &&
             this->filterByLimitSearchsRule(myUser, user) &&
             this->filterByLocationRule(myUser, user));
 }
 
-Json::Value CandidatesService::getArrayInterests(){
+Json::Value CandidatesService::getArrayInterests() {
     return this->arrayInterests;
 }
