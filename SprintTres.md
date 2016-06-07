@@ -22,7 +22,7 @@ Desde el 02/05/2016 hasta el 23/06/2016
 ## Compromisos
 
 ### Historias de usuario
-* 
+* COMPLETAR
 
 ### División de tareas
 
