@@ -47,10 +47,8 @@ Desde el 02/05/2016 hasta el 23/06/2016
 |                           |               | 16.2 | De Instalación / Técnica                  | Sella       | 1     |
 |                           | Shared Server | 16.3 | De Usuario                                | Dausá       | 3     |
 |                           |               | 16.4 | De Instalación / Técnica                  | Dausá       | 3     |
-|                           | App Server    | 16.5 | De Usuario                                | Dausá       | 2     |
-|                           |               | 16.6 | De Administrador                          | Sella       | 1     |
-|                           |               | 16.7 | Técnica                                   | Dausá       | 5     |
-
+|                           | App Server    | 16.5 | De Administrador                          | Sella       | 1     |
+|                           |               | 16.6 | Técnica                                   | Dausá       | 5     |
 
 ## Comentarios
  * Se incluyen tareas correspondientes al sprint pasado con la misma numeración. Por esto se puede observar que algunos números no son consecutivos.
