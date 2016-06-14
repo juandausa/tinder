@@ -32,7 +32,7 @@ Clonar Branch
 ^^^^^^^^^^^^^^^^
 Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar en la linea de comandos:
 
-* `git clone -b AppServer https://github.com/juandausa/tinder.git AppServer`
+* ``git clone -b AppServer https://github.com/juandausa/tinder.git AppServer``
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Requerimientos Para su Uso
@@ -152,7 +152,7 @@ Documentación de Instalación
 Desarrolladores
 -------------------
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Como Probar el Shared Server
+Probar el Shared Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Actualmente se encuentra subido y corriendo en `Heroku <https://enigmatic-scrubland-75073.herokuapp.com/>`_ .
 Se puede correr tambien de manera local como está indicado en el item "Ambiente local" de este archivo.
@@ -163,7 +163,9 @@ Entonces, para acceder al frontend del shared server subido a Heroku basta con a
 Clonar Branch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar en la linea de comandos: ``git clone -b SharedServer https://github.com/juandausa/tinder.git SharedServer`` .
+Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar en la linea de comandos:
+ 
+* ``git clone -b SharedServer https://github.com/juandausa/tinder.git SharedServer`` .
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Probar Antes de Pushear
@@ -174,6 +176,7 @@ Probar Antes de Pushear
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Pushear a Repositorio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 * ``git push origin SharedServer``
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -269,7 +272,7 @@ Clonar Branch
 
 Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar en la linea de comandos:
 
- * ``git clone -b App https://github.com/juandausa/tinder.git App``
+* ``git clone -b App https://github.com/juandausa/tinder.git App``
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Requerimientos para su Uso
