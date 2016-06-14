@@ -110,6 +110,24 @@ app.post('/user/update/:user_id', function(request, response) {
   response.send({status_code:200});
 });
 
+app.post('/filters/:user_id', function(request, response) {
+  console.log(request.body);
+  response.send({status_code:200});
+});
+
+app.post('/dislikes/:user_id', function(request, response) {
+  console.log("Dislike a", request.body.to_user_id);
+  response.send({status_code:200});
+});
+
+
+app.post('/likes/:user_id', function(request, response) {
+  console.log("Like a", request.body.to_user_id);
+  response.send({status_code:200});
+});
+
+
+
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
