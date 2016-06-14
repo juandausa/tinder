@@ -1,5 +1,7 @@
 package com.tinder_app;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +16,10 @@ import classes.UserData;
  * Activity that contains and shows the data of other users
  */
 public class OtherUsersProfileActivity extends UserProfileActivity {
+
+    private static final String SEND_LIKE = "LIKE";
+    private static final String SEND_DISLIKE = "DISLIKE";
+    public static final String DECISION = "DECISION";
 
     /**
      * Sets up the activity data and look
@@ -61,6 +67,7 @@ public class OtherUsersProfileActivity extends UserProfileActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                sendDesicion(SEND_LIKE);
             }
         });
     }
@@ -82,8 +89,19 @@ public class OtherUsersProfileActivity extends UserProfileActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                sendDesicion(SEND_DISLIKE);
             }
         });
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    private void sendDesicion(String decision) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(DECISION, decision);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 
     /**********************************************************************************************/

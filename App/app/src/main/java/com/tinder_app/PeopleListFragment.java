@@ -19,14 +19,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
 
 import classes.CandidateData;
 import classes.Constants;
 import classes.SessionManager;
 import classes.SwipeDeckAdapter;
 import requests.GetCandidatesRequest;
+import requests.JSONRequest;
+import requests.SendDislikeRequest;
+import requests.SendLikeRequest;
 
 /**
  * Fragment that holds the SwipeDeck of the people to be liked or disliked by the user.
@@ -34,11 +42,15 @@ import requests.GetCandidatesRequest;
 public class PeopleListFragment extends Fragment {
 
     private static final int SWIPE_DURATION = 4000;
+    private static final String SEND_LIKE = "LIKE";
+    private static final String SEND_DISLIKE = "DISLIKE";
     private JSONArray mCandidates;
     private List<CandidateData> mCardList;
     private SwipeDeckAdapter mAdapter;
     private SwipeDeck mCardStack;
     private ProgressDialog mProgress;
+    private Map<String, Method> mDecisionMethods;
+    MainActivity mActivity;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -53,10 +65,12 @@ public class PeopleListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         CoordinatorLayout layout = (CoordinatorLayout) inflater.inflate(R.layout.swipe_deck, container, false);
+        mActivity = (MainActivity) getActivity();
         setUpLikeButton(layout);
         setUpDislikeButton(layout);
         loading();
         getCandidates();
+        buildMethodsMap();
 
         mCardStack = (SwipeDeck) layout.findViewById(R.id.swipe_deck);
         //cardStack.setHardwareAccelerationEnabled(true);
@@ -68,11 +82,13 @@ public class PeopleListFragment extends Fragment {
             @Override
             public void cardSwipedLeft(int position) {
                 //Log.i("MainActivity", "card was swiped left, position in adapter: " + position);
+                sendDecisionOverCandidate(SEND_DISLIKE);
             }
 
             @Override
             public void cardSwipedRight(int position) {
                 //Log.i("MainActivity", "card was swiped right, position in adapter: " + position);
+                sendDecisionOverCandidate(SEND_LIKE);
             }
 
             @Override
@@ -138,9 +154,14 @@ public class PeopleListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCardStack.swipeTopCardRight(SWIPE_DURATION);
+                sendLikeDecision();
             }
         });
+    }
+
+    private void sendLikeDecision() {
+        mCardStack.swipeTopCardRight(SWIPE_DURATION);
+        sendDecisionOverCandidate(SEND_LIKE);
     }
 
     /**********************************************************************************************/
@@ -159,9 +180,52 @@ public class PeopleListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCardStack.swipeTopCardLeft(SWIPE_DURATION);
+                sendDislikeDecision();
             }
         });
+    }
+
+    private void sendDislikeDecision() {
+        mCardStack.swipeTopCardLeft(SWIPE_DURATION);
+        sendDecisionOverCandidate(SEND_DISLIKE);
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    private void buildMethodsMap() {
+        mDecisionMethods = new HashMap<>();
+        try {
+            mDecisionMethods.put(SEND_LIKE, mActivity.getClass().getMethod("sendLikeRequest", String.class));
+            mDecisionMethods.put(SEND_DISLIKE, mActivity.getClass().getMethod("sendDislikeRequest", String.class));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    private void sendDecisionOverCandidate(String decision) {
+        CandidateData candidate = (CandidateData) mAdapter.getItem(0);
+        try {
+            (mDecisionMethods.get(decision)).invoke(mActivity, candidate.getUserId());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    public void sendDecisionFromResult(String result) {
+        if (result.equals(SEND_LIKE)) {
+            sendLikeDecision();
+        } else if (result.equals(SEND_DISLIKE)) {
+            sendLikeDecision();
+        }
     }
 
     /**********************************************************************************************/

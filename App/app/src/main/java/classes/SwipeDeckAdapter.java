@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tinder_app.MainActivity;
 import com.tinder_app.OtherUsersProfileActivity;
 import com.tinder_app.R;
 
@@ -117,7 +118,8 @@ public class SwipeDeckAdapter extends BaseAdapter {
                 Toast.makeText(mContext, item.getAlias(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, OtherUsersProfileActivity.class);
                 intent.putExtra(OtherUsersProfileActivity.USER, item.toString());
-                mContext.startActivity(intent);
+                //mContext.startActivity(intent);
+                ((MainActivity) mContext).startActivityForResult(intent, 1);
             }
         });
     }

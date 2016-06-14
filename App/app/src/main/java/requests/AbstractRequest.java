@@ -14,7 +14,7 @@ import org.json.JSONObject;
  */
 public abstract class AbstractRequest {
 
-    private static final int TIMEOUT = 50000;
+    private static final int TIMEOUT = 250000;//50000;
     protected RequestHandler mRequestHandler;
     protected Context mContext;
     protected Response.Listener mResponseListener;

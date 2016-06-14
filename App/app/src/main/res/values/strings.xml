@@ -72,7 +72,6 @@
     <string name="title_activity_edit_profile">Editar Perfil</string>
     <string name="JSON">JSON</string>
 
-
     <!-- Dialog strings -->
     <string name="select_age">Elegir edad</string>
     <string name="OK">OK</string>

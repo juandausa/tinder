@@ -29,6 +29,9 @@ public class MatchChatActivity extends AppCompatActivity {
     private Button mButtonSend;
     private EditText mEditTextMessage;
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
     /**
      * Sets the activity data and views
      * @param savedInstanceState the saved state of the activity to be restored
@@ -68,6 +71,8 @@ public class MatchChatActivity extends AppCompatActivity {
         showConversation();
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     /**
      * The user sends a message
@@ -79,6 +84,9 @@ public class MatchChatActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
     /**
      * The other user sends a message
      * @param message the message to be sent
@@ -89,6 +97,9 @@ public class MatchChatActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
     /**
      * Send a message from both of the users
      */
@@ -98,6 +109,9 @@ public class MatchChatActivity extends AppCompatActivity {
         mimicOtherMessage();
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
     /**
      * Send a message from the other user
      */
@@ -106,6 +120,8 @@ public class MatchChatActivity extends AppCompatActivity {
         mAdapter.add(chatMessage);
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     /**
      * Show a conversation
@@ -118,5 +134,4 @@ public class MatchChatActivity extends AppCompatActivity {
         sendMessage(aux);
         mimicOtherMessage("ok, no problem");
     }
-
 }

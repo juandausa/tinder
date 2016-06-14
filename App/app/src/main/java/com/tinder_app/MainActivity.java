@@ -1,5 +1,6 @@
 package com.tinder_app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -26,11 +27,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import classes.CandidateData;
 import classes.Constants;
 import classes.CustomViewPager;
 import classes.MyUserProfileData;
 import classes.SessionManager;
 import requests.GetProfileRequest;
+import requests.JSONRequest;
+import requests.SendDislikeRequest;
+import requests.SendLikeRequest;
 
 /**
  * Main Activity of the App. Main screen, where the user will be the mayor part of the time.
@@ -42,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private MyUserProfileData mUserData;
     private String mUserId;
+    private PeopleListFragment mPeopleFragment;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -134,7 +140,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new PeopleListFragment());
+        mPeopleFragment = new PeopleListFragment();
+        adapter.addFragment(mPeopleFragment);
         adapter.addFragment(new MatchesFragment());
         viewPager.setAdapter(adapter);
     }
@@ -211,6 +218,49 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setProfile(final JSONObject user) {
         mUserData = new MyUserProfileData(user);
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    public void sendLikeRequest(String candidateId) {
+        SendLikeRequest request = new SendLikeRequest(this);
+        sendDecisionOverCandidate(candidateId, request);
+    }
+
+    public void sendDislikeRequest(String candidateId) {
+        SendDislikeRequest request = new SendDislikeRequest(this);
+        sendDecisionOverCandidate(candidateId, request);
+    }
+
+
+    private void sendDecisionOverCandidate(String candidateId, JSONRequest request) {
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("to_user_id", candidateId);
+            data.put(Constants.USER_ID, mUserId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        request.send(data);
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String result =data.getStringExtra(OtherUsersProfileActivity.DECISION);
+                mPeopleFragment.sendDecisionFromResult(result);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 
     /**********************************************************************************************/

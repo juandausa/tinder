@@ -11,7 +11,7 @@ public final class Constants {
      * Ip of the server. Used to build paths for requests.
      * Localhost is "http://10.0.2.2:5000";;
      */
-    public static final String IP_SERVER = "http://192.168.1.108:5000";
+    public static final String IP_SERVER = "http://192.168.1.108:5000"; //"http://10.0.2.2:8000";
 
     /**
      * Route for constructing the url path for the request that checks if the user is registered in
@@ -51,6 +51,19 @@ public final class Constants {
      * Route for constructing the url path for the request that updates the user data in the server
      */
     public static final String USER_UPDATE_DATA_PATH = "/user/update/";
+
+    /**
+     * Route for constructing the url path for the request that send the id of the candidate that
+     * the user liked.
+     */
+    public static final String LIKES_PATH = "/likes/";
+
+    /**
+     * Route for constructing the url path for the request that send the id of the candidate that
+     * the user disliked.
+     */
+    public static final String DISLIKES_PATH = "/dislikes/";
+
 
     /**********************************************************************************************/
     /**********************     FACEBOOK INTERESTS STRING CONSTANTS     ***************************/
