@@ -474,6 +474,7 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
 //                user["interests"] = candidatesService.getArrayInterests();
 //                arrayUsers.append(user);
 //            }
+            LOG(INFO) << "asdasds";
             for (unsigned int j = 0; j < interests.size(); j++) {
                 arrayInterests.append(interests[j]["value"]);
                 if (isInMyArrayOfInterest(interests[j]["value"], myArrayOfInterests)) {

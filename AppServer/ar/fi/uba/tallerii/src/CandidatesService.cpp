@@ -48,7 +48,6 @@ bool CandidatesService::filterByLocationRule(Json::Value myUser, Json::Value use
     return true;
 }
 
-
 // Tanto el usuario como el candidato deben compartir algún interés en común
 bool CandidatesService::filterByInterestsRule(Json::Value interests, Json::Value myArrayOfInterests ){
     int interestInCommon = 0;
@@ -60,8 +59,6 @@ bool CandidatesService::filterByInterestsRule(Json::Value interests, Json::Value
     }
     return (interestInCommon >= 1);
 }
-
-
 
 bool CandidatesService::filterCandidates(Json::Value myUser, Json::Value user, Json::Value interests, Json::Value myArrayOfInterests ) {
     return (this->filterByInterestsRule(interests,myArrayOfInterests) &&
