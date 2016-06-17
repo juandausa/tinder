@@ -10,6 +10,7 @@
 class Message {
 public:
     Message(const std::string sender, const std::string reciever, const std::string content);
+    Message();
     virtual std::string toString();
     virtual void loadFromString(std::string sourceString);
     virtual std::string getSender();
