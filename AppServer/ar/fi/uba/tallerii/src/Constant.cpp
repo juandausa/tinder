@@ -20,3 +20,4 @@ std::string Constant :: male = "male";
 std::string Constant :: female = "female";
 std::string Constant :: defaultAge = "0";
 std::string Constant :: defaultBirthday = "01/01/1970";
+std::string Constant :: messageComponentDivider = "N_N";
