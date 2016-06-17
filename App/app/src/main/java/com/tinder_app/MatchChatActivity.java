@@ -2,6 +2,7 @@ package com.tinder_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -10,12 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import classes.ChatMessage;
 import classes.ChatMessageAdapter;
 import classes.Constants;
 import classes.Conversation;
+import classes.SessionManager;
+import requests.chat.SendNewMessageRequest;
+import services.GetNewMessageService;
 
 /**
  * Chat Activity of the user with other
@@ -24,10 +32,15 @@ public class MatchChatActivity extends AppCompatActivity {
 
     private Conversation mConversation;
     private String mAlias;
+    private String mUserId;
     private ListView mListView;
     private ChatMessageAdapter mAdapter;
     private Button mButtonSend;
     private EditText mEditTextMessage;
+    private boolean mIsAlive;
+    private Thread mListenMessagesThread;
+    private JSONArray mOldMessages;
+
 
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -42,20 +55,24 @@ public class MatchChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_match_chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mListenMessagesThread = new Thread(new GetNewMessageService(this));
 
-        mListView = (ListView) findViewById(R.id.listView);
+        mListView = (ListView) findViewById(R.id.listMessageView);
         mButtonSend = (Button) findViewById(R.id.btn_send);
         mEditTextMessage = (EditText) findViewById(R.id.et_message);
 
-
         Intent intent = getIntent();
         mAlias = intent.getStringExtra(Constants.ALIAS);
+
+        mUserId = SessionManager.getUserId(this);
         mConversation = new Conversation(intent.getStringExtra(Constants.CONVERSATION));
         toolbar.setTitle(mAlias);
         toolbar.bringToFront();
 
         mAdapter = new ChatMessageAdapter(this, new ArrayList<ChatMessage>());
         mListView.setAdapter(mAdapter);
+        mListView.setSelection(mAdapter.getCount() - 1);
+
 
         mButtonSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +81,14 @@ public class MatchChatActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(message)) {
                     return;
                 }
-                sendMessage(message);
+                JSONObject data = new JSONObject();
+                try {
+                    data.put(Constants.USER_ID, mUserId);
+                    data.put(Constants.MESSAGE, message);
+                    (new SendNewMessageRequest(MatchChatActivity.this)).send(data);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 mEditTextMessage.setText("");
             }
         });
@@ -74,14 +98,26 @@ public class MatchChatActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mIsAlive = true;
+        mListenMessagesThread.setDaemon(true);
+        mListenMessagesThread.start();
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
     /**
      * The user sends a message
      * @param message the message to be sent
      */
-    private void sendMessage(String message) {
+    public void sendMessage(String message) {
         ChatMessage chatMessage = new ChatMessage(message, true, false);
         mAdapter.add(chatMessage);
         mAdapter.notifyDataSetChanged();
+        mListView.setSelection(mAdapter.getCount() - 1);
     }
 
     /**********************************************************************************************/
@@ -91,10 +127,11 @@ public class MatchChatActivity extends AppCompatActivity {
      * The other user sends a message
      * @param message the message to be sent
      */
-    private void mimicOtherMessage(String message) {
+    public void mimicOtherMessage(String message) {
         ChatMessage chatMessage = new ChatMessage(message, false, false);
         mAdapter.add(chatMessage);
         mAdapter.notifyDataSetChanged();
+        mListView.setSelection(mAdapter.getCount() - 1);
     }
 
     /**********************************************************************************************/
@@ -127,11 +164,30 @@ public class MatchChatActivity extends AppCompatActivity {
      * Show a conversation
      */
     private void showConversation() {
-        //LinearLayout layout = (LinearLayout) findViewById(R.id.chat_layout);
-        int index = 0;
-        boolean messageIsMine = true;
-        String aux = "this is a test";
-        sendMessage(aux);
-        mimicOtherMessage("ok, no problem");
+        while (!mConversation.noMoreMessages()) {
+            String message = mConversation.getCurrentMessage();
+            if (mConversation.currentMessageIsMine()) {
+                sendMessage(message);
+            } else {
+                mimicOtherMessage(message);
+            }
+            mConversation.advanceToNextMessage();
+        }
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    @Override
+    protected void onStop() {
+        mIsAlive = false;
+        super.onStop();
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    public boolean isAlive() {
+        return mIsAlive;
     }
 }

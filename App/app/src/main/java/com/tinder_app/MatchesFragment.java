@@ -126,5 +126,4 @@ public class MatchesFragment extends Fragment {
         };
         loadCards.execute();
     }
-
 }

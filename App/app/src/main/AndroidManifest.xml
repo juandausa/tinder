@@ -75,12 +75,14 @@
         <activity
             android:name=".MatchChatActivity"
             android:label="@string/title_activity_match_chat"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.DesignDemo">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tinder_app.MainActivity" />
         </activity>
+
     </application>
 
 </manifest>

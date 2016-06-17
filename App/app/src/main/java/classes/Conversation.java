@@ -77,12 +77,16 @@ public class Conversation {
             } else {
                 message = messageObject.getString(OTHER);
             }
-            mMessageIndex++;
             return message;
         } catch (JSONException e) {
             Log.e("JSON ERROR", e.toString());
             return "";
         }
+    }
+
+
+    public void advanceToNextMessage() {
+        mMessageIndex++;
     }
 
     /**********************************************************************************************/

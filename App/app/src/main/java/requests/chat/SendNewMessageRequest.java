@@ -1,37 +1,37 @@
-package requests;
+package requests.chat;
 
-import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
-import com.tinder_app.MainActivity;
-import com.tinder_app.PeopleListFragment;
+import com.tinder_app.MatchChatActivity;
 import com.tinder_app.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import classes.Constants;
+import requests.JSONRequest;
 
 /**
- * Created by fabrizio on 13/06/16.
+ * Created by fabrizio on 16/06/16.
  */
-public class SendLikeRequest extends JSONRequest {
+public class SendNewMessageRequest extends JSONRequest {
 
-    private static final String LIKE_STRING = "_LIKE";
-    private final String mStatusCode = "status_code";
-    private final int mOk = 200;
+
+    private MatchChatActivity mContext;
+    private String mMessage;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
     /**
-     * Constructor of the class JSONRequest
+     * Constructor of the class SendNewMessageRequest
      *
      * @param context the context from where this request is being constructed
      **/
-    public SendLikeRequest(MainActivity context) {
+    public SendNewMessageRequest(MatchChatActivity context) {
         super(context);
         mContext = context;
         mMethod = Request.Method.POST;
@@ -41,14 +41,13 @@ public class SendLikeRequest extends JSONRequest {
     /**********************************************************************************************/
 
     @Override
-    protected void onResponse(JSONObject response) {
-        try {
-            if (response.getInt(mStatusCode) != mOk) {
-                // TODO: Do something on error code received
+    protected void onResponse(final JSONObject response) {
+        mContext.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mContext.sendMessage(mMessage);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        });
     }
 
     /**********************************************************************************************/
@@ -57,7 +56,8 @@ public class SendLikeRequest extends JSONRequest {
     @Override
     public void send(JSONObject json) {
         try {
-            super.send(json, Constants.LIKES_PATH + json.getString(Constants.USER_ID));
+            mMessage = json.getString(Constants.MESSAGE);
+            super.send(json, Constants.SEND_MESSAGE + json.getString(Constants.USER_ID));
         } catch (JSONException e) {
             Log.e(mContext.getString(R.string.JSON_ERROR), e.getMessage());
         }
@@ -68,9 +68,7 @@ public class SendLikeRequest extends JSONRequest {
 
     @Override
     protected void onError(VolleyError error) {
-        Log.e(mContext.getString(R.string.REQUEST_ERROR)+LIKE_STRING, error.getMessage());
+        Toast.makeText(mContext, R.string.message_not_sent, Toast.LENGTH_LONG).show();
+        Log.e(mContext.getString(R.string.REQUEST_ERROR), error.getMessage());
     }
-
-
-
 }
