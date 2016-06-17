@@ -11,6 +11,7 @@ std::string Constant :: security_token_prefix = "token-";
 std::size_t Constant :: random_characters_quantity = 5;
 std::string Constant :: filters_prefix = "preferences-";
 std::string Constant :: likes_prefix = "likes-";
+std::string Constant :: count_likes_prefix = "countLikes-";
 std::string Constant :: dislikes_prefix = "dislikes-";
 std::string Constant :: matches_prefix = "matches-";
 char Constant :: likes_separator = ' ';

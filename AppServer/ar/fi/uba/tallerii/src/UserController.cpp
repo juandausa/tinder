@@ -5,6 +5,7 @@
 #include "UserController.h"
 #include <time.h>
 #include <string>
+#include <unordered_map>
 
 
 UserController :: UserController(UserService userService) : userService(userService) {
@@ -442,6 +443,8 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
     Json::Value arrayUsers;
     std::string readBuffer;
     std::string genderOfInterest;
+    std::unordered_map<string, string> usersLikes = std::unordered_map<string, string>();
+    std::unordered_map<string, Json::Value> usersData = std::unordered_map<string, Json::Value>();
 
     CurlWrapper curlWrapper = CurlWrapper();
     std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
@@ -482,11 +485,16 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
             }
             user["interests"] = arrayInterests;
             if (interestInCommon >= 1) {
-                arrayUsers.append(user);
+                usersData.emplace(sharedUserId, user);
+                usersLikes.emplace(sharedUserId, this->userService.getCountLikes(sharedUserId));
             }
         }
     }
-    event["candidates"] = arrayUsers;
+    onePercentRule(usersData, usersLikes);
+    fillUsersArray(usersData, arrayUsers);
+    if (arrayUsers.size() != 0){
+        event["candidates"] = arrayUsers;
+    }
     return event;
 }
 
@@ -499,4 +507,30 @@ bool UserController::isInMyArrayOfInterest(Json::Value interest, Json::Value myA
         }
     }
     return false;
+}
+
+void UserController::onePercentRule(std::unordered_map<string, Json::Value> &usersData, std::unordered_map<string, string> &usersLikes){
+    std::unordered_map<string, string>::const_iterator iter;
+    std::unordered_map<string, Json::Value>::iterator iterData;
+    int max = 0;
+    std::string maxUserId = "";
+    for(iter = usersLikes.begin(); iter != usersLikes.end(); ++iter){
+        if (((*iter).second).compare("") != 0){
+            if (atoi(((*iter).second).c_str()) >= max){
+                max = atoi(((*iter).second).c_str());
+                maxUserId = (*iter).first;
+            }
+        }
+    }
+    if (maxUserId.compare("") != 0) {
+        iterData = usersData.find(maxUserId);
+        usersData.erase(iterData);
+    }
+}
+
+void UserController::fillUsersArray(std::unordered_map<string, Json::Value> &usersData, Json::Value &arrayUsers){
+    std::unordered_map<string, Json::Value>::const_iterator iter;
+    for(iter = usersData.begin(); iter != usersData.end(); ++iter){
+        arrayUsers.append((*iter).second);
+    }
 }
