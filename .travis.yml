@@ -12,6 +12,7 @@ notifications:
       - juandausa@gmail.com
       - zebas.graffe@gmail.com
       - jasminasf@gmail.com
+      - rojasagustin90@gmail.com
     on_success: change
     on_failure: always
     
@@ -60,14 +61,14 @@ before_install:
     
 before_script:
     - cd AppServer
-    - ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/src/*
-    - ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/main/*
+    - ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./source/src/*
+    - ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./source/main/*
     - cmake .
     - make
 
-script: ./ar/fi/uba/tallerii/test/runTests
+script: ./source/test/runTests
 
 after_success: 
-    - lcov --capture --directory ./ar/fi/uba/tallerii/test/ --output-file coverageTinderTests.info
+    - lcov --capture --directory ./source/test/ --output-file coverageTinderTests.info
     - lcov --remove coverageTinderTests.info '/usr/include/*' '/usr/lib/*' 'src/Mongoose.cpp' --output-file coverageTinderTestsWithoutLibs.info
     - genhtml coverageTinderTestsWithoutLibs.info --output-directory coverageHtml
