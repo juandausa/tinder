@@ -7,10 +7,6 @@
 
 #include "UserService.h"
 #include "DataBase.h"
-#include "RemoveDatabase.h"
 #include <gtest/gtest.h>
-
-
-
 
 #endif //TINDER_USER_SERVICE_TEST_H

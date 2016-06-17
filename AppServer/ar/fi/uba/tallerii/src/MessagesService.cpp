@@ -6,13 +6,14 @@
 #include "DataBase.h"
 #include "Message.h"
 #include "Constant.h"
-#include <vector>
 #include <glog/logging.h>
+#include <vector>
+#include <string>
 
 MessagesService::MessagesService(DataBase &db) : database(&db) {
 }
 
-bool addMessageToDatabase(Message &message, std::string key, DataBase *database) {
+bool addMessageToDatabase(Message message, std::string key, DataBase *database) {
     std::string previousMessages("");
     database->get(key, &previousMessages);
 
@@ -32,7 +33,7 @@ bool MessagesService::addMessage(Message message) {
     LOG(INFO) << "Adding messages between users '" + message.getSender() + "' and '" + message.getReciever() + "'.";
     if (this->database->is_open()) {
         std::string messagesKeySender = Constant::messagesPrefix + message.getSender() + message.getReciever();
-        std::string messagesKeyReciever = Constant::messagesPrefix + message.getSender() + message.getReciever();
+        std::string messagesKeyReciever = Constant::messagesPrefix + message.getReciever() + message.getSender();
         bool result = addMessageToDatabase(message, messagesKeySender, this->database) &&
                       addMessageToDatabase(message, messagesKeyReciever, this->database);
 
