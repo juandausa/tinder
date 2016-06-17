@@ -1,6 +1,6 @@
 # Branch App Server
 
-[![Build Status](https://travis-ci.com/juandausa/tinder.svg?token=BQqpkHq7v8pQHzVJzZjB&branch=AppServer)](https://travis-ci.com/juandausa/tinder)
+[![Build Status](https://travis-ci.com/juandausa/tinder.svg?token=BQqpkHq7v8pQHzVJzZjB&branch=AppServerRefactor)](https://travis-ci.com/juandausa/tinder)
 
 En este branch se encuentran todos los sources, tests y otros archivos del App Server.
 El App Server es un servidor desarrollado en [C++](http://www.cplusplus.com/) que contiene la lógica del negocio del proyecto. Está conectado a una base de datos no relacional para la cual se usa [RocksDB](http://rocksdb.org/) como administrador de base de datos.
@@ -11,7 +11,7 @@ Este servidor es un servidor intermedio entre el cliente Android y el Shared Ser
 
 Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar en la linea de comandos:
 
-`git clone -b AppServer https://github.com/juandausa/tinder.git AppServer`
+`git clone -b AppServerRefactor https://github.com/juandausa/tinder.git AppServerRefactor`
 
 ### Requerimientos para su uso
 
@@ -22,8 +22,8 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
    * Posicionarse sobre la carpeta AppServer/AppServer y ejecutar ```cmake .```.
    * Luego ejecutar ```make```.
 * Para correr los tests por consola:
-   * Puede correr los tests mediante ```./ar/fi/uba/tallerii/test/runTests``` .
-* Para correr el servidor utilizar lo anterior pero iniciar el server mediante ```./ar/fi/uba/tallerii/main/Tinder_main``` .
+   * Puede correr los tests mediante ```./source/test/runTests``` .
+* Para correr el servidor utilizar lo anterior pero iniciar el server mediante ```./source/main/Tinder_main``` .
    * El servidor lo puede finalizar con ```Ctrl+C``` o eviandole cualquier señal distinta de ```-9```.
    
 ### Configuración en CLion
@@ -34,8 +34,8 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 ### Políticas de Commit
 * Correr valgrind sobre los tests, utilizando los flags --leak-check=full.
 * Correr cpplint para verificar los estilos de codificación. Desde la carpeta AppServer ejecute los siguientes comando y verifique que no hay errores:
-   * ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/src/*
-   * ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/main/*
+   * ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./source/src/*
+   * ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./source/main/*
 
 ### API Web
 
