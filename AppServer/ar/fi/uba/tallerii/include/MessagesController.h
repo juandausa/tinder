@@ -25,6 +25,8 @@ private:
     Json::Reader reader;
     Json::FastWriter fastWriter;
     Message getMessageFromRequest(RequestParser request);
+    std::string getErrorResponseBody();
+    std::string getSucceedResponseBody();
 };
 
 

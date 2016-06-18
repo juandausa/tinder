@@ -28,22 +28,22 @@ void MessagesController::handleAddMessage(RequestParser requestParser, Response 
     std::string reciever = message.getReciever();
     if ((sender.length() == 0) || (reciever.length() == 0)) {
         response.SetCode(500);
-        response.SetBody("Bad Request, no sender or reciever detected.");
+        response.SetBody(this->getErrorResponseBody());
         LOG(WARNING) << "Bad Request, no sender or reciever detected. Sender: '" << sender << "' or user: '" <<
         reciever << "'";
     } else if ((!userService.isUserRegistered(sender)) || (!userService.isUserRegistered(reciever))) {
         response.SetCode(500);
-        response.SetBody(
-                "Bad Request, sender '" + sender + "' or reciever '" + reciever + " is not registered.");
+        response.SetBody(this->getErrorResponseBody());
         LOG(WARNING) << "Error for addLike. User: '" << sender << "' or user: '" << reciever <<
         "' is not registered";
     } else {
         if (this->messagesService.addMessage(message)) {
             response.SetCode(200);
+            response.SetBody(this->getSucceedResponseBody());
             LOG(INFO) << "Message from user: '" << sender << "' to user: '" << reciever << "' added";
         } else {
             response.SetCode(500);
-            response.SetBody("Error for addMessage, error on save.");
+            response.SetBody(this->getErrorResponseBody());
             LOG(WARNING) << "Error for addMessage, error on save. From user: '" << sender << "' to user: '" <<
             reciever << "'";
         }
@@ -54,6 +54,23 @@ void MessagesController::handleAddMessage(RequestParser requestParser, Response 
 
 void MessagesController::handleGetMessages(RequestParser requestParser, Response response) {
     response.SetCode(200);
-    response.SetBody("RECIBIDO");
+    response.SetBody(this->getSucceedResponseBody());
     response.Send();
+    /*OK:
+		{message: “ESTO ES UN MENSAJE”}
+	Error:
+		{message: “”}
+     */
+}
+
+std::string MessagesController::getErrorResponseBody() {
+    Json::Value errorResponse;
+    errorResponse["status_code"] = 500;
+    return this->fastWriter.write(errorResponse);
+}
+
+std::string MessagesController::getSucceedResponseBody() {
+    Json::Value succeedResponse;
+    succeedResponse["status_code"] = 200;
+    return this->fastWriter.write(succeedResponse);
 }
