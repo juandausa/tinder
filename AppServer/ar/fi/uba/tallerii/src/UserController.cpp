@@ -492,7 +492,7 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
     }
     onePercentRule(usersData, usersLikes);
     fillUsersArray(usersData, arrayUsers);
-    if (arrayUsers.size() != 0){
+    if (arrayUsers.size() != 0) {
         event["candidates"] = arrayUsers;
     }
     return event;
@@ -509,14 +509,14 @@ bool UserController::isInMyArrayOfInterest(Json::Value interest, Json::Value myA
     return false;
 }
 
-void UserController::onePercentRule(std::unordered_map<string, Json::Value> &usersData, std::unordered_map<string, string> &usersLikes){
+void UserController::onePercentRule(std::unordered_map<string, Json::Value> &usersData, std::unordered_map<string, string> &usersLikes) {
     std::unordered_map<string, string>::const_iterator iter;
     std::unordered_map<string, Json::Value>::iterator iterData;
     int max = 0;
     std::string maxUserId = "";
-    for(iter = usersLikes.begin(); iter != usersLikes.end(); ++iter){
-        if (((*iter).second).compare("") != 0){
-            if (atoi(((*iter).second).c_str()) >= max){
+    for (iter = usersLikes.begin(); iter != usersLikes.end(); ++iter) {
+        if (((*iter).second).compare("") != 0) {
+            if (atoi(((*iter).second).c_str()) >= max) {
                 max = atoi(((*iter).second).c_str());
                 maxUserId = (*iter).first;
             }
@@ -528,9 +528,9 @@ void UserController::onePercentRule(std::unordered_map<string, Json::Value> &use
     }
 }
 
-void UserController::fillUsersArray(std::unordered_map<string, Json::Value> &usersData, Json::Value &arrayUsers){
+void UserController::fillUsersArray(std::unordered_map<string, Json::Value> &usersData, Json::Value &arrayUsers) {
     std::unordered_map<string, Json::Value>::const_iterator iter;
-    for(iter = usersData.begin(); iter != usersData.end(); ++iter){
+    for (iter = usersData.begin(); iter != usersData.end(); ++iter) {
         arrayUsers.append((*iter).second);
     }
 }
