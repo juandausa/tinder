@@ -9,7 +9,6 @@
 #include <string>
 #include "Mongoose.h"
 #include "Server.h"
-#include "PlusController.h"
 #include "UserController.h"
 #include "FilterController.h"
 #include "MatchesController.h"

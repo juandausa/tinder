@@ -7,6 +7,7 @@ FILE(GLOB SOURCE_FILES "../src/server/*.cpp"
 						"../src/server/Controllers/*.cpp" 
 						"../src/server/Services/*.cpp" 
 						"../src/database/*.cpp"
+						"../src/resources/*.cpp"
 						"../src/utils/*.cpp")
 
 add_executable(Tinder_main main.cpp ${SOURCE_FILES})

@@ -152,6 +152,60 @@ __/src/database/DataBase.cpp.s:
 	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.s
 .PHONY : __/src/database/DataBase.cpp.s
 
+__/src/resources/Location.o: __/src/resources/Location.cpp.o
+
+.PHONY : __/src/resources/Location.o
+
+# target to build an object file
+__/src/resources/Location.cpp.o:
+	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o
+.PHONY : __/src/resources/Location.cpp.o
+
+__/src/resources/Location.i: __/src/resources/Location.cpp.i
+
+.PHONY : __/src/resources/Location.i
+
+# target to preprocess a source file
+__/src/resources/Location.cpp.i:
+	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.i
+.PHONY : __/src/resources/Location.cpp.i
+
+__/src/resources/Location.s: __/src/resources/Location.cpp.s
+
+.PHONY : __/src/resources/Location.s
+
+# target to generate assembly for a file
+__/src/resources/Location.cpp.s:
+	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.s
+.PHONY : __/src/resources/Location.cpp.s
+
+__/src/resources/User.o: __/src/resources/User.cpp.o
+
+.PHONY : __/src/resources/User.o
+
+# target to build an object file
+__/src/resources/User.cpp.o:
+	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o
+.PHONY : __/src/resources/User.cpp.o
+
+__/src/resources/User.i: __/src/resources/User.cpp.i
+
+.PHONY : __/src/resources/User.i
+
+# target to preprocess a source file
+__/src/resources/User.cpp.i:
+	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.i
+.PHONY : __/src/resources/User.cpp.i
+
+__/src/resources/User.s: __/src/resources/User.cpp.s
+
+.PHONY : __/src/resources/User.s
+
+# target to generate assembly for a file
+__/src/resources/User.cpp.s:
+	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.s
+.PHONY : __/src/resources/User.cpp.s
+
 __/src/server/Constant.o: __/src/server/Constant.cpp.o
 
 .PHONY : __/src/server/Constant.o
@@ -232,33 +286,6 @@ __/src/server/Controllers/MatchesController.s: __/src/server/Controllers/Matches
 __/src/server/Controllers/MatchesController.cpp.s:
 	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/MatchesController.cpp.s
 .PHONY : __/src/server/Controllers/MatchesController.cpp.s
-
-__/src/server/Controllers/PlusController.o: __/src/server/Controllers/PlusController.cpp.o
-
-.PHONY : __/src/server/Controllers/PlusController.o
-
-# target to build an object file
-__/src/server/Controllers/PlusController.cpp.o:
-	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o
-.PHONY : __/src/server/Controllers/PlusController.cpp.o
-
-__/src/server/Controllers/PlusController.i: __/src/server/Controllers/PlusController.cpp.i
-
-.PHONY : __/src/server/Controllers/PlusController.i
-
-# target to preprocess a source file
-__/src/server/Controllers/PlusController.cpp.i:
-	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.i
-.PHONY : __/src/server/Controllers/PlusController.cpp.i
-
-__/src/server/Controllers/PlusController.s: __/src/server/Controllers/PlusController.cpp.s
-
-.PHONY : __/src/server/Controllers/PlusController.s
-
-# target to generate assembly for a file
-__/src/server/Controllers/PlusController.cpp.s:
-	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.s
-.PHONY : __/src/server/Controllers/PlusController.cpp.s
 
 __/src/server/Controllers/UserController.o: __/src/server/Controllers/UserController.cpp.o
 
@@ -623,6 +650,12 @@ help:
 	@echo "... __/src/database/DataBase.o"
 	@echo "... __/src/database/DataBase.i"
 	@echo "... __/src/database/DataBase.s"
+	@echo "... __/src/resources/Location.o"
+	@echo "... __/src/resources/Location.i"
+	@echo "... __/src/resources/Location.s"
+	@echo "... __/src/resources/User.o"
+	@echo "... __/src/resources/User.i"
+	@echo "... __/src/resources/User.s"
 	@echo "... __/src/server/Constant.o"
 	@echo "... __/src/server/Constant.i"
 	@echo "... __/src/server/Constant.s"
@@ -632,9 +665,6 @@ help:
 	@echo "... __/src/server/Controllers/MatchesController.o"
 	@echo "... __/src/server/Controllers/MatchesController.i"
 	@echo "... __/src/server/Controllers/MatchesController.s"
-	@echo "... __/src/server/Controllers/PlusController.o"
-	@echo "... __/src/server/Controllers/PlusController.i"
-	@echo "... __/src/server/Controllers/PlusController.s"
 	@echo "... __/src/server/Controllers/UserController.o"
 	@echo "... __/src/server/Controllers/UserController.i"
 	@echo "... __/src/server/Controllers/UserController.s"
