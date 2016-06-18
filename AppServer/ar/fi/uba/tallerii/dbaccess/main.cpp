@@ -36,12 +36,16 @@ void clearDatabase(DataBase *database) {
     DataBase db(Constant::database_path);
     database = &db;
     if (database->is_open()) {
+        LOG(INFO) << "Database cleared.";
         std::cout << "Database cleared." << std::endl;
+    } else {
+        std::cout << "Error clearing database." << std::endl;
+        LOG(ERROR) << "Error clearing database.";
     }
 }
 
 int main(int argc, char **args) {
-    google::SetLogDestination(google::GLOG_INFO, "/tmp/tinder.log");
+    google::SetLogDestination(google::GLOG_INFO, "/tmp/dbaccess.log");
     google::SetLogDestination(google::GLOG_ERROR, "");
     google::SetLogDestination(google::GLOG_FATAL, "");
     google::SetLogDestination(google::GLOG_WARNING, "");
