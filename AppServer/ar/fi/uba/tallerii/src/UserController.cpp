@@ -110,8 +110,8 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
     LOG(INFO) << "Updating user info for user: '" << userId<< "'";
     std::string body = this->makeBodyUserInfoForUpdate(requestParser.getBody(), externalUserId);
     if ((userId.compare("") == 0) || (externalUserId.compare("") == 0) || (body.compare("") == 0)) {
-        response.SetCode(400);
-        response.SetBody("Bad Request.");
+        response.SetCode(500);
+        response.SetBody(this->getErrorResponseBody());
     } else {
         std::string url = "http://enigmatic-scrubland-75073.herokuapp.com/users/" + externalUserId;
         LOG(INFO) << "Requesting url: " << url;
@@ -123,9 +123,11 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
         if (!requestResult) {
             LOG(WARNING) << "Error requesting url: '" << url << "' whith body: " << body << ". Response: " << readBuffer;
             response.SetCode(500);
+            response.SetBody(this->getErrorResponseBody());
         } else {
             LOG(INFO) << "Requesting url: '" << url << " ' has respond: " << readBuffer;
             response.SetCode(200);
+            response.SetBody(this->getSucceedResponseBody());
         }
         curlWrapper.clean();
     }
@@ -544,4 +546,10 @@ std::string UserController::getErrorResponseBody() {
     Json::Value errorResponse;
     errorResponse["status_code"] = 500;
     return this->fastWriter.write(errorResponse);
+}
+
+std::string UserController::getSucceedResponseBody() {
+    Json::Value succeedResponse;
+    succeedResponse["status_code"] = 200;
+    return this->fastWriter.write(succeedResponse);
 }

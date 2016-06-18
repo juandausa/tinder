@@ -45,6 +45,7 @@ private:
     void postInterests(const Json::Value root);
     std::string getUserTo(const std::string body);
     std::string getErrorResponseBody();
+    std::string getSucceedResponseBody();
 };
 
 
