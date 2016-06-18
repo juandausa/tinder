@@ -70,3 +70,11 @@ bool RequestParser::isAddLikeRequest() {
 bool RequestParser::isAddDislikeRequest() {
     return (this->uri == "/dislikes" && this->method == "POST");
 }
+
+bool RequestParser::isAddMessagesRequest() {
+    return (this->uri == "/message" && this->method == "POST");
+}
+
+bool RequestParser::isGetMessagesRequest() {
+    return (this->uri == "/message" && this->method == "GET");
+}

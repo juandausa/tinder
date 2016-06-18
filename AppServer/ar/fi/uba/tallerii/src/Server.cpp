@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <MessagesController.h>
 #include "Mongoose.h"
 #include "Server.h"
 #include "PlusController.h"
@@ -38,6 +39,7 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
             DataBase db(Constant::database_path);
             UserService user_service(db);
             MatchesService matches_service(db);
+            MessagesService messages_service(db);
             SecurityManager security(user_service);
             Response response(nc);
             RequestParser requestParser;
@@ -77,6 +79,12 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
             } else if (requestParser.isAddDislikeRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleAddDislike(requestParser, response);
+            } else if (requestParser.isAddMessagesRequest()) {
+                MessagesController messages_controller(messages_service, user_service);
+                messages_controller.handleAddMessage(requestParser, response);
+            } else if (requestParser.isGetMessagesRequest()) {
+                MessagesController messages_controller(messages_service, user_service);
+                messages_controller.handleGetMessages(requestParser, response);
             }
 
             break;

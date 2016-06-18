@@ -29,6 +29,8 @@ public:
     bool isMatchesGetRequest();
     bool isAddLikeRequest();
     bool isAddDislikeRequest();
+    bool isGetMessagesRequest();
+    bool isAddMessagesRequest();
 private:
     std::string uri;
     std::string resourceId;
