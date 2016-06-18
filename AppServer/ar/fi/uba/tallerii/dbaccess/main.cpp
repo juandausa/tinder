@@ -1,13 +1,15 @@
 /* Copyright 2016 FiUBA */
 
+#include "DataBase.h"
+#include "Constant.h"
 #include <unistd.h>
 #include <glog/logging.h>
 #include <iostream>
 #include <ctime>
 #include <fstream>
+#include <cstdlib>
 #include <string>
 #include <vector>
-#include "Server.h"
 
 void printCurrentDir() {
     char cwd[1024];
@@ -25,6 +27,17 @@ std::vector<std::string> convert_parameters(int argc, char **args) {
     }
 
     return parameters;
+}
+
+void clearDatabase(DataBase *database) {
+    database->~DataBase();
+    std::string command = "rm -r " + Constant::database_path + "/*";
+    system(command.c_str());
+    DataBase db(Constant::database_path);
+    database = &db;
+    if (database->is_open()) {
+        std::cout << "Database cleared." << std::endl;
+    }
 }
 
 int main(int argc, char **args) {
@@ -46,12 +59,15 @@ int main(int argc, char **args) {
             std::getline(std::cin, key);
             if (key.compare("exit") == 0) {
                 break;
-            }
-            std::string value;
-            if (db.get(key, &value)) {
-                std::cout << "Value: '" + value + "'" << std::endl;
+            } else if (key.compare("clear") == 0) {
+                clearDatabase(&db);
             } else {
-                std::cout << "Key not found." << std::endl;
+                std::string value;
+                if (db.get(key, &value)) {
+                    std::cout << "Value: '" + value + "'" << std::endl;
+                } else {
+                    std::cout << "Key not found." << std::endl;
+                }
             }
         }
     }
