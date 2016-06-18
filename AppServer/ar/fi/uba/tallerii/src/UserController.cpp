@@ -143,7 +143,7 @@ std::string UserController :: handleGetUserInfo(RequestParser requestParser, Res
     LOG(INFO) << "Retrieving user info for user: '" << userId<< "'";
     if ((userId.compare("") == 0) || (externalUserId.compare("") == 0)) {
         response.SetCode(500);
-        response.SetBody("Bad Request, no userId detected.");
+        response.SetBody(this->getErrorResponseBody());
     } else {
         CurlWrapper curlWrapper = CurlWrapper();
         std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users/" + externalUserId;
@@ -156,7 +156,7 @@ std::string UserController :: handleGetUserInfo(RequestParser requestParser, Res
             response.SetBody(body);
         } else {
             response.SetCode(500);
-            response.SetBody("Bad Request");
+            response.SetBody(this->getErrorResponseBody());
         }
     }
     if (send) {
@@ -186,7 +186,7 @@ void UserController :: handleGetCandidates(RequestParser requestParser, Response
         response.Send();
     } else {
         response.SetCode(400);
-        response.SetBody("{ \"response\": \"DummyUserNotRegistered\" }");
+        response.SetBody("{}");
         response.Send();
         LOG(INFO) << "Show Candidates failed for user: '" << userId<< "'";
     }
