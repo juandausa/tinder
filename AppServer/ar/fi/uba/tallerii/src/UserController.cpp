@@ -62,10 +62,13 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     Json::Value root;
     Json::Value responseShared;
     std::string readBuffer;
+
     bool parsingSuccessful = reader.parse(requestParser.getBody(), root, true);
     if (!parsingSuccessful) {
         std::cout  << "Failed to parse configuration\n";
-        return;
+        response.SetCode(500);
+        response.SetBody(this->getErrorResponseBody());
+        response.Send();
     }
 
     Json::Value event = this->makeBodyForRegistrationPost(root);
@@ -94,7 +97,8 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
         response.Send();
         LOG(INFO) << "Registration succeeded";
     } else {
-        response.SetCode(304);
+        response.SetCode(500);
+        response.SetBody(this->getErrorResponseBody());
         response.Send();
         LOG(INFO) << "Registration failed";
     }
@@ -256,6 +260,7 @@ Json::Value UserController::makeBodyAndTokenForRegistrationResponse(const std::s
     std::string token = this->userService.getSecurityToken(userId);
     event["user"]["userId"] = userId;
     event["user"]["token"] = token;
+    event["status_code"] = 200;
     return event;
 }
 
@@ -533,4 +538,10 @@ void UserController::fillUsersArray(std::unordered_map<string, Json::Value> &use
     for (iter = usersData.begin(); iter != usersData.end(); ++iter) {
         arrayUsers.append((*iter).second);
     }
+}
+
+std::string UserController::getErrorResponseBody() {
+    Json::Value errorResponse;
+    errorResponse["status_code"] = 500;
+    return this->fastWriter.write(errorResponse);
 }
