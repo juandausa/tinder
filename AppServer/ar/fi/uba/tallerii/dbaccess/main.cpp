@@ -40,7 +40,7 @@ int main(int argc, char **args) {
     if (db.is_open()) {
         LOG(INFO) << "The Database is open.";
         std::cout << "The Database is open." << std::endl;
-        std::cout << "Type exit for quit." << std::endl;
+        std::cout << "Type exit to quit." << std::endl;
         while (true) {
             std::string key;
             std::getline(std::cin, key);
@@ -51,7 +51,7 @@ int main(int argc, char **args) {
             if (db.get(key, &value)) {
                 std::cout << "Value: '" + value + "'" << std::endl;
             } else {
-                std::cout << "Key not found.";
+                std::cout << "Key not found." << std::endl;
             }
         }
     }
