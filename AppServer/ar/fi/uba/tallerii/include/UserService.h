@@ -26,6 +26,7 @@ public:
     std::string getExternalUserId(std::string userId);
     std::string getAppUserId(std::string sharedUserId);
     std::vector<std::string> getLikes(const std::string userId);
+    std::string getCountLikes(const std::string userId);
     std::vector<std::string> getDislikes(const std::string userId);
     std::vector<std::string> getMatches(const std::string userId);
     bool addLike(const std::string fromUserId, const std::string toUserId);

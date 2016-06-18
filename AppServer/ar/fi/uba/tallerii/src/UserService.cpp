@@ -116,7 +116,16 @@ bool UserService::addLike(const std::string fromUserId, const std::string toUser
     if (this->database->is_open()) {
         if (!this->hasLike(fromUserId, toUserId)) {
             std::string previousLikes("");
+            std::string countLikes("0");
             this->database->get(Constant::likes_prefix + fromUserId, &previousLikes);
+            if (this->database->get(Constant::count_likes_prefix + toUserId, &countLikes) == false) {
+                this->database->set(Constant::count_likes_prefix + toUserId, countLikes);
+            }else {
+                int count = atoi(countLikes.c_str()) + 1;
+                std::ostringstream countStream;
+                countStream << count;
+                this->database->set(Constant::count_likes_prefix + toUserId, countStream.str());
+            }
             bool result;
             if (previousLikes.length() != 0) {
                 previousLikes += Constant::likes_separator;
@@ -149,6 +158,12 @@ std::vector<std::string> UserService::getLikes(const std::string userId) {
 
     std::vector<std::string> likes;
     return likes;
+}
+
+std::string UserService::getCountLikes(const std::string userId) {
+    std::string countLikes = "0";
+    this->database->get(Constant::count_likes_prefix + userId, &countLikes);
+    return countLikes;
 }
 
 std::vector<std::string> UserService::getMatches(const std::string userId) {
