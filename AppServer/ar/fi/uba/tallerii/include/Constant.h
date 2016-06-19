@@ -26,6 +26,10 @@ public:
     static std::string female;
     static std::string defaultAge;
     static std::string defaultBirthday;
+    static std::string messageComponentDivider;
+    static char messagesSeparator;
+    static std::string messagesPrefix;
+
 private:
     Constant();
 };

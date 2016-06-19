@@ -4,6 +4,7 @@
 
 #include "include/user_service_test.h"
 #include "DataBase.h"
+#include "RemoveDatabase.h"
 
 TEST(UserService, IsUserRegisteredWithNoUsers) {
     DataBase db("/tmp/testuserservicedb");

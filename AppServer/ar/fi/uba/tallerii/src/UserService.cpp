@@ -120,7 +120,7 @@ bool UserService::addLike(const std::string fromUserId, const std::string toUser
             this->database->get(Constant::likes_prefix + fromUserId, &previousLikes);
             if (this->database->get(Constant::count_likes_prefix + toUserId, &countLikes) == false) {
                 this->database->set(Constant::count_likes_prefix + toUserId, countLikes);
-            }else {
+            } else {
                 int count = atoi(countLikes.c_str()) + 1;
                 std::ostringstream countStream;
                 countStream << count;

@@ -62,10 +62,13 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     Json::Value root;
     Json::Value responseShared;
     std::string readBuffer;
+
     bool parsingSuccessful = reader.parse(requestParser.getBody(), root, true);
     if (!parsingSuccessful) {
         std::cout  << "Failed to parse configuration\n";
-        return;
+        response.SetCode(500);
+        response.SetBody(this->getErrorResponseBody());
+        response.Send();
     }
 
     Json::Value event = this->makeBodyForRegistrationPost(root);
@@ -95,7 +98,8 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
         response.Send();
         LOG(INFO) << "Registration succeeded";
     } else {
-        response.SetCode(304);
+        response.SetCode(500);
+        response.SetBody(this->getErrorResponseBody());
         response.Send();
         LOG(INFO) << "Registration failed";
     }
@@ -109,8 +113,8 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
     LOG(INFO) << "Updating user info for user: '" << userId<< "'";
     std::string body = this->makeBodyUserInfoForUpdate(requestParser.getBody(), externalUserId);
     if ((userId.compare("") == 0) || (externalUserId.compare("") == 0) || (body.compare("") == 0)) {
-        response.SetCode(400);
-        response.SetBody("Bad Request.");
+        response.SetCode(500);
+        response.SetBody(this->getErrorResponseBody());
     } else {
         std::string url = "http://enigmatic-scrubland-75073.herokuapp.com/users/" + externalUserId;
         LOG(INFO) << "Requesting url: " << url;
@@ -122,9 +126,11 @@ void UserController :: handleUpdateUserInfo(RequestParser requestParser, Respons
         if (!requestResult) {
             LOG(WARNING) << "Error requesting url: '" << url << "' whith body: " << body << ". Response: " << readBuffer;
             response.SetCode(500);
+            response.SetBody(this->getErrorResponseBody());
         } else {
             LOG(INFO) << "Requesting url: '" << url << " ' has respond: " << readBuffer;
             response.SetCode(200);
+            response.SetBody(this->getSucceedResponseBody());
         }
         curlWrapper.clean();
     }
@@ -140,7 +146,7 @@ std::string UserController :: handleGetUserInfo(RequestParser requestParser, Res
     LOG(INFO) << "Retrieving user info for user: '" << userId<< "'";
     if ((userId.compare("") == 0) || (externalUserId.compare("") == 0)) {
         response.SetCode(500);
-        response.SetBody("Bad Request, no userId detected.");
+        response.SetBody(this->getErrorResponseBody());
     } else {
         CurlWrapper curlWrapper = CurlWrapper();
         std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users/" + externalUserId;
@@ -153,7 +159,7 @@ std::string UserController :: handleGetUserInfo(RequestParser requestParser, Res
             response.SetBody(body);
         } else {
             response.SetCode(500);
-            response.SetBody("Bad Request");
+            response.SetBody(this->getErrorResponseBody());
         }
     }
     if (send) {
@@ -183,7 +189,7 @@ void UserController :: handleGetCandidates(RequestParser requestParser, Response
         response.Send();
     } else {
         response.SetCode(400);
-        response.SetBody("{ \"response\": \"DummyUserNotRegistered\" }");
+        response.SetBody("{}");
         response.Send();
         LOG(INFO) << "Show Candidates failed for user: '" << userId<< "'";
     }
@@ -201,19 +207,20 @@ void UserController::handleAddLike(RequestParser requestParser, Response respons
     LOG(INFO) << "Adding like from user: '" << fromUserId << "' to user: '" << toUserId << "'";
     if ((fromUserId.length() == 0) || (toUserId.length() == 0)) {
         response.SetCode(500);
-        response.SetBody("Bad Request, no fromUserId or toUserId detected.");
+        response.SetBody(this->getErrorResponseBody());
         LOG(WARNING) << "Bad request for addLike. User: '" << fromUserId << "' or user: '" << toUserId << "'";
     } else if ((!userService.isUserRegistered(fromUserId)) || (!userService.isUserRegistered(toUserId))) {
         response.SetCode(500);
-        response.SetBody("Bad Request, fromUserId '" + fromUserId + "' or toUserId '" + toUserId + " is not registered.");
+        response.SetBody(this->getErrorResponseBody());
         LOG(WARNING) << "Error for addLike. User: '" << fromUserId << "' or user: '" << toUserId << "' is not registered";
     } else {
         if (this->userService.addLike(fromUserId, toUserId)) {
             response.SetCode(200);
+            response.SetBody(this->getSucceedResponseBody());
             LOG(INFO) << "Like from user: '" << fromUserId << "' to user: '" << toUserId << "' added";
         } else {
             response.SetCode(500);
-            response.SetBody("Error for addLike, error on save.");
+            response.SetBody(this->getErrorResponseBody());
             LOG(WARNING) << "Error for addLike, error on save. From user: '" << fromUserId << "' to user: '" << toUserId << "'";
         }
     }
@@ -227,19 +234,20 @@ void UserController::handleAddDislike(RequestParser requestParser, Response resp
     LOG(INFO) << "Adding dislike from user: '" << fromUserId << "' to user: '" << toUserId << "'";
     if ((fromUserId.length() == 0) || (toUserId.length() == 0)) {
         response.SetCode(500);
-        response.SetBody("Bad Request, no fromUserId or toUserId detected.");
+        response.SetBody(this->getErrorResponseBody());
         LOG(WARNING) << "Bad request for addDislike. User: '" << fromUserId << "' or user: '" << toUserId << "'";
     } else if ((!userService.isUserRegistered(fromUserId)) || (!userService.isUserRegistered(toUserId))) {
         response.SetCode(500);
-        response.SetBody("Bad Request, fromUserId '" + fromUserId + "' or toUserId '" + toUserId + " is not registered.");
+        response.SetBody(this->getErrorResponseBody());
         LOG(WARNING) << "Error for addDislike. User: '" << fromUserId << "' or user: '" << toUserId << "' is not registered";
     } else {
         if (this->userService.addDislike(fromUserId, toUserId)) {
             response.SetCode(200);
+            response.SetBody(this->getSucceedResponseBody());
             LOG(INFO) << "Dislike from user: '" << fromUserId << "' to user: '" << toUserId << "' added";
         } else {
             response.SetCode(500);
-            response.SetBody("Error for addDislike, error on save.");
+            response.SetBody(this->getErrorResponseBody());
             LOG(WARNING) << "Error for addDislike, error on save. From user: '" << fromUserId << "' to user: '" << toUserId << "'";
         }
     }
@@ -259,6 +267,7 @@ Json::Value UserController::makeBodyAndTokenForRegistrationResponse(const std::s
     std::string token = this->userService.getSecurityToken(userId);
     event["user"]["userId"] = userId;
     event["user"]["token"] = token;
+    event["status_code"] = 200;
     return event;
 }
 
@@ -495,7 +504,7 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
     }
     onePercentRule(usersData, usersLikes);
     fillUsersArray(usersData, arrayUsers);
-    if (arrayUsers.size() != 0){
+    if (arrayUsers.size() != 0) {
         event["candidates"] = arrayUsers;
     }
     return event;
@@ -512,14 +521,14 @@ bool UserController::isInMyArrayOfInterest(Json::Value interest, Json::Value myA
     return false;
 }
 
-void UserController::onePercentRule(std::unordered_map<string, Json::Value> &usersData, std::unordered_map<string, string> &usersLikes){
+void UserController::onePercentRule(std::unordered_map<string, Json::Value> &usersData, std::unordered_map<string, string> &usersLikes) {
     std::unordered_map<string, string>::const_iterator iter;
     std::unordered_map<string, Json::Value>::iterator iterData;
     int max = 0;
     std::string maxUserId = "";
-    for(iter = usersLikes.begin(); iter != usersLikes.end(); ++iter){
-        if (((*iter).second).compare("") != 0){
-            if (atoi(((*iter).second).c_str()) >= max){
+    for (iter = usersLikes.begin(); iter != usersLikes.end(); ++iter) {
+        if (((*iter).second).compare("") != 0) {
+            if (atoi(((*iter).second).c_str()) >= max) {
                 max = atoi(((*iter).second).c_str());
                 maxUserId = (*iter).first;
             }
@@ -531,9 +540,21 @@ void UserController::onePercentRule(std::unordered_map<string, Json::Value> &use
     }
 }
 
-void UserController::fillUsersArray(std::unordered_map<string, Json::Value> &usersData, Json::Value &arrayUsers){
+void UserController::fillUsersArray(std::unordered_map<string, Json::Value> &usersData, Json::Value &arrayUsers) {
     std::unordered_map<string, Json::Value>::const_iterator iter;
-    for(iter = usersData.begin(); iter != usersData.end(); ++iter){
+    for (iter = usersData.begin(); iter != usersData.end(); ++iter) {
         arrayUsers.append((*iter).second);
     }
+}
+
+std::string UserController::getErrorResponseBody() {
+    Json::Value errorResponse;
+    errorResponse["status_code"] = 500;
+    return this->fastWriter.write(errorResponse);
+}
+
+std::string UserController::getSucceedResponseBody() {
+    Json::Value succeedResponse;
+    succeedResponse["status_code"] = 200;
+    return this->fastWriter.write(succeedResponse);
 }

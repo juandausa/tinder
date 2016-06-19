@@ -21,4 +21,5 @@ endforeach(LIB ${NOMBRE_LIBS})
 
 add_subdirectory(ar/fi/uba/tallerii/src)
 add_subdirectory(ar/fi/uba/tallerii/main)
+add_subdirectory(ar/fi/uba/tallerii/dbaccess)
 add_subdirectory(ar/fi/uba/tallerii/test)
