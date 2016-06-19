@@ -43,6 +43,7 @@ public class NewRegisterRequest extends JSONRequest {
     @Override
     public void send(JSONObject json) {
         Log.i(USER, json.toString());
+        Log.i("REGISTER", "REGISTER SENT");
         super.send(json, Constants.REGISTER_PATH);
     }
 
