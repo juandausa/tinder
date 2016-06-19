@@ -103,8 +103,8 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
         response.Send();
         LOG(INFO) << "Registration failed";
     }
-    thread.join();
     std::cout << "Thread Join" << std::endl;
+    thread.detach();
 }
 
 void UserController :: handleUpdateUserInfo(RequestParser requestParser, Response response) {
@@ -352,7 +352,9 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
 void UserController::postInterests(Json::Value root) {
     std::cout << "Posting Interest" << std::endl;
     std::string readBuffer;
-    Json::Value interests = root["user"]["interests"];
+    Json::Value original_interests = root["user"]["interests"];
+    Json::Value interests(original_interests);    
+        
     for (unsigned int i = 0; i < interests.size(); i++) {
         Json::Value postData;
         postData["interest"] = interests[i];
