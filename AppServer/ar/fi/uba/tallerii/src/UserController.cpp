@@ -285,7 +285,7 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
     Json::Value television = root["interests"]["television"];
     Json::Value games = root["interests"]["games"];
     Json::Value books = root["interests"]["books"];
-    std::string discovering_distance = root.get("discovering_distance", "0").asString();
+    std::string discovering_distance = fastWriter.write(root.get("discovering_distance", "0"));
     this->userService.setDiscoveringDistance(appUserId, discovering_distance);
 
     double latitude = root["location"].get("latitude", 0).asDouble();
