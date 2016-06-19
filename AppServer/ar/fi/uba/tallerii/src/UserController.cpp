@@ -6,7 +6,7 @@
 #include <time.h>
 #include <string>
 #include <unordered_map>
-
+#include <thread>
 
 UserController :: UserController(UserService userService) : userService(userService) {
 }
@@ -70,9 +70,10 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
 
     Json::Value event = this->makeBodyForRegistrationPost(root);
     std::string appUserId = root.get("user_id", "").asString();
-
     std::string data = fastWriter.write(event);
-    postInterests(event);
+    //Lanzo thread de posteo de intereses
+    std::thread thread(&UserController::postInterests, this, event);
+
     CurlWrapper curlWrapper = CurlWrapper();
     std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
 //    std::string url = "localhost:5000/users";
@@ -98,6 +99,8 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
         response.Send();
         LOG(INFO) << "Registration failed";
     }
+    thread.join();
+    std::cout << "Thread Join" << std::endl;
 }
 
 void UserController :: handleUpdateUserInfo(RequestParser requestParser, Response response) {
@@ -328,6 +331,7 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
 
 
 void UserController::postInterests(Json::Value root) {
+    std::cout << "Posting Interest" << std::endl;
     std::string readBuffer;
     Json::Value interests = root["user"]["interests"];
     for (unsigned int i = 0; i < interests.size(); i++) {
@@ -336,7 +340,6 @@ void UserController::postInterests(Json::Value root) {
         postData["metadata"]["version"] = "0.1";
         postData["metadata"]["count"] = "1";
         std::string data = fastWriter.write(postData);
-        std::cout << data << std::endl;
         CurlWrapper curlWrapper = CurlWrapper();
         std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/interests";
 //        std::string url = "10.1.86.224:5000/interests";
