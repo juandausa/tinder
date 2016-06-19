@@ -195,11 +195,11 @@ public class SettingsActivity extends AppCompatActivity {
         JSONObject filters = new JSONObject();
         String genderString = "";
         if ((mMenChecked) && (mWomenChecked)) {
-            genderString = "Male,Female";
+            genderString = Constants.DEFAULT_GENDER_INTEREST;
         } else if (mWomenChecked) {
-            genderString = "Female";
+            genderString = Constants.WOMEN_INTEREST;
         } else {
-            genderString = "Male";
+            genderString = Constants.MEN_INTEREST;
         }
         try {
             filters.put(Constants.SHOW_GENDER, genderString);

@@ -164,7 +164,9 @@ public class FacebookProxy {
             interests.put(Constants.TV, getTVShows());
             interests.put(Constants.BOOKS, getBooks());
             interests.put(Constants.GAMES, getGames());
+            interests.put(Constants.GENDER, Constants.DEFAULT_GENDER_INTEREST);
             json.put(Constants.INTERESTS, interests);
+            json.put(Constants.DISCOVERING_DISTANCE, Constants.DEFAULT_DISTANCE);
             json.put(Constants.PHOTO_PROFILE, mProfile.get(Constants.PHOTO_PROFILE));
             if (mLocation != null) {
                 JSONObject location = new JSONObject();

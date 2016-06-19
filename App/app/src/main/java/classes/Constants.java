@@ -11,7 +11,7 @@ public final class Constants {
      * Ip of the server. Used to build paths for requests.
      * Localhost is "http://10.0.2.2:5000";;
      */
-    public static final String IP_SERVER = "http://192.168.0.2:5000"; //"http://192.168.1.108:5000";
+    public static final String IP_SERVER = "http://192.168.1.108:8000"; //"http://192.168.1.108:5000";
 
     /**
      * Route for constructing the url path for the request that checks if the user is registered in
@@ -65,9 +65,9 @@ public final class Constants {
     public static final String DISLIKES_PATH = "/dislikes/";
 
 
-    public static final String GET_MESSAGE = "/message/";
+    public static final String GET_MESSAGE = "/getmessage/";
 
-    public static final String SEND_MESSAGE = "/message/";
+    public static final String SEND_MESSAGE = "/sendmessage/";
 
 
     /**********************************************************************************************/
@@ -216,12 +216,12 @@ public final class Constants {
     /**
      * Name of the "men" field
      */
-    public static final String MEN_INTEREST = "men";
+    public static final String MEN_INTEREST = "male";
 
     /**
      * Name of the "women" field
      */
-    public static final String WOMEN_INTEREST = "women";
+    public static final String WOMEN_INTEREST = "female";
 
     /**
      * Name of field "show_gender" of the json sent in setting request
@@ -232,6 +232,9 @@ public final class Constants {
      * Name of field "discovering_distance" of the json sent in setting request
      */
     public static final String DISCOVERING_DISTANCE = "discovering_distance";
+
+    public static final int DEFAULT_DISTANCE = 10;
+    public static final String DEFAULT_GENDER_INTEREST = "male|female";
 
     /**********************************************************************************************/
     /**********************************************************************************************/

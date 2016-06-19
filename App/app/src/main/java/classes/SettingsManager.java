@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
  */
 public final class SettingsManager {
 
-    private static final int DEFAULT_DISTANCE = 10;
+
 
     /**
      * Private constructor of the class SettingsManager
@@ -41,7 +41,7 @@ public final class SettingsManager {
      */
     public static int getDistance(Context context) {
         SharedPreferences pref = getSettingsPreferences(context);
-        return pref.getInt(Constants.DISTANCE, DEFAULT_DISTANCE);
+        return pref.getInt(Constants.DISTANCE, Constants.DEFAULT_DISTANCE);
     }
 
     /**********************************************************************************************/
@@ -80,7 +80,7 @@ public final class SettingsManager {
      */
     public static void setDefaultValues(Context context) {
         SharedPreferences preferences = getSettingsPreferences(context);
-        preferences.edit().putInt(Constants.DISTANCE, DEFAULT_DISTANCE).apply();
+        preferences.edit().putInt(Constants.DISTANCE, Constants.DEFAULT_DISTANCE).apply();
         preferences.edit().putBoolean(Constants.MEN_INTEREST, true).apply();
         preferences.edit().putBoolean(Constants.WOMEN_INTEREST, true).apply();
     }
