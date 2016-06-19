@@ -34,7 +34,7 @@ public class GetNewMessageRequest extends JSONRequest {
     public GetNewMessageRequest(MatchChatActivity context) {
         super(context);
         mContext = context;
-        mMethod = Request.Method.GET;
+        mMethod = Request.Method.POST;
     }
 
     /**********************************************************************************************/
