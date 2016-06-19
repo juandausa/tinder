@@ -188,7 +188,7 @@ app.post('/likes/:user_id', function(request, response) {
 /*************************************************************************************/
 /*************************************************************************************/
 
-app.post('/message/:user_id', function(request, response) {
+app.post('/sendmessage/:user_id', function(request, response) {
   console.log("Mensaje enviado", request.body.message);
   response.send({status_code:200});
 });
@@ -196,7 +196,7 @@ app.post('/message/:user_id', function(request, response) {
 /*************************************************************************************/
 /*************************************************************************************/
 
-app.get('/message/:user_id', function(request, response) {
+app.post('/getmessage/:user_id', function(request, response) {
   console.log("Mensaje recibido");
   response.send({message:"hola"});
 });
