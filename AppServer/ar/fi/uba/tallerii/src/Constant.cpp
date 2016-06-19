@@ -24,3 +24,4 @@ std::string Constant :: defaultBirthday = "01/01/1970";
 std::string Constant :: messageComponentDivider = "N_N";
 char Constant :: messagesSeparator = ';';
 std::string Constant :: messagesPrefix = "messages-";
+std::string Constant :: distancePrefix = "distance-";

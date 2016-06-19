@@ -29,6 +29,7 @@ public:
     static std::string messageComponentDivider;
     static char messagesSeparator;
     static std::string messagesPrefix;
+    static std::string distancePrefix;
 
 private:
     Constant();

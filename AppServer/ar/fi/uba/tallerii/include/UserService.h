@@ -34,6 +34,7 @@ public:
     bool addDislike(const std::string fromUserId, const std::string toUserId);
     bool hasDislike(const std::string fromUserId, const std::string toUserId);
     bool hasMatch(const std::string fromUserId, const std::string toUserId);
+    bool setDiscoveringDistance(const std::string appUserId, const std::string discoveringDistance);
 
 private:
     DataBase* database;
