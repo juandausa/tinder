@@ -6,12 +6,9 @@
 #define TINDER_SEVER_H
 #include <vector>
 #include <cstring>
-#include <glog/logging.h>
 #include <signal.h>
 #include <iostream>
-#include "RequestParser.h"
-#include "UserController.h"
-#include "FilterController.h"
+#include "Request.h"
 #include "Constant.h"
 #include "SecurityManager.h"
 #include "Mongoose.h"

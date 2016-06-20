@@ -49,15 +49,48 @@ void Log::printLog(const char msj[], const std::string level){
     if (level == Log::INFO){
         std::cout << "INFO: " << this->msj << std::endl;
     } else if (level == Log::ERROR) {
-        std::cout << "ERROR: " << this->msj << std::endl;
+        std::cerr << "ERROR: " << this->msj << std::endl;
     } else if (level == Log::WARNING) {
         std::cout << "WARNING: " << this->msj << std::endl;
     } else if (level == Log::FATAL) {
-        std::cout << "FATAL: " << this->msj << std::endl;
+        std::cerr << "FATAL: " << this->msj << std::endl;
     }
 }
 
 void Log::writeAndPrintLog(const char msj[], const std::string level){
+    this->printLog(msj,level);
+    this->writeLog(msj,level);
+}
+
+
+
+void Log::writeLog(const std::string msj, const std::string level){
+    this->msj = msj;
+    if (level == Log::INFO){
+        LOG(INFO) << this->msj;
+    } else if (level == Log::ERROR) {
+        LOG(ERROR) << this->msj;
+    } else if (level == Log::WARNING) {
+        LOG(WARNING) << this->msj;
+    } else if (level == Log::FATAL) {
+        LOG(FATAL) << this->msj;
+    } 
+}
+
+void Log::printLog(const std::string msj, const std::string level){
+    this->msj = msj;
+    if (level == Log::INFO){
+        std::cout << "INFO: " << this->msj << std::endl;
+    } else if (level == Log::ERROR) {
+        std::cerr << "ERROR: " << this->msj << std::endl;
+    } else if (level == Log::WARNING) {
+        std::cout << "WARNING: " << this->msj << std::endl;
+    } else if (level == Log::FATAL) {
+        std::cerr << "FATAL: " << this->msj << std::endl;
+    }
+}
+
+void Log::writeAndPrintLog(const std::string msj, const std::string level){
     this->printLog(msj,level);
     this->writeLog(msj,level);
 }

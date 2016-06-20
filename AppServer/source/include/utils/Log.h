@@ -21,7 +21,10 @@ public:
     void init(char *executableName);
     void writeAndPrintLog(const char msj[], const std::string level);
     void writeLog(const char msj[], const std::string level);
-    void printLog(const char msj[], const std::string level);
+    void printLog(const char msj[], const std::string level);    
+    void writeAndPrintLog(const std::string, const std::string level);
+    void writeLog(const std::string, const std::string level);
+    void printLog(const std::string, const std::string level);
     ~Log();
 private:
     Log();  // Private so that it can  not be called

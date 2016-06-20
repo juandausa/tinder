@@ -1,4 +1,4 @@
-# Install script for directory: /home/agu/Repositorios/AppServer/AppServer/source/src
+# Install script for directory: /home/agu/Repositorios/AppServerRefactor/AppServer/source/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

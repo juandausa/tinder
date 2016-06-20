@@ -9,8 +9,8 @@ MatchesController ::MatchesController(MatchesService matches_service, UserServic
         matchesService(matches_service), userService(user_service) {
 }
 
-void MatchesController :: handleGetCandidates(RequestParser requestParser, Response response) {
-//    std::string userId = requestParser.getResourceId();
+void MatchesController :: handleGetCandidates(Request Request, Response response) {
+//    std::string userId = Request.getResourceId();
 //    LOG(INFO) << "Proccesing show candidates for user: '" << userId << "'";
 //    if (this->userService.isUserRegistered(userId)) {
 //        response.SetCode(200);

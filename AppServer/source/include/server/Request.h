@@ -2,22 +2,38 @@
 // Created by agu on 27/04/16.
 //
 
-#ifndef TINDER_REQUESTPARSER_H
-#define TINDER_REQUESTPARSER_H
+#ifndef TINDER_REQUEST_H
+#define TINDER_REQUEST_H
 
 #include "Mongoose.h"
 #include <iostream>
 #include <vector>
 #include <string>
 #include <sstream>
+#include "Response.h"
+#include "GenericController.h"
 
-class RequestParser {
+class GenericController;
+class Request {
 public:
+    Request(Response &response);
+    ~Request();
     void parse(struct http_message *hm);
     std::string getUrl();
     std::string getResourceId();
     std::string getMethod();
     std::string getBody();
+    
+    void handleOperation();
+    void execute();
+
+private:
+    Response response;
+    std::string uri;
+    std::string resourceId;
+    std::string method;
+    std::string body;
+    GenericController *genericController;
 
     bool isUserLoginRequest();
     bool isUserRegisterRequest();
@@ -29,12 +45,7 @@ public:
     bool isMatchesGetRequest();
     bool isAddLikeRequest();
     bool isAddDislikeRequest();
-private:
-    std::string uri;
-    std::string resourceId;
-    std::string method;
-    std::string body;
 };
 
 
-#endif //TINDER_REQUESTPARSER_H
+#endif //TINDER_REQUEST_H
