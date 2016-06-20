@@ -14,6 +14,7 @@
 #include "MD5.h"
 #include "RandomTextGenerator.h"
 #include "Constant.h"
+#include <jsoncpp/json/json.h>
 
 class UserService {
 public:
@@ -34,9 +35,14 @@ public:
     bool addDislike(const std::string fromUserId, const std::string toUserId);
     bool hasDislike(const std::string fromUserId, const std::string toUserId);
     bool hasMatch(const std::string fromUserId, const std::string toUserId);
+    virtual bool update_filters(const std::string user_id, const std::string filters);
     bool setDiscoveringDistance(const std::string appUserId, const std::string discoveringDistance);
+    bool setShowGender(const std::string appUserId, const std::string showGender);
+    std::string getDiscoveringDistance(const std::string appUserId);
+    std::string getShowGender(const std::string appUserId);
 
 private:
+    Json::Reader reader;
     DataBase* database;
     bool addMatch(const std::string fromUserId, const std::string toUserId);
 };

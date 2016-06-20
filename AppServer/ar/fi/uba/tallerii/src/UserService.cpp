@@ -5,6 +5,7 @@
 #include "UserService.h"
 #include <string>
 #include <vector>
+#include <jsoncpp/json/json.h>
 
 UserService::UserService(DataBase &db) : database(&db) {
 }
@@ -40,13 +41,6 @@ bool UserService::isUserRegistered(const std::string userId) {
 bool UserService::registerUser(const std::string appUserId, const std::string sharedUserId) {
     if (this->database->is_open()) {
         return this->database->set(appUserId, sharedUserId) && this->database->set(sharedUserId, appUserId);
-    }
-    return false;
-}
-
-bool UserService::setDiscoveringDistance(const std::string appUserId, const std::string discoveringDistance){
-    if (this->database->is_open()) {
-        return this->database->set(Constant::distancePrefix + appUserId, discoveringDistance);
     }
     return false;
 }
@@ -252,6 +246,61 @@ bool UserService::hasDislike(const std::string fromUserId, const std::string toU
     }
 
     return false;
+}
+
+bool UserService::setDiscoveringDistance(const std::string appUserId, const std::string discoveringDistance){
+    if (this->database->is_open()) {
+        return this->database->set(Constant::distancePrefix + appUserId, discoveringDistance);
+    }
+    return false;
+}
+
+bool UserService::setShowGender(const std::string appUserId, const std::string showGender){
+    if (this->database->is_open()) {
+        return this->database->set(Constant::showGenderPrefix + appUserId, showGender);
+    }
+    return false;
+}
+
+bool UserService :: update_filters(const std::string user_id, const std::string filters) {
+    Json::Value body;
+    reader.parse(filters, body, true);
+    std::string showGender = body.get("show_gender", "").asString();
+    std::string discoveringDistance = body.get("discovering_distance", "").asString();
+    if (this->database->is_open()) {
+        return (this->database->set(Constant::distancePrefix + user_id, discoveringDistance)) &&
+               (this->database->set(Constant::showGenderPrefix + user_id, showGender));
+    }
+    LOG(WARNING) << "The database is closed";
+    return false;
+}
+
+std::string UserService :: getShowGender(const std::string appUserId) {
+    std::string showGender = "";
+    if (!this->database->is_open()) {
+        LOG(WARNING) << "The database is closed";
+        return "";
+    }
+
+    if (!this->database->get(Constant::showGenderPrefix + appUserId, &showGender)){
+        LOG(WARNING) << "Filters for user: '" << appUserId << "' were not found.";
+        return "";
+    }
+    return showGender;
+}
+
+std::string UserService :: getDiscoveringDistance(const std::string appUserId) {
+    std::string discoveringDistance = "";
+    if (!this->database->is_open()) {
+        LOG(WARNING) << "The database is closed";
+        return "";
+    }
+
+    if (!this->database->get(Constant::distancePrefix + appUserId, &discoveringDistance)){
+        LOG(WARNING) << "Filters for user: '" << appUserId << "' were not found.";
+        return "0";
+    }
+    return discoveringDistance;
 }
 
 UserService::~UserService() {

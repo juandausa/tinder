@@ -12,13 +12,11 @@
 #include "Server.h"
 #include "PlusController.h"
 #include "UserController.h"
-#include "FilterController.h"
 #include "MatchesController.h"
 #include "Response.h"
 #include "DataBase.h"
 #include "Constant.h"
 #include "UserService.h"
-#include "FilterService.h"
 #include "MatchesService.h"
 #include "SecurityManager.h"
 
@@ -63,16 +61,15 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 UserController user_controller(user_service);
                 user_controller.handleUpdateUserInfo(requestParser, response);
             } else if (requestParser.isFiltersPostRequest()) {
-                FilterService filter_service(db);
-                FilterController filter_controller(filter_service);
-                filter_controller.handle_update_filters(requestParser, response);
+                UserController user_controller(user_service);
+                user_controller.handle_update_filters(requestParser, response);
             } else if (requestParser.isMatchesGetRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleGetMatches(requestParser, response);
             } else if (requestParser.isFiltersGetRequest()) {
-                FilterService filter_service(db);
-                FilterController filter_controller(filter_service);
-                filter_controller.handle_get_filters(requestParser, response);
+//                FilterService filter_service(db);
+//                FilterController filter_controller(filter_service);
+//                filter_controller.handle_get_filters(requestParser, response);
             } else if (requestParser.isAddLikeRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleAddLike(requestParser, response);

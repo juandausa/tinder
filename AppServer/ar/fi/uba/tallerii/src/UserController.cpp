@@ -182,7 +182,7 @@ void UserController :: handleGetCandidates(RequestParser requestParser, Response
         std::string myGender = fastWriter.write(rootShared.get("gender", "male"));
         myGender = myGender.substr(1, myGender.size()-3);
         myArrayOfInterests = rootShared.get("interests", "");
-        std::string genderOfMyInterest = genderOfMyPreference(myArrayOfInterests);
+        std::string genderOfMyInterest = this->userService.getShowGender(userId);
         Json::Value body = makeBodyForShowCandidatesResponse(rootShared, myGender, genderOfMyInterest, myArrayOfInterests);
         std::string sendBody = fastWriter.write(body);
         if (sendBody.compare("null\n") == 0){
@@ -291,6 +291,7 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
     Json::Value books = root["interests"]["books"];
     std::string discovering_distance = fastWriter.write(root.get("discovering_distance", "0"));
     this->userService.setDiscoveringDistance(appUserId, discovering_distance);
+    this->userService.setShowGender(appUserId, "male|female");
 
     double latitude = root["location"].get("latitude", 0).asDouble();
     double longitude = root["location"].get("longitude", 0).asDouble();
@@ -496,7 +497,12 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
             Json::Value arrayInterests;
             std::string sharedUserId = fastWriter.write(users[i]["user"].get("id", ""));
             sharedUserId = sharedUserId.substr(0, sharedUserId.size()-1);
-            user["user_id"] = this->userService.getAppUserId(sharedUserId);
+            std::string appUserId = this->userService.getAppUserId(sharedUserId);
+            user["user_id"] = appUserId;
+            genderOfTheirInterest = this->userService.getShowGender(appUserId);
+            if (genderOfTheirInterest.compare(myGender) != 0){
+                continue;
+            }
             user["alias"] = users[i]["user"].get("alias", "");
             std::string birthday = validateTimeOrReturnDefault(users[i]["user"].get("birthday", "").asString());
             user["birthday"] = birthday;
@@ -511,12 +517,6 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
 //            }
 //            std::cout << "INTERESES:" << fastWriter.write(interests);
             for (unsigned int j = 0; j < interests.size(); j++) {
-                if ((fastWriter.write(interests[j]["category"])).compare("gender") == 0){
-                    genderOfTheirInterest = fastWriter.write(interests[j]["value"]);
-                    if (genderOfTheirInterest.compare(myGender) != 0){
-                        break;
-                    }
-                }
                 arrayInterests.append(interests[j]["value"]);
                 if (isInMyArrayOfInterest(interests[j]["value"], myArrayOfInterests)) {
                     interestInCommon++;
@@ -548,25 +548,25 @@ bool UserController::isInMyArrayOfInterest(Json::Value interest, Json::Value myA
     return false;
 }
 
-std::string UserController::genderOfMyPreference(Json::Value myArrayOfInterests) {
-    bool male = false;
-    bool female = false;
-    for (unsigned int i = 0; i < myArrayOfInterests.size(); i++) {
-        if ((fastWriter.write(myArrayOfInterests[i])).compare("male")) {
-            male = true;
-        }
-        if ((fastWriter.write(myArrayOfInterests[i])).compare("female")) {
-            female = true;
-        }
-    }
-    if (male && female){
-        return "male|female";
-    }else if (female){
-        return "female";
-    }else{
-        return "male";
-    }
-}
+//std::string UserController::genderOfMyPreference(Json::Value myArrayOfInterests) {
+//    bool male = false;
+//    bool female = false;
+//    for (unsigned int i = 0; i < myArrayOfInterests.size(); i++) {
+//        if ((fastWriter.write(myArrayOfInterests[i])).compare("male") == 0) {
+//            male = true;
+//        }
+//        if ((fastWriter.write(myArrayOfInterests[i])).compare("female") == 0) {
+//            female = true;
+//        }
+//    }
+//    if (male && female){
+//        return "male|female";
+//    }else if (female){
+//        return "female";
+//    }else{
+//        return "male";
+//    }
+//}
 
 void UserController::onePercentRule(std::unordered_map<string, Json::Value> &usersData, std::unordered_map<string, string> &usersLikes) {
     if (usersData.size() <= 1){
@@ -608,3 +608,25 @@ std::string UserController::getSucceedResponseBody() {
     succeedResponse["status_code"] = 200;
     return this->fastWriter.write(succeedResponse);
 }
+
+void UserController::handle_update_filters(RequestParser requestParser, Response response) {
+    std::string userId = requestParser.getResourceId();
+    std::string body = requestParser.getBody();
+    Json::Value root;
+    Json::Reader reader;
+    bool parsingSuccessful = reader.parse(body, root, true);
+    if (!parsingSuccessful) {
+        response.SetCode(500);
+        response.SetBody(this->getErrorResponseBody());
+    } else {
+        if (this->userService.update_filters(userId, body)) {
+            response.SetCode(200);
+            response.SetBody(this->getSucceedResponseBody());
+        } else {
+            response.SetCode(500);
+            response.SetBody(this->getErrorResponseBody());
+        }
+    }
+    response.Send();
+}
+

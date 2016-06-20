@@ -12,7 +12,6 @@
 #include "RequestParser.h"
 #include "PlusController.h"
 #include "UserController.h"
-#include "FilterController.h"
 #include "Constant.h"
 #include "SecurityManager.h"
 #include "Mongoose.h"

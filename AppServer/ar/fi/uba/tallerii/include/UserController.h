@@ -27,6 +27,7 @@ public:
     virtual void handleGetMatches(RequestParser requestParser, Response response);
     virtual void handleAddLike(RequestParser requestParser, Response response);
     virtual void handleAddDislike(RequestParser requestParser, Response response);
+    virtual void handle_update_filters(RequestParser requestParser, Response response);
     virtual void onePercentRule(std::unordered_map<string, Json::Value> &usersData, std::unordered_map<string, string> &usersLikes);
     virtual void fillUsersArray(std::unordered_map<string, Json::Value> &usersData, Json::Value &arrayUsers);
 
