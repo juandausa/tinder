@@ -27,7 +27,7 @@ void MessagesController::handleAddMessage(RequestParser requestParser, Response 
     Message message = this->getMessageFromRequest(requestParser);
     std::string sender = message.getSender();
     std::string reciever = message.getReciever();
-    /*if ((sender.length() == 0) || (reciever.length() == 0)) {
+    if ((sender.length() == 0) || (reciever.length() == 0)) {
         response.SetCode(500);
         response.SetBody(this->getErrorResponseBody());
         LOG(WARNING) << "Bad Request, no sender or reciever detected. Sender: '" << sender << "' or reciever: '" <<
@@ -37,7 +37,7 @@ void MessagesController::handleAddMessage(RequestParser requestParser, Response 
         response.SetBody(this->getErrorResponseBody());
         LOG(WARNING) << "Error for addMessage. User: '" << sender << "' or user: '" << reciever <<
         "' is not registered";
-    } else {*/
+    } else {
         if (this->messagesService.addMessage(message)) {
             response.SetCode(200);
             response.SetBody(this->getSucceedResponseBody());
@@ -48,7 +48,7 @@ void MessagesController::handleAddMessage(RequestParser requestParser, Response 
             LOG(WARNING) << "Error for addMessage, error on save. From user: '" << sender << "' to user: '" <<
             reciever << "'";
         }
-    //}
+    }
 
     response.Send();
 }
@@ -58,7 +58,7 @@ void MessagesController::handleGetMessage(RequestParser requestParser, Response 
     Message message = this->getMessageFromRequest(requestParser);
     std::string sender = message.getSender();
     std::string reciever = message.getReciever();
-    /*if ((sender.length() == 0) || (reciever.length() == 0)) {
+    if ((sender.length() == 0) || (reciever.length() == 0)) {
         response.SetCode(500);
         response.SetBody(this->getErrorResponseBody());
         LOG(WARNING) << "Bad Request, no sender or reciever detected. Sender: '" << sender << "' or reciever: '" <<
@@ -68,7 +68,7 @@ void MessagesController::handleGetMessage(RequestParser requestParser, Response 
         response.SetBody(this->getErrorResponseBody());
         LOG(WARNING) << "Error for getMessage. User: '" << sender << "' or user: '" << reciever <<
         "' is not registered";
-    } else {*/
+    } else {
         Message lastMessage = this->messagesService.getLastMessage(sender, reciever);
         if (lastMessage.getContent().length() == 0) {
             response.SetCode(200);
@@ -80,7 +80,7 @@ void MessagesController::handleGetMessage(RequestParser requestParser, Response 
             LOG(WARNING) << "Error for getMessage, error on load. From user: '" << sender << "' to user: '" <<
             reciever << "'";
         }
-    //}
+    }
 
     response.Send();
 }

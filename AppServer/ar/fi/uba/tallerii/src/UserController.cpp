@@ -592,4 +592,3 @@ void UserController::handle_update_filters(RequestParser requestParser, Response
     }
     response.Send();
 }
-
