@@ -161,7 +161,7 @@ void UserController :: handleGetCandidates(RequestParser requestParser, Response
         if (!parsingSuccessful) {
             std::cout << "Error parsing result" << std::endl;
         }
-        std::string myGender = fastWriter.write(rootShared.get("gender", "male"));
+        std::string myGender = fastWriter.write(rootShared.get("sex", Constant::male));
         myGender = myGender.substr(1, myGender.size()-3);
         myArrayOfInterests = rootShared.get("interests", "");
         std::string genderOfMyInterest = this->userService.getShowGender(userId);
@@ -281,7 +281,8 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
     user["alias"] = alias;
     user["email"] = email;
     user["birthday"] = birthday;
-    user["gender"] = gender;
+    user["age"] = Converter::calculateAge(birthday);
+    user["sex"] = gender;
     user["photo_profile"] = photo_profile;
     user["location"]["latitude"] = latitude;
     user["location"]["longitude"] = longitude;
@@ -410,7 +411,7 @@ std::string UserController :: makeBodyForUserInfoResponse(const std::string appU
     std::string birthday = Converter::validateTimeOrReturnDefault(rootShared["user"].get("birthday", "").asString());
     rootApp["birthday"] = birthday;
     rootApp["age"] = Converter::calculateAge(birthday);
-    rootApp["gender"] = rootShared["user"].get("gender", "male");
+    rootApp["gender"] = rootShared["user"].get("sex", Constant::male);
     rootApp["photo_profile"] = rootShared["user"].get("photo_profile", "");
     Json::Value interests = rootShared["user"].get("interests", "");
     for (unsigned int j = 0; j < interests.size(); j++) {
