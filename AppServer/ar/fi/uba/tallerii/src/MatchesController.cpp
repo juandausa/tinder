@@ -22,7 +22,7 @@ void MatchesController::handleGetMatches(RequestParser requestParser, Response r
         response.SetCode(500);
         response.SetBody(this->getErrorResponseBody());
         response.Send();
-        LOG(INFO) << "Show Candidates has returned no users for user: '" << userId<< "'";
+        LOG(INFO) << "Show matches has returned no users for user: '" << userId<< "'";
         return;
     }
 }
