@@ -74,7 +74,7 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     Json::Value event = this->makeBodyForRegistrationPost(root);
     std::string appUserId = root.get("user_id", "").asString();
     std::string data = fastWriter.write(event);
-    //Lanzo thread de posteo de intereses
+    // Lanzo thread de posteo de intereses
     std::thread thread(&UserController::postInterests, this, event);
 
     CurlWrapper curlWrapper = CurlWrapper();
@@ -185,7 +185,7 @@ void UserController :: handleGetCandidates(RequestParser requestParser, Response
         std::string genderOfMyInterest = genderOfMyPreference(myArrayOfInterests);
         Json::Value body = makeBodyForShowCandidatesResponse(rootShared, myGender, genderOfMyInterest, myArrayOfInterests);
         std::string sendBody = fastWriter.write(body);
-        if (sendBody.compare("null\n") == 0){
+        if (sendBody.compare("null\n") == 0) {
             sendBody = "{}";
         }
         response.SetCode(200);
@@ -378,7 +378,6 @@ void UserController::postInterests(Json::Value root) {
         }
         curlWrapper.clean();
     }
-
 }
 
 std::string UserController::fakeResponseForUserMatches() {
@@ -511,9 +510,9 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
 //            }
 //            std::cout << "INTERESES:" << fastWriter.write(interests);
             for (unsigned int j = 0; j < interests.size(); j++) {
-                if ((fastWriter.write(interests[j]["category"])).compare("gender") == 0){
+                if ((fastWriter.write(interests[j]["category"])).compare("gender") == 0) {
                     genderOfTheirInterest = fastWriter.write(interests[j]["value"]);
-                    if (genderOfTheirInterest.compare(myGender) != 0){
+                    if (genderOfTheirInterest.compare(myGender) != 0) {
                         break;
                     }
                 }
@@ -559,17 +558,17 @@ std::string UserController::genderOfMyPreference(Json::Value myArrayOfInterests)
             female = true;
         }
     }
-    if (male && female){
+    if (male && female) {
         return "male|female";
-    }else if (female){
+    } else if (female) {
         return "female";
-    }else{
+    } else {
         return "male";
     }
 }
 
 void UserController::onePercentRule(std::unordered_map<string, Json::Value> &usersData, std::unordered_map<string, string> &usersLikes) {
-    if (usersData.size() <= 1){
+    if (usersData.size() <= 1) {
         return;
     }
     std::unordered_map<string, string>::const_iterator iter;

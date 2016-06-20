@@ -97,7 +97,7 @@ Message MessagesService::getLastMessage(std::string sender, std::string reciever
         std::string lastMessages;
         for (size_t i = 0; i < messageCollection.size(); i++) {
             lastMessages.append(messageCollection[i].toString());
-            if ( i + 1 != messageCollection.size()) {
+            if (i + 1 != messageCollection.size()) {
                 lastMessages += Constant::messagesSeparator;
             }
         }
