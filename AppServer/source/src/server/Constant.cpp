@@ -21,3 +21,7 @@ std::string Constant :: female = "female";
 std::string Constant :: defaultAge = "0";
 std::string Constant :: defaultBirthday = "01/01/1970";
 int Constant::DB_ERROR = 666;
+std::string Constant::GLOG_INFO_PATH = "/tmp/tinder_info.log";
+std::string Constant::GLOG_ERROR_PATH = "/tmp/tinder_error.log";
+std::string Constant::GLOG_FATAL_PATH = "/tmp/tinder_fatal.log";
+std::string Constant::GLOG_WARNING_PATH = "/tmp/tinder_warning.log";

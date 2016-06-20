@@ -557,6 +557,33 @@ __/src/utils/CurlWrapper.cpp.s:
 	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.s
 .PHONY : __/src/utils/CurlWrapper.cpp.s
 
+__/src/utils/Log.o: __/src/utils/Log.cpp.o
+
+.PHONY : __/src/utils/Log.o
+
+# target to build an object file
+__/src/utils/Log.cpp.o:
+	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Log.cpp.o
+.PHONY : __/src/utils/Log.cpp.o
+
+__/src/utils/Log.i: __/src/utils/Log.cpp.i
+
+.PHONY : __/src/utils/Log.i
+
+# target to preprocess a source file
+__/src/utils/Log.cpp.i:
+	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Log.cpp.i
+.PHONY : __/src/utils/Log.cpp.i
+
+__/src/utils/Log.s: __/src/utils/Log.cpp.s
+
+.PHONY : __/src/utils/Log.s
+
+# target to generate assembly for a file
+__/src/utils/Log.cpp.s:
+	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Log.cpp.s
+.PHONY : __/src/utils/Log.cpp.s
+
 __/src/utils/MD5.o: __/src/utils/MD5.cpp.o
 
 .PHONY : __/src/utils/MD5.o
@@ -695,6 +722,9 @@ help:
 	@echo "... __/src/utils/CurlWrapper.o"
 	@echo "... __/src/utils/CurlWrapper.i"
 	@echo "... __/src/utils/CurlWrapper.s"
+	@echo "... __/src/utils/Log.o"
+	@echo "... __/src/utils/Log.i"
+	@echo "... __/src/utils/Log.s"
 	@echo "... __/src/utils/MD5.o"
 	@echo "... __/src/utils/MD5.i"
 	@echo "... __/src/utils/MD5.s"

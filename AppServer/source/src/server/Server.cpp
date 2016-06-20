@@ -104,15 +104,7 @@ void Server :: start() {
         exit(1);
     }
 
-// #ifdef MG_ENABLE_SSL
-//     if (ssl_cert != NULL) {
-//     const char *err_str = mg_set_ssl(nc, ssl_cert, NULL);
-//     if (err_str != NULL) {
-//       fprintf(stderr, "Error loading SSL cert: %s\n", err_str);
-//       exit(1);
-//     }
-//   }
-// #endif
+
 
     mg_set_protocol_http_websocket(nc);
     s_http_server_opts.document_root = ".";

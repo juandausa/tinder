@@ -1,7 +1,6 @@
 /* Copyright 2016 FiUBA */
 
 #include <unistd.h>
-#include <glog/logging.h>
 #include <iostream>
 #include <ctime>
 #include <fstream>
@@ -9,6 +8,7 @@
 #include <vector>
 #include "Server.h"
 #include "DataBase.h"
+#include "Log.h"
 
 void printCurrentDir() {
     char cwd[1024];
@@ -28,24 +28,30 @@ std::vector<std::string> convert_parameters(int argc, char** args) {
     return parameters;
 }
 
+void initLog(char** args){
+    
+}
+
 int main(int argc, char** args) {
-    google::SetLogDestination(google::GLOG_INFO, "/tmp/tinder.log");
-    google::SetLogDestination(google::GLOG_ERROR, "");
-    google::SetLogDestination(google::GLOG_FATAL, "");
-    google::SetLogDestination(google::GLOG_WARNING, "");
-    google::InitGoogleLogging(args[0]);
     DataBase* db = DataBase::getInstance();
+    Log* log = Log::getInstance();
+    log->init(args[0]);
+    
     if (!db->open(Constant::database_path)){
-        LOG(INFO) << "Open db error";
+        log->writeAndPrintLog("Open db error.", Log::FATAL);
         return Constant::DB_ERROR;
     }
-    LOG(INFO) << "App Server started.";
+    
+    log->writeAndPrintLog("App Server started.",Log::INFO);
     printCurrentDir();
+    
     Server tinderServer(convert_parameters(argc, args));
     tinderServer.start();
-    delete(db);
-    LOG(INFO) << "App Server finished.";
-    google::ShutdownGoogleLogging();
+
+    log->writeAndPrintLog("App Server finished.",Log::INFO);
+    delete db;
+    delete log;
+    
     return 0;
 }
 

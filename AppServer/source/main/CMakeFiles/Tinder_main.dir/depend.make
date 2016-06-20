@@ -108,6 +108,10 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/UserService.cpp.o:
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o: source/src/utils/CurlWrapper.cpp
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o: source/include/utils/CurlWrapper.h
 
+source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Log.cpp.o: source/src/utils/Log.cpp
+source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Log.cpp.o: source/include/server/Constant.h
+source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Log.cpp.o: source/include/utils/Log.h
+
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o: source/src/utils/MD5.cpp
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o: source/include/utils/MD5.h
 
@@ -127,6 +131,7 @@ source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/server/Service
 source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/server/Services/FilterService.h
 source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/server/Services/UserService.h
 source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/utils/CurlWrapper.h
+source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/utils/Log.h
 source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/utils/MD5.h
 source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/utils/Mongoose.h
 source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/utils/RandomTextGenerator.h

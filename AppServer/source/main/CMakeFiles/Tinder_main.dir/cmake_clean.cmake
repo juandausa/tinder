@@ -16,6 +16,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o"
   "CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o"
   "CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o"
+  "CMakeFiles/Tinder_main.dir/__/src/utils/Log.cpp.o"
   "CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o"
   "CMakeFiles/Tinder_main.dir/__/src/utils/Mongoose.cpp.o"
   "Tinder_main.pdb"

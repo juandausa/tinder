@@ -20,6 +20,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/agu/Repositorios/AppServer/AppServer/source/src/server/Services/MatchesService.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/MatchesService.cpp.o"
   "/home/agu/Repositorios/AppServer/AppServer/source/src/server/Services/UserService.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/UserService.cpp.o"
   "/home/agu/Repositorios/AppServer/AppServer/source/src/utils/CurlWrapper.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/main/CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o"
+  "/home/agu/Repositorios/AppServer/AppServer/source/src/utils/Log.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Log.cpp.o"
   "/home/agu/Repositorios/AppServer/AppServer/source/src/utils/MD5.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/main/CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o"
   "/home/agu/Repositorios/AppServer/AppServer/source/src/utils/Mongoose.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Mongoose.cpp.o"
   "/home/agu/Repositorios/AppServer/AppServer/source/main/main.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/main/CMakeFiles/Tinder_main.dir/main.cpp.o"

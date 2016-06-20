@@ -26,6 +26,10 @@ public:
     static std::string defaultAge;
     static std::string defaultBirthday;
     static int DB_ERROR;
+    static std::string GLOG_INFO_PATH;
+    static std::string GLOG_ERROR_PATH;
+    static std::string GLOG_FATAL_PATH;
+    static std::string GLOG_WARNING_PATH;
 private:
     Constant();
 };

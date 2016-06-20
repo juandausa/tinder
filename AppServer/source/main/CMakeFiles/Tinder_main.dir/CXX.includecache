@@ -9,8 +9,6 @@
 /home/agu/Repositorios/AppServer/AppServer/source/main/main.cpp
 unistd.h
 -
-glog/logging.h
--
 iostream
 -
 ctime
@@ -25,6 +23,8 @@ Server.h
 /home/agu/Repositorios/AppServer/AppServer/source/main/Server.h
 DataBase.h
 /home/agu/Repositorios/AppServer/AppServer/source/main/DataBase.h
+Log.h
+/home/agu/Repositorios/AppServer/AppServer/source/main/Log.h
 
 /home/agu/Repositorios/AppServer/AppServer/source/src/database/DataBase.cpp
 string
@@ -185,6 +185,14 @@ string
 -
 iostream
 -
+
+/home/agu/Repositorios/AppServer/AppServer/source/src/utils/Log.cpp
+Log.h
+/home/agu/Repositorios/AppServer/AppServer/source/src/utils/Log.h
+string
+-
+Constant.h
+/home/agu/Repositorios/AppServer/AppServer/source/src/utils/Constant.h
 
 /home/agu/Repositorios/AppServer/AppServer/source/src/utils/MD5.cpp
 MD5.h
@@ -395,6 +403,16 @@ curl/curl.h
 -
 curl/easy.h
 -
+
+source/include/utils/Log.h
+glog/logging.h
+-
+string
+-
+iostream
+-
+Constant.h
+source/include/utils/Constant.h
 
 source/include/utils/MD5.h
 cstring
