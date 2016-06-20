@@ -64,7 +64,7 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 UserController user_controller(user_service);
                 user_controller.handle_update_filters(requestParser, response);
             } else if (requestParser.isMatchesGetRequest()) {
-                MatchesController matches_controller(matches_service, user_service);
+                MatchesController matches_controller(matches_service, user_service, messages_service);
                 matches_controller.handleGetMatches(requestParser, response);
             } else if (requestParser.isFiltersGetRequest()) {
 //                FilterService filter_service(db);

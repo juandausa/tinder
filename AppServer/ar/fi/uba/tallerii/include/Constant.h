@@ -31,6 +31,7 @@ public:
     static std::string distancePrefix;
     static std::string showGenderPrefix;
     static std::string lastMessagesPrefix;
+    static std::string getUsersUrl;
 
 private:
     Constant();

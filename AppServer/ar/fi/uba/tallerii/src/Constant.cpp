@@ -16,6 +16,7 @@ std::string Constant :: matches_prefix = "matches-";
 char Constant :: likes_separator = ' ';
 std::string Constant :: update_user_info_url = "http://enigmatic-scrubland-75073.herokuapp.com/users/";
 std::string Constant :: get_user_info_url = "http://enigmatic-scrubland-75073.herokuapp.com/users/";
+std::string Constant :: getUsersUrl = "http://enigmatic-scrubland-75073.herokuapp.com/users";
 std::string Constant :: male = "male";
 std::string Constant :: female = "female";
 std::string Constant :: defaultAge = "0";
