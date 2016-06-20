@@ -44,6 +44,13 @@ bool UserService::registerUser(const std::string appUserId, const std::string sh
     return false;
 }
 
+bool UserService::setDiscoveringDistance(const std::string appUserId, const std::string discoveringDistance) {
+    if (this->database->is_open()) {
+        return this->database->set(Constant::distancePrefix + appUserId, discoveringDistance);
+    }
+    return false;
+}
+
 std::string UserService::getSecurityToken(const std::string userId) {
     LOG(INFO) << "Generating security token for user: '" << userId <<"'";
     RandomTextGenerator rnd;

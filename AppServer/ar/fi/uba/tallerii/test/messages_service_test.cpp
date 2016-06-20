@@ -87,3 +87,67 @@ TEST(MessageService, AddConversation) {
         EXPECT_EQ(1, 0);
     }
 }
+
+TEST(MessageService, AddAndGetLastMessage) {
+    removeDataBase("/tmp/messagesService5");
+    DataBase db("/tmp/messagesService5");
+    if (db.is_open()) {
+        MessagesService messagesService(db);
+        std::vector<Message> messages = messagesService.getMessages("Elthon", "John");
+        EXPECT_TRUE(messages.size() == 0);
+        Message m("Elthon", "John", "content");
+        messagesService.addMessage(m);
+        Message message = messagesService.getLastMessage("Elthon", "John");
+        EXPECT_TRUE(message.getContent().compare(m.getContent()) == 0);
+        message = messagesService.getLastMessage("John", "Elthon");
+        EXPECT_TRUE(message.getContent().compare("") == 0);
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(MessageService, AddTwoMessagesAndGetLastMessageTwice) {
+    removeDataBase("/tmp/messagesService6");
+    DataBase db("/tmp/messagesService6");
+    if (db.is_open()) {
+        MessagesService messagesService(db);
+        std::vector<Message> messages = messagesService.getMessages("Elthon", "John");
+        EXPECT_TRUE(messages.size() == 0);
+        Message firstMessage("Elthon", "John", "content");
+        Message secondMessage("Elthon", "John", "secondContent");
+        messagesService.addMessage(firstMessage);
+        messagesService.addMessage(secondMessage);
+        Message message = messagesService.getLastMessage("Elthon", "John");
+        EXPECT_TRUE(message.getContent().compare(firstMessage.getContent()) == 0);
+        message = messagesService.getLastMessage("Elthon", "John");
+        EXPECT_TRUE(message.getContent().compare(secondMessage.getContent()) == 0);
+        message = messagesService.getLastMessage("Elthon", "John");
+        EXPECT_TRUE(message.getContent().compare("") == 0);
+        message = messagesService.getLastMessage("John", "Elthon");
+        EXPECT_TRUE(message.getContent().compare("") == 0);
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(MessageService, AddMessagesAndGetLastMessageAfterGetAll) {
+    removeDataBase("/tmp/messagesService6");
+    DataBase db("/tmp/messagesService6");
+    if (db.is_open()) {
+        MessagesService messagesService(db);
+        std::vector<Message> messages = messagesService.getMessages("Elthon", "John");
+        EXPECT_TRUE(messages.size() == 0);
+        Message firstMessage("Elthon", "John", "content");
+        Message secondMessage("Elthon", "John", "secondContent");
+        messagesService.addMessage(firstMessage);
+        messagesService.addMessage(secondMessage);
+        messages = messagesService.getMessages("Elthon", "John");
+        EXPECT_TRUE(messages.size() == 2);
+        Message message = messagesService.getLastMessage("Elthon", "John");
+        EXPECT_TRUE(message.getContent().compare("") == 0);
+        message = messagesService.getLastMessage("John", "Elthon");
+        EXPECT_TRUE(message.getContent().compare("") == 0);
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}

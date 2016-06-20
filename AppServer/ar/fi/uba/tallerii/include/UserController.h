@@ -43,13 +43,14 @@ private:
     Json::Value makeBodyForRegistrationPost(const Json::Value root);
     std::string makeBodyForUserInfoResponse(const std::string appUserId, const std::string userInfo);
     std::string makeBodyUserInfoForUpdate(const std::string info, const std::string userId);
-    Json::Value makeBodyForShowCandidatesResponse(Json::Value userData, const std::string genderOfInterest, Json::Value myArrayOfInterests);
+    Json::Value makeBodyForShowCandidatesResponse(Json::Value userData, std::string genderOfMyInterest, const std::string genderOfInterest, Json::Value myArrayOfInterests);
     bool isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests);
     void postInterests(const Json::Value root);
     void rest(Json::Value &event, Json::Value &root, Response &response);
     std::string getUserTo(const std::string body);
     std::string getErrorResponseBody();
     std::string getSucceedResponseBody();
+    std::string genderOfMyPreference(Json::Value myArrayOfInterests);
 };
 
 

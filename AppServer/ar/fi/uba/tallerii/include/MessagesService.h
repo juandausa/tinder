@@ -15,6 +15,7 @@ public:
     ~MessagesService();
     virtual bool addMessage(Message message);
     virtual std::vector<Message> getMessages(std::string userA, std::string userB);
+    virtual Message getLastMessage(std::string sender, std::string reciever);
 private:
     DataBase* database;
 };
