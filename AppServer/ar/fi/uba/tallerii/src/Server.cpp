@@ -85,6 +85,9 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
             } else if (requestParser.isGetMessagesRequest()) {
                 MessagesController messages_controller(messages_service, user_service);
                 messages_controller.handleGetMessages(requestParser, response);
+            } else {
+                response.SetCode(404);
+                response.Send();
             }
 
             break;
