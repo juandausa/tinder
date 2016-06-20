@@ -62,7 +62,7 @@ std::string GetUserInfoController :: makeBodyForUserInfoResponse(const std::stri
     std::string birthday = validateTimeOrReturnDefault(rootShared["user"].get("birthday", "").asString());
     rootApp["birthday"] = birthday;
     rootApp["age"] = calculateAge(birthday);
-    rootApp["gender"] = rootShared["user"].get("gender", "male");
+    rootApp["gender"] = rootShared["user"].get("sex", Constant::male);
     rootApp["photo_profile"] = rootShared["user"].get("photo_profile", "");
     Json::Value interests = rootShared["user"].get("interests", "");
     for (unsigned int j = 0; j < interests.size(); j++) {

@@ -53,7 +53,7 @@ void GetCandidatesController::operation(Request &request, Response &response) {
         if (!parsingSuccessful) {
             std::cout << "Error parsing result" << std::endl;
         }
-        std::string myGender = fastWriter.write(rootShared.get("gender", "male"));
+        std::string myGender = fastWriter.write(rootShared.get("sex", Constant::male));
         myGender = myGender.substr(1, myGender.size()-3);
         myArrayOfInterests = rootShared.get("interests", "");
         std::string genderOfMyInterest = this->userService.getShowGender(userId);
@@ -117,6 +117,7 @@ std::string GetCandidatesController::makeBodyForUserInfoResponse(const std::stri
     rootApp["birthday"] = birthday;
     rootApp["age"] = Converter::calculateAge(birthday);
     rootApp["gender"] = rootShared["user"].get("gender", "male");
+
     rootApp["photo_profile"] = rootShared["user"].get("photo_profile", "");
     Json::Value interests = rootShared["user"].get("interests", "");
     for (unsigned int j = 0; j < interests.size(); j++) {
