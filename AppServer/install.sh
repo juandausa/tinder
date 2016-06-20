@@ -35,6 +35,8 @@ sudo make install
 sudo ldconfig -v
 cd ..
 # # Install curl
+wget https://curl.haxx.se/download/curl-7.48.0.tar.gz
+tar xf curl-7.48.0.tar.gz
 cd curl-7.48.0
 ./configure
 make
