@@ -523,7 +523,6 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
         sharedUserId = sharedUserId.substr(0, sharedUserId.size()-1);
         std::string appUserId = this->userService.getAppUserId(sharedUserId);
         std::string genderOfTheirInterest = this->userService.getShowGender(appUserId);
-        genderOfMyInterest = "male";
         if (genderOfMyInterest.compare("male|female") == 0 ||
                 (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare(myGender) == 0) ||
                 (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare("male|female") == 0)) {
