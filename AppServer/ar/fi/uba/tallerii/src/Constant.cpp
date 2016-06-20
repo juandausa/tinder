@@ -25,3 +25,4 @@ std::string Constant :: messageComponentDivider = "N_N";
 char Constant :: messagesSeparator = ';';
 std::string Constant :: messagesPrefix = "messages-";
 std::string Constant :: distancePrefix = "distance-";
+std::string Constant :: lastMessagesPrefix = "lastmessage-";
