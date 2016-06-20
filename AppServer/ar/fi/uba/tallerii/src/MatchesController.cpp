@@ -49,8 +49,9 @@ std::string MatchesController::makeBodyForShowMatchesResponse(std::string userId
         if (!this->userService.hasMatch(userId, appUserId)) {
             continue;
         }
-        user["userId"] = appUserId;
+        user["user_id"] = appUserId;
         user["messages"] = this->getMessages(userId, appUserId);
+        user["age"] = Converter::calculateAge(user.get("birthday", "").asString());
         user.removeMember("id");
         user.removeMember("location");
         matches.append(user);
