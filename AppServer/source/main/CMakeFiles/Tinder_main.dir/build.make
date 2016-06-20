@@ -249,33 +249,9 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/MatchesControll
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/MatchesController.cpp.o.provides.build: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/MatchesController.cpp.o
 
 
-source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o: source/main/CMakeFiles/Tinder_main.dir/flags.make
-source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o: source/src/server/Controllers/PlusController.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o"
-	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/PlusController.cpp
-
-source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.i"
-	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/PlusController.cpp > CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.i
-
-source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.s"
-	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/PlusController.cpp -o CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.s
-
-source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o.requires:
-
-.PHONY : source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o.requires
-
-source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o.provides: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o.requires
-	$(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o.provides.build
-.PHONY : source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o.provides
-
-source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o.provides.build: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o
-
-
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.cpp.o: source/main/CMakeFiles/Tinder_main.dir/flags.make
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.cpp.o: source/src/server/Controllers/UserController.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/UserController.cpp
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.cpp.i: cmake_force
@@ -299,7 +275,7 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/CandidatesService.cpp.o: source/main/CMakeFiles/Tinder_main.dir/flags.make
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/CandidatesService.cpp.o: source/src/server/Services/CandidatesService.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/CandidatesService.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/CandidatesService.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tinder_main.dir/__/src/server/Services/CandidatesService.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/server/Services/CandidatesService.cpp
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/CandidatesService.cpp.i: cmake_force
@@ -323,7 +299,7 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/CandidatesService.
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/FilterService.cpp.o: source/main/CMakeFiles/Tinder_main.dir/flags.make
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/FilterService.cpp.o: source/src/server/Services/FilterService.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/FilterService.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/FilterService.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tinder_main.dir/__/src/server/Services/FilterService.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/server/Services/FilterService.cpp
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/FilterService.cpp.i: cmake_force
@@ -347,7 +323,7 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/FilterService.cpp.
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/MatchesService.cpp.o: source/main/CMakeFiles/Tinder_main.dir/flags.make
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/MatchesService.cpp.o: source/src/server/Services/MatchesService.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/MatchesService.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/MatchesService.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tinder_main.dir/__/src/server/Services/MatchesService.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/server/Services/MatchesService.cpp
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/MatchesService.cpp.i: cmake_force
@@ -371,7 +347,7 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/MatchesService.cpp
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/UserService.cpp.o: source/main/CMakeFiles/Tinder_main.dir/flags.make
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/UserService.cpp.o: source/src/server/Services/UserService.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/UserService.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/UserService.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tinder_main.dir/__/src/server/Services/UserService.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/server/Services/UserService.cpp
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/UserService.cpp.i: cmake_force
@@ -395,7 +371,7 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/UserService.cpp.o.
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o: source/main/CMakeFiles/Tinder_main.dir/flags.make
 source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o: source/src/database/DataBase.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/database/DataBase.cpp
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.i: cmake_force
@@ -417,9 +393,57 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o.provides: 
 source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o.provides.build: source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o
 
 
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o: source/main/CMakeFiles/Tinder_main.dir/flags.make
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o: source/src/resources/Location.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o"
+	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/resources/Location.cpp
+
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.i"
+	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/agu/Repositorios/AppServer/AppServer/source/src/resources/Location.cpp > CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.i
+
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.s"
+	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/agu/Repositorios/AppServer/AppServer/source/src/resources/Location.cpp -o CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.s
+
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o.requires:
+
+.PHONY : source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o.requires
+
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o.provides: source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o.requires
+	$(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o.provides.build
+.PHONY : source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o.provides
+
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o.provides.build: source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o
+
+
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o: source/main/CMakeFiles/Tinder_main.dir/flags.make
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o: source/src/resources/User.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o"
+	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/resources/User.cpp
+
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.i"
+	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/agu/Repositorios/AppServer/AppServer/source/src/resources/User.cpp > CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.i
+
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.s"
+	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/agu/Repositorios/AppServer/AppServer/source/src/resources/User.cpp -o CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.s
+
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o.requires:
+
+.PHONY : source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o.requires
+
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o.provides: source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o.requires
+	$(MAKE) -f source/main/CMakeFiles/Tinder_main.dir/build.make source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o.provides.build
+.PHONY : source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o.provides
+
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o.provides.build: source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o
+
+
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o: source/main/CMakeFiles/Tinder_main.dir/flags.make
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o: source/src/utils/CurlWrapper.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/utils/CurlWrapper.cpp
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.i: cmake_force
@@ -443,7 +467,7 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o.provides.b
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o: source/main/CMakeFiles/Tinder_main.dir/flags.make
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o: source/src/utils/MD5.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/utils/MD5.cpp
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.i: cmake_force
@@ -467,7 +491,7 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o.provides.build: so
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Mongoose.cpp.o: source/main/CMakeFiles/Tinder_main.dir/flags.make
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Mongoose.cpp.o: source/src/utils/Mongoose.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Mongoose.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Mongoose.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/main && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tinder_main.dir/__/src/utils/Mongoose.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/utils/Mongoose.cpp
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Mongoose.cpp.i: cmake_force
@@ -499,13 +523,14 @@ Tinder_main_OBJECTS = \
 "CMakeFiles/Tinder_main.dir/__/src/server/Server.cpp.o" \
 "CMakeFiles/Tinder_main.dir/__/src/server/Controllers/FilterController.cpp.o" \
 "CMakeFiles/Tinder_main.dir/__/src/server/Controllers/MatchesController.cpp.o" \
-"CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o" \
 "CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.cpp.o" \
 "CMakeFiles/Tinder_main.dir/__/src/server/Services/CandidatesService.cpp.o" \
 "CMakeFiles/Tinder_main.dir/__/src/server/Services/FilterService.cpp.o" \
 "CMakeFiles/Tinder_main.dir/__/src/server/Services/MatchesService.cpp.o" \
 "CMakeFiles/Tinder_main.dir/__/src/server/Services/UserService.cpp.o" \
 "CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o" \
+"CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o" \
+"CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o" \
 "CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o" \
 "CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o" \
 "CMakeFiles/Tinder_main.dir/__/src/utils/Mongoose.cpp.o"
@@ -521,19 +546,20 @@ source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Se
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Server.cpp.o
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/FilterController.cpp.o
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/MatchesController.cpp.o
-source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.cpp.o
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/CandidatesService.cpp.o
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/FilterService.cpp.o
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/MatchesService.cpp.o
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/UserService.cpp.o
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o
+source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o
+source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Mongoose.cpp.o
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/build.make
 source/main/Tinder_main: source/main/CMakeFiles/Tinder_main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable Tinder_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Linking CXX executable Tinder_main"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/main && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Tinder_main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -549,13 +575,14 @@ source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_m
 source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Server.cpp.o.requires
 source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/FilterController.cpp.o.requires
 source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/MatchesController.cpp.o.requires
-source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o.requires
 source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.cpp.o.requires
 source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/CandidatesService.cpp.o.requires
 source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/FilterService.cpp.o.requires
 source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/MatchesService.cpp.o.requires
 source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/server/Services/UserService.cpp.o.requires
 source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o.requires
+source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o.requires
+source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o.requires
 source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/utils/CurlWrapper.cpp.o.requires
 source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/utils/MD5.cpp.o.requires
 source/main/CMakeFiles/Tinder_main.dir/requires: source/main/CMakeFiles/Tinder_main.dir/__/src/utils/Mongoose.cpp.o.requires

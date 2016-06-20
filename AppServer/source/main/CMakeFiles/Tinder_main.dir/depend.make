@@ -4,6 +4,14 @@
 source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o: source/src/database/DataBase.cpp
 source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o: source/include/database/DataBase.h
 
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o: source/src/resources/Location.cpp
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o: source/include/resources/Location.h
+
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o: source/src/resources/User.cpp
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o: source/include/resources/Location.h
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o: source/include/resources/User.h
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o: source/include/server/Constant.h
+
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Constant.cpp.o: source/src/server/Constant.cpp
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Constant.cpp.o: source/include/server/Constant.h
 
@@ -26,10 +34,6 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/MatchesControll
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/MatchesController.cpp.o: source/include/utils/MD5.h
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/MatchesController.cpp.o: source/include/utils/Mongoose.h
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/MatchesController.cpp.o: source/include/utils/RandomTextGenerator.h
-
-source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o: source/src/server/Controllers/PlusController.cpp
-source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o: source/include/server/Controllers/PlusController.h
-source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o: source/include/utils/Mongoose.h
 
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.cpp.o: source/src/server/Controllers/UserController.cpp
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.cpp.o: source/include/database/DataBase.h
@@ -68,7 +72,6 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/server/Server.cpp.o: source/includ
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Server.cpp.o: source/include/server/Constant.h
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Server.cpp.o: source/include/server/Controllers/FilterController.h
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Server.cpp.o: source/include/server/Controllers/MatchesController.h
-source/main/CMakeFiles/Tinder_main.dir/__/src/server/Server.cpp.o: source/include/server/Controllers/PlusController.h
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Server.cpp.o: source/include/server/Controllers/UserController.h
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Server.cpp.o: source/include/server/RequestParser.h
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Server.cpp.o: source/include/server/Response.h
@@ -115,7 +118,6 @@ source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/main/main.cpp
 source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/database/DataBase.h
 source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/server/Constant.h
 source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/server/Controllers/FilterController.h
-source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/server/Controllers/PlusController.h
 source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/server/Controllers/UserController.h
 source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/server/RequestParser.h
 source/main/CMakeFiles/Tinder_main.dir/main.cpp.o: source/include/server/Response.h

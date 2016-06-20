@@ -15,7 +15,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/runTests.dir/__/src/server/Server.cpp.o"
   "CMakeFiles/runTests.dir/__/src/server/Controllers/FilterController.cpp.o"
   "CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.cpp.o"
-  "CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o"
   "CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o"
   "CMakeFiles/runTests.dir/__/src/server/Services/CandidatesService.cpp.o"
   "CMakeFiles/runTests.dir/__/src/server/Services/FilterService.cpp.o"

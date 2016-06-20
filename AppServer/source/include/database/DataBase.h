@@ -8,18 +8,22 @@
 #include <rocksdb/db.h>
 #include <string>
 
-class DataBase {
+class DataBase{
 public:
-    DataBase(const std::string & full_path);
-    bool is_open();
+   	static DataBase* getInstance();
+   	bool is_open();
     bool set(const std::string key, const std::string value);
     bool get(const std::string key, std::string *value);
     bool remove(const std::string key);
-    ~DataBase();
-
+    bool open(const std::string path);
+    bool close();
+   	~DataBase();
 private:
-    rocksdb::DB *database;
+   DataBase();  // Private so that it can  not be called
+   DataBase(DataBase const&){};             // copy constructor is private
+   // DataBase& operator=(DataBase const&){};  // assignment operator is private
+   static DataBase* dbInstance;
+   rocksdb::DB *database;
 };
-
 
 #endif //TINDER_DATABASE_H

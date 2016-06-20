@@ -27,10 +27,6 @@ source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.
 source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.cpp.o: source/include/utils/Mongoose.h
 source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.cpp.o: source/include/utils/RandomTextGenerator.h
 
-source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o: source/src/server/Controllers/PlusController.cpp
-source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o: source/include/server/Controllers/PlusController.h
-source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o: source/include/utils/Mongoose.h
-
 source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o: source/src/server/Controllers/UserController.cpp
 source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o: source/include/database/DataBase.h
 source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o: source/include/server/Constant.h
@@ -68,7 +64,6 @@ source/test/CMakeFiles/runTests.dir/__/src/server/Server.cpp.o: source/include/d
 source/test/CMakeFiles/runTests.dir/__/src/server/Server.cpp.o: source/include/server/Constant.h
 source/test/CMakeFiles/runTests.dir/__/src/server/Server.cpp.o: source/include/server/Controllers/FilterController.h
 source/test/CMakeFiles/runTests.dir/__/src/server/Server.cpp.o: source/include/server/Controllers/MatchesController.h
-source/test/CMakeFiles/runTests.dir/__/src/server/Server.cpp.o: source/include/server/Controllers/PlusController.h
 source/test/CMakeFiles/runTests.dir/__/src/server/Server.cpp.o: source/include/server/Controllers/UserController.h
 source/test/CMakeFiles/runTests.dir/__/src/server/Server.cpp.o: source/include/server/RequestParser.h
 source/test/CMakeFiles/runTests.dir/__/src/server/Server.cpp.o: source/include/server/Response.h

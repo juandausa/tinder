@@ -4,27 +4,53 @@
 
 #include <string>
 #include "DataBase.h"
+#include <string>
 
-DataBase :: DataBase(const std::string & full_path) {
-    rocksdb::Options options;
-    options.create_if_missing = true;
-    options.error_if_exists = false;
-    rocksdb::Status status = rocksdb::DB::Open(options, full_path, &this->database);
-    if (!status.ok()) {
-        delete this->database;
-        this->database = NULL;
+DataBase* DataBase::dbInstance = NULL; 
+
+DataBase* DataBase::getInstance() {
+    if (!dbInstance) {
+        dbInstance = new DataBase();
     }
+   return dbInstance;
 }
 
-bool DataBase :: is_open() {
-    return this->database != NULL;
+
+DataBase::DataBase() {
+    this->database = NULL;
 }
 
-bool DataBase :: get(const std::string key, std::string *value) {
+bool DataBase::close(){
     if (!this->is_open()) {
         return false;
     }
+    delete(this->database);
+    this->database = NULL;
+    return true;
+}
 
+bool DataBase::open(const std::string path){
+
+    rocksdb::Options options;
+    options.create_if_missing = true;
+    options.error_if_exists = false;
+    rocksdb::Status status = rocksdb::DB::Open(options, path, &this->database);
+    if (!status.ok()) {
+        delete this->database;
+        this->database = NULL;
+        return false;
+    }
+    return true;
+}
+
+bool DataBase::is_open() {
+    return this->database != NULL;
+}
+
+bool DataBase::get(const std::string key, std::string *value) {
+    if (!this->is_open()) {
+        return false;
+    }
     std::string retrivedValue;
     rocksdb::Status read_operation_result = database->Get(rocksdb::ReadOptions(), key, &retrivedValue);
     if (read_operation_result.ok()) {
@@ -35,11 +61,10 @@ bool DataBase :: get(const std::string key, std::string *value) {
     return false;
 }
 
-bool DataBase :: set(const std::string key, const std::string value) {
+bool DataBase::set(const std::string key, const std::string value) {
     if (!this->is_open()) {
         return false;
     }
-
     rocksdb::Status put_opreation_result = database->Put(rocksdb::WriteOptions(), key, value);
     return put_opreation_result.ok();
 }
@@ -53,7 +78,7 @@ bool DataBase::remove(const std::string key) {
     return delete_opreation_result.ok();
 }
 
-DataBase :: ~DataBase() {
+DataBase::~DataBase() {
     if (this->is_open()) {
         delete(this->database);
         this->database = NULL;

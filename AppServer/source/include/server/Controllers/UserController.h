@@ -18,16 +18,18 @@
 class UserController {
 public:
     UserController(UserService user_service);
-    virtual void handleLogin(RequestParser requestParser,Response response);
-    virtual void handleRegistration(RequestParser requestParser, Response response);
-    virtual std::string handleGetUserInfo(RequestParser requestParser, Response response, bool send);
-    virtual void handleUpdateUserInfo(RequestParser requestParser, Response response);
-    virtual void handleGetCandidates(RequestParser requestParser, Response response);
-    virtual void handleGetMatches(RequestParser requestParser, Response response);
-    virtual void handleAddLike(RequestParser requestParser, Response response);
-    virtual void handleAddDislike(RequestParser requestParser, Response response);
+    void setUrl(std::string url);
+    void handleLogin(RequestParser requestParser,Response response);
+    void handleRegistration(RequestParser requestParser, Response response);
+    std::string handleGetUserInfo(RequestParser requestParser, Response response, bool send);
+    void handleUpdateUserInfo(RequestParser requestParser, Response response);
+    void handleGetCandidates(RequestParser requestParser, Response response);
+    void handleGetMatches(RequestParser requestParser, Response response);
+    void handleAddLike(RequestParser requestParser, Response response);
+    void handleAddDislike(RequestParser requestParser, Response response);
 
 private:
+    CurlWrapper curlWrapper;
     UserService userService;
     Json::Reader reader;
     Json::FastWriter fastWriter;

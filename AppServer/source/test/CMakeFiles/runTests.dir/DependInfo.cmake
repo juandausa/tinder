@@ -8,7 +8,6 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/agu/Repositorios/AppServer/AppServer/source/src/server/Constant.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/test/CMakeFiles/runTests.dir/__/src/server/Constant.cpp.o"
   "/home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/FilterController.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/FilterController.cpp.o"
   "/home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/MatchesController.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.cpp.o"
-  "/home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/PlusController.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o"
   "/home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/UserController.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o"
   "/home/agu/Repositorios/AppServer/AppServer/source/src/server/RequestParser.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/test/CMakeFiles/runTests.dir/__/src/server/RequestParser.cpp.o"
   "/home/agu/Repositorios/AppServer/AppServer/source/src/server/Response.cpp" "/home/agu/Repositorios/AppServer/AppServer/source/test/CMakeFiles/runTests.dir/__/src/server/Response.cpp.o"

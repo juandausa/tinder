@@ -25,6 +25,7 @@ public:
     static std::string female;
     static std::string defaultAge;
     static std::string defaultBirthday;
+    static int DB_ERROR;
 private:
     Constant();
 };

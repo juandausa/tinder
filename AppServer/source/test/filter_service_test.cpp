@@ -3,11 +3,10 @@
 //
 
 #include "filter_service_test.h"
-
 TEST(FilterTest, GetFiltersWithoutPreviousUpdate) {
-    DataBase db("/tmp/testfilterservicedb");
-    if (db.is_open()) {
-        FilterService filter_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testfilterservicedb")){
+        FilterService filter_service;
         std::string filters = filter_service.get_filters("UserJoaneDoe");
         EXPECT_EQ(filters, "");
     } else {
@@ -16,9 +15,9 @@ TEST(FilterTest, GetFiltersWithoutPreviousUpdate) {
 }
 
 TEST(FilterTest, UpdateFilters) {
-    DataBase db("/tmp/testfilterservicedb2");
-    if (db.is_open()) {
-        FilterService filter_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb2")){
+        FilterService filter_service;
         EXPECT_TRUE(filter_service.update_filters("UserJoaneDoe", "Some random text."));
     } else {
         EXPECT_EQ(1, 0);
@@ -28,9 +27,9 @@ TEST(FilterTest, UpdateFilters) {
 
 TEST(FilterTest, UpdateAndGetFilters) {
     std::string filters = "Some random text. Bla Bla";
-    DataBase db("/tmp/testfilterservicedb4");
-    if (db.is_open()) {
-        FilterService filter_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testfilterservicedb4")){
+        FilterService filter_service;
         EXPECT_TRUE(filter_service.update_filters("UserJoaneDoe", filters));
         EXPECT_EQ(filter_service.get_filters("UserJoaneDoe"), filters);
     } else {
@@ -40,9 +39,9 @@ TEST(FilterTest, UpdateAndGetFilters) {
 
 TEST(FilterTest, UpdateAndGetFiltersWrongValueExpected) {
     std::string filters = "Some random text. Bla Bla";
-    DataBase db("/tmp/testfilterservicedb4");
-    if (db.is_open()) {
-        FilterService filter_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testfilterservicedb5")){
+        FilterService filter_service;
         EXPECT_TRUE(filter_service.update_filters("UserJoaneDoe", filters));
         EXPECT_NE(filter_service.get_filters("UserJoaneDoe"), filters + "other");
     } else {

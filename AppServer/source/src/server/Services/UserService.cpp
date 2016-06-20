@@ -6,7 +6,8 @@
 #include <string>
 #include <vector>
 
-UserService::UserService(DataBase &db) : database(&db) {
+UserService::UserService(){
+    this->database = DataBase::getInstance();
 }
 
 std::vector<std::string> split(const std::string &s, char delim) {

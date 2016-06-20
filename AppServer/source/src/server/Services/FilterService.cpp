@@ -7,7 +7,8 @@
 #include <string>
 #include "Constant.h"
 
-FilterService :: FilterService(DataBase & db) : database(&db) {
+FilterService :: FilterService(){
+    this->database = DataBase::getInstance();
 }
 
 bool FilterService :: update_filters(const std::string user_id, const std::string filters) {

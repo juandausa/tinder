@@ -27,10 +27,6 @@ source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.
  source/include/utils/MD5.h
  source/include/utils/Mongoose.h
  source/include/utils/RandomTextGenerator.h
-source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o
- /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/PlusController.cpp
- source/include/server/Controllers/PlusController.h
- source/include/utils/Mongoose.h
 source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o
  /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/UserController.cpp
  source/include/database/DataBase.h
@@ -69,7 +65,6 @@ source/test/CMakeFiles/runTests.dir/__/src/server/Server.cpp.o
  source/include/server/Constant.h
  source/include/server/Controllers/FilterController.h
  source/include/server/Controllers/MatchesController.h
- source/include/server/Controllers/PlusController.h
  source/include/server/Controllers/UserController.h
  source/include/server/RequestParser.h
  source/include/server/Response.h

@@ -5,7 +5,8 @@
 #include "MatchesService.h"
 #include "DataBase.h"
 
-MatchesService::MatchesService(DataBase &db) : database(&db) {
+MatchesService::MatchesService() {
+	this->database = DataBase::getInstance();
 }
 
 MatchesService::~MatchesService() {

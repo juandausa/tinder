@@ -13,11 +13,11 @@
 #include "FilterController.h"
 #include "MatchesController.h"
 #include "Response.h"
-#include "DataBase.h"
 #include "Constant.h"
 #include "UserService.h"
 #include "FilterService.h"
 #include "MatchesService.h"
+#include "SecurityManager.h"
 #include "SecurityManager.h"
 
 static struct mg_serve_http_opts s_http_server_opts;
@@ -34,9 +34,8 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     switch (ev) {
         case MG_EV_HTTP_REQUEST:
         {
-            DataBase db(Constant::database_path);
-            UserService user_service(db);
-            MatchesService matches_service(db);
+            UserService user_service;
+            MatchesService matches_service;
             SecurityManager security(user_service);
             Response response(nc);
             RequestParser requestParser;
@@ -60,14 +59,14 @@ void Server :: ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                 UserController user_controller(user_service);
                 user_controller.handleUpdateUserInfo(requestParser, response);
             } else if (requestParser.isFiltersPostRequest()) {
-                FilterService filter_service(db);
+                FilterService filter_service;
                 FilterController filter_controller(filter_service);
                 filter_controller.handle_update_filters(requestParser, response);
             } else if (requestParser.isMatchesGetRequest()) {
                 UserController user_controller(user_service);
                 user_controller.handleGetMatches(requestParser, response);
             } else if (requestParser.isFiltersGetRequest()) {
-                FilterService filter_service(db);
+                FilterService filter_service;
                 FilterController filter_controller(filter_service);
                 filter_controller.handle_get_filters(requestParser, response);
             } else if (requestParser.isAddLikeRequest()) {
@@ -105,15 +104,15 @@ void Server :: start() {
         exit(1);
     }
 
-#ifdef MG_ENABLE_SSL
-    if (ssl_cert != NULL) {
-    const char *err_str = mg_set_ssl(nc, ssl_cert, NULL);
-    if (err_str != NULL) {
-      fprintf(stderr, "Error loading SSL cert: %s\n", err_str);
-      exit(1);
-    }
-  }
-#endif
+// #ifdef MG_ENABLE_SSL
+//     if (ssl_cert != NULL) {
+//     const char *err_str = mg_set_ssl(nc, ssl_cert, NULL);
+//     if (err_str != NULL) {
+//       fprintf(stderr, "Error loading SSL cert: %s\n", err_str);
+//       exit(1);
+//     }
+//   }
+// #endif
 
     mg_set_protocol_http_websocket(nc);
     s_http_server_opts.document_root = ".";

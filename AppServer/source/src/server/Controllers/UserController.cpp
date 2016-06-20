@@ -5,10 +5,12 @@
 #include "UserController.h"
 #include <time.h>
 #include <string>
+#include "UserService.h"
 
 
 UserController :: UserController(UserService userService) : userService(userService) {
 }
+
 
 std::string validateTimeOrReturnDefault(std::string time) {
     struct tm convertedTime;;

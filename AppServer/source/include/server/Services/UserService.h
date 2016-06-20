@@ -16,7 +16,7 @@
 
 class UserService {
 public:
-    UserService(DataBase & db);
+    UserService();
     ~UserService();
     bool isUserRegistered(const std::string userId);
     bool registerUser(const std::string userId, const std::string token);
@@ -34,7 +34,7 @@ public:
     bool hasMatch(const std::string fromUserId, const std::string toUserId);
 
 private:
-    DataBase* database;
+    DataBase *database;
     bool addMatch(const std::string fromUserId, const std::string toUserId);
 };
 

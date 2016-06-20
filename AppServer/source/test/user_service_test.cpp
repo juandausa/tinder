@@ -4,22 +4,24 @@
 
 #include "include/user_service_test.h"
 #include "DataBase.h"
-
+#include <iostream>
 TEST(UserService, IsUserRegisteredWithNoUsers) {
-    DataBase db("/tmp/testuserservicedb");
-    if (db.is_open()) {
-        UserService user_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb")) {
+        UserService user_service;
         EXPECT_FALSE(user_service.isUserRegistered("UserJohnDoe"));
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, IsUserRegisteredWithUserPreviouslyRegistered) {
-/*    DataBase db("/tmp/testuserservicedb2");
+/*DataBase* db = DataBase::getInstance();    
+DataBase db("/tmp/testuserservicedb2");
     db.set("UserJoaneDoe", "value");
-    if (db.is_open()) {
-        UserService user_service(db);
+    if (db->open("/tmp/testuserservicedb4")){
+        UserService user_service;
         EXPECT_TRUE(user_service.isUserRegistered("UserJoaneDoe"));
     } else {
         EXPECT_EQ(1, 0);
@@ -28,29 +30,31 @@ TEST(UserService, IsUserRegisteredWithUserPreviouslyRegistered) {
 }
 
 TEST(UserService, GenerateTokenFromUsername) {
-    DataBase db("/tmp/testuserservicedb3");
-    if (db.is_open()) {
-        UserService user_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb1")){
+        UserService user_service;
         EXPECT_NE("", user_service.getSecurityToken("UserJoaneDoe"));
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, GenerateDifferentTokensFromTwoUsernames) {
-    DataBase db("/tmp/testuserservicedb3");
-    if (db.is_open()) {
-        UserService user_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb3")){
+        UserService user_service;
         EXPECT_NE(user_service.getSecurityToken("UserJoaneDoes"), user_service.getSecurityToken("UserJoaneDoe"));
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, GenerateTokenTwoTokensFromOneUsernameShoulReturnDifferentTokens) {
-    DataBase db("/tmp/testuserservicedb4");
-    if (db.is_open()) {
-        UserService user_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb4")){
+        UserService user_service;
         std::string token = user_service.getSecurityToken("UserJoaneDoe");
         for (unsigned int i = 0; i < 100; i++) {
             EXPECT_NE(token, user_service.getSecurityToken("UserJoaneDoe"));
@@ -59,91 +63,100 @@ TEST(UserService, GenerateTokenTwoTokensFromOneUsernameShoulReturnDifferentToken
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, GenerateTokenAndValidateWithValidToken) {
-    DataBase db("/tmp/testuserservicedb5");
-    if (db.is_open()) {
-        UserService user_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb5")){
+        UserService user_service;
         std::string token = user_service.getSecurityToken("UserJoaneDoe");
         EXPECT_TRUE(user_service.isTokenValid("UserJoaneDoe", token));
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, GenerateTokenAndValidateWithInvalidToken) {
-    DataBase db("/tmp/testuserservicedb6");
-    if (db.is_open()) {
-        UserService user_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb6")){
+        UserService user_service;
         std::string token = user_service.getSecurityToken("UserJoaneDoe");
         EXPECT_FALSE(user_service.isTokenValid("UserJoaneDoe", "invalidtoken"));
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, ValidateNullToken) {
-    DataBase db("/tmp/testuserservicedb6");
-    if (db.is_open()) {
-        UserService user_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb7")){
+        UserService user_service;
         std::string token = user_service.getSecurityToken("UserJoaneDoe");
         EXPECT_FALSE(user_service.isTokenValid("UserJoaneDoe", ""));
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, ValidateNullUser) {
-    DataBase db("/tmp/testuserservicedb6");
-    if (db.is_open()) {
-        UserService user_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb8")){
+        UserService user_service;
         std::string token = user_service.getSecurityToken("UserJoaneDoe");
         EXPECT_FALSE(user_service.isTokenValid("", token));
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, GetLikesWhithNoLike) {
-    DataBase db("/tmp/testuserservicedb7");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb9");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb9")){
+        UserService user_service;
         std::vector<std::string> likes = user_service.getLikes("JohnDoe");
         EXPECT_TRUE(likes.size() == 0);
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, AddLikeReturnTrue) {
-    DataBase db("/tmp/testuserservicedb8");
-    if (db.is_open()) {
-        UserService user_service(db);
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb10")){
+        UserService user_service;
         std::vector<std::string> likes = user_service.getLikes("JohnDoe");
         EXPECT_TRUE(user_service.addLike("JohnDoe", "Josi"));
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, AddLikeReturnFalseIfDbIsClose) {
-    DataBase db("/tmp/testuserservicedb9");
-    if (db.is_open()) {
-        UserService user_service(db);
-        db.~DataBase();
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb11")){
+        UserService user_service;
+        db->close();
         std::vector<std::string> likes = user_service.getLikes("JohnDoe");
         EXPECT_FALSE(user_service.addLike("JohnDoe", "Josi"));
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, AddLikeShouldAddLikeToTheUser) {
-    removeDataBase("/tmp/testuserservicedb10");
-    DataBase db("/tmp/testuserservicedb10");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb12");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb12")){
+        UserService user_service;
         std::vector<std::string> likes = user_service.getLikes("JohnDoe");
         EXPECT_TRUE(likes.size() == 0);
         user_service.addLike("JohnDoe", "Josi");
@@ -152,13 +165,14 @@ TEST(UserService, AddLikeShouldAddLikeToTheUser) {
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, AddSeveralLikesShouldAddLikesToTheUser) {
-    removeDataBase("/tmp/testuserservicedb12");
-    DataBase db("/tmp/testuserservicedb12");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb13");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb13")){
+        UserService user_service;
         std::vector<std::string> likes = user_service.getLikes("JohnDoe");
         EXPECT_TRUE(likes.size() == 0);
         user_service.addLike("JohnDoe", "Josi");
@@ -169,13 +183,14 @@ TEST(UserService, AddSeveralLikesShouldAddLikesToTheUser) {
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, AddSameLikeTwiceShouldAddLikeOnce) {
-    removeDataBase("/tmp/testuserservicedb13");
-    DataBase db("/tmp/testuserservicedb13");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb14");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb14")){
+        UserService user_service;
         std::vector<std::string> likes = user_service.getLikes("JohnDoe");
         EXPECT_TRUE(likes.size() == 0);
         user_service.addLike("JohnDoe", "Josi");
@@ -187,13 +202,14 @@ TEST(UserService, AddSameLikeTwiceShouldAddLikeOnce) {
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, HasLikeAfterAddShouldReturnTrue) {
-    removeDataBase("/tmp/testuserservicedb14");
-    DataBase db("/tmp/testuserservicedb14");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb15");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb15")){
+        UserService user_service;
         std::vector<std::string> likes = user_service.getLikes("JohnDoe");
         EXPECT_TRUE(likes.size() == 0);
         user_service.addLike("JohnDoe", "Josi");
@@ -202,24 +218,26 @@ TEST(UserService, HasLikeAfterAddShouldReturnTrue) {
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, HasLikeBeforeAddShouldReturnFalse) {
-    removeDataBase("/tmp/testuserservicedb15");
-    DataBase db("/tmp/testuserservicedb15");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb16");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb16")){
+        UserService user_service;
         EXPECT_FALSE(user_service.hasLike("JohnDoe", "Josi"));
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, AddLikeBetweenUsersShouldAddMatch) {
-    removeDataBase("/tmp/testuserservicedb16");
-    DataBase db("/tmp/testuserservicedb16");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb18");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb18")){
+        UserService user_service;
         user_service.addLike("JohnDoe", "Josi");
         EXPECT_TRUE(user_service.hasLike("JohnDoe", "Josi"));
         user_service.addLike("Josi", "JohnDoe");
@@ -229,13 +247,14 @@ TEST(UserService, AddLikeBetweenUsersShouldAddMatch) {
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, AddLikeUserShouldNotAddMatch) {
-    removeDataBase("/tmp/testuserservicedb17");
-    DataBase db("/tmp/testuserservicedb17");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb19");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb19")){
+        UserService user_service;
         user_service.addLike("JohnDoe", "Josi");
         EXPECT_TRUE(user_service.hasLike("JohnDoe", "Josi"));
         EXPECT_FALSE(user_service.hasMatch("Josi", "JohnDoe"));
@@ -243,13 +262,14 @@ TEST(UserService, AddLikeUserShouldNotAddMatch) {
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, AddDislikeShouldAddLikeToTheUser) {
-    removeDataBase("/tmp/testuserservicedb18");
-    DataBase db("/tmp/testuserservicedb18");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb20");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb20")){
+        UserService user_service;
         std::vector<std::string> dislikes = user_service.getDislikes("JohnDoe");
         EXPECT_TRUE(dislikes.size() == 0);
         user_service.addDislike("JohnDoe", "Josi");
@@ -258,13 +278,14 @@ TEST(UserService, AddDislikeShouldAddLikeToTheUser) {
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, AddSeveralDislikesShouldAddDislikesToTheUser) {
-    removeDataBase("/tmp/testuserservicedb19");
-    DataBase db("/tmp/testuserservicedb19");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb21");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb21")){
+        UserService user_service;
         std::vector<std::string> dislikes = user_service.getDislikes("JohnDoe");
         EXPECT_TRUE(dislikes.size() == 0);
         user_service.addDislike("JohnDoe", "Josi");
@@ -275,13 +296,14 @@ TEST(UserService, AddSeveralDislikesShouldAddDislikesToTheUser) {
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, AddSameDislikeTwiceShouldAddDislikeOnce) {
-    removeDataBase("/tmp/testuserservicedb20");
-    DataBase db("/tmp/testuserservicedb20");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb22");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb22")){
+        UserService user_service;
         std::vector<std::string> dislikes = user_service.getDislikes("JohnDoe");
         EXPECT_TRUE(dislikes.size() == 0);
         user_service.addDislike("JohnDoe", "Josi");
@@ -293,13 +315,14 @@ TEST(UserService, AddSameDislikeTwiceShouldAddDislikeOnce) {
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, HasDislikeAfterAddDislikeShouldReturnTrue) {
-    removeDataBase("/tmp/testuserservicedb21");
-    DataBase db("/tmp/testuserservicedb21");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb23");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb23")){
+        UserService user_service;
         std::vector<std::string> dislikes = user_service.getDislikes("JohnDoe");
         EXPECT_TRUE(dislikes.size() == 0);
         user_service.addDislike("JohnDoe", "Josi");
@@ -308,15 +331,17 @@ TEST(UserService, HasDislikeAfterAddDislikeShouldReturnTrue) {
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }
 
 TEST(UserService, HasDislikeBeforeAddDislikeShouldReturnFalse) {
-    removeDataBase("/tmp/testuserservicedb22");
-    DataBase db("/tmp/testuserservicedb22");
-    if (db.is_open()) {
-        UserService user_service(db);
+    removeDataBase("/tmp/testuserservicedb24");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb24")){
+        UserService user_service;
         EXPECT_FALSE(user_service.hasDislike("JohnDoe", "Josi"));
     } else {
         EXPECT_EQ(1, 0);
     }
+
 }

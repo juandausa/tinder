@@ -11,6 +11,8 @@ string
 -
 DataBase.h
 /home/agu/Repositorios/AppServer/AppServer/source/src/database/DataBase.h
+string
+-
 
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/Constant.cpp
 Constant.h
@@ -34,10 +36,6 @@ MatchesController.h
 string
 -
 
-/home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/PlusController.cpp
-PlusController.h
-/home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/PlusController.h
-
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/UserController.cpp
 UserController.h
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/UserController.h
@@ -45,6 +43,8 @@ time.h
 -
 string
 -
+UserService.h
+/home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/UserService.h
 
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/RequestParser.cpp
 RequestParser.h
@@ -101,8 +101,6 @@ Mongoose.h
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/Mongoose.h
 Server.h
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/Server.h
-PlusController.h
-/home/agu/Repositorios/AppServer/AppServer/source/src/server/PlusController.h
 UserController.h
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/UserController.h
 FilterController.h
@@ -111,8 +109,6 @@ MatchesController.h
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/MatchesController.h
 Response.h
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/Response.h
-DataBase.h
-/home/agu/Repositorios/AppServer/AppServer/source/src/server/DataBase.h
 Constant.h
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/Constant.h
 UserService.h
@@ -121,6 +117,8 @@ FilterService.h
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/FilterService.h
 MatchesService.h
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/MatchesService.h
+SecurityManager.h
+/home/agu/Repositorios/AppServer/AppServer/source/src/server/SecurityManager.h
 SecurityManager.h
 /home/agu/Repositorios/AppServer/AppServer/source/src/server/SecurityManager.h
 
@@ -291,6 +289,8 @@ include/user_service_test.h
 /home/agu/Repositorios/AppServer/AppServer/source/test/include/user_service_test.h
 DataBase.h
 /home/agu/Repositorios/AppServer/AppServer/source/test/DataBase.h
+iostream
+-
 
 source/include/database/DataBase.h
 rocksdb/db.h
@@ -321,10 +321,6 @@ RequestParser.h
 source/include/server/Controllers/RequestParser.h
 Response.h
 source/include/server/Controllers/Response.h
-
-source/include/server/Controllers/PlusController.h
-Mongoose.h
-source/include/server/Controllers/Mongoose.h
 
 source/include/server/Controllers/UserController.h
 jsoncpp/json/json.h

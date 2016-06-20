@@ -8,7 +8,7 @@
 
 class MatchesService {
 public:
-    MatchesService(DataBase & db);
+    MatchesService();
     ~MatchesService();
 
 private:

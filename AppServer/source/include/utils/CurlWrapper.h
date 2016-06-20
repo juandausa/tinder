@@ -16,10 +16,14 @@ class CurlWrapper {
 private:
     CURL *curl;
     CURLcode res;
+    std::string commonUrl;
+    std::string localUrl;
 
 public:
     CurlWrapper();
+    CurlWrapper(std::string url);
     ~CurlWrapper();
+    void setCommonUrl(const std::string url);
     void set_post_url(const std::string url);
     void set_post_data(const std::string data, std::string &readBuffer);
     void set_put_data(const std::string data, std::string &readBuffer);

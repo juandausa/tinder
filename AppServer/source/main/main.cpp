@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "Server.h"
+#include "DataBase.h"
 
 void printCurrentDir() {
     char cwd[1024];
@@ -33,11 +34,16 @@ int main(int argc, char** args) {
     google::SetLogDestination(google::GLOG_FATAL, "");
     google::SetLogDestination(google::GLOG_WARNING, "");
     google::InitGoogleLogging(args[0]);
-
+    DataBase* db = DataBase::getInstance();
+    if (!db->open(Constant::database_path)){
+        LOG(INFO) << "Open db error";
+        return Constant::DB_ERROR;
+    }
     LOG(INFO) << "App Server started.";
     printCurrentDir();
     Server tinderServer(convert_parameters(argc, args));
     tinderServer.start();
+    delete(db);
     LOG(INFO) << "App Server finished.";
     google::ShutdownGoogleLogging();
     return 0;

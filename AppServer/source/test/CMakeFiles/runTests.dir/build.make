@@ -441,33 +441,9 @@ source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.
 source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.cpp.o.provides.build: source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.cpp.o
 
 
-source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o: source/test/CMakeFiles/runTests.dir/flags.make
-source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o: source/src/server/Controllers/PlusController.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o"
-	cd /home/agu/Repositorios/AppServer/AppServer/source/test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/PlusController.cpp
-
-source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.i"
-	cd /home/agu/Repositorios/AppServer/AppServer/source/test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/PlusController.cpp > CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.i
-
-source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.s"
-	cd /home/agu/Repositorios/AppServer/AppServer/source/test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/PlusController.cpp -o CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.s
-
-source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o.requires:
-
-.PHONY : source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o.requires
-
-source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o.provides: source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o.requires
-	$(MAKE) -f source/test/CMakeFiles/runTests.dir/build.make source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o.provides.build
-.PHONY : source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o.provides
-
-source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o.provides.build: source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o
-
-
 source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o: source/test/CMakeFiles/runTests.dir/flags.make
 source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o: source/src/server/Controllers/UserController.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/UserController.cpp
 
 source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.i: cmake_force
@@ -491,7 +467,7 @@ source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp
 
 source/test/CMakeFiles/runTests.dir/__/src/server/Services/CandidatesService.cpp.o: source/test/CMakeFiles/runTests.dir/flags.make
 source/test/CMakeFiles/runTests.dir/__/src/server/Services/CandidatesService.cpp.o: source/src/server/Services/CandidatesService.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/server/Services/CandidatesService.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/server/Services/CandidatesService.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/runTests.dir/__/src/server/Services/CandidatesService.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/server/Services/CandidatesService.cpp
 
 source/test/CMakeFiles/runTests.dir/__/src/server/Services/CandidatesService.cpp.i: cmake_force
@@ -515,7 +491,7 @@ source/test/CMakeFiles/runTests.dir/__/src/server/Services/CandidatesService.cpp
 
 source/test/CMakeFiles/runTests.dir/__/src/server/Services/FilterService.cpp.o: source/test/CMakeFiles/runTests.dir/flags.make
 source/test/CMakeFiles/runTests.dir/__/src/server/Services/FilterService.cpp.o: source/src/server/Services/FilterService.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/server/Services/FilterService.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/server/Services/FilterService.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/runTests.dir/__/src/server/Services/FilterService.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/server/Services/FilterService.cpp
 
 source/test/CMakeFiles/runTests.dir/__/src/server/Services/FilterService.cpp.i: cmake_force
@@ -539,7 +515,7 @@ source/test/CMakeFiles/runTests.dir/__/src/server/Services/FilterService.cpp.o.p
 
 source/test/CMakeFiles/runTests.dir/__/src/server/Services/MatchesService.cpp.o: source/test/CMakeFiles/runTests.dir/flags.make
 source/test/CMakeFiles/runTests.dir/__/src/server/Services/MatchesService.cpp.o: source/src/server/Services/MatchesService.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/server/Services/MatchesService.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/server/Services/MatchesService.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/runTests.dir/__/src/server/Services/MatchesService.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/server/Services/MatchesService.cpp
 
 source/test/CMakeFiles/runTests.dir/__/src/server/Services/MatchesService.cpp.i: cmake_force
@@ -563,7 +539,7 @@ source/test/CMakeFiles/runTests.dir/__/src/server/Services/MatchesService.cpp.o.
 
 source/test/CMakeFiles/runTests.dir/__/src/server/Services/UserService.cpp.o: source/test/CMakeFiles/runTests.dir/flags.make
 source/test/CMakeFiles/runTests.dir/__/src/server/Services/UserService.cpp.o: source/src/server/Services/UserService.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/server/Services/UserService.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/server/Services/UserService.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/runTests.dir/__/src/server/Services/UserService.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/server/Services/UserService.cpp
 
 source/test/CMakeFiles/runTests.dir/__/src/server/Services/UserService.cpp.i: cmake_force
@@ -587,7 +563,7 @@ source/test/CMakeFiles/runTests.dir/__/src/server/Services/UserService.cpp.o.pro
 
 source/test/CMakeFiles/runTests.dir/__/src/database/DataBase.cpp.o: source/test/CMakeFiles/runTests.dir/flags.make
 source/test/CMakeFiles/runTests.dir/__/src/database/DataBase.cpp.o: source/src/database/DataBase.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/database/DataBase.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/database/DataBase.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/runTests.dir/__/src/database/DataBase.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/database/DataBase.cpp
 
 source/test/CMakeFiles/runTests.dir/__/src/database/DataBase.cpp.i: cmake_force
@@ -611,7 +587,7 @@ source/test/CMakeFiles/runTests.dir/__/src/database/DataBase.cpp.o.provides.buil
 
 source/test/CMakeFiles/runTests.dir/__/src/utils/CurlWrapper.cpp.o: source/test/CMakeFiles/runTests.dir/flags.make
 source/test/CMakeFiles/runTests.dir/__/src/utils/CurlWrapper.cpp.o: source/src/utils/CurlWrapper.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/utils/CurlWrapper.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/utils/CurlWrapper.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/runTests.dir/__/src/utils/CurlWrapper.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/utils/CurlWrapper.cpp
 
 source/test/CMakeFiles/runTests.dir/__/src/utils/CurlWrapper.cpp.i: cmake_force
@@ -635,7 +611,7 @@ source/test/CMakeFiles/runTests.dir/__/src/utils/CurlWrapper.cpp.o.provides.buil
 
 source/test/CMakeFiles/runTests.dir/__/src/utils/MD5.cpp.o: source/test/CMakeFiles/runTests.dir/flags.make
 source/test/CMakeFiles/runTests.dir/__/src/utils/MD5.cpp.o: source/src/utils/MD5.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/utils/MD5.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/utils/MD5.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/runTests.dir/__/src/utils/MD5.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/utils/MD5.cpp
 
 source/test/CMakeFiles/runTests.dir/__/src/utils/MD5.cpp.i: cmake_force
@@ -659,7 +635,7 @@ source/test/CMakeFiles/runTests.dir/__/src/utils/MD5.cpp.o.provides.build: sourc
 
 source/test/CMakeFiles/runTests.dir/__/src/utils/Mongoose.cpp.o: source/test/CMakeFiles/runTests.dir/flags.make
 source/test/CMakeFiles/runTests.dir/__/src/utils/Mongoose.cpp.o: source/src/utils/Mongoose.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/utils/Mongoose.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object source/test/CMakeFiles/runTests.dir/__/src/utils/Mongoose.cpp.o"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/runTests.dir/__/src/utils/Mongoose.cpp.o -c /home/agu/Repositorios/AppServer/AppServer/source/src/utils/Mongoose.cpp
 
 source/test/CMakeFiles/runTests.dir/__/src/utils/Mongoose.cpp.i: cmake_force
@@ -699,7 +675,6 @@ runTests_OBJECTS = \
 "CMakeFiles/runTests.dir/__/src/server/Server.cpp.o" \
 "CMakeFiles/runTests.dir/__/src/server/Controllers/FilterController.cpp.o" \
 "CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.cpp.o" \
-"CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o" \
 "CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o" \
 "CMakeFiles/runTests.dir/__/src/server/Services/CandidatesService.cpp.o" \
 "CMakeFiles/runTests.dir/__/src/server/Services/FilterService.cpp.o" \
@@ -729,7 +704,6 @@ source/test/runTests: source/test/CMakeFiles/runTests.dir/__/src/server/Security
 source/test/runTests: source/test/CMakeFiles/runTests.dir/__/src/server/Server.cpp.o
 source/test/runTests: source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/FilterController.cpp.o
 source/test/runTests: source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.cpp.o
-source/test/runTests: source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o
 source/test/runTests: source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o
 source/test/runTests: source/test/CMakeFiles/runTests.dir/__/src/server/Services/CandidatesService.cpp.o
 source/test/runTests: source/test/CMakeFiles/runTests.dir/__/src/server/Services/FilterService.cpp.o
@@ -741,7 +715,7 @@ source/test/runTests: source/test/CMakeFiles/runTests.dir/__/src/utils/MD5.cpp.o
 source/test/runTests: source/test/CMakeFiles/runTests.dir/__/src/utils/Mongoose.cpp.o
 source/test/runTests: source/test/CMakeFiles/runTests.dir/build.make
 source/test/runTests: source/test/CMakeFiles/runTests.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Linking CXX executable runTests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/agu/Repositorios/AppServer/AppServer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Linking CXX executable runTests"
 	cd /home/agu/Repositorios/AppServer/AppServer/source/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/runTests.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -765,7 +739,6 @@ source/test/CMakeFiles/runTests.dir/requires: source/test/CMakeFiles/runTests.di
 source/test/CMakeFiles/runTests.dir/requires: source/test/CMakeFiles/runTests.dir/__/src/server/Server.cpp.o.requires
 source/test/CMakeFiles/runTests.dir/requires: source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/FilterController.cpp.o.requires
 source/test/CMakeFiles/runTests.dir/requires: source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.cpp.o.requires
-source/test/CMakeFiles/runTests.dir/requires: source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o.requires
 source/test/CMakeFiles/runTests.dir/requires: source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/UserController.cpp.o.requires
 source/test/CMakeFiles/runTests.dir/requires: source/test/CMakeFiles/runTests.dir/__/src/server/Services/CandidatesService.cpp.o.requires
 source/test/CMakeFiles/runTests.dir/requires: source/test/CMakeFiles/runTests.dir/__/src/server/Services/FilterService.cpp.o.requires

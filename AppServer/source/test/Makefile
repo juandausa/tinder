@@ -233,33 +233,6 @@ __/src/server/Controllers/MatchesController.cpp.s:
 	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/test/CMakeFiles/runTests.dir/build.make source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/MatchesController.cpp.s
 .PHONY : __/src/server/Controllers/MatchesController.cpp.s
 
-__/src/server/Controllers/PlusController.o: __/src/server/Controllers/PlusController.cpp.o
-
-.PHONY : __/src/server/Controllers/PlusController.o
-
-# target to build an object file
-__/src/server/Controllers/PlusController.cpp.o:
-	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/test/CMakeFiles/runTests.dir/build.make source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.o
-.PHONY : __/src/server/Controllers/PlusController.cpp.o
-
-__/src/server/Controllers/PlusController.i: __/src/server/Controllers/PlusController.cpp.i
-
-.PHONY : __/src/server/Controllers/PlusController.i
-
-# target to preprocess a source file
-__/src/server/Controllers/PlusController.cpp.i:
-	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/test/CMakeFiles/runTests.dir/build.make source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.i
-.PHONY : __/src/server/Controllers/PlusController.cpp.i
-
-__/src/server/Controllers/PlusController.s: __/src/server/Controllers/PlusController.cpp.s
-
-.PHONY : __/src/server/Controllers/PlusController.s
-
-# target to generate assembly for a file
-__/src/server/Controllers/PlusController.cpp.s:
-	cd /home/agu/Repositorios/AppServer/AppServer && $(MAKE) -f source/test/CMakeFiles/runTests.dir/build.make source/test/CMakeFiles/runTests.dir/__/src/server/Controllers/PlusController.cpp.s
-.PHONY : __/src/server/Controllers/PlusController.cpp.s
-
 __/src/server/Controllers/UserController.o: __/src/server/Controllers/UserController.cpp.o
 
 .PHONY : __/src/server/Controllers/UserController.o
@@ -848,9 +821,6 @@ help:
 	@echo "... __/src/server/Controllers/MatchesController.o"
 	@echo "... __/src/server/Controllers/MatchesController.i"
 	@echo "... __/src/server/Controllers/MatchesController.s"
-	@echo "... __/src/server/Controllers/PlusController.o"
-	@echo "... __/src/server/Controllers/PlusController.i"
-	@echo "... __/src/server/Controllers/PlusController.s"
 	@echo "... __/src/server/Controllers/UserController.o"
 	@echo "... __/src/server/Controllers/UserController.i"
 	@echo "... __/src/server/Controllers/UserController.s"

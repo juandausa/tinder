@@ -4,6 +4,14 @@
 source/main/CMakeFiles/Tinder_main.dir/__/src/database/DataBase.cpp.o
  /home/agu/Repositorios/AppServer/AppServer/source/src/database/DataBase.cpp
  source/include/database/DataBase.h
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/Location.cpp.o
+ /home/agu/Repositorios/AppServer/AppServer/source/src/resources/Location.cpp
+ source/include/resources/Location.h
+source/main/CMakeFiles/Tinder_main.dir/__/src/resources/User.cpp.o
+ /home/agu/Repositorios/AppServer/AppServer/source/src/resources/User.cpp
+ source/include/resources/Location.h
+ source/include/resources/User.h
+ source/include/server/Constant.h
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Constant.cpp.o
  /home/agu/Repositorios/AppServer/AppServer/source/src/server/Constant.cpp
  source/include/server/Constant.h
@@ -27,10 +35,6 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/MatchesControll
  source/include/utils/MD5.h
  source/include/utils/Mongoose.h
  source/include/utils/RandomTextGenerator.h
-source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/PlusController.cpp.o
- /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/PlusController.cpp
- source/include/server/Controllers/PlusController.h
- source/include/utils/Mongoose.h
 source/main/CMakeFiles/Tinder_main.dir/__/src/server/Controllers/UserController.cpp.o
  /home/agu/Repositorios/AppServer/AppServer/source/src/server/Controllers/UserController.cpp
  source/include/database/DataBase.h
@@ -69,7 +73,6 @@ source/main/CMakeFiles/Tinder_main.dir/__/src/server/Server.cpp.o
  source/include/server/Constant.h
  source/include/server/Controllers/FilterController.h
  source/include/server/Controllers/MatchesController.h
- source/include/server/Controllers/PlusController.h
  source/include/server/Controllers/UserController.h
  source/include/server/RequestParser.h
  source/include/server/Response.h
@@ -116,7 +119,6 @@ source/main/CMakeFiles/Tinder_main.dir/main.cpp.o
  source/include/database/DataBase.h
  source/include/server/Constant.h
  source/include/server/Controllers/FilterController.h
- source/include/server/Controllers/PlusController.h
  source/include/server/Controllers/UserController.h
  source/include/server/RequestParser.h
  source/include/server/Response.h
