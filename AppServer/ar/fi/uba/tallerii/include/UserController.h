@@ -15,10 +15,12 @@
 #include "Constant.h"
 #include <RequestParser.h>
 #include "CandidatesService.h"
+#include <thread>
 
 class UserController {
 public:
     UserController(UserService user_service);
+    virtual ~UserController();
     virtual void handleLogin(RequestParser requestParser,Response response);
     virtual void handleRegistration(RequestParser requestParser, Response response);
     virtual std::string handleGetUserInfo(RequestParser requestParser, Response response, bool send);
@@ -33,6 +35,7 @@ public:
 
 private:
     UserService userService;
+    std::thread* postInterestsThread;
     Json::Reader reader;
     Json::FastWriter fastWriter;
     std::string fakeResponseForUserMatches();
@@ -44,6 +47,7 @@ private:
     Json::Value makeBodyForShowCandidatesResponse(Json::Value userData, std::string genderOfMyInterest, const std::string genderOfInterest, Json::Value myArrayOfInterests);
     bool isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests);
     void postInterests(const Json::Value root);
+    void rest(Json::Value &event, Json::Value &root, Response &response);
     std::string getUserTo(const std::string body);
     std::string getErrorResponseBody();
     std::string getSucceedResponseBody();

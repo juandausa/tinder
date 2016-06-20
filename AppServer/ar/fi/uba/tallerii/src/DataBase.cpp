@@ -2,8 +2,14 @@
 // Copyright 2016 FiUBA
 //
 
+#include <unordered_map>
 #include <string>
+#include <iostream>
 #include "DataBase.h"
+#include <map>
+
+using namespace std;
+typedef std::map<std::string, std::string> registers;
 
 DataBase :: DataBase(const std::string & full_path) {
     rocksdb::Options options;
@@ -52,6 +58,21 @@ bool DataBase::remove(const std::string key) {
     rocksdb::Status delete_opreation_result =  database->Delete(rocksdb::WriteOptions(), key);
     return delete_opreation_result.ok();
 }
+
+registers* DataBase::getAll() {
+    rocksdb::Iterator* it = database->NewIterator(rocksdb::ReadOptions());
+    registers* all;
+    all = new registers();
+    for (it->SeekToFirst(); it->Valid(); it->Next()) {
+        all->emplace(it->key().ToString(), it->value().ToString());
+        cout << it->key().ToString() << ": " << it->value().ToString() << endl;
+    }
+    //assert(it->status().ok()); // Check for any errors found during the scan
+    delete it;
+    return all;
+};
+
+
 
 DataBase :: ~DataBase() {
     if (this->is_open()) {

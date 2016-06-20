@@ -30,6 +30,7 @@ public:
     static std::string messagesPrefix;
     static std::string distancePrefix;
     static std::string showGenderPrefix;
+    static std::string lastMessagesPrefix;
 
 private:
     Constant();

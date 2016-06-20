@@ -25,3 +25,4 @@ char Constant :: messagesSeparator = ';';
 std::string Constant :: messagesPrefix = "messages-";
 std::string Constant :: distancePrefix = "distance-";
 std::string Constant :: showGenderPrefix = "showGender-";
+std::string Constant :: lastMessagesPrefix = "lastmessage-";

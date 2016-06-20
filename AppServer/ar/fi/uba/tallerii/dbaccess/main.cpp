@@ -8,6 +8,7 @@
 #include <ctime>
 #include <fstream>
 #include <cstdlib>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -44,6 +45,16 @@ void clearDatabase(DataBase *database) {
     }
 }
 
+
+void getAll(DataBase *dataBase) {
+    std::map<std::string, std::string>* allData = dataBase->getAll();
+    for ( auto it = allData->begin(); it != allData->end(); it++ ) {
+        cout << it->first << ": " << it->second << endl;
+    }
+    delete allData;
+}
+
+
 int main(int argc, char **args) {
     google::SetLogDestination(google::GLOG_INFO, "/tmp/dbaccess.log");
     google::SetLogDestination(google::GLOG_ERROR, "");
@@ -63,6 +74,8 @@ int main(int argc, char **args) {
             std::getline(std::cin, key);
             if (key.compare("exit") == 0) {
                 break;
+            } else if (key.compare("all") == 0) {
+                getAll(&db);
             } else if (key.compare("clear") == 0) {
                 clearDatabase(&db);
             } else {

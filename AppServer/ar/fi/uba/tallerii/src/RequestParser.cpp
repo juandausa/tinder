@@ -72,9 +72,9 @@ bool RequestParser::isAddDislikeRequest() {
 }
 
 bool RequestParser::isAddMessagesRequest() {
-    return (this->uri == "/message" && this->method == "POST");
+    return (this->uri == "/sendmessage" && this->method == "POST");
 }
 
 bool RequestParser::isGetMessagesRequest() {
-    return (this->uri == "/message" && this->method == "GET");
+    return (this->uri == "/getmessage" && this->method == "POST");
 }
