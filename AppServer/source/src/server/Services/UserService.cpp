@@ -117,7 +117,16 @@ bool UserService::addLike(const std::string fromUserId, const std::string toUser
     if (this->database->is_open()) {
         if (!this->hasLike(fromUserId, toUserId)) {
             std::string previousLikes("");
+            std::string countLikes("0");
             this->database->get(Constant::likes_prefix + fromUserId, &previousLikes);
+            if (this->database->get(Constant::count_likes_prefix + toUserId, &countLikes) == false) {
+                this->database->set(Constant::count_likes_prefix + toUserId, countLikes);
+            } else {
+                int count = atoi(countLikes.c_str()) + 1;
+                std::ostringstream countStream;
+                countStream << count;
+                this->database->set(Constant::count_likes_prefix + toUserId, countStream.str());
+            }
             bool result;
             if (previousLikes.length() != 0) {
                 previousLikes += Constant::likes_separator;
@@ -150,6 +159,12 @@ std::vector<std::string> UserService::getLikes(const std::string userId) {
 
     std::vector<std::string> likes;
     return likes;
+}
+
+std::string UserService::getCountLikes(const std::string userId) {
+    std::string countLikes = "0";
+    this->database->get(Constant::count_likes_prefix + userId, &countLikes);
+    return countLikes;
 }
 
 std::vector<std::string> UserService::getMatches(const std::string userId) {
@@ -231,6 +246,49 @@ bool UserService::hasDislike(const std::string fromUserId, const std::string toU
     }
 
     return false;
+}
+
+bool UserService::setDiscoveringDistance(const std::string appUserId, const std::string discoveringDistance) {
+    if (this->database->is_open()) {
+        return this->database->set(Constant::distancePrefix + appUserId, discoveringDistance);
+    }
+    return false;
+}
+
+bool UserService::setShowGender(const std::string appUserId, const std::string showGender) {
+    if (this->database->is_open()) {
+        return this->database->set(Constant::showGenderPrefix + appUserId, showGender);
+    }
+    return false;
+}
+
+
+std::string UserService :: getShowGender(const std::string appUserId) {
+    std::string showGender = "";
+    if (!this->database->is_open()) {
+        LOG(WARNING) << "The database is closed";
+        return "";
+    }
+
+    if (!this->database->get(Constant::showGenderPrefix + appUserId, &showGender)) {
+        LOG(WARNING) << "Filters for user: '" << appUserId << "' were not found.";
+        return "";
+    }
+    return showGender;
+}
+
+std::string UserService :: getDiscoveringDistance(const std::string appUserId) {
+    std::string discoveringDistance = "";
+    if (!this->database->is_open()) {
+        LOG(WARNING) << "The database is closed";
+        return "";
+    }
+
+    if (!this->database->get(Constant::distancePrefix + appUserId, &discoveringDistance)) {
+        LOG(WARNING) << "Filters for user: '" << appUserId << "' were not found.";
+        return "0";
+    }
+    return discoveringDistance;
 }
 
 UserService::~UserService() {

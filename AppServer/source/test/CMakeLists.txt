@@ -40,6 +40,7 @@ FILE(GLOB CPP_SOURCE "../src/server/*.cpp"
 						"../src/server/Controllers/*.cpp" 
 						"../src/server/Services/*.cpp" 
 						"../src/database/*.cpp"
+						"../src/resources/*.cpp"
 						"../src/utils/*.cpp")
 
 

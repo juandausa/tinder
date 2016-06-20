@@ -2,22 +2,24 @@
 
 
 void UserLoginController::operation(Request &request, Response &response) {
-    std::cout << "handle_login" << std::endl;
+    log->writeAndPrintLog("UserLoginController", Log::INFO);
     std::string userId = request.getResourceId();
-    LOG(INFO) << "Proccesing login for user: '" << userId << "'";
+    log->writeAndPrintLog(std::string("Proccesing login for user: ' ") + userId + std::string("'"), Log::INFO);
     if (this->userService.isUserRegistered(userId)) {
         response.SetCode(200);
         Json::Value event = this->makeBodyAndTokenForLoginResponse(userId);
         std::string data = fastWriter.write(event);
         response.SetBody(data);
         response.Send();
-        LOG(INFO) << "Login succeeded for user: '" << userId<< "'";
+        log->writeAndPrintLog(std::string("Login succeeded for user: ' ") + userId + std::string("'"), Log::INFO);
     } else {
         response.SetCode(304);
         response.Send();
-        LOG(INFO) << "Login failed for user: '" << userId<< "'";
+        log->writeAndPrintLog(std::string("Login failed for user: ' ") + userId + std::string("'"), Log::WARNING);
     }
 }
+
+
 
 Json::Value UserLoginController::makeBodyAndTokenForLoginResponse(const std::string userId) {
     Json::Value event;

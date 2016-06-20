@@ -5,6 +5,7 @@ void AddDisLikeController::operation(Request &request, Response &response) {
     std::string fromUserId = request.getResourceId();
     std::string toUserId = this->getUserTo(request.getBody());
     LOG(INFO) << "Adding dislike from user: '" << fromUserId << "' to user: '" << toUserId << "'";
+    
     if ((fromUserId.length() == 0) || (toUserId.length() == 0)) {
         response.SetCode(500);
         response.SetBody("Bad Request, no fromUserId or toUserId detected.");

@@ -30,6 +30,14 @@ public:
     static std::string GLOG_ERROR_PATH;
     static std::string GLOG_FATAL_PATH;
     static std::string GLOG_WARNING_PATH;
+    static std::string messageComponentDivider;
+    static char messagesSeparator;
+    static std::string messagesPrefix;
+    static std::string distancePrefix;
+    static std::string showGenderPrefix;
+    static std::string lastMessagesPrefix;
+    static std::string getUsersUrl;
+    static std::string count_likes_prefix;
 private:
     Constant();
 };

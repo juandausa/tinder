@@ -13,26 +13,42 @@ static std::string validateGenderOrReturnDefault(std::string gender) {
     if (gender.compare(Constant::female) == 0) {
         return gender;
     }
-
     return Constant::male;
 }
 
+UserRegisterController::UserRegisterController(){
+    postInterestsThread = NULL;
+}   
+
+
+UserRegisterController::~UserRegisterController(){
+    if (postInterestsThread) {
+        delete postInterestsThread;
+    }
+    postInterestsThread = NULL;
+}
+
+
 void UserRegisterController::operation(Request &request, Response &response) {
-    std::cout << "handleRegistration" << std::endl;;
+    log->writeAndPrintLog("UserRegisterController", Log::INFO);
     Json::Value root;
     Json::Value responseShared;
     std::string readBuffer;
+
     bool parsingSuccessful = reader.parse(request.getBody(), root, true);
     if (!parsingSuccessful) {
         std::cout  << "Failed to parse configuration\n";
-        return;
+        response.SetCode(500);
+        response.SetBody(this->getErrorResponseBody());
+        response.Send();
     }
 
     Json::Value event = this->makeBodyForRegistrationPost(root);
     std::string appUserId = root.get("user_id", "").asString();
-
     std::string data = fastWriter.write(event);
-    postInterests(event);
+    // Lanzo thread de posteo de intereses
+    postInterestsThread = new std::thread(&UserRegisterController::postInterests, this, event);
+
     CurlWrapper curlWrapper = CurlWrapper();
     std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
 //    std::string url = "localhost:5000/users";
@@ -54,10 +70,13 @@ void UserRegisterController::operation(Request &request, Response &response) {
         response.Send();
         LOG(INFO) << "Registration succeeded";
     } else {
-        response.SetCode(304);
+        response.SetCode(500);
+        response.SetBody(this->getErrorResponseBody());
         response.Send();
         LOG(INFO) << "Registration failed";
     }
+    postInterestsThread->detach();
+    std::cout << "Thread Join" << std::endl;
 }
 
 Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root) {
@@ -127,34 +146,60 @@ Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root
     return event;
 }
 
-Json::Value UserRegisterController::makeBodyAndTokenForRegistrationResponse(const std::string userId) {
+
+Json::Value UserRegisterController
+::makeBodyAndTokenForRegistrationResponse(const std::string userId) {
     Json::Value event;
     std::string token = this->userService.getSecurityToken(userId);
     event["user"]["userId"] = userId;
     event["user"]["token"] = token;
+    event["status_code"] = 200;
     return event;
 }
 
 void UserRegisterController::postInterests(Json::Value root) {
-    std::string readBuffer;
-    Json::Value interests = root["user"]["interests"];
+    std::cout << "Posting Interest" << std::endl;
+    std::vector<std::string*> readBuffers;
+    std::vector<CurlWrapper*> curlWrappers;
+    std::vector<Json::FastWriter*> writers;
+    Json::Value original_interests = root["user"]["interests"];
+    Json::Value interests(original_interests);
+    CurlWrapper curlWrapper;
+    std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/interests";
+    // std::string url = "10.1.86.224:5000/interests";
+    // std::string url = "190.244.18.3:5000/interests";
     for (unsigned int i = 0; i < interests.size(); i++) {
         Json::Value postData;
         postData["interest"] = interests[i];
         postData["metadata"]["version"] = "0.1";
         postData["metadata"]["count"] = "1";
-        std::string data = fastWriter.write(postData);
-        std::cout << data << std::endl;
-        CurlWrapper curlWrapper = CurlWrapper();
+        Json::FastWriter* writer = new Json::FastWriter();
+        std::string data = writer->write(postData);
+        writers.push_back(writer);
+        CurlWrapper* curlWrapper = new CurlWrapper();
         std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/interests";
 //        std::string url = "10.1.86.224:5000/interests";
 //        std::string url = "190.244.18.3:5000/interests";
-        curlWrapper.set_post_url(url);
-        curlWrapper.set_post_data(data, readBuffer);
-        bool res = curlWrapper.perform_request();
+        curlWrapper->set_post_url(url);
+        std::string* readBuffer = new std::string();
+        readBuffers.push_back(readBuffer);
+        curlWrapper->set_post_data(data, readBuffer);
+        bool res = curlWrapper->perform_request();
         if (!res) {
             std::cout << "Failed to post new interests\n";
+            return;
         }
-        curlWrapper.clean();
+        curlWrappers.push_back(curlWrapper);
+    }
+
+    for (size_t i = 0; i < readBuffers.size(); i++) {
+        // std::string* readBuff = readBuffers.back();
+        // readBuffers.pop_back();
+        CurlWrapper* wrapper = curlWrappers.back();
+        curlWrappers.pop_back();
+        wrapper->clean();
+        // delete readBuff;
+        delete wrapper;
+        // FALTA DESTRUIR LOS WRITERS
     }
 }

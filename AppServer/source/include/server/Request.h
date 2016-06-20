@@ -45,6 +45,8 @@ private:
     bool isMatchesGetRequest();
     bool isAddLikeRequest();
     bool isAddDislikeRequest();
+    bool isAddMessagesRequest();
+    bool isGetMessagesRequest();
 };
 
 

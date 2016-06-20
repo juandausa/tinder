@@ -2,5 +2,5 @@ Mongoose/*
 AppServer/.idea/*
 AppServer/CMakeFiles/*
 AppServer/build/*
-AppServer/source/test/CMakeFiles/*
-AppServer/source/main/CMakeFiles/*
+AppServer/source/test/CMakeFiles/*/*
+AppServer/source/main/CMakeFiles/*/*

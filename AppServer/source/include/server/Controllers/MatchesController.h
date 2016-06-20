@@ -1,21 +1,28 @@
 //
-// Copyright 2016 FiUBA
 //
 
 #ifndef TINDER_MATCHCONTROLLER_H
 #define TINDER_MATCHCONTROLLER_H
+
+#include "GenericController.h"
 #include "MatchesService.h"
 #include "UserService.h"
-#include "Request.h"
-#include "Response.h"
+#include "MessagesService.h"
 
-class MatchesController {
+class MatchesController: public GenericController {
+
 public:
-    MatchesController(MatchesService matches_service, UserService user_service);
-    void handleGetCandidates(Request Request, Response response);
+    void operation(Request &request, Response &response);
+
 private:
     MatchesService matchesService;
     UserService userService;
+    MessagesService messagesService;
+    // std::string getErrorResponseBody();
+    std::string makeBodyForShowMatchesResponse(std::string userId);
+    Json::Value getUsersFromSharedServer();
+    Json::Value getMessages(std::string userId, std::string appUserId);
+    
 };
 
 

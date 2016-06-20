@@ -9,11 +9,13 @@
 #include "UserLoginController.h"
 #include "UserRegisterController.h"
 #include "GetCandidatesController.h"
-#include "GetMatchesController.h"
 #include "GetUserInfoController.h"
 #include "UpdateUserInfoController.h"
 #include "GetFiltersController.h"
 #include "UpdateFiltersController.h"
+#include "MatchesController.h"
+#include "AddMessagesController.h"
+#include "GetMessagesController.h"
 
 Request::Request(Response &response):response(response){}
 
@@ -49,11 +51,12 @@ std::string Request::getBody() {
 }
 
 void Request::execute(){
+    std::cout << this->uri << this->method << std::endl;
+    
     this->genericController->operation(*this,response);
 }
 
 void Request::handleOperation(){
-    
     if (this->isUserLoginRequest()) {
         this->genericController = new UserLoginController();
     } else if (this->isUserRegisterRequest()) {
@@ -67,13 +70,17 @@ void Request::handleOperation(){
     } else if (this->isFiltersPostRequest()) {
         this->genericController = new UpdateFiltersController();
     } else if (this->isMatchesGetRequest()) {
-        this->genericController = new GetMatchesController();
+        this->genericController = new MatchesController();
     } else if (this->isFiltersGetRequest()) {
         this->genericController = new GetFiltersController();
     } else if (this->isAddLikeRequest()) {
         this->genericController = new AddLikeController();
     } else if (this->isAddDislikeRequest()) {
         this->genericController = new AddDisLikeController();
+    } else if (this->isAddMessagesRequest()) {
+        this->genericController = new AddMessagesController();
+    } else if (this->isGetMessagesRequest()) {
+        this->genericController = new GetMessagesController();
     }
 }
 
@@ -115,4 +122,12 @@ bool Request::isAddLikeRequest() {
 
 bool Request::isAddDislikeRequest() {
     return (this->uri == "/dislikes" && this->method == "POST");
+}
+
+bool Request::isAddMessagesRequest() {
+    return (this->uri == "/sendmessage" && this->method == "POST");
+}
+
+bool Request::isGetMessagesRequest() {
+    return (this->uri == "/getmessage" && this->method == "POST");
 }

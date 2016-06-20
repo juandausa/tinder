@@ -28,13 +28,9 @@ std::vector<std::string> convert_parameters(int argc, char** args) {
     return parameters;
 }
 
-void initLog(char** args){
-    
-}
-
 int main(int argc, char** args) {
-    DataBase* db = DataBase::getInstance();
-    Log* log = Log::getInstance();
+    DataBase *db = DataBase::getInstance();
+    Log *log = Log::getInstance();
     log->init(args[0]);
     
     if (!db->open(Constant::database_path)){
