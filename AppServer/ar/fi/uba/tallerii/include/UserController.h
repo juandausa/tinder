@@ -26,7 +26,6 @@ public:
     virtual std::string handleGetUserInfo(RequestParser requestParser, Response response, bool send);
     virtual void handleUpdateUserInfo(RequestParser requestParser, Response response);
     virtual void handleGetCandidates(RequestParser requestParser, Response response);
-    virtual void handleGetMatches(RequestParser requestParser, Response response);
     virtual void handleAddLike(RequestParser requestParser, Response response);
     virtual void handleAddDislike(RequestParser requestParser, Response response);
     virtual void handle_update_filters(RequestParser requestParser, Response response);

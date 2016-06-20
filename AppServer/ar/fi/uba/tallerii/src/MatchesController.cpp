@@ -5,23 +5,31 @@
 #include "MatchesController.h"
 #include <string>
 
-MatchesController ::MatchesController(MatchesService matches_service, UserService user_service) :
+MatchesController::MatchesController(MatchesService matches_service, UserService user_service) :
         matchesService(matches_service), userService(user_service) {
 }
 
-void MatchesController :: handleGetCandidates(RequestParser requestParser, Response response) {
-//    std::string userId = requestParser.getResourceId();
-//    LOG(INFO) << "Proccesing show candidates for user: '" << userId << "'";
-//    if (this->userService.isUserRegistered(userId)) {
-//        response.SetCode(200);
-//        response.SetBody("{ \"response\": \"DummyUserRegistered\" }");
-//        response.Send();
-//        LOG(INFO) << "Show Candidates succeeded for user: '" << userId<< "'";
-//    } else {
-//        response.SetCode(400);
-//        response.SetBody("{ \"response\": \"DummyUserNotRegistered\" }");
-//        response.Send();
-//        LOG(INFO) << "Show Candidates failed for user: '" << userId<< "'";
-//    }
+void MatchesController::handleGetMatches(RequestParser requestParser, Response response) {
+    /*
+     * Pedir todos los usuarios.
+     * Filtrar los matcheados
+     * Agregarle la lista de mensajes
+     */
+
+    std::string userId = requestParser.getResourceId();
+    LOG(INFO) << "Proccesing show matches for user: '" << userId << "'";
+    if (!this->userService.isUserRegistered(userId)) {
+        response.SetCode(500);
+        response.SetBody(this->getErrorResponseBody());
+        response.Send();
+        LOG(INFO) << "Show Candidates has returned no users for user: '" << userId<< "'";
+        return;
+    }
+}
+
+std::string MatchesController::getErrorResponseBody() {
+    Json::Value errorResponse;
+    errorResponse["matches"] = Json::arrayValue;
+    return this->fastWriter.write(errorResponse);
 }
 
