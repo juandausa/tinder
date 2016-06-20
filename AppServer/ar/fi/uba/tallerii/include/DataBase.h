@@ -7,6 +7,9 @@
 
 #include <rocksdb/db.h>
 #include <string>
+#include <map>
+
+using namespace std;
 
 class DataBase {
 public:
@@ -14,6 +17,7 @@ public:
     bool is_open();
     bool set(const std::string key, const std::string value);
     bool get(const std::string key, std::string *value);
+    std::map<std::string, std::string>* getAll();
     bool remove(const std::string key);
     ~DataBase();
 
