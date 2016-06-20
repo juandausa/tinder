@@ -43,6 +43,7 @@ public:
 
 private:
     Json::Reader reader;
+    Json::FastWriter fastWriter;
     DataBase* database;
     bool addMatch(const std::string fromUserId, const std::string toUserId);
 };
