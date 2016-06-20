@@ -71,6 +71,12 @@ std::vector<Message> convertInVectorOfMessages(std::string in) {
 }
 
 std::vector<Message> MessagesService::getMessages(std::string userA, std::string userB) {
+    if (!this->database->is_open()) {
+        LOG(WARNING) << "Getting messages. The database is closed.";
+        std::vector<Message> empty;
+        return empty;
+    }
+
     LOG(INFO) << "Getting messages between users '" + userA + "' and '" + userB + "'.";
     std::string messages;
     std::string messagesKeySender = Constant::messagesPrefix + userA + userB;
@@ -86,6 +92,12 @@ std::vector<Message> MessagesService::getMessages(std::string userA, std::string
 }
 
 Message MessagesService::getLastMessage(std::string sender, std::string reciever) {
+    if (!this->database->is_open()) {
+        LOG(WARNING) << "Getting last message. The database is closed.";
+        Message empty;
+        return empty;
+    }
+
     LOG(INFO) << "Getting messages between users '" + sender + "' and '" + reciever + "'.";
     std::string messages;
     std::string lastMessageKey = Constant::lastMessagesPrefix + sender + reciever;
