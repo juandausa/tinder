@@ -266,7 +266,8 @@ bool UserService :: update_filters(const std::string user_id, const std::string 
     Json::Value body;
     reader.parse(filters, body, true);
     std::string showGender = body.get("show_gender", "").asString();
-    std::string discoveringDistance = body.get("discovering_distance", "").asString();
+    std::string discoveringDistance = fastWriter.write(body.get("discovering_distance", ""));
+    discoveringDistance = discoveringDistance.substr(0, discoveringDistance.size() - 1);
     if (this->database->is_open()) {
         return (this->database->set(Constant::distancePrefix + user_id, discoveringDistance)) &&
                (this->database->set(Constant::showGenderPrefix + user_id, showGender));
