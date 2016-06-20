@@ -3,6 +3,7 @@
 //
 
 #include "UserController.h"
+#include "Converter.h"
 #include <time.h>
 #include <string>
 #include <unordered_map>
@@ -18,34 +19,6 @@ UserController :: ~UserController() {
         delete postInterestsThread;
     }
     postInterestsThread = NULL;
-}
-
-std::string validateTimeOrReturnDefault(std::string time) {
-    struct tm convertedTime;;
-    if (strptime(time.c_str(), "%d/%m/%Y", &convertedTime)) {
-        return time;
-    } else {
-        return Constant::defaultBirthday;
-    }
-}
-
-std::string validateGenderOrReturnDefault(std::string gender) {
-    if (gender.compare(Constant::female) == 0) {
-        return gender;
-    }
-
-    return Constant::male;
-}
-
-std::string calculateAge(std::string birthday) {
-    struct tm convertedTime, localTime;
-    time_t t = time(NULL);
-    localtime_r(&t, &localTime);
-    if (strptime(birthday.c_str(), "%d/%m/%Y", &convertedTime)) {
-        return static_cast<std::ostringstream*>(&(std::ostringstream() << (localTime.tm_year - convertedTime.tm_year)))->str();
-    }
-
-    return Constant::defaultAge;
 }
 
 void UserController :: handleLogin(RequestParser requestParser, Response response) {
@@ -283,8 +256,8 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
     std::string name = root.get("name", "").asString();
     std::string alias = root.get("alias", "").asString();
     std::string email = root.get("email", "").asString();
-    std::string birthday = validateTimeOrReturnDefault(root.get("birthday", "").asString());
-    std::string gender = validateGenderOrReturnDefault(root.get("gender", Constant::male).asString());
+    std::string birthday = Converter::validateTimeOrReturnDefault(root.get("birthday", "").asString());
+    std::string gender = Converter::validateGenderOrReturnDefault(root.get("gender", Constant::male).asString());
     std::string photo_profile = root.get("photo_profile", "").asString();
     Json::Value music = root["interests"]["music"];
     Json::Value movies = root["interests"]["movies"];
@@ -434,9 +407,9 @@ std::string UserController :: makeBodyForUserInfoResponse(const std::string appU
     rootApp["user_id"] = appUserId;
     rootApp["name"] = rootShared["user"].get("name", "");
     rootApp["alias"] = rootShared["user"].get("alias", "");
-    std::string birthday = validateTimeOrReturnDefault(rootShared["user"].get("birthday", "").asString());
+    std::string birthday = Converter::validateTimeOrReturnDefault(rootShared["user"].get("birthday", "").asString());
     rootApp["birthday"] = birthday;
-    rootApp["age"] = calculateAge(birthday);
+    rootApp["age"] = Converter::calculateAge(birthday);
     rootApp["gender"] = rootShared["user"].get("gender", "male");
     rootApp["photo_profile"] = rootShared["user"].get("photo_profile", "");
     Json::Value interests = rootShared["user"].get("interests", "");
@@ -493,10 +466,10 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
             Json::Value arrayInterests;
             user["user_id"] = appUserId;
             user["alias"] = users[i]["user"].get("alias", "");
-            std::string birthday = validateTimeOrReturnDefault(users[i]["user"].get("birthday", "").asString());
+            std::string birthday = Converter::validateTimeOrReturnDefault(users[i]["user"].get("birthday", "").asString());
             user["birthday"] = birthday;
-            user["age"] = calculateAge(birthday);
-            user["gender"] = validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString());
+            user["age"] = Converter::calculateAge(birthday);
+            user["gender"] = Converter::validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString());
             std::cout << fastWriter.write(users[i]["user"]) << std::endl;
             user["photo_profile"] = url + "/" + sharedUserId + "/photo";
             Json::Value interests = users[i]["user"].get("interests", "");

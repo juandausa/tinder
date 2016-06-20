@@ -4,7 +4,9 @@
 
 #include "MatchesController.h"
 #include "CurlWrapper.h"
+#include "Converter.h"
 #include <string>
+#include <vector>
 
 MatchesController::MatchesController(MatchesService matches_service, UserService user_service,
                                      MessagesService messages_service) :
@@ -20,13 +22,13 @@ void MatchesController::handleGetMatches(RequestParser requestParser, Response r
 
     std::string userId = requestParser.getResourceId();
     LOG(INFO) << "Proccesing show matches for user: '" << userId << "'";
-    /*if (!this->userService.isUserRegistered(userId)) {
+    if (!this->userService.isUserRegistered(userId)) {
         response.SetCode(500);
         response.SetBody(this->getErrorResponseBody());
         response.Send();
         LOG(INFO) << "Show matches has returned no users for user: '" << userId<< "'";
         return;
-    }*/
+    }
 
     response.SetCode(200);
     response.SetBody(this->makeBodyForShowMatchesResponse(userId));
@@ -39,14 +41,6 @@ std::string MatchesController::getErrorResponseBody() {
     return this->fastWriter.write(errorResponse);
 }
 
-std::string MatchesController::intToString(int value) {
-    std::ostringstream oss;
-    // Works just like cout
-    oss << value;
-    // Return the underlying string
-    return oss.str();
-}
-
 std::string MatchesController::makeBodyForShowMatchesResponse(std::string userId) {
     Json::Value result;
     Json::Value matches;
@@ -56,7 +50,7 @@ std::string MatchesController::makeBodyForShowMatchesResponse(std::string userId
     Json::Value users = this->getUsersFromSharedServer();
     for (unsigned int i = 0; i < users.size(); i++) {
         Json::Value user = users[i]["user"];
-        std::string sharedUserId = intToString(user.get("id", "").asInt());
+        std::string sharedUserId = Converter::intToString(user.get("id", "").asInt());
         std::string appUserId = this->userService.getAppUserId(sharedUserId);
         user["userId"] = appUserId;
         user["messages"] = this->getMessages(userId, appUserId);

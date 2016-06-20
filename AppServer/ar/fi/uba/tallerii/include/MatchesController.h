@@ -25,7 +25,6 @@ private:
     std::string getErrorResponseBody();
     std::string makeBodyForShowMatchesResponse(std::string userId);
     Json::Value getUsersFromSharedServer();
-    std::string intToString(int value);
     Json::Value getMessages(std::string userId, std::string appUserId);
 };
 
