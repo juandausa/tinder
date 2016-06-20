@@ -535,14 +535,14 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
             user["birthday"] = birthday;
             user["age"] = calculateAge(birthday);
             user["gender"] = validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString());
-            user["photo_profile"] = users[i]["user"].get("photo_profile", "");
+            std::cout << fastWriter.write(users[i]["user"]) << std::endl;
+            user["photo_profile"] = url + "/" + sharedUserId + "/photo";
             Json::Value interests = users[i]["user"].get("interests", "");
             /* TODO: Cuando se solucione el problema en CandidatesService usar esto*/
 //            if (candidatesService.filterCandidates(userData,user, interests,myArrayOfInterests)) {
 //                user["interests"] = candidatesService.getArrayInterests();
 //                arrayUsers.append(user);
 //            }
-//            std::cout << "INTERESES:" << fastWriter.write(interests);
             for (unsigned int j = 0; j < interests.size(); j++) {
                 arrayInterests.append(interests[j]["value"]);
                 if (isInMyArrayOfInterest(interests[j]["value"], myArrayOfInterests)) {
