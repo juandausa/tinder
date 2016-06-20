@@ -14,19 +14,13 @@ MatchesController::MatchesController(MatchesService matches_service, UserService
 }
 
 void MatchesController::handleGetMatches(RequestParser requestParser, Response response) {
-    /*
-     * Pedir todos los usuarios.
-     * Filtrar los matcheados
-     * Agregarle la lista de mensajes
-     */
-
     std::string userId = requestParser.getResourceId();
     LOG(INFO) << "Proccesing show matches for user: '" << userId << "'";
     if (!this->userService.isUserRegistered(userId)) {
         response.SetCode(500);
         response.SetBody(this->getErrorResponseBody());
         response.Send();
-        LOG(INFO) << "Show matches has returned no users for user: '" << userId<< "'";
+        LOG(INFO) << "Show matches has returned no users for user: '" << userId << "'";
         return;
     }
 
@@ -52,6 +46,9 @@ std::string MatchesController::makeBodyForShowMatchesResponse(std::string userId
         Json::Value user = users[i]["user"];
         std::string sharedUserId = Converter::intToString(user.get("id", "").asInt());
         std::string appUserId = this->userService.getAppUserId(sharedUserId);
+        if (!this->userService.hasMatch(userId, appUserId)) {
+            continue;
+        }
         user["userId"] = appUserId;
         user["messages"] = this->getMessages(userId, appUserId);
         user.removeMember("id");
