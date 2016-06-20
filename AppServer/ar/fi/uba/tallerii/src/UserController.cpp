@@ -191,7 +191,7 @@ void UserController :: handleGetCandidates(RequestParser requestParser, Response
         std::string myGender = fastWriter.write(rootShared.get("gender", "male"));
         myGender = myGender.substr(1, myGender.size()-3);
         myArrayOfInterests = rootShared.get("interests", "");
-        std::string genderOfMyInterest = genderOfMyPreference(myArrayOfInterests);
+        std::string genderOfMyInterest = this->userService.getShowGender(userId);
         Json::Value body = makeBodyForShowCandidatesResponse(rootShared, myGender, genderOfMyInterest, myArrayOfInterests);
         std::string sendBody = fastWriter.write(body);
         if (sendBody.compare("null\n") == 0) {
@@ -519,15 +519,17 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
         int interestInCommon = 0;
         std::string gender = fastWriter.write(users[i]["user"].get("gender", "male"));
         gender = gender.substr(1, gender.size()-3);
-        std::string genderOfTheirInterest = Constant::male;
-        if (genderOfMyInterest.compare("male|female") == 0 || genderOfMyInterest.compare(gender) == 0) {
+        std::string sharedUserId = fastWriter.write(users[i]["user"].get("id", ""));
+        sharedUserId = sharedUserId.substr(0, sharedUserId.size()-1);
+        std::string appUserId = this->userService.getAppUserId(sharedUserId);
+        std::string genderOfTheirInterest = this->userService.getShowGender(appUserId);
+        genderOfMyInterest = "male";
+        if (genderOfMyInterest.compare("male|female") == 0 ||
+                (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare(myGender) == 0) ||
+                (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare("male|female") == 0)) {
             Json::Value user;
             Json::Value arrayInterests;
-            std::string sharedUserId = fastWriter.write(users[i]["user"].get("id", ""));
-            sharedUserId = sharedUserId.substr(0, sharedUserId.size()-1);
-            std::string appUserId = this->userService.getAppUserId(sharedUserId);
             user["user_id"] = appUserId;
-            genderOfTheirInterest = this->userService.getShowGender(appUserId);
             user["alias"] = users[i]["user"].get("alias", "");
             std::string birthday = validateTimeOrReturnDefault(users[i]["user"].get("birthday", "").asString());
             user["birthday"] = birthday;
@@ -548,7 +550,7 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
                 }
             }
             user["interests"] = arrayInterests;
-            if ((interestInCommon >= 1) && (genderOfTheirInterest.compare(myGender) == 0)) {
+            if (interestInCommon >= 1) {
                 usersData.emplace(sharedUserId, user);
                 usersLikes.emplace(sharedUserId, this->userService.getCountLikes(sharedUserId));
             }
