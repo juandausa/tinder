@@ -9,6 +9,7 @@ var localhostString = "postgres://"+config.postgres.user+":"+config.postgres.pas
 var port = (process.env.PORT || 5000); // config.express.port
 var connectionString = (process.env.DATABASE_URL || localhostString);
 var db;
+var url = config.url;
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true})); // for parsing application/x-www-form-urlencoded
@@ -34,18 +35,6 @@ function checkIfUndefined(data, message) {
 		return true;
 	}
 	return false;
-}
-
-/************************************************************************/
-/************************************************************************/
-
-function decodeImage(data, res) {
-	var imageData = new Buffer(data, 'base64');
-	var options = {filename: "profile"};
-	base64.base64decoder(imageData, options, function (err, saved) {
-		if (checkForError(err, res, "Error storing photo")) return;
-		res.send(saved);  
-	});	
 }
 
 /************************************************************************/
@@ -106,6 +95,7 @@ app.get('/users', function (req, res) {
 		for (i = 0; i < users.length; i++) {
 			var data = users[i].data;
 			data.id = users[i].id;
+			data.photo_profile = url + "/users/"+ String(data.id) + "/photo"
 			response.users.push({user: data});
 		}
 		response.metadata = getMetadata(users);
@@ -137,8 +127,13 @@ app.get('/users/:user_id', function (req, res) {
 app.get('/users/:user_id/photo', function (req, res) {
 	db.users.findOne({id: req.params.user_id}, function(err, user) { 
 		if (checkForError(err, res, "Error downloading photo")) return;
-		if (user !== undefined)
-			decodeImage(user.data.photo_profile, res);
+		if (user !== undefined) {
+			var data = user.data.photo_profile;
+			var imageData = new Buffer(data, 'base64');
+			res.statusCode = 200;
+			res.setHeader('Content-Type', 'image/jpg');
+			res.end(imageData, 'binary');
+		}	
 	});
 });
 
