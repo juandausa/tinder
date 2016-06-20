@@ -7,8 +7,17 @@
 #include <string>
 #include <unordered_map>
 #include <thread>
+#include <vector>
 
 UserController :: UserController(UserService userService) : userService(userService) {
+    postInterestsThread = NULL;
+}
+
+UserController :: ~UserController() {
+    if (postInterestsThread) {
+        delete postInterestsThread;
+    }
+    postInterestsThread = NULL;
 }
 
 std::string validateTimeOrReturnDefault(std::string time) {
@@ -75,7 +84,7 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     std::string appUserId = root.get("user_id", "").asString();
     std::string data = fastWriter.write(event);
     //Lanzo thread de posteo de intereses
-    std::thread thread(&UserController::postInterests, this, event);
+    postInterestsThread = new std::thread(&UserController::postInterests, this, event);
 
     CurlWrapper curlWrapper = CurlWrapper();
     std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/users";
@@ -103,8 +112,8 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
         response.Send();
         LOG(INFO) << "Registration failed";
     }
+    postInterestsThread->detach();
     std::cout << "Thread Join" << std::endl;
-    thread.join();
 }
 
 void UserController :: handleUpdateUserInfo(RequestParser requestParser, Response response) {
@@ -182,10 +191,10 @@ void UserController :: handleGetCandidates(RequestParser requestParser, Response
         std::string myGender = fastWriter.write(rootShared.get("gender", "male"));
         myGender = myGender.substr(1, myGender.size()-3);
         myArrayOfInterests = rootShared.get("interests", "");
-        std::string genderOfMyInterest = this->userService.getShowGender(userId);
+        std::string genderOfMyInterest = genderOfMyPreference(myArrayOfInterests);
         Json::Value body = makeBodyForShowCandidatesResponse(rootShared, myGender, genderOfMyInterest, myArrayOfInterests);
         std::string sendBody = fastWriter.write(body);
-        if (sendBody.compare("null\n") == 0){
+        if (sendBody.compare("null\n") == 0) {
             sendBody = "{}";
         }
         response.SetCode(200);
@@ -356,7 +365,9 @@ Json::Value UserController::makeBodyForRegistrationPost(Json::Value root) {
 
 void UserController::postInterests(Json::Value root) {
     std::cout << "Posting Interest" << std::endl;
-    std::string readBuffer;
+    std::vector<std::string*> readBuffers;
+    std::vector<CurlWrapper*> curlWrappers;
+    std::vector<Json::FastWriter*> writers;
     Json::Value original_interests = root["user"]["interests"];
     Json::Value interests(original_interests);
     CurlWrapper curlWrapper;
@@ -368,18 +379,35 @@ void UserController::postInterests(Json::Value root) {
         postData["interest"] = interests[i];
         postData["metadata"]["version"] = "0.1";
         postData["metadata"]["count"] = "1";
-        std::string data = fastWriter.write(postData);
-        curlWrapper = CurlWrapper();
-        curlWrapper.set_post_url(url);
-        curlWrapper.set_post_data(data, readBuffer);
-        bool res = curlWrapper.perform_request();
+        Json::FastWriter* writer = new Json::FastWriter();
+        std::string data = writer->write(postData);
+        writers.push_back(writer);
+        CurlWrapper* curlWrapper = new CurlWrapper();
+        std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/interests";
+//        std::string url = "10.1.86.224:5000/interests";
+//        std::string url = "190.244.18.3:5000/interests";
+        curlWrapper->set_post_url(url);
+        std::string* readBuffer = new std::string();
+        readBuffers.push_back(readBuffer);
+        curlWrapper->set_post_data(data, readBuffer);
+        bool res = curlWrapper->perform_request();
         if (!res) {
             std::cout << "Failed to post new interests\n";
             return;
         }
-        curlWrapper.clean();
+        curlWrappers.push_back(curlWrapper);
     }
 
+    for (size_t i = 0; i < readBuffers.size(); i++) {
+        //std::string* readBuff = readBuffers.back();
+        //readBuffers.pop_back();
+        CurlWrapper* wrapper = curlWrappers.back();
+        curlWrappers.pop_back();
+        wrapper->clean();
+        //delete readBuff;
+        delete wrapper;
+        //FALTA DESTRUIR LOS WRITERS
+    }
 }
 
 std::string UserController::fakeResponseForUserMatches() {
@@ -398,7 +426,7 @@ std::string UserController::fakeResponseForUserMatches() {
     match["messages"][0] = message1;
     match["messages"][1] = message2;
     match["messages"][2] = message3,
-    otherMatch["user_id"] = "111";
+            otherMatch["user_id"] = "111";
     otherMatch["alias"] = "Juanita";
     otherMatch["age"] = "32";
     otherMatch["photo_profile"] = "";
@@ -500,9 +528,6 @@ Json::Value UserController::makeBodyForShowCandidatesResponse(Json::Value userDa
             std::string appUserId = this->userService.getAppUserId(sharedUserId);
             user["user_id"] = appUserId;
             genderOfTheirInterest = this->userService.getShowGender(appUserId);
-            if (genderOfTheirInterest.compare(myGender) != 0){
-                continue;
-            }
             user["alias"] = users[i]["user"].get("alias", "");
             std::string birthday = validateTimeOrReturnDefault(users[i]["user"].get("birthday", "").asString());
             user["birthday"] = birthday;
@@ -548,28 +573,28 @@ bool UserController::isInMyArrayOfInterest(Json::Value interest, Json::Value myA
     return false;
 }
 
-//std::string UserController::genderOfMyPreference(Json::Value myArrayOfInterests) {
-//    bool male = false;
-//    bool female = false;
-//    for (unsigned int i = 0; i < myArrayOfInterests.size(); i++) {
-//        if ((fastWriter.write(myArrayOfInterests[i])).compare("male") == 0) {
-//            male = true;
-//        }
-//        if ((fastWriter.write(myArrayOfInterests[i])).compare("female") == 0) {
-//            female = true;
-//        }
-//    }
-//    if (male && female){
-//        return "male|female";
-//    }else if (female){
-//        return "female";
-//    }else{
-//        return "male";
-//    }
-//}
+std::string UserController::genderOfMyPreference(Json::Value myArrayOfInterests) {
+    bool male = false;
+    bool female = false;
+    for (unsigned int i = 0; i < myArrayOfInterests.size(); i++) {
+        if ((fastWriter.write(myArrayOfInterests[i])).compare("male")) {
+            male = true;
+        }
+        if ((fastWriter.write(myArrayOfInterests[i])).compare("female")) {
+            female = true;
+        }
+    }
+    if (male && female) {
+        return "male|female";
+    } else if (female) {
+        return "female";
+    } else {
+        return "male";
+    }
+}
 
 void UserController::onePercentRule(std::unordered_map<string, Json::Value> &usersData, std::unordered_map<string, string> &usersLikes) {
-    if (usersData.size() <= 1){
+    if (usersData.size() <= 1) {
         return;
     }
     std::unordered_map<string, string>::const_iterator iter;
@@ -608,6 +633,7 @@ std::string UserController::getSucceedResponseBody() {
     succeedResponse["status_code"] = 200;
     return this->fastWriter.write(succeedResponse);
 }
+
 
 void UserController::handle_update_filters(RequestParser requestParser, Response response) {
     std::string userId = requestParser.getResourceId();
