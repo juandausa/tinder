@@ -8,14 +8,18 @@
 #include "UserService.h"
 #include "RequestParser.h"
 #include "Response.h"
+#include <string>
 
 class MatchesController {
 public:
     MatchesController(MatchesService matches_service, UserService user_service);
-    virtual void handleGetCandidates(RequestParser requestParser, Response response);
+    virtual void handleGetMatches(RequestParser requestParser, Response response);
 private:
     MatchesService matchesService;
     UserService userService;
+    Json::Reader reader;
+    Json::FastWriter fastWriter;
+    std::string getErrorResponseBody();
 };
 
 
