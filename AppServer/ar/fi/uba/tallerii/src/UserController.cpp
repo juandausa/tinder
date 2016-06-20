@@ -83,7 +83,7 @@ void UserController::handleRegistration(RequestParser requestParser, Response re
     Json::Value event = this->makeBodyForRegistrationPost(root);
     std::string appUserId = root.get("user_id", "").asString();
     std::string data = fastWriter.write(event);
-    //Lanzo thread de posteo de intereses
+    // Lanzo thread de posteo de intereses
     postInterestsThread = new std::thread(&UserController::postInterests, this, event);
 
     CurlWrapper curlWrapper = CurlWrapper();
@@ -399,14 +399,14 @@ void UserController::postInterests(Json::Value root) {
     }
 
     for (size_t i = 0; i < readBuffers.size(); i++) {
-        //std::string* readBuff = readBuffers.back();
-        //readBuffers.pop_back();
+        // std::string* readBuff = readBuffers.back();
+        // readBuffers.pop_back();
         CurlWrapper* wrapper = curlWrappers.back();
         curlWrappers.pop_back();
         wrapper->clean();
-        //delete readBuff;
+        // delete readBuff;
         delete wrapper;
-        //FALTA DESTRUIR LOS WRITERS
+        // FALTA DESTRUIR LOS WRITERS
     }
 }
 

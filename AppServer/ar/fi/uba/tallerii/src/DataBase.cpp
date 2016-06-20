@@ -8,7 +8,6 @@
 #include "DataBase.h"
 #include <map>
 
-using namespace std;
 typedef std::map<std::string, std::string> registers;
 
 DataBase :: DataBase(const std::string & full_path) {
@@ -67,12 +66,10 @@ registers* DataBase::getAll() {
         all->emplace(it->key().ToString(), it->value().ToString());
         cout << it->key().ToString() << ": " << it->value().ToString() << endl;
     }
-    //assert(it->status().ok()); // Check for any errors found during the scan
+    // assert(it->status().ok()); // Check for any errors found during the scan
     delete it;
     return all;
-};
-
-
+}
 
 DataBase :: ~DataBase() {
     if (this->is_open()) {

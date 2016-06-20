@@ -3,9 +3,10 @@
 //
 
 #include "UserService.h"
+#include <jsoncpp/json/json.h>
 #include <string>
 #include <vector>
-#include <jsoncpp/json/json.h>
+
 
 UserService::UserService(DataBase &db) : database(&db) {
 }
@@ -248,14 +249,14 @@ bool UserService::hasDislike(const std::string fromUserId, const std::string toU
     return false;
 }
 
-bool UserService::setDiscoveringDistance(const std::string appUserId, const std::string discoveringDistance){
+bool UserService::setDiscoveringDistance(const std::string appUserId, const std::string discoveringDistance) {
     if (this->database->is_open()) {
         return this->database->set(Constant::distancePrefix + appUserId, discoveringDistance);
     }
     return false;
 }
 
-bool UserService::setShowGender(const std::string appUserId, const std::string showGender){
+bool UserService::setShowGender(const std::string appUserId, const std::string showGender) {
     if (this->database->is_open()) {
         return this->database->set(Constant::showGenderPrefix + appUserId, showGender);
     }
@@ -282,7 +283,7 @@ std::string UserService :: getShowGender(const std::string appUserId) {
         return "";
     }
 
-    if (!this->database->get(Constant::showGenderPrefix + appUserId, &showGender)){
+    if (!this->database->get(Constant::showGenderPrefix + appUserId, &showGender)) {
         LOG(WARNING) << "Filters for user: '" << appUserId << "' were not found.";
         return "";
     }
@@ -296,7 +297,7 @@ std::string UserService :: getDiscoveringDistance(const std::string appUserId) {
         return "";
     }
 
-    if (!this->database->get(Constant::distancePrefix + appUserId, &discoveringDistance)){
+    if (!this->database->get(Constant::distancePrefix + appUserId, &discoveringDistance)) {
         LOG(WARNING) << "Filters for user: '" << appUserId << "' were not found.";
         return "0";
     }
