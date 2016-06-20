@@ -25,6 +25,10 @@ void MatchesController::handleGetMatches(RequestParser requestParser, Response r
         LOG(INFO) << "Show matches has returned no users for user: '" << userId<< "'";
         return;
     }
+
+    response.SetCode(200);
+    response.SetBody(this->makeBodyForShowMatchesResponse(userId));
+    response.Send();
 }
 
 std::string MatchesController::getErrorResponseBody() {
@@ -32,4 +36,10 @@ std::string MatchesController::getErrorResponseBody() {
     errorResponse["matches"] = Json::arrayValue;
     return this->fastWriter.write(errorResponse);
 }
+
+std::string MatchesController::makeBodyForShowMatchesResponse(std::string userId) {
+    Json::Value event;
+    return this->fastWriter.write(event);
+}
+
 

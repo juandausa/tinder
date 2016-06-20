@@ -8,6 +8,7 @@
 #include "UserService.h"
 #include "RequestParser.h"
 #include "Response.h"
+#include <jsoncpp/json/json.h>
 #include <string>
 
 class MatchesController {
@@ -20,7 +21,7 @@ private:
     Json::Reader reader;
     Json::FastWriter fastWriter;
     std::string getErrorResponseBody();
+    std::string makeBodyForShowMatchesResponse(std::string userId);
 };
-
 
 #endif //TINDER_MATCHCONTROLLER_H
