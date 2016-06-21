@@ -311,3 +311,21 @@ Documentación Técnica
 ================================
 
 * TBD
+
+################
+General
+################
+================================
+Modo de Trabajo
+================================
+
+--------------------------------------
+Herramientas
+--------------------------------------
+Desde la primera iteración comenzamos con la integración de todas las herramientas propuestas por la cátedra. Esto fue realmente útil en los checkpoints, ya que en esos momentos no tuvimos que preocuparnos por estas tareas y quitarle tiempo al desarrallo.
+
+--------------------------------------
+División de Tareas
+--------------------------------------
+Si bien la división de tareas no estableció una asignación específica para cada parte del proyecto a determinado desarrollador, muchas de las tareas de la misma tecnología fueron tomadas por las mismas personas.
+En el caso de App Server, hubo participación de los cuatro miembros, dado que esta fue la sección que involucró mayor incertidumbre.
