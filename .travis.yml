@@ -10,9 +10,6 @@ notifications:
   email:
     recipients:
       - juandausa@gmail.com
-      - zebas.graffe@gmail.com
-      - jasminasf@gmail.com
-      - rojasagustin90@gmail.com
     on_success: change
     on_failure: always
     
@@ -57,6 +54,8 @@ before_install:
     - sudo ldconfig -v
     - cd ..
     - sudo apt-get install -y  libjsoncpp-dev
+    - cd ..
+    - ls
     - sudo rm -r dependencies
     
 before_script:
