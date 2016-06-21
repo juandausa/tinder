@@ -68,5 +68,5 @@ script: ./source/test/runTests
 
 after_success: 
     - lcov --capture --directory ./source/test/ --output-file coverageTinderTests.info
-    - lcov --remove coverageTinderTests.info '/usr/include/*' '/usr/lib/*' 'src/Mongoose.cpp' --output-file coverageTinderTestsWithoutLibs.info
+    - lcov --remove coverageTinderTests.info '/usr/include/*' '/usr/lib/*' 'src/utils/Mongoose.cpp' 'test/*' 'test/include/*' --output-file coverageTinderTestsWithoutLibs.info
     - genhtml coverageTinderTestsWithoutLibs.info --output-directory coverageHtml
