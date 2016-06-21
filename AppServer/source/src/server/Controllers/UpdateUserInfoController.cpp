@@ -1,5 +1,9 @@
-#include "UpdateUserInfoController.h"
+//
+// Copyright 2016 FiUBA
+//
 
+#include "UpdateUserInfoController.h"
+#include <string>
 
 static std::string validateTimeOrReturnDefault(std::string time) {
     struct tm convertedTime;;
@@ -22,7 +26,7 @@ static std::string validateGenderOrReturnDefault(std::string gender) {
 void UpdateUserInfoController::operation(Request &request, Response &response) {
     std::string userId = request.getResourceId();
     std::string externalUserId = this->userService.getExternalUserId(userId);
-    LOG(INFO) << "Updating user info for user: '" << userId<< "'";
+    LOG(INFO) << "Updating user info for user: '" << userId << "'";
     std::string body = this->makeBodyUserInfoForUpdate(request.getBody(), externalUserId);
     if ((userId.compare("") == 0) || (externalUserId.compare("") == 0) || (body.compare("") == 0)) {
         response.SetCode(400);
@@ -36,7 +40,8 @@ void UpdateUserInfoController::operation(Request &request, Response &response) {
         curlWrapper.set_put_data(body, readBuffer);
         bool requestResult = curlWrapper.perform_request();
         if (!requestResult) {
-            LOG(WARNING) << "Error requesting url: '" << url << "' whith body: " << body << ". Response: " << readBuffer;
+            LOG(WARNING) << "Error requesting url: '" << url << "' whith body: " << body << ". Response: " <<
+            readBuffer;
             response.SetCode(500);
         } else {
             LOG(INFO) << "Requesting url: '" << url << " ' has respond: " << readBuffer;
@@ -127,7 +132,7 @@ std::string UpdateUserInfoController::makeBodyUserInfoForUpdate(const std::strin
     parsedUserInfo = this->makeBodyForRegistrationPost(root);
     try {
         parsedUserInfo["user"]["id"] = std::atoi(userId.c_str());
-    } catch(std::exception const & e) {
+    } catch (std::exception const &e) {
         LOG(WARNING) << "Error parsing user extrenal id, which is: '" << userId << "'";
         return "";
     }

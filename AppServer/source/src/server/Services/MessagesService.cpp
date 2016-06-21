@@ -10,7 +10,7 @@
 #include <vector>
 #include <string>
 
-MessagesService::MessagesService(){
+MessagesService::MessagesService() {
     this->database = DataBase::getInstance();
 }
 
@@ -105,7 +105,8 @@ Message MessagesService::getLastMessage(std::string sender, std::string reciever
     this->database->get(lastMessageKey, &messages);
     if (messages.length() != 0) {
         std::vector<Message> messageCollection = convertInVectorOfMessages(messages);
-        Message message(messageCollection[0].getSender(), messageCollection[0].getReciever(), messageCollection[0].getContent());
+        Message message(messageCollection[0].getSender(), messageCollection[0].getReciever(),
+                        messageCollection[0].getContent());
         messageCollection.erase(messageCollection.begin());
         std::string lastMessages;
         for (size_t i = 0; i < messageCollection.size(); i++) {

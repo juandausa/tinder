@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-UserService::UserService(){
+UserService::UserService() {
     this->database = DataBase::getInstance();
 }
 
@@ -46,7 +46,7 @@ bool UserService::registerUser(const std::string appUserId, const std::string sh
 }
 
 std::string UserService::getSecurityToken(const std::string userId) {
-    LOG(INFO) << "Generating security token for user: '" << userId <<"'";
+    LOG(INFO) << "Generating security token for user: '" << userId << "'";
     RandomTextGenerator rnd;
     std::string random_string = rnd.generate(Constant::random_characters_quantity);
     std::string token = md5(userId + random_string);
@@ -263,7 +263,7 @@ bool UserService::setShowGender(const std::string appUserId, const std::string s
 }
 
 
-std::string UserService :: getShowGender(const std::string appUserId) {
+std::string UserService::getShowGender(const std::string appUserId) {
     std::string showGender = "";
     if (!this->database->is_open()) {
         LOG(WARNING) << "The database is closed";
@@ -277,7 +277,7 @@ std::string UserService :: getShowGender(const std::string appUserId) {
     return showGender;
 }
 
-std::string UserService :: getDiscoveringDistance(const std::string appUserId) {
+std::string UserService::getDiscoveringDistance(const std::string appUserId) {
     std::string discoveringDistance = "";
     if (!this->database->is_open()) {
         LOG(WARNING) << "The database is closed";

@@ -5,7 +5,6 @@
 #include "GetMessagesController.h"
 #include <string>
 
-
 void GetMessagesController::operation(Request &request, Response &response) {
     LOG(INFO) << "Getting messages from user: '" << request.getResourceId() << "'";
     Message message = this->getMessageFromRequest(request);

@@ -1,4 +1,10 @@
+//
+// Copyright 2016 FiUBA
+//
+
 #include "UserRegisterController.h"
+#include <string>
+#include <vector>
 
 static std::string validateTimeOrReturnDefault(std::string time) {
     struct tm convertedTime;;
@@ -16,12 +22,12 @@ static std::string validateGenderOrReturnDefault(std::string gender) {
     return Constant::male;
 }
 
-UserRegisterController::UserRegisterController(){
+UserRegisterController::UserRegisterController() {
     postInterestsThread = NULL;
-}   
+}
 
 
-UserRegisterController::~UserRegisterController(){
+UserRegisterController::~UserRegisterController() {
     if (postInterestsThread) {
         delete postInterestsThread;
     }
@@ -37,7 +43,7 @@ void UserRegisterController::operation(Request &request, Response &response) {
 
     bool parsingSuccessful = reader.parse(request.getBody(), root, true);
     if (!parsingSuccessful) {
-        std::cout  << "Failed to parse configuration\n";
+        std::cout << "Failed to parse configuration\n";
         response.SetCode(500);
         response.SetBody(this->getErrorResponseBody());
         response.Send();
@@ -160,9 +166,9 @@ Json::Value UserRegisterController
 
 void UserRegisterController::postInterests(Json::Value root) {
     std::cout << "Posting Interest" << std::endl;
-    std::vector<std::string*> readBuffers;
-    std::vector<CurlWrapper*> curlWrappers;
-    std::vector<Json::FastWriter*> writers;
+    std::vector<std::string *> readBuffers;
+    std::vector<CurlWrapper *> curlWrappers;
+    std::vector<Json::FastWriter *> writers;
     Json::Value original_interests = root["user"]["interests"];
     Json::Value interests(original_interests);
     CurlWrapper curlWrapper;
@@ -174,15 +180,15 @@ void UserRegisterController::postInterests(Json::Value root) {
         postData["interest"] = interests[i];
         postData["metadata"]["version"] = "0.1";
         postData["metadata"]["count"] = "1";
-        Json::FastWriter* writer = new Json::FastWriter();
+        Json::FastWriter *writer = new Json::FastWriter();
         std::string data = writer->write(postData);
         writers.push_back(writer);
-        CurlWrapper* curlWrapper = new CurlWrapper();
+        CurlWrapper *curlWrapper = new CurlWrapper();
         std::string url = "https://enigmatic-scrubland-75073.herokuapp.com/interests";
 //        std::string url = "10.1.86.224:5000/interests";
 //        std::string url = "190.244.18.3:5000/interests";
         curlWrapper->set_post_url(url);
-        std::string* readBuffer = new std::string();
+        std::string *readBuffer = new std::string();
         readBuffers.push_back(readBuffer);
         curlWrapper->set_post_data(data, readBuffer);
         bool res = curlWrapper->perform_request();
@@ -196,7 +202,7 @@ void UserRegisterController::postInterests(Json::Value root) {
     for (size_t i = 0; i < readBuffers.size(); i++) {
         // std::string* readBuff = readBuffers.back();
         // readBuffers.pop_back();
-        CurlWrapper* wrapper = curlWrappers.back();
+        CurlWrapper *wrapper = curlWrappers.back();
         curlWrappers.pop_back();
         wrapper->clean();
         // delete readBuff;

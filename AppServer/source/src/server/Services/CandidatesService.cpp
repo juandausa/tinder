@@ -24,7 +24,7 @@ bool CandidatesService::filterByMatchesRule(Json::Value myUser, Json::Value user
 // se encuentren dentro del 1% con más matches serán seleccionados con menos
 // frecuencia como candidatos. Dentro de este 1% tambien se consideraran los candidatos
 // que reciban un voto positivo pero el match no se realiza.
-bool CandidatesService::filterByOnePercentRule(Json::Value myUser, Json::Value user)  {
+bool CandidatesService::filterByOnePercentRule(Json::Value myUser, Json::Value user) {
     /*TODO: ver como recuperar los usuarios con mas o menos matches*/
     return true;
 }
@@ -49,7 +49,7 @@ bool CandidatesService::filterByLocationRule(Json::Value myUser, Json::Value use
 }
 
 // Tanto el usuario como el candidato deben compartir algún interés en común
-bool CandidatesService::filterByInterestsRule(Json::Value interests, Json::Value myArrayOfInterests ) {
+bool CandidatesService::filterByInterestsRule(Json::Value interests, Json::Value myArrayOfInterests) {
     int interestInCommon = 0;
     for (unsigned int j = 0; j < interests.size(); j++) {
         this->arrayInterests.append(interests[j]["value"]);
@@ -60,7 +60,8 @@ bool CandidatesService::filterByInterestsRule(Json::Value interests, Json::Value
     return (interestInCommon >= 1);
 }
 
-bool CandidatesService::filterCandidates(Json::Value myUser, Json::Value user, Json::Value interests, Json::Value myArrayOfInterests ) {
+bool CandidatesService::filterCandidates(Json::Value myUser, Json::Value user, Json::Value interests,
+                                         Json::Value myArrayOfInterests) {
     return (this->filterByInterestsRule(interests, myArrayOfInterests) &&
             this->filterByMatchesRule(myUser, user) &&
             this->filterByOnePercentRule(myUser, user) &&

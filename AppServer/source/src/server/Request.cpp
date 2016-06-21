@@ -17,21 +17,21 @@
 #include "AddMessagesController.h"
 #include "GetMessagesController.h"
 
-Request::Request(Response &response):response(response){}
+Request::Request(Response &response) : response(response) { }
 
-Request ::~Request() { 
-    if (this->genericController){
+Request::~Request() {
+    if (this->genericController) {
         delete this->genericController;
     }
 }
 
 
 void Request::parse(struct http_message *hm) {
-    this->method = std::string(reinterpret_cast<const char*>(hm->method.p)).substr(0 , hm->method.len);
-    this->body = std::string(reinterpret_cast<const char*>(hm->body.p)).substr(0 , hm->body.len);
-    std::string completeUrl = std::string(reinterpret_cast<const char*>(hm->uri.p)).substr(0 , hm->uri.len);
-    this->uri = completeUrl.substr(0 , completeUrl.find("/" , 1));
-    this->resourceId = completeUrl.substr(completeUrl.find("/" , 1)+1, completeUrl.length());
+    this->method = std::string(reinterpret_cast<const char *>(hm->method.p)).substr(0, hm->method.len);
+    this->body = std::string(reinterpret_cast<const char *>(hm->body.p)).substr(0, hm->body.len);
+    std::string completeUrl = std::string(reinterpret_cast<const char *>(hm->uri.p)).substr(0, hm->uri.len);
+    this->uri = completeUrl.substr(0, completeUrl.find("/", 1));
+    this->resourceId = completeUrl.substr(completeUrl.find("/", 1) + 1, completeUrl.length());
 }
 
 std::string Request::getUrl() {
@@ -50,13 +50,13 @@ std::string Request::getBody() {
     return this->body;
 }
 
-void Request::execute(){
+void Request::execute() {
     std::cout << this->uri << this->method << std::endl;
-    
-    this->genericController->operation(*this,response);
+
+    this->genericController->operation(*this, response);
 }
 
-void Request::handleOperation(){
+void Request::handleOperation() {
     if (this->isUserLoginRequest()) {
         this->genericController = new UserLoginController();
     } else if (this->isUserRegisterRequest()) {

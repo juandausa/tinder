@@ -30,7 +30,8 @@ std::string Converter::calculateAge(std::string birthday) {
     time_t t = time(NULL);
     localtime_r(&t, &localTime);
     if (strptime(birthday.c_str(), "%d/%m/%Y", &convertedTime)) {
-        return static_cast<std::ostringstream*>(&(std::ostringstream() << (localTime.tm_year - convertedTime.tm_year)))->str();
+        return static_cast<std::ostringstream *>(&(std::ostringstream() <<
+                                                   (localTime.tm_year - convertedTime.tm_year)))->str();
     }
 
     return Constant::defaultAge;

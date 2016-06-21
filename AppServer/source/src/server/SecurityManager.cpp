@@ -20,7 +20,7 @@ void SecurityManager::filter_request(struct mg_connection *nc, struct http_messa
     LOG(INFO) << "Apliying security filter for any path";
     for (std::string &path : this->secure_paths) {
         if ((mg_vcmp(&hm->uri, path.c_str()) == 0)) {
-            LOG(INFO) << "Apliying security filter for path: '" << path <<"'";
+            LOG(INFO) << "Apliying security filter for path: '" << path << "'";
             char user_id[255], token[255];
             mg_get_http_var(&hm->query_string, "userId", user_id, sizeof(user_id));
             mg_get_http_var(&hm->query_string, "token", token, sizeof(token));

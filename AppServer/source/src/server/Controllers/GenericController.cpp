@@ -1,14 +1,18 @@
+//
+// Copyright 2016 FiUBA
+//
+
 #include "GenericController.h"
+#include <string>
 
-
-GenericController::GenericController(){
-	 this->log = Log::getInstance();
+GenericController::GenericController() {
+    this->log = Log::getInstance();
 }
 
-GenericController::~GenericController(){}
+GenericController::~GenericController() { }
 
 void GenericController::operation(Request &request, Response &response) {
-   log->writeAndPrintLog("GenericController", Log::INFO);
+    log->writeAndPrintLog("GenericController", Log::INFO);
 }
 
 std::string GenericController::getErrorResponseBody() {

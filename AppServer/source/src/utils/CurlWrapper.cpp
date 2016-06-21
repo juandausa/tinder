@@ -8,7 +8,7 @@
 #include <iostream>
 
 static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
-    ((std::string*)userp)->append(reinterpret_cast<char*>(contents), size * nmemb);
+    ((std::string *) userp)->append(reinterpret_cast<char *>(contents), size * nmemb);
     return size * nmemb;
 }
 
@@ -45,7 +45,7 @@ void CurlWrapper::set_post_data(const std::string data, std::string &readBuffer)
     }
 }
 
-void CurlWrapper::set_post_data(const std::string data, std::string* readBuffer) {
+void CurlWrapper::set_post_data(const std::string data, std::string *readBuffer) {
     if (curl) {
         /* Now specify the POST data */
         struct curl_slist *headers = NULL;
@@ -58,9 +58,6 @@ void CurlWrapper::set_post_data(const std::string data, std::string* readBuffer)
         // curl_slist_free_all(headers);  //NO! ROMPE EL CURL y tira SEG FAULT!
     }
 }
-
-
-
 
 
 void CurlWrapper::set_put_data(const std::string data, std::string &readBuffer) {

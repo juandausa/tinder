@@ -1,34 +1,9 @@
+//
+// Copyright 2016 FiUBA
+//
+
 #include "GetCandidatesController.h"
-
-/*AUX FUNCTIONS: SACAR*/
-
-// static std::string validateTimeOrReturnDefault(std::string time) {
-//     struct tm convertedTime;;
-//     if (strptime(time.c_str(), "%d/%m/%Y", &convertedTime)) {
-//         return time;
-//     } else {
-//         return Constant::defaultBirthday;
-//     }
-// }
-
-// static std::string validateGenderOrReturnDefault(std::string gender) {
-//     if (gender.compare(Constant::female) == 0) {
-//         return gender;
-//     }
-
-//     return Constant::male;
-// }
-
-// static std::string calculateAge(std::string birthday) {
-//     struct tm convertedTime, localTime;
-//     time_t t = time(NULL);
-//     localtime_r(&t, &localTime);
-//     if (strptime(birthday.c_str(), "%d/%m/%Y", &convertedTime)) {
-//         return static_cast<std::ostringstream*>(&(std::ostringstream() << (localTime.tm_year - convertedTime.tm_year)))->str();
-//     }
-
-//     return Constant::defaultAge;
-// }
+#include <string>
 
 bool GetCandidatesController::isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests) {
     std::string theirInterest = fastWriter.write(interest);
@@ -40,7 +15,6 @@ bool GetCandidatesController::isInMyArrayOfInterest(Json::Value interest, Json::
     }
     return false;
 }
-
 
 void GetCandidatesController::operation(Request &request, Response &response) {
     Json::Value rootShared;
@@ -54,10 +28,11 @@ void GetCandidatesController::operation(Request &request, Response &response) {
             std::cout << "Error parsing result" << std::endl;
         }
         std::string myGender = fastWriter.write(rootShared.get("sex", Constant::male));
-        myGender = myGender.substr(1, myGender.size()-3);
+        myGender = myGender.substr(1, myGender.size() - 3);
         myArrayOfInterests = rootShared.get("interests", "");
         std::string genderOfMyInterest = this->userService.getShowGender(userId);
-        Json::Value body = makeBodyForShowCandidatesResponse(rootShared, myGender, genderOfMyInterest, myArrayOfInterests);
+        Json::Value body = makeBodyForShowCandidatesResponse(rootShared, myGender, genderOfMyInterest,
+                                                             myArrayOfInterests);
         std::string sendBody = fastWriter.write(body);
         if (sendBody.compare("null\n") == 0) {
             sendBody = "{}";
@@ -69,7 +44,7 @@ void GetCandidatesController::operation(Request &request, Response &response) {
         response.SetCode(400);
         response.SetBody("{}");
         response.Send();
-        LOG(INFO) << "Show Candidates failed for user: '" << userId<< "'";
+        LOG(INFO) << "Show Candidates failed for user: '" << userId << "'";
     }
 }
 
@@ -78,7 +53,7 @@ std::string GetCandidatesController::getUserInfoWithOutResponse(Request &request
     std::string body;
     std::string userId = request.getResourceId();
     std::string externalUserId = this->userService.getExternalUserId(userId);
-    LOG(INFO) << "Retrieving user info for user: '" << userId<< "'";
+    LOG(INFO) << "Retrieving user info for user: '" << userId << "'";
     if ((userId.compare("") == 0) || (externalUserId.compare("") == 0)) {
         response.SetCode(500);
         response.SetBody("Bad Request, no userId detected.");
@@ -97,12 +72,13 @@ std::string GetCandidatesController::getUserInfoWithOutResponse(Request &request
             response.SetBody("Bad Request");
         }
     }
-    
+
     return body;
 }
 
 
-std::string GetCandidatesController::makeBodyForUserInfoResponse(const std::string appUserId, const std::string userInfo) {
+std::string GetCandidatesController::makeBodyForUserInfoResponse(const std::string appUserId,
+                                                                 const std::string userInfo) {
     Json::Value rootShared;
     Json::Value rootApp;
     Json::Value arrayInterests;
@@ -129,9 +105,9 @@ std::string GetCandidatesController::makeBodyForUserInfoResponse(const std::stri
 }
 
 Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Value userData, std::string myGender,
-                                                              std::string genderOfMyInterest,
-                                                              Json::Value myArrayOfInterests) {
-        Json::Value event;
+                                                                       std::string genderOfMyInterest,
+                                                                       Json::Value myArrayOfInterests) {
+    Json::Value event;
     Json::Value root;
     Json::Value arrayUsers;
     std::string readBuffer;
@@ -151,19 +127,20 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
     for (unsigned int i = 0; i < users.size(); i++) {
         int interestInCommon = 0;
         std::string gender = fastWriter.write(users[i]["user"].get("gender", "male"));
-        gender = gender.substr(1, gender.size()-3);
+        gender = gender.substr(1, gender.size() - 3);
         std::string sharedUserId = fastWriter.write(users[i]["user"].get("id", ""));
-        sharedUserId = sharedUserId.substr(0, sharedUserId.size()-1);
+        sharedUserId = sharedUserId.substr(0, sharedUserId.size() - 1);
         std::string appUserId = this->userService.getAppUserId(sharedUserId);
         std::string genderOfTheirInterest = this->userService.getShowGender(appUserId);
         if (genderOfMyInterest.compare("male|female") == 0 ||
-                (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare(myGender) == 0) ||
-                (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare("male|female") == 0)) {
+            (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare(myGender) == 0) ||
+            (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare("male|female") == 0)) {
             Json::Value user;
             Json::Value arrayInterests;
             user["user_id"] = appUserId;
             user["alias"] = users[i]["user"].get("alias", "");
-            std::string birthday = Converter::validateTimeOrReturnDefault(users[i]["user"].get("birthday", "").asString());
+            std::string birthday = Converter::validateTimeOrReturnDefault(
+                    users[i]["user"].get("birthday", "").asString());
             user["birthday"] = birthday;
             user["age"] = Converter::calculateAge(birthday);
             user["gender"] = Converter::validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString());
@@ -216,7 +193,8 @@ std::string GetCandidatesController::genderOfMyPreference(Json::Value myArrayOfI
     }
 }
 
-void GetCandidatesController::onePercentRule(std::unordered_map<std::string, Json::Value> &usersData, std::unordered_map<std::string, std::string> &usersLikes) {
+void GetCandidatesController::onePercentRule(std::unordered_map<std::string, Json::Value> &usersData,
+                                             std::unordered_map<std::string, std::string> &usersLikes) {
     if (usersData.size() <= 1) {
         return;
     }
@@ -238,7 +216,8 @@ void GetCandidatesController::onePercentRule(std::unordered_map<std::string, Jso
     }
 }
 
-void GetCandidatesController::fillUsersArray(std::unordered_map<std::string, Json::Value> &usersData, Json::Value &arrayUsers) {
+void GetCandidatesController::fillUsersArray(std::unordered_map<std::string, Json::Value> &usersData,
+                                             Json::Value &arrayUsers) {
     std::unordered_map<std::string, Json::Value>::const_iterator iter;
     for (iter = usersData.begin(); iter != usersData.end(); ++iter) {
         arrayUsers.append((*iter).second);

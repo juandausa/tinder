@@ -10,7 +10,7 @@
 #include <vector>
 #include <map>
 
-Response :: Response(struct mg_connection *nc) : connection(nc) {
+Response::Response(struct mg_connection *nc) : connection(nc) {
     this->statusCodes[200] = "200 OK";
     this->statusCodes[201] = "201 Created";
     this->statusCodes[202] = "201 Accepted";
@@ -28,36 +28,36 @@ Response :: Response(struct mg_connection *nc) : connection(nc) {
     this->SetCode(DEFAUTLRESPONSE);
 }
 
-void Response :: SetCode(int code) {
-    if ( this->statusCodes.count(code) != 0 ) {
+void Response::SetCode(int code) {
+    if (this->statusCodes.count(code) != 0) {
         this->code = code;
     } else {
         this->code = DEFAUTLRESPONSE;
     }
 }
 
-int Response ::GetCode() {
+int Response::GetCode() {
     return this->code;
 }
 
-void Response :: AddHeader(std::string key, std::string value) {
+void Response::AddHeader(std::string key, std::string value) {
     std::pair<std::string, std::string> header(key, value);
     this->headers.push_back(header);
 }
 
-std::vector<std::pair<std::string, std::string>> Response ::GetHeaders() {
+std::vector<std::pair<std::string, std::string>> Response::GetHeaders() {
     return this->headers;
 }
 
-void Response :: SetBody(std::string body) {
+void Response::SetBody(std::string body) {
     this->body = body;
 }
 
-std::string Response ::GetBody() {
+std::string Response::GetBody() {
     return this->body;
 }
 
-void Response :: Send() {
+void Response::Send() {
     // TODO(juandausa): AddHeaders
     std::string header("HTTP/1.1 " + this->statusCodes[this->GetCode()] + "\r\nTransfer-Encoding: chunked\r\n\r\n");
     mg_printf(this->connection, "%s", header.c_str());
