@@ -10,6 +10,9 @@ notifications:
   email:
     recipients:
       - juandausa@gmail.com
+      - zebas.graffe@gmail.com
+      - jasminasf@gmail.com
+      - rojasagustin90@gmail.com
     on_success: change
     on_failure: always
     
