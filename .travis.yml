@@ -60,8 +60,7 @@ before_install:
     
 before_script:
     - cd AppServer
-    - ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./source/src/*
-    - ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./source/main/*
+    - sh cpplint.sh
     - cmake .
     - make
 
