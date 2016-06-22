@@ -6,20 +6,21 @@
 #include <string>
 
 void GetMessagesController::operation(Request &request, Response &response) {
-    LOG(INFO) << "Getting messages from user: '" << request.getResourceId() << "'";
+    log->writeAndPrintLog(std::string("Getting message from user: '") + request.getResourceId()
+                                  + std::string("'"), Log::INFO);
     Message message = this->getMessageFromRequest(request);
     std::string sender = message.getSender();
     std::string reciever = message.getReciever();
     if ((sender.length() == 0) || (reciever.length() == 0)) {
         response.SetCode(500);
         response.SetBody(this->getErrorResponseBody());
-        LOG(WARNING) << "Bad Request, no sender or reciever detected. Sender: '" << sender << "' or reciever: '" <<
-        reciever << "'";
+        log->writeAndPrintLog(std::string("Bad Request, no sender or reciever detected. Sender: '") + request.getResourceId()
+                                  + std::string("' or reciever: '") + reciever + std::string("'"), Log::WARNING);
     } else if ((!userService.isUserRegistered(sender)) || (!userService.isUserRegistered(reciever))) {
         response.SetCode(500);
         response.SetBody(this->getErrorResponseBody());
-        LOG(WARNING) << "Error for getMessage. User: '" << sender << "' or user: '" << reciever <<
-        "' is not registered";
+        log->writeAndPrintLog(std::string("Error for getMessage. User: '") + sender
+                                  + std::string("' or user: '") + reciever + std::string("' is not registered"), Log::WARNING);
     } else {
         Message lastMessage = this->messagesService.getLastMessage(sender, reciever);
         if (lastMessage.getContent().length() == 0) {

@@ -3,43 +3,45 @@
 //
 
 #include "MessagesService.h"
-#include "DataBase.h"
 #include "Message.h"
 #include "Constant.h"
-#include "Log.h"
+
 #include <vector>
 #include <string>
 
 MessagesService::MessagesService() {
+    this->log = Log::getInstance();
     this->database = DataBase::getInstance();
 }
 
-bool addMessageToDatabase(Message message, std::string key, DataBase *database) {
+bool MessagesService::addMessageToDatabase(Message message, std::string key) {
     std::string previousMessages("");
-    database->get(key, &previousMessages);
+    this->database->get(key, &previousMessages);
 
     bool result;
     if (previousMessages.length() != 0) {
         previousMessages += Constant::messagesSeparator;
         previousMessages.append(message.toString());
-        result = database->set(key, previousMessages);
+        result = this->database->set(key, previousMessages);
     } else {
-        result = database->set(key, message.toString());
+        result = this->database->set(key, message.toString());
     }
 
     return result;
 }
 
 bool MessagesService::addMessage(Message message) {
-    LOG(INFO) << "Adding messages between users '" + message.getSender() + "' and '" + message.getReciever() + "'.";
+    log->writeAndPrintLog(std::string("Adding messages between users '") + message.getSender()
+                                  + std::string("' and '") + message.getReciever() + std::string("'."), Log::INFO);
     if (this->database->is_open()) {
         std::string messagesKeySender = Constant::messagesPrefix + message.getSender() + message.getReciever();
         std::string messagesKeyReciever = Constant::messagesPrefix + message.getReciever() + message.getSender();
         std::string lastMessagesKey = Constant::lastMessagesPrefix + message.getSender() + message.getReciever();
-        bool result = addMessageToDatabase(message, messagesKeySender, this->database) &&
-                      addMessageToDatabase(message, messagesKeyReciever, this->database);
+        
+        bool result = this->addMessageToDatabase(message, messagesKeySender) &&
+                      this->addMessageToDatabase(message, messagesKeyReciever);
         if (result) {
-            addMessageToDatabase(message, lastMessagesKey, this->database);
+            this->addMessageToDatabase(message, lastMessagesKey);
         }
         return result;
     } else {
@@ -102,6 +104,7 @@ Message MessagesService::getLastMessage(std::string sender, std::string reciever
     LOG(INFO) << "Getting messages between users '" + sender + "' and '" + reciever + "'.";
     std::string messages;
     std::string lastMessageKey = Constant::lastMessagesPrefix + sender + reciever;
+    std::cout << "' lastMessageKey  '" + lastMessageKey  + "'." <<std::endl;
     this->database->get(lastMessageKey, &messages);
     if (messages.length() != 0) {
         std::vector<Message> messageCollection = convertInVectorOfMessages(messages);
