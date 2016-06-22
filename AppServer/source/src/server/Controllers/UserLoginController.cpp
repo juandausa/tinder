@@ -1,5 +1,9 @@
-#include "UserLoginController.h"
+//
+// Copyright 2016 FiUBA
+//
 
+#include "UserLoginController.h"
+#include <string>
 
 void UserLoginController::operation(Request &request, Response &response) {
     log->writeAndPrintLog("UserLoginController", Log::INFO);
@@ -18,8 +22,6 @@ void UserLoginController::operation(Request &request, Response &response) {
         log->writeAndPrintLog(std::string("Login failed for user: ' ") + userId + std::string("'"), Log::WARNING);
     }
 }
-
-
 
 Json::Value UserLoginController::makeBodyAndTokenForLoginResponse(const std::string userId) {
     Json::Value event;

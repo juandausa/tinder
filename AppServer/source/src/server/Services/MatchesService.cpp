@@ -6,7 +6,7 @@
 #include "DataBase.h"
 
 MatchesService::MatchesService() {
-	this->database = DataBase::getInstance();
+    this->database = DataBase::getInstance();
 }
 
 MatchesService::~MatchesService() {

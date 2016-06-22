@@ -4,10 +4,11 @@
 
 #include "MatchesController.h"
 #include "Converter.h"
-
+#include <string>
+#include <vector>
 
 void MatchesController::operation(Request &request, Response &response) {
-std::string userId = request.getResourceId();
+    std::string userId = request.getResourceId();
     LOG(INFO) << "Proccesing show matches for user: '" << userId << "'";
     if (!this->userService.isUserRegistered(userId)) {
         response.SetCode(500);

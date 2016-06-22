@@ -1,5 +1,9 @@
-#include "AddLikeController.h"
+//
+// Copyright 2016 FiUBA
+//
 
+#include "AddLikeController.h"
+#include <string>
 
 void AddLikeController::operation(Request &request, Response &response) {
     std::string fromUserId = request.getResourceId();
@@ -11,8 +15,10 @@ void AddLikeController::operation(Request &request, Response &response) {
         LOG(WARNING) << "Bad request for addLike. User: '" << fromUserId << "' or user: '" << toUserId << "'";
     } else if ((!userService.isUserRegistered(fromUserId)) || (!userService.isUserRegistered(toUserId))) {
         response.SetCode(500);
-        response.SetBody("Bad Request, fromUserId '" + fromUserId + "' or toUserId '" + toUserId + " is not registered.");
-        LOG(WARNING) << "Error for addLike. User: '" << fromUserId << "' or user: '" << toUserId << "' is not registered";
+        response.SetBody(
+                "Bad Request, fromUserId '" + fromUserId + "' or toUserId '" + toUserId + " is not registered.");
+        LOG(WARNING) << "Error for addLike. User: '" << fromUserId << "' or user: '" << toUserId <<
+        "' is not registered";
     } else {
         if (this->userService.addLike(fromUserId, toUserId)) {
             response.SetCode(200);
@@ -20,13 +26,13 @@ void AddLikeController::operation(Request &request, Response &response) {
         } else {
             response.SetCode(500);
             response.SetBody("Error for addLike, error on save.");
-            LOG(WARNING) << "Error for addLike, error on save. From user: '" << fromUserId << "' to user: '" << toUserId << "'";
+            LOG(WARNING) << "Error for addLike, error on save. From user: '" << fromUserId << "' to user: '" <<
+            toUserId << "'";
         }
     }
 
     response.Send();
 }
-
 
 
 std::string AddLikeController::getUserTo(const std::string body) {

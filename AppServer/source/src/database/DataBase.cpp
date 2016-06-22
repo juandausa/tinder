@@ -4,15 +4,14 @@
 
 #include <string>
 #include "DataBase.h"
-#include <string>
 
-DataBase* DataBase::dbInstance = NULL; 
+DataBase *DataBase::dbInstance = NULL;
 
-DataBase* DataBase::getInstance() {
+DataBase *DataBase::getInstance() {
     if (!dbInstance) {
         dbInstance = new DataBase();
     }
-   return dbInstance;
+    return dbInstance;
 }
 
 
@@ -20,17 +19,16 @@ DataBase::DataBase() {
     this->database = NULL;
 }
 
-bool DataBase::close(){
+bool DataBase::close() {
     if (!this->is_open()) {
         return false;
     }
-    delete(this->database);
+    delete (this->database);
     this->database = NULL;
     return true;
 }
 
-bool DataBase::open(const std::string path){
-
+bool DataBase::open(const std::string path) {
     rocksdb::Options options;
     options.create_if_missing = true;
     options.error_if_exists = false;
@@ -74,13 +72,13 @@ bool DataBase::remove(const std::string key) {
         return false;
     }
 
-    rocksdb::Status delete_opreation_result =  database->Delete(rocksdb::WriteOptions(), key);
+    rocksdb::Status delete_opreation_result = database->Delete(rocksdb::WriteOptions(), key);
     return delete_opreation_result.ok();
 }
 
 DataBase::~DataBase() {
     if (this->is_open()) {
-        delete(this->database);
+        delete (this->database);
         this->database = NULL;
     }
 }

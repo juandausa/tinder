@@ -56,4 +56,3 @@ void Message::loadFromString(std::string sourceString) {
         this->content = message[2];
     }
 }
-

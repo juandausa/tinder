@@ -6,18 +6,18 @@
 #include <string>
 #include "Constant.h"
 
-Log* Log::logInstance = NULL; 
+Log *Log::logInstance = NULL;
 
 std::string Log::INFO = "INFO";
 std::string Log::ERROR = "ERROR";
 std::string Log::WARNING = "WARNING";
 std::string Log::FATAL = "FATAL";
 
-Log* Log::getInstance() {
+Log *Log::getInstance() {
     if (!logInstance) {
         logInstance = new Log();
     }
-   return logInstance;
+    return logInstance;
 }
 
 Log::Log() {
@@ -27,13 +27,13 @@ Log::Log() {
     google::SetLogDestination(google::GLOG_WARNING, Constant::GLOG_WARNING_PATH.c_str());
 }
 
-void Log::init(char *executableName){
+void Log::init(char *executableName) {
     google::InitGoogleLogging(executableName);
 }
 
-void Log::writeLog(const char msj[], const std::string level){
+void Log::writeLog(const char msj[], const std::string level) {
     this->msj = std::string(msj);
-    if (level == Log::INFO){
+    if (level == Log::INFO) {
         LOG(INFO) << this->msj;
     } else if (level == Log::ERROR) {
         LOG(ERROR) << this->msj;
@@ -41,12 +41,12 @@ void Log::writeLog(const char msj[], const std::string level){
         LOG(WARNING) << this->msj;
     } else if (level == Log::FATAL) {
         LOG(FATAL) << this->msj;
-    } 
+    }
 }
 
-void Log::printLog(const char msj[], const std::string level){
+void Log::printLog(const char msj[], const std::string level) {
     this->msj = std::string(msj);
-    if (level == Log::INFO){
+    if (level == Log::INFO) {
         std::cout << "INFO: " << this->msj << std::endl;
     } else if (level == Log::ERROR) {
         std::cerr << "ERROR: " << this->msj << std::endl;
@@ -57,16 +57,15 @@ void Log::printLog(const char msj[], const std::string level){
     }
 }
 
-void Log::writeAndPrintLog(const char msj[], const std::string level){
-    this->printLog(msj,level);
-    this->writeLog(msj,level);
+void Log::writeAndPrintLog(const char msj[], const std::string level) {
+    this->printLog(msj, level);
+    this->writeLog(msj, level);
 }
 
 
-
-void Log::writeLog(const std::string msj, const std::string level){
+void Log::writeLog(const std::string msj, const std::string level) {
     this->msj = msj;
-    if (level == Log::INFO){
+    if (level == Log::INFO) {
         LOG(INFO) << this->msj;
     } else if (level == Log::ERROR) {
         LOG(ERROR) << this->msj;
@@ -74,12 +73,12 @@ void Log::writeLog(const std::string msj, const std::string level){
         LOG(WARNING) << this->msj;
     } else if (level == Log::FATAL) {
         LOG(FATAL) << this->msj;
-    } 
+    }
 }
 
-void Log::printLog(const std::string msj, const std::string level){
+void Log::printLog(const std::string msj, const std::string level) {
     this->msj = msj;
-    if (level == Log::INFO){
+    if (level == Log::INFO) {
         std::cout << "INFO: " << this->msj << std::endl;
     } else if (level == Log::ERROR) {
         std::cerr << "ERROR: " << this->msj << std::endl;
@@ -90,9 +89,9 @@ void Log::printLog(const std::string msj, const std::string level){
     }
 }
 
-void Log::writeAndPrintLog(const std::string msj, const std::string level){
-    this->printLog(msj,level);
-    this->writeLog(msj,level);
+void Log::writeAndPrintLog(const std::string msj, const std::string level) {
+    this->printLog(msj, level);
+    this->writeLog(msj, level);
 }
 
 Log::~Log() {
