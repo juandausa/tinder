@@ -15,7 +15,8 @@ Actualmente hay 4 branches en el repositorio. Los cuales son:
 
 * **master:** el branch actual con información general del proyecto.
 * **App:** branch que contiene el proyecto del cliente Android.
-* **AppServer:** branch que contiene el proyecto del servidor C++ que posee la lógica de negocio.
+* **AppServer:** branch que contiene el proyecto del servidor C++ que posee la lógica de negocio.  (Deprecado)
+* **AppServerRefactor:** branch que contiene el proyecto del servidor C++ que posee la lógica de negocio.
 * **SharedServer:** branch que contiene el proyecto del servidor node.js el cual es un ABM de usuarios.
 
 ## Clonar proyecto
@@ -28,7 +29,7 @@ Pasos:
 * Ubicarse dentro del directorio **Tinder**
 `cd Tinder`
 * Clonar el branch App
-* Clonar el branch AppServer
+* Clonar el branch AppServerRefactor
 * Clonar el branch SharedServer
 
 #### Cómo clonar branch App
@@ -37,11 +38,11 @@ Para clonar el branch y empezar a desarrollar sobre el mismo, desde la linea de 
 
 `git clone -b App https://github.com/juandausa/tinder.git App`
 
-#### Cómo clonar branch AppServer
+#### Cómo clonar branch AppServerRefactor
 
 Para clonar el branch y empezar a desarrollar sobre el mismo, desde la linea de comandos ubicarse en el directorio **Tinder** y ejecutar:
 
-`git clone -b AppServer https://github.com/juandausa/tinder.git AppServer`
+`git clone -b AppServerRefactor https://github.com/juandausa/tinder.git AppServerRefactor`
 
 
 #### Cómo clonar branch SharedServer
