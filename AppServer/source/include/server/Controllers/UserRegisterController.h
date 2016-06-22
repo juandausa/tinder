@@ -6,6 +6,7 @@
 
 #include "GenericController.h"
 #include "UserService.h"
+#include "PhotoService.h"
 #include <thread>
 
 class UserRegisterController: public GenericController {
