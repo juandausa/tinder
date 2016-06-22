@@ -4,7 +4,7 @@
 
 #include "user_update_controller_test.h"
 
-TEST(UserUpdateController, IsUserRegisteredWithNoUsers) {
+TEST(UserUpdateController, CreateBody) {
     DataBase* db = DataBase::getInstance();
     if (db->open("/tmp/testuserupdatecontrollerdb")) {
         UserService user_service;
