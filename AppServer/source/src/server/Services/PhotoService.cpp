@@ -1,13 +1,13 @@
 //
-// Created by fabrizio on 22/06/16.
+// Copyright 2016 FiUBA
 //
 
-#include <iostream>
-#include <CurlWrapper.h>
+#include "CurlWrapper.h"
+#include "PhotoService.h"
 #include <jsoncpp/json/value.h>
 #include <jsoncpp/json/json.h>
-#include "PhotoService.h"
-
+#include <iostream>
+#include <string>
 
 bool PhotoService::update(std::string userId, std::string photoBase64) {
     CurlWrapper *curlWrapper = new CurlWrapper();

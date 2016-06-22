@@ -2,8 +2,9 @@
 // Copyright 2016 FiUBA
 //
 
-#include <CurlWrapper.h>
+#include "CurlWrapper.h"
 #include "CandidatesService.h"
+#include <string>
 
 /* TODO: Ver porque se rompe en esta funcion */
 bool CandidatesService::isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests) {
@@ -79,6 +80,6 @@ std::string* CandidatesService::getCandidatePhoto(std::string url) {
     curlWrapper->set_get_url(url);
     std::string* readBuffer = new std::string();
     curlWrapper->set_get_buffer(readBuffer);
-    bool res = curlWrapper->perform_request();
+    curlWrapper->perform_request();
     return readBuffer;
 }
