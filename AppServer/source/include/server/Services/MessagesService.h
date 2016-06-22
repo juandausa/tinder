@@ -18,6 +18,7 @@ public:
     Message getLastMessage(std::string sender, std::string reciever);
 private:
     DataBase* database;
+    bool addMessageToDatabase(Message message, std::string key);
 };
 
 #endif //TINDER_MESSAGESSERVICE_H

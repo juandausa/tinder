@@ -3,7 +3,6 @@
 //
 
 #include "MessagesService.h"
-#include "DataBase.h"
 #include "Message.h"
 #include "Constant.h"
 #include "Log.h"
@@ -14,17 +13,17 @@ MessagesService::MessagesService(){
     this->database = DataBase::getInstance();
 }
 
-bool addMessageToDatabase(Message message, std::string key, DataBase *database) {
+bool MessagesService::addMessageToDatabase(Message message, std::string key) {
     std::string previousMessages("");
-    database->get(key, &previousMessages);
+    this->database->get(key, &previousMessages);
 
     bool result;
     if (previousMessages.length() != 0) {
         previousMessages += Constant::messagesSeparator;
         previousMessages.append(message.toString());
-        result = database->set(key, previousMessages);
+        result = this->database->set(key, previousMessages);
     } else {
-        result = database->set(key, message.toString());
+        result = this->database->set(key, message.toString());
     }
 
     return result;
@@ -36,10 +35,10 @@ bool MessagesService::addMessage(Message message) {
         std::string messagesKeySender = Constant::messagesPrefix + message.getSender() + message.getReciever();
         std::string messagesKeyReciever = Constant::messagesPrefix + message.getReciever() + message.getSender();
         std::string lastMessagesKey = Constant::lastMessagesPrefix + message.getSender() + message.getReciever();
-        bool result = addMessageToDatabase(message, messagesKeySender, this->database) &&
-                      addMessageToDatabase(message, messagesKeyReciever, this->database);
+        bool result = this->addMessageToDatabase(message, messagesKeySender) &&
+                      this->addMessageToDatabase(message, messagesKeyReciever);
         if (result) {
-            addMessageToDatabase(message, lastMessagesKey, this->database);
+            this->addMessageToDatabase(message, lastMessagesKey);
         }
         return result;
     } else {
