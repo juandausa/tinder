@@ -13,8 +13,9 @@ public:
 
 private:
     UserService userService;
-    std::string makeBodyUserInfoForUpdate(const std::string appUserId, const std::string userInfo);
-    Json::Value makeBodyForRegistrationPost(Json::Value root);
+    std::string makeBodyUserInfoForUpdate(const std::string info, const std::string userInfo,
+                                          const std::string appUserId);
+    Json::Value makeBodyForRegistrationPost(Json::Value root, std::string appUserId);
     
 };
 

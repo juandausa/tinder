@@ -49,8 +49,8 @@ void UserRegisterController::operation(Request &request, Response &response) {
         response.Send();
     }
 
-    Json::Value event = this->makeBodyForRegistrationPost(root);
     std::string appUserId = root.get("user_id", "").asString();
+    Json::Value event = this->makeBodyForRegistrationPost(root, appUserId);
     std::string data = fastWriter.write(event);
     // Lanzo thread de posteo de intereses
     postInterestsThread = new std::thread(&UserRegisterController::postInterests, this, event);
@@ -85,7 +85,7 @@ void UserRegisterController::operation(Request &request, Response &response) {
     std::cout << "Thread Join" << std::endl;
 }
 
-Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root) {
+Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root, std::string appUserId) {
     std::string name = root.get("name", "").asString();
     std::string alias = root.get("alias", "").asString();
     std::string email = root.get("email", "").asString();
@@ -98,6 +98,9 @@ Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root
     Json::Value television = root["interests"]["television"];
     Json::Value games = root["interests"]["games"];
     Json::Value books = root["interests"]["books"];
+    std::string discovering_distance = fastWriter.write(root.get("discovering_distance", "0"));
+    this->userService.setDiscoveringDistance(appUserId, discovering_distance);
+    this->userService.setShowGender(appUserId, "male|female");
 
     double latitude = root["location"].get("latitude", 0).asDouble();
     double longitude = root["location"].get("longitude", 0).asDouble();
@@ -147,6 +150,10 @@ Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root
         interest["value"] = books[i];
         interests.append(interest);
     }
+
+    interest["category"] = "sex";
+    interest["value"] = "male|female";
+    interests.append(interest);
 
     user["interests"] = interests;
     event["user"] = user;

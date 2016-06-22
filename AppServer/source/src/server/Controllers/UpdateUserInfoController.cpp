@@ -24,11 +24,11 @@ static std::string validateGenderOrReturnDefault(std::string gender) {
 
 
 void UpdateUserInfoController::operation(Request &request, Response &response) {
-    std::string userId = request.getResourceId();
-    std::string externalUserId = this->userService.getExternalUserId(userId);
-    LOG(INFO) << "Updating user info for user: '" << userId << "'";
-    std::string body = this->makeBodyUserInfoForUpdate(request.getBody(), externalUserId);
-    if ((userId.compare("") == 0) || (externalUserId.compare("") == 0) || (body.compare("") == 0)) {
+    std::string appUserId = request.getResourceId();
+    std::string externalUserId = this->userService.getExternalUserId(appUserId);
+    LOG(INFO) << "Updating user info for user: '" << appUserId << "'";
+    std::string body = this->makeBodyUserInfoForUpdate(request.getBody(), externalUserId, appUserId);
+    if ((appUserId.compare("") == 0) || (externalUserId.compare("") == 0) || (body.compare("") == 0)) {
         response.SetCode(400);
         response.SetBody("Bad request.");
     } else {
@@ -40,12 +40,14 @@ void UpdateUserInfoController::operation(Request &request, Response &response) {
         curlWrapper.set_put_data(body, readBuffer);
         bool requestResult = curlWrapper.perform_request();
         if (!requestResult) {
-            LOG(WARNING) << "Error requesting url: '" << url << "' whith body: " << body << ". Response: " <<
+            LOG(WARNING) << "Error requesting url: '" << url << "' with body: " << body << ". Response: " <<
             readBuffer;
             response.SetCode(500);
+            response.SetBody(getErrorResponseBody());
         } else {
             LOG(INFO) << "Requesting url: '" << url << " ' has respond: " << readBuffer;
             response.SetCode(200);
+            response.SetBody(getSucceedResponseBody());
         }
         curlWrapper.clean();
     }
@@ -53,7 +55,7 @@ void UpdateUserInfoController::operation(Request &request, Response &response) {
     response.Send();
 }
 
-Json::Value UpdateUserInfoController::makeBodyForRegistrationPost(Json::Value root) {
+Json::Value UpdateUserInfoController::makeBodyForRegistrationPost(Json::Value root, std::string appUserId) {
     std::string name = root.get("name", "").asString();
     std::string alias = root.get("alias", "").asString();
     std::string email = root.get("email", "").asString();
@@ -66,6 +68,8 @@ Json::Value UpdateUserInfoController::makeBodyForRegistrationPost(Json::Value ro
     Json::Value television = root["interests"]["television"];
     Json::Value games = root["interests"]["games"];
     Json::Value books = root["interests"]["books"];
+    std::string sex = root["interests"]["sex"].asString();
+    this->userService.setShowGender(appUserId, sex);
 
     double latitude = root["location"].get("latitude", 0).asDouble();
     double longitude = root["location"].get("longitude", 0).asDouble();
@@ -114,13 +118,18 @@ Json::Value UpdateUserInfoController::makeBodyForRegistrationPost(Json::Value ro
         interest["value"] = books[i];
         interests.append(interest);
     }
+    interest["category"] = "sex";
+    interest["value"] = sex;
+    interests.append(interest);
 
     user["interests"] = interests;
     event["user"] = user;
+    std::cout << fastWriter.write(event) << std::endl;
     return event;
 }
 
-std::string UpdateUserInfoController::makeBodyUserInfoForUpdate(const std::string info, const std::string userId) {
+std::string UpdateUserInfoController::makeBodyUserInfoForUpdate(const std::string info, const std::string userId,
+                                                                const std::string appUserId) {
     Json::Value root;
     Json::Reader reader;
     bool parsingSuccessful = reader.parse(info, root, true);
@@ -129,7 +138,7 @@ std::string UpdateUserInfoController::makeBodyUserInfoForUpdate(const std::strin
     }
 
     Json::Value parsedUserInfo;
-    parsedUserInfo = this->makeBodyForRegistrationPost(root);
+    parsedUserInfo = this->makeBodyForRegistrationPost(root, appUserId);
     try {
         parsedUserInfo["user"]["id"] = std::atoi(userId.c_str());
     } catch (std::exception const &e) {
