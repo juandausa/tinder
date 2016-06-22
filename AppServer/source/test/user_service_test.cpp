@@ -16,19 +16,6 @@ TEST(UserService, IsUserRegisteredWithNoUsers) {
 
 }
 
-TEST(UserService, IsUserRegisteredWithUserPreviouslyRegistered) {
-/*DataBase* db = DataBase::getInstance();    
-DataBase db("/tmp/testuserservicedb2");
-    db.set("UserJoaneDoe", "value");
-    if (db->open("/tmp/testuserservicedb4")){
-        UserService user_service;
-        EXPECT_TRUE(user_service.isUserRegistered("UserJoaneDoe"));
-    } else {
-        EXPECT_EQ(1, 0);
-    }
-*/
-}
-
 TEST(UserService, GenerateTokenFromUsername) {
     DataBase* db = DataBase::getInstance();
     if (db->open("/tmp/testuserservicedb1")){

@@ -10,8 +10,8 @@
 
 class UserRegisterController: public GenericController {
 public:
-	UserRegisterController();	
-	~UserRegisterController();	
+	UserRegisterController();
+	~UserRegisterController();
     void operation(Request &request, Response &response);
 
 private:
