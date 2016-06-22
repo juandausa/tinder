@@ -31,6 +31,15 @@ void CurlWrapper::set_post_url(const std::string url) {
     }
 }
 
+void CurlWrapper::set_get_url(const std::string url) {
+    if (curl) {
+        /* First set the URL that is about to receive our POST. This URL can
+           just as well be a https:// URL if that is what should receive the
+           data. */
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    }
+}
+
 void CurlWrapper::set_post_data(const std::string data, std::string &readBuffer) {
     if (curl) {
         /* Now specify the POST data */
@@ -84,6 +93,21 @@ void CurlWrapper::set_get_buffer(const std::string &readBuffer) {
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     }
 }
+
+void CurlWrapper::set_get_buffer(const std::string* readBuffer) {
+    if (curl) {
+        struct curl_slist *headers = NULL;
+        headers = curl_slist_append(headers, "Accept: application/json");
+        headers = curl_slist_append(headers, "Content-Type: application/json");
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+    }
+}
+
+
+
+
 
 bool CurlWrapper::perform_request() {
     if (curl) {

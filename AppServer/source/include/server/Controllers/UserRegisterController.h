@@ -6,6 +6,7 @@
 
 #include "GenericController.h"
 #include "UserService.h"
+#include "PhotoService.h"
 #include <thread>
 
 class UserRegisterController: public GenericController {
@@ -13,12 +14,14 @@ public:
 	UserRegisterController();
 	~UserRegisterController();
     void operation(Request &request, Response &response);
-	Json::Value makeBodyForRegistrationPost(const Json::Value root);
-    Json::Value makeBodyAndTokenForRegistrationResponse(const std::string userId);
+	Json::Value makeBodyAndTokenForRegistrationResponse(const std::string userId);
+	Json::Value makeBodyForRegistrationPost(const Json::Value root, std::string appUserId);
+
 private:
     UserService userService;
     std::thread* postInterestsThread;
     void postInterests(Json::Value root);
+    
 };
 
 
