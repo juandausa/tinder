@@ -2,6 +2,7 @@
 
 #include "DataBase.h"
 #include "Constant.h"
+#include "RandomTextGenerator.h"
 #include <unistd.h>
 #include <glog/logging.h>
 #include <iostream>
@@ -55,6 +56,28 @@ void getAll(DataBase *dataBase) {
 }
 
 
+std::string getAppKey(const std::string userId) {
+    std::size_t random_characters_quantity = 5;
+    RandomTextGenerator rnd;
+    std::string random_string = rnd.generate(random_characters_quantity);
+    return random_string;
+}
+
+void saveAppKey(std::string sharedId, std::string appId, DataBase* db) {
+    if (db->is_open()) {
+        db->set(sharedId, appId);
+        db->set(appId, sharedId);
+    }
+}
+
+void addNewUser(std::string sharedId, DataBase* db) {
+    std::string appId = getAppKey(sharedId);
+    saveAppKey(sharedId, appId, db);
+}
+
+
+
+
 int main(int argc, char **args) {
     google::SetLogDestination(google::GLOG_INFO, "/tmp/dbaccess.log");
     google::SetLogDestination(google::GLOG_ERROR, "");
@@ -68,7 +91,13 @@ int main(int argc, char **args) {
     if (db.is_open()) {
         LOG(INFO) << "The Database is open.";
         std::cout << "The Database is open." << std::endl;
-        std::cout << "Type exit to quit." << std::endl;
+        std::cout << "Command list" << std::endl;
+        std::cout << "  all         - Gets all the data in the database." << std::endl;
+        std::cout << "  clear       - Clear the database." << std::endl;
+        std::cout << "  new_user    - Adds a new user inserting its shared server id." << std::endl;
+        std::cout << "  exit        - exits the program." << std::endl;
+        std::cout << "  Any other thing entered that its not these commands, will be searched in the database as a key." << std::endl;
+        std::cout << "Enter your command or data" << std::endl;
         while (true) {
             std::string key;
             std::getline(std::cin, key);
@@ -78,6 +107,10 @@ int main(int argc, char **args) {
                 getAll(&db);
             } else if (key.compare("clear") == 0) {
                 clearDatabase(&db);
+            } else if (key.compare("new_user") == 0) {
+                std::string key;
+                std::getline(std::cin, key);
+                addNewUser(key, &db);
             } else {
                 std::string value;
                 if (db.get(key, &value)) {
