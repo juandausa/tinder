@@ -3,6 +3,7 @@
 //
 
 #include "UserRegisterController.h"
+#include "PhotoService.h"
 #include <string>
 #include <vector>
 
@@ -83,6 +84,7 @@ void UserRegisterController::operation(Request &request, Response &response) {
     }
     postInterestsThread->detach();
     std::cout << "Thread Join" << std::endl;
+    PhotoService::update(sharedUserIdString, root.get("photo_profile", "").asString());
 }
 
 Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root) {
