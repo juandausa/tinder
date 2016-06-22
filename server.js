@@ -124,7 +124,7 @@ app.get('/users/:user_id', function (req, res) {
 /************************************************************************/
 
 // This downloads a photo
-app.get('/users/:user_id/photo', function (req, res) {
+/*app.get('/users/:user_id/photo', function (req, res) {
 	db.users.findOne({id: req.params.user_id}, function(err, user) { 
 		if (checkForError(err, res, "Error downloading photo")) return;
 		if (user !== undefined) {
@@ -135,9 +135,17 @@ app.get('/users/:user_id/photo', function (req, res) {
 			res.end(imageData, 'binary');
 		}	
 	});
+});*/
+
+app.get('/users/:user_id/photo', function (req, res) {
+	db.users.findOne({id: req.params.user_id}, function(err, user) { 
+		if (checkForError(err, res, "Error sending photo")) return;
+		if (user !== undefined) {
+			var data = user.data.photo_profile;
+			res.send(data);
+		}	
+	});
 });
-
-
 /************************************************************************/
 /************************************************************************/
 
@@ -145,6 +153,7 @@ app.get('/users/:user_id/photo', function (req, res) {
 app.post('/users', function (req, res) {
 	var response = {};
 	var user_data = req.body.user;
+    console.log(req.body);
 	user_data.photo_profile = '';
 	db.users.save({data: user_data}, function(err, saved) {
 		if (checkForError(err, res, "Error at saving user data")) return;
