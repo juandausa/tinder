@@ -3,6 +3,8 @@
 //
 
 #include "User.h"
+#include <string>
+#include <vector>
 
 User::User() {
     this->userId = "";
@@ -22,14 +24,14 @@ User::User() {
 }
 
 /*TODO: Faltaria agregar validacion de campos del json*/
-User::User(Json::Value root){
+User::User(Json::Value root) {
     this->name = root.get("name", "").asString();
     this->alias = root.get("alias", "").asString();
     this->email = root.get("email", "").asString();
     this->birthday = this->validateTimeOrReturnDefault(root.get("birthday", "").asString());
     this->gender = this->validateGenderOrReturnDefault(root.get("gender", Constant::male).asString());
     this->urlPhotoProfile = root.get("photo_profile", "").asString();
-    
+
     Json::Value music = root["interests"]["music"];
     Json::Value movies = root["interests"]["movies"];
     Json::Value likes = root["interests"]["likes"];
@@ -55,9 +57,7 @@ User::User(Json::Value root){
 
     this->location.setLatitude(root["location"].get("latitude", 0).asDouble());
     this->location.setLongitude(root["location"].get("longitude", 0).asDouble());
-
 }
-
 
 std::string User::validateTimeOrReturnDefault(std::string time) {
     struct tm convertedTime;;
@@ -83,8 +83,10 @@ std::string User::calculateAge(std::string birthday) {
     if (strptime(birthday.c_str(), "%d/%m/%Y", &convertedTime)) {
         // return static_cast<std::ostringstream*>(&(std::ostringstream() << (localTime.tm_year - convertedTime.tm_year)))->str();
         int age = localTime.tm_year - convertedTime.tm_year;
-        std::stringstream convert; // stringstream used for the conversion
-        convert << age;//add the value of Number to the characters in the stream
+        std::stringstream convert;
+        // stringstream used for the conversion
+        convert << age;
+        // add the value of Number to the characters in the stream
         return convert.str();
     }
 

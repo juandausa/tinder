@@ -3,6 +3,7 @@
 //
 
 #include "UpdateFiltersController.h"
+#include <string>
 
 void UpdateFiltersController::operation(Request &request, Response &response) {
     std::string userId = request.getResourceId();

@@ -42,6 +42,13 @@ before_install:
     - sudo make install
     - sudo ldconfig -v
     - cd ..
+    - wget https://curl.haxx.se/download/curl-7.48.0.tar.gz
+    - tar xf curl-7.48.0.tar.gz
+    - cd curl-7.48.0
+    - ./configure
+    - make
+    - sudo make install
+    - cd ..
     - wget https://github.com/facebook/rocksdb/archive/rocksdb-4.3.1.tar.gz
     - tar xf rocksdb-4.3.1.tar.gz
     - cd rocksdb-rocksdb-4.3.1/
@@ -49,20 +56,14 @@ before_install:
     - sudo make install
     - sudo ldconfig -v
     - cd ..
-    - ls
-    - cd ../AppServer/curl-7.48.0
-    - ./configure
-    - make
-    - sudo make install
-    - cd ..
-    - cd ..
     - sudo apt-get install -y  libjsoncpp-dev
+    - cd ..
+    - ls
     - sudo rm -r dependencies
     
 before_script:
     - cd AppServer
-    - ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./source/src/*
-    - ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./source/main/*
+    - sh cpplint.sh
     - cmake .
     - make
 
@@ -70,5 +71,5 @@ script: ./source/test/runTests
 
 after_success: 
     - lcov --capture --directory ./source/test/ --output-file coverageTinderTests.info
-    - lcov --remove coverageTinderTests.info '/usr/include/*' '/usr/lib/*' 'src/Mongoose.cpp' --output-file coverageTinderTestsWithoutLibs.info
+    - lcov --remove coverageTinderTests.info '/usr/include/*' '/usr/lib/*' 'src/utils/Mongoose.cpp' 'test/*' 'test/include/*' --output-file coverageTinderTestsWithoutLibs.info
     - genhtml coverageTinderTestsWithoutLibs.info --output-directory coverageHtml

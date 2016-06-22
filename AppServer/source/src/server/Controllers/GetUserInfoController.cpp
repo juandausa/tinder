@@ -1,5 +1,9 @@
-#include "GetUserInfoController.h"
+//
+// Copyright 2016 FiUBA
+//
 
+#include "GetUserInfoController.h"
+#include <string>
 
 static std::string validateTimeOrReturnDefault(std::string time) {
     struct tm convertedTime;;
@@ -15,17 +19,19 @@ static std::string calculateAge(std::string birthday) {
     time_t t = time(NULL);
     localtime_r(&t, &localTime);
     if (strptime(birthday.c_str(), "%d/%m/%Y", &convertedTime)) {
-        return static_cast<std::ostringstream*>(&(std::ostringstream() << (localTime.tm_year - convertedTime.tm_year)))->str();
+        return static_cast<std::ostringstream *>(&(std::ostringstream() <<
+                                                   (localTime.tm_year - convertedTime.tm_year)))->str();
     }
 
     return Constant::defaultAge;
 }
-void GetUserInfoController :: operation(Request &request, Response &response) {
+
+void GetUserInfoController::operation(Request &request, Response &response) {
     std::string readBuffer;
     std::string body;
     std::string userId = request.getResourceId();
     std::string externalUserId = this->userService.getExternalUserId(userId);
-    LOG(INFO) << "Retrieving user info for user: '" << userId<< "'";
+    LOG(INFO) << "Retrieving user info for user: '" << userId << "'";
     if ((userId.compare("") == 0) || (externalUserId.compare("") == 0)) {
         response.SetCode(500);
         response.SetBody("Bad Request, no userId detected.");
@@ -48,7 +54,8 @@ void GetUserInfoController :: operation(Request &request, Response &response) {
     return;
 }
 
-std::string GetUserInfoController :: makeBodyForUserInfoResponse(const std::string appUserId, const std::string userInfo) {
+std::string GetUserInfoController::makeBodyForUserInfoResponse(const std::string appUserId,
+                                                               const std::string userInfo) {
     Json::Value rootShared;
     Json::Value rootApp;
     Json::Value arrayInterests;

@@ -5,7 +5,6 @@
 #include "AddMessagesController.h"
 #include <string>
 
-
 void AddMessagesController::operation(Request &request, Response &response) {
     LOG(INFO) << "Adding message from user: '" << request.getResourceId() << "'";
     Message message = this->getMessageFromRequest(request);

@@ -18,7 +18,7 @@ void printCurrentDir() {
         perror("getcwd() error");
 }
 
-std::vector<std::string> convert_parameters(int argc, char** args) {
+std::vector<std::string> convert_parameters(int argc, char **args) {
     std::vector<std::string> parameters;
     for (int i = 0; i < argc; i++) {
         std::string parameter(args[i]);
@@ -28,27 +28,25 @@ std::vector<std::string> convert_parameters(int argc, char** args) {
     return parameters;
 }
 
-int main(int argc, char** args) {
+int main(int argc, char **args) {
     DataBase *db = DataBase::getInstance();
     Log *log = Log::getInstance();
     log->init(args[0]);
-    
-    if (!db->open(Constant::database_path)){
+
+    if (!db->open(Constant::database_path)) {
         log->writeAndPrintLog("Open db error.", Log::FATAL);
         return Constant::DB_ERROR;
     }
-    
-    log->writeAndPrintLog("App Server started.",Log::INFO);
+
+    log->writeAndPrintLog("App Server started.", Log::INFO);
     printCurrentDir();
-    
+
     Server tinderServer(convert_parameters(argc, args));
     tinderServer.start();
 
-    log->writeAndPrintLog("App Server finished.",Log::INFO);
+    log->writeAndPrintLog("App Server finished.", Log::INFO);
     delete db;
     delete log;
-    
+
     return 0;
 }
-
-

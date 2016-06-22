@@ -7,11 +7,11 @@
 #include <string>
 #include "Constant.h"
 
-FilterService :: FilterService(){
+FilterService::FilterService() {
     this->database = DataBase::getInstance();
 }
 
-bool FilterService :: update_filters(const std::string user_id, const std::string filters) {
+bool FilterService::update_filters(const std::string user_id, const std::string filters) {
     if (this->database->is_open()) {
         return this->database->set(Constant::filters_prefix + user_id, filters);
     }
@@ -20,7 +20,7 @@ bool FilterService :: update_filters(const std::string user_id, const std::strin
     return false;
 }
 
-std::string FilterService :: get_filters(const std::string user_id) {
+std::string FilterService::get_filters(const std::string user_id) {
     std::string filters("");
     if (!this->database->is_open()) {
         LOG(WARNING) << "The database is closed";
@@ -34,4 +34,3 @@ std::string FilterService :: get_filters(const std::string user_id) {
 
     return filters;
 }
-

@@ -14,10 +14,10 @@
 #include "UserService.h"
 
 
-Server :: Server(std::vector<std::string> options) : options(options), port(Constant::server_port) {
+Server::Server(std::vector<std::string> options) : options(options), port(Constant::server_port) {
 }
 
-Server :: Server() : options(std::vector<std::string>()), port(Constant::server_port) {
+Server::Server() : options(std::vector<std::string>()), port(Constant::server_port) {
 }
 
 
@@ -33,15 +33,14 @@ static void signal_handler(int sig_num) {
 void Server::ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     struct http_message *hm = (struct http_message *) ev_data;
     switch (ev) {
-        case MG_EV_HTTP_REQUEST:
-        {
+        case MG_EV_HTTP_REQUEST: {
             UserService user_service;
             Response response(nc);
             Request request(response);
             request.parse(hm);
-            Log* log = Log::getInstance();
-            log->writeAndPrintLog(std::string("Url: ") + request.getUrl() 
-                                    +  std::string("Method: ") + request.getMethod(),Log::INFO);
+            Log *log = Log::getInstance();
+            log->writeAndPrintLog(std::string("Url: ") + request.getUrl()
+                                  + std::string("Method: ") + request.getMethod(), Log::INFO);
             SecurityManager security(user_service);
             security.filter_request(nc, hm, response);
 
@@ -56,16 +55,15 @@ void Server::ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
 }
 
 
-
-void Server :: start() {
+void Server::start() {
     struct mg_mgr mgr;
     struct mg_connection *nc;
-    this->port = Constant :: server_port;
+    this->port = Constant::server_port;
 
     mg_mgr_init(&mgr, NULL);
 
-    Log* log = Log::getInstance();
-    
+    Log *log = Log::getInstance();
+
     /* Set HTTP server options */
     nc = mg_bind(&mgr, this->port.c_str(), Server::ev_handler);
     if (nc == NULL) {
@@ -82,13 +80,13 @@ void Server :: start() {
 
     signal(SIGINT, signal_handler);
     signal(SIGTERM, signal_handler);
-    log->writeAndPrintLog(std::string("Starting RESTful server on port") + this->port ,Log::INFO);
+    log->writeAndPrintLog(std::string("Starting RESTful server on port") + this->port, Log::INFO);
     while (s_sig_num == 0) {
         mg_mgr_poll(&mgr, 1000);
     }
     mg_mgr_free(&mgr);
-    log->writeAndPrintLog(std::string("Finishing RESTful server on port") + this->port ,Log::INFO);
+    log->writeAndPrintLog(std::string("Finishing RESTful server on port") + this->port, Log::INFO);
     return;
 }
 
-Server ::~Server() { }
+Server::~Server() { }
