@@ -32,7 +32,6 @@ void GetCandidatesController::operation(Request &request, Response &response) {
     if (this->userService.isUserRegistered(userId)) {
         std::string responseBody = getUserInfoWithOutResponse(request, response);
         bool parsingSuccessful = reader.parse(responseBody, rootShared, true);
-        std::cout << "User data: '" <<  fastWriter.write(rootShared) << "'";
         if (!parsingSuccessful) {
             std::cout << "Error parsing result" << std::endl;
         }
@@ -146,6 +145,8 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
         if (genderOfMyInterest.compare("male|female") == 0 ||
                 (genderOfMyInterest.compare(gender) == 0 /*&& genderOfTheirInterest.compare(myGender) == 0) ||
                 (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare("male|female") == 0)*/)) {
+            
+            //std::cout << "LLEGAAAAA 1" << std::endl;
             Json::Value user;
             Json::Value arrayInterests;
             user["user_id"] = appUserId;
@@ -155,11 +156,12 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
             user["birthday"] = birthday;
             user["age"] = Converter::calculateAge(birthday);
             user["gender"] = Converter::validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString());
-
+            //std::cout << "LLEGAAAAA 2" << std::endl;
            // LIBERAR ESTA MEMORIA
-            std::string* photoBase64 = candidatesService.getCandidatePhoto((users[i]["user"].get("photo_profile", "")).asString());
-            user["photo_profile"] = *photoBase64;
-            photos.push_back(photoBase64);
+            std::string photoBase64 = candidatesService.getCandidatePhoto((users[i]["user"].get("photo_profile", "")).asString());
+            user["photo_profile"] = photoBase64;
+            //photos.push_back(photoBase64);
+            //std::cout << "LLEGAAAAA 3" << std::endl;
             Json::Value interests = users[i]["user"].get("interests", "");
             /* TODO: Cuando se solucione el problema en CandidatesService usar esto*/
 //            if (candidatesService.filterCandidates(userData,user, interests,myArrayOfInterests)) {
@@ -172,6 +174,7 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
                     interestInCommon++;
                 }
             }
+            //std::cout << "LLEGAAAAA 4" << std::endl;
             user["interests"] = arrayInterests;
             if (interestInCommon >= 1) {
                 usersData.emplace(sharedUserId, user);
