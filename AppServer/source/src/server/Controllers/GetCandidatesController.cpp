@@ -59,7 +59,7 @@ void GetCandidatesController::operation(Request &request, Response &response) {
         std::string genderOfMyInterest = this->userService.getShowGender(userId);
         Json::Value body = makeBodyForShowCandidatesResponse(rootShared, myGender, genderOfMyInterest, myArrayOfInterests);
         std::string sendBody = fastWriter.write(body);
-        if (sendBody.compare("null\n") == 0) {
+        if ((sendBody.compare("null\n") == 0)) {
             sendBody = "{}";
         }
         response.SetCode(200);
@@ -153,12 +153,12 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
         std::string gender = fastWriter.write(users[i]["user"].get("gender", "male"));
         gender = gender.substr(1, gender.size()-3);
         std::string sharedUserId = fastWriter.write(users[i]["user"].get("id", ""));
+
         sharedUserId = sharedUserId.substr(0, sharedUserId.size()-1);
         std::string appUserId = this->userService.getAppUserId(sharedUserId);
-        std::string genderOfTheirInterest = this->userService.getShowGender(appUserId);
         if (genderOfMyInterest.compare("male|female") == 0 ||
-                (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare(myGender) == 0) ||
-                (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare("male|female") == 0)) {
+                (genderOfMyInterest.compare(gender) == 0 /*&& genderOfTheirInterest.compare(myGender) == 0) ||
+                (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare("male|female") == 0)*/)) {
             Json::Value user;
             Json::Value arrayInterests;
             user["user_id"] = appUserId;
