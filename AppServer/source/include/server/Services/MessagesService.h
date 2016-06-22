@@ -8,7 +8,7 @@
 #include "Message.h"
 #include <string>
 #include <vector>
-
+#include "Log.h"
 class MessagesService {
 public:
     MessagesService();
@@ -18,6 +18,8 @@ public:
     Message getLastMessage(std::string sender, std::string reciever);
 private:
     DataBase* database;
+    Log *log;
+    bool addMessageToDatabase(Message message, std::string key);
 };
 
 #endif //TINDER_MESSAGESSERVICE_H

@@ -14,12 +14,14 @@ public:
 	UserRegisterController();
 	~UserRegisterController();
     void operation(Request &request, Response &response);
-	Json::Value makeBodyForRegistrationPost(const Json::Value root);
-    Json::Value makeBodyAndTokenForRegistrationResponse(const std::string userId);
+
 private:
     UserService userService;
     std::thread* postInterestsThread;
+    Json::Value makeBodyAndTokenForRegistrationResponse(const std::string userId);
+    Json::Value makeBodyForRegistrationPost(const Json::Value root, std::string appUserId);
     void postInterests(Json::Value root);
+    
 };
 
 

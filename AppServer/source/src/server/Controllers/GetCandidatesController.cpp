@@ -7,8 +7,16 @@
 
 bool GetCandidatesController::isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests) {
     std::string theirInterest = fastWriter.write(interest);
+    if (theirInterest.compare("") != 0) {
+        theirInterest = theirInterest.substr(1, theirInterest.size() - 3);
+    }
+    // Para no tener en cuenta si tiene mismas preferencias de gender:
+    if (theirInterest.compare("male") == 0 || theirInterest.compare("female") == 0 || theirInterest.compare("male|female") == 0){
+        return false;
+    }
     for (unsigned int i = 0; i < myArrayOfInterests.size(); i++) {
         std::string myInterest = fastWriter.write(myArrayOfInterests[i]);
+        myInterest = myInterest.substr(1, myInterest.size() - 3);
         if (theirInterest.compare(myInterest) == 0) {
             return true;
         }
@@ -144,7 +152,6 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
             user["birthday"] = birthday;
             user["age"] = Converter::calculateAge(birthday);
             user["gender"] = Converter::validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString());
-            std::cout << fastWriter.write(users[i]["user"]) << std::endl;
             user["photo_profile"] = url + "/" + sharedUserId + "/photo";
             Json::Value interests = users[i]["user"].get("interests", "");
             /* TODO: Cuando se solucione el problema en CandidatesService usar esto*/
