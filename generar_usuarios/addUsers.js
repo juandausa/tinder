@@ -23,7 +23,7 @@ var photos = [
 
 var location = {
         "latitude" : -34.780884,
-        "logitude" : -58.395260 
+        "longitude" : -58.395260 
     };
 
 
@@ -85,7 +85,6 @@ setTimeout(function() {
         candidate.photo_profile = photos[i];        
         candidate.location = location;
         candidate.discovering_distance = distances[i];
-        console.log(interests);
         candidates.push(candidate);           
     }    
     sendCandidate(candidates, 0, sendCandidate);
