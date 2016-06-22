@@ -32,6 +32,7 @@ void GetCandidatesController::operation(Request &request, Response &response) {
     if (this->userService.isUserRegistered(userId)) {
         std::string responseBody = getUserInfoWithOutResponse(request, response);
         bool parsingSuccessful = reader.parse(responseBody, rootShared, true);
+        std::cout << "User data: '" <<  fastWriter.write(rootShared) << "'";
         if (!parsingSuccessful) {
             std::cout << "Error parsing result" << std::endl;
         }
@@ -132,6 +133,8 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
 
     Json::Value users = root["users"];
     CandidatesService candidatesService;
+    std::vector<std::string*> photos;
+
     for (unsigned int i = 0; i < users.size(); i++) {
         int interestInCommon = 0;
         std::string gender = fastWriter.write(users[i]["user"].get("gender", "male"));
@@ -152,7 +155,11 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
             user["birthday"] = birthday;
             user["age"] = Converter::calculateAge(birthday);
             user["gender"] = Converter::validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString());
-            user["photo_profile"] = url + "/" + sharedUserId + "/photo";
+
+           // LIBERAR ESTA MEMORIA
+            std::string* photoBase64 = candidatesService.getCandidatePhoto((users[i]["user"].get("photo_profile", "")).asString());
+            user["photo_profile"] = *photoBase64;
+            photos.push_back(photoBase64);
             Json::Value interests = users[i]["user"].get("interests", "");
             /* TODO: Cuando se solucione el problema en CandidatesService usar esto*/
 //            if (candidatesService.filterCandidates(userData,user, interests,myArrayOfInterests)) {
