@@ -86,7 +86,6 @@ void UserRegisterController::operation(Request &request, Response &response) {
 }
 
 Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root, std::string appUserId) {
-    std::string appUserId = root.get("user_id", "").asString();
     std::string name = root.get("name", "").asString();
     std::string alias = root.get("alias", "").asString();
     std::string email = root.get("email", "").asString();
