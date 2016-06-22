@@ -80,6 +80,7 @@ void UserRegisterController::operation(Request &request, Response &response) {
 }
 
 Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root) {
+    std::string appUserId = root.get("user_id", "").asString();
     std::string name = root.get("name", "").asString();
     std::string alias = root.get("alias", "").asString();
     std::string email = root.get("email", "").asString();
@@ -92,6 +93,9 @@ Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root
     Json::Value television = root["interests"]["television"];
     Json::Value games = root["interests"]["games"];
     Json::Value books = root["interests"]["books"];
+    std::string discovering_distance = fastWriter.write(root.get("discovering_distance", "10"));
+    this->userService.setDiscoveringDistance(appUserId, discovering_distance);
+    this->userService.setShowGender(appUserId, "male|female");
 
     double latitude = root["location"].get("latitude", 0).asDouble();
     double longitude = root["location"].get("longitude", 0).asDouble();
