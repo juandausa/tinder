@@ -13,6 +13,7 @@ class GetCandidatesController: public GenericController {
 
 public:
     void operation(Request &request, Response &response);
+	std::string makeBodyForUserInfoResponse(const std::string appUserId, const std::string userInfo);
 
 private:
     UserService userService;
@@ -21,8 +22,7 @@ private:
                                                               Json::Value myArrayOfInterests);
     std::string getUserInfoWithOutResponse(Request &request, Response &response);
     bool isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests);
-    std::string makeBodyForUserInfoResponse(const std::string appUserId, const std::string userInfo);
-    void onePercentRule(std::unordered_map<std::string, Json::Value> &usersData, 
+    void onePercentRule(std::unordered_map<std::string, Json::Value> &usersData,
     	std::unordered_map<std::string, std::string> &usersLikes);
     void fillUsersArray(std::unordered_map<std::string, Json::Value> &usersData, 
     	Json::Value &arrayUsers);
