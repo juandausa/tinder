@@ -20,6 +20,7 @@ bool MessagesService::addMessageToDatabase(Message message, std::string key) {
 
     bool result;
     if (previousMessages.length() != 0) {
+        /*Recuperar el mensaje como json array y parsearlo*/
         previousMessages += Constant::messagesSeparator;
         previousMessages.append(message.toString());
         result = this->database->set(key, previousMessages);
