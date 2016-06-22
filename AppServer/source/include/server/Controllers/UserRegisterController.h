@@ -10,17 +10,17 @@
 
 class UserRegisterController: public GenericController {
 public:
-	UserRegisterController();	
-	~UserRegisterController();	
+	UserRegisterController();
+	~UserRegisterController();
     void operation(Request &request, Response &response);
+	Json::Value makeBodyForRegistrationPost(const Json::Value root);
 
 private:
     UserService userService;
     std::thread* postInterestsThread;
     Json::Value makeBodyAndTokenForRegistrationResponse(const std::string userId);
-    Json::Value makeBodyForRegistrationPost(const Json::Value root);
     void postInterests(Json::Value root);
-    
+
 };
 
 
