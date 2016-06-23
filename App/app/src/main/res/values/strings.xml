@@ -92,6 +92,8 @@
     </string>
     <string name="gender_not_selected">Género de interés no seleccionado</string>
     <string name="select_one_or_more_genders">Seleccione uno o ambos géneros para la búsqueda de personas</string>
+    <string name="no_more_candidates">Limite de busqueda de personas alcanzado para este dia.</string>
+    <string name="no_more_candidates_title">No hay nueva gente cerca</string>
 
 
     <string name="large_text">

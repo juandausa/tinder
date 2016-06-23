@@ -82,6 +82,10 @@ public class UserData {
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
+    public String getImageURL() {
+        return mPhoto;
+    }
+
     /**********************************************************************************************/
     /**********************************************************************************************/
 

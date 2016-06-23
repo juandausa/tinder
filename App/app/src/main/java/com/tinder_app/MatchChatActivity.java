@@ -33,6 +33,7 @@ public class MatchChatActivity extends AppCompatActivity {
     private Conversation mConversation;
     private String mAlias;
     private String mUserId;
+    public String mOtherUserId = null;
     private ListView mListView;
     private ChatMessageAdapter mAdapter;
     private Button mButtonSend;
@@ -63,6 +64,7 @@ public class MatchChatActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mAlias = intent.getStringExtra(Constants.ALIAS);
+        mOtherUserId = intent.getStringExtra(Constants.USER_ID);
 
         mUserId = SessionManager.getUserId(this);
         mConversation = new Conversation(intent.getStringExtra(Constants.CONVERSATION));
@@ -85,6 +87,7 @@ public class MatchChatActivity extends AppCompatActivity {
                 try {
                     data.put(Constants.USER_ID, mUserId);
                     data.put(Constants.MESSAGE, message);
+                    data.put("to_user_id", mOtherUserId);
                     (new SendNewMessageRequest(MatchChatActivity.this)).send(data);
                 } catch (JSONException e) {
                     e.printStackTrace();

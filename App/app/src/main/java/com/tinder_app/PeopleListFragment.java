@@ -51,6 +51,7 @@ public class PeopleListFragment extends Fragment {
     private ProgressDialog mProgress;
     private Map<String, Method> mDecisionMethods;
     MainActivity mActivity;
+    private int mCurrId = 0;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -207,14 +208,16 @@ public class PeopleListFragment extends Fragment {
     /**********************************************************************************************/
 
     private void sendDecisionOverCandidate(String decision) {
-        CandidateData candidate = (CandidateData) mAdapter.getItem(0);
+        CandidateData candidate = (CandidateData) ((SwipeDeckAdapter)mAdapter).getItem(mCurrId);
         try {
             (mDecisionMethods.get(decision)).invoke(mActivity, candidate.getUserId());
+            mCurrId += 1;
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+
     }
 
     /**********************************************************************************************/
@@ -261,6 +264,7 @@ public class PeopleListFragment extends Fragment {
                 mAdapter.update(mCards);
                 mCardStack.invalidate();
                 mProgress.dismiss();
+                mCurrId = mCardStack.getTop();
             }
         };
         loadCards.execute();
@@ -296,4 +300,23 @@ public class PeopleListFragment extends Fragment {
                     }
                 }).create().show();
     }
+
+    /**
+     * Creates a dialog that shows the message of unable to connect
+     */
+    public void noMoreCandidatesDialog() {
+        mProgress.dismiss();
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.no_more_candidates_title)
+                .setMessage(getString(R.string.no_more_candidates))
+                .setCancelable(false)
+                .setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Whatever...
+                    }
+                }).create().show();
+    }
+
+
 }

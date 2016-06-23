@@ -1,7 +1,10 @@
 package facebookdata;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 
 import com.facebook.AccessToken;
@@ -11,6 +14,11 @@ import com.facebook.GraphResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -77,14 +85,20 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
                         Log.i("Object", user.toString());
                         Log.d("check", response.toString());
                         try {
+                            Bitmap bitmap = getBitmapFromURL(user.getJSONObject("picture").
+                                    getJSONObject("data").getString("url"));
+                            String base64Photo = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100);
                             mProfile.putIfAbsent(mName, user.getString(mName));
                             mProfile.putIfAbsent(mEmail, user.getString(mEmail));
                             mProfile.putIfAbsent(mBirthday, user.getString(mBirthday));
                             mProfile.putIfAbsent(mAlias, user.getString(mFirstName));
-                            mProfile.putIfAbsent(mGender, user.getString(mGender));
+                            if (genderIsMale(user.getString(mGender))) {
+                                mProfile.putIfAbsent(mGender, "male");
+                            } else {
+                                mProfile.putIfAbsent(mGender, "female");
+                            }
                             mProfile.putIfAbsent(mUser, mUserId);
-                            mProfile.putIfAbsent(mPhoto, user.getJSONObject("picture").
-                                    getJSONObject("data").getString("url"));
+                            mProfile.putIfAbsent(mPhoto, base64Photo);
                         } catch (JSONException e) {
                             Log.e("JSON ERROR", e.toString());
                         }
@@ -93,4 +107,34 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
         request.setParameters(mParams);
         request.executeAndWait();
     }
+
+
+    private boolean genderIsMale(String gender) {
+        return ((gender.equals("hombre")) || (gender.equals("male")));
+    }
+
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            // Log exception
+            return null;
+        }
+    }
+
+
+    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
+    {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        image.compress(compressFormat, quality, byteArrayOS);
+        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
+    }
+
 }

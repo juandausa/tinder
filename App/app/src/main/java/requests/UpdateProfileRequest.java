@@ -28,7 +28,7 @@ public class UpdateProfileRequest extends JSONRequest {
      */
     public UpdateProfileRequest(EditProfileActivity context) {
         super(context);
-        mMethod = Request.Method.POST;
+        mMethod = Request.Method.PUT;
         mContext = context;
     }
 
@@ -78,7 +78,7 @@ public class UpdateProfileRequest extends JSONRequest {
      */
     @Override
     public void onError(VolleyError error) {
-        Log.e(mContext.getString(R.string.REQUEST_ERROR) + "1", error.getMessage());
+        Log.e(mContext.getString(R.string.REQUEST_ERROR) + "1", error.toString());
     }
 
     /**********************************************************************************************/

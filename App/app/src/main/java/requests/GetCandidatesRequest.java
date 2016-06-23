@@ -49,6 +49,7 @@ public class GetCandidatesRequest extends JSONRequest {
             mFragment.setCandidates(response.getJSONArray(CANDIDATES));
         } catch (JSONException e) {
             Log.e(mContext.getString(R.string.JSON_ERROR), e.getMessage());
+            mFragment.noMoreCandidatesDialog();
         }
     }
 

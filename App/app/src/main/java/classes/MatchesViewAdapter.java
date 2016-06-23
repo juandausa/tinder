@@ -85,6 +85,7 @@ public class MatchesViewAdapter extends RecyclerView.Adapter<ViewHolder> {
                 Context context = v.getContext();
                 Intent intent = new Intent(context, MatchChatActivity.class);
                 intent.putExtra(Constants.ALIAS, holder.getBoundString());
+                intent.putExtra(Constants.USER_ID, currMatch.getUserId());
                 intent.putExtra(Constants.CONVERSATION, currMatch.getConversation().toString());
 
                 context.startActivity(intent);

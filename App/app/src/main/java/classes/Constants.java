@@ -50,7 +50,7 @@ public final class Constants {
     /**
      * Route for constructing the url path for the request that updates the user data in the server
      */
-    public static final String USER_UPDATE_DATA_PATH = "/user/update/";
+    public static final String USER_UPDATE_DATA_PATH = "/user/";
 
     /**
      * Route for constructing the url path for the request that send the id of the candidate that

@@ -215,9 +215,9 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radio_male) {
-                    mSelectedGender = "Hombre";
+                    mSelectedGender = "male";
                 } else {
-                    mSelectedGender = "Mujer";
+                    mSelectedGender = "female";
                 }
             }
         });

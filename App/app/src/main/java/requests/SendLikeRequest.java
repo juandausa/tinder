@@ -68,7 +68,7 @@ public class SendLikeRequest extends JSONRequest {
 
     @Override
     protected void onError(VolleyError error) {
-        Log.e(mContext.getString(R.string.REQUEST_ERROR)+LIKE_STRING, error.getMessage());
+        Log.e(mContext.getString(R.string.REQUEST_ERROR)+LIKE_STRING, error.toString());
     }
 
 

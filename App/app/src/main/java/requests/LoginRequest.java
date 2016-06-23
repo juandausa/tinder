@@ -43,10 +43,12 @@ public class LoginRequest extends SimpleRequest {
     @Override
     public void send(JSONObject json) {
         mUser = json;
+        JSONObject empty = new JSONObject();
         try {
-            Log.i(Constants.USER_ID, json.getString(Constants.USER_ID));
-            String route = Constants.LOGIN_PATH + json.getString(Constants.USER_ID);
-            super.send(json, route);
+            empty.put(Constants.USER_ID, json.getString(Constants.USER_ID));
+            Log.i(Constants.USER_ID, empty.getString(Constants.USER_ID));
+            String route = Constants.LOGIN_PATH + empty.getString(Constants.USER_ID);
+            super.send(empty, route);
         } catch (JSONException e) {
             Log.e(mContext.getString(R.string.JSON_ERROR), e.getMessage());
         }

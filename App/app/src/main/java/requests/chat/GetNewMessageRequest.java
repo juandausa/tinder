@@ -21,6 +21,7 @@ public class GetNewMessageRequest extends JSONRequest {
 
 
     MatchChatActivity mContext;
+    private String TO_USER_ID = "to_user_id";
 
 
     /**********************************************************************************************/

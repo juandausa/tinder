@@ -29,13 +29,16 @@ public class GetNewMessageService implements Runnable {
     public void run() {
         android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
         while (mContext.isAlive()) {
-            GetNewMessageRequest request = new GetNewMessageRequest(mContext);
-            JSONObject data = new JSONObject();
-            try {
-                data.put(Constants.USER_ID, SessionManager.getUserId(mContext));
-                request.send(data);
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if (mContext.mOtherUserId != null) {
+                GetNewMessageRequest request = new GetNewMessageRequest(mContext);
+                JSONObject data = new JSONObject();
+                try {
+                    data.put("to_user_id", SessionManager.getUserId(mContext));
+                    data.put(Constants.USER_ID, mContext.mOtherUserId);
+                    request.send(data);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
             try {
                 Thread.sleep(TIME);
