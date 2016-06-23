@@ -18,7 +18,7 @@ static std::string calculateAge(std::string birthday) {
     struct tm convertedTime, localTime;
     time_t t = time(NULL);
     localtime_r(&t, &localTime);
-    if (strptime(birthday.c_str(), "%d/%m/%Y", &convertedTime)) {
+    if (strptime(birthday.c_str(), "%m/%d/%Y", &convertedTime)) {
         return static_cast<std::ostringstream *>(&(std::ostringstream() <<
                                                    (localTime.tm_year - convertedTime.tm_year)))->str();
     }
@@ -70,6 +70,7 @@ std::string GetUserInfoController::makeBodyForUserInfoResponse(const std::string
     rootApp["birthday"] = birthday;
     rootApp["age"] = calculateAge(birthday);
     rootApp["gender"] = rootShared["user"].get("sex", Constant::male);
+    rootApp["email"] = rootShared["user"].get("email", "");
     rootApp["photo_profile"] = rootShared["user"].get("photo_profile", "");
     Json::Value interests = rootShared["user"].get("interests", "");
     for (unsigned int j = 0; j < interests.size(); j++) {

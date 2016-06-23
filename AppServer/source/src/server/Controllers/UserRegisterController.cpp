@@ -132,7 +132,7 @@ Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root
         interest["value"] = movies[i];
         interests.append(interest);
     }
-    for (unsigned int i = 0; i < likes.size(); ++i) {
+    /*for (unsigned int i = 0; i < likes.size(); ++i) {
         interest["category"] = "likes";
         interest["value"] = likes[i];
         interests.append(interest);
@@ -151,7 +151,7 @@ Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root
         interest["category"] = "books";
         interest["value"] = books[i];
         interests.append(interest);
-    }
+    }*/
 
     interest["category"] = "sex";
     interest["value"] = "male|female";
@@ -188,7 +188,7 @@ void UserRegisterController::postInterests(Json::Value root) {
         Json::Value postData;
         postData["interest"] = interests[i];
         postData["metadata"]["version"] = "0.1";
-        postData["metadata"]["count"] = "1";
+        postData["metadata"]["count"] = 1;
         Json::FastWriter *writer = new Json::FastWriter();
         std::string data = writer->write(postData);
         writers.push_back(writer);

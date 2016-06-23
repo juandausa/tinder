@@ -5,14 +5,14 @@
 #include "UpdateUserInfoController.h"
 #include <string>
 
-static std::string validateTimeOrReturnDefault(std::string time) {
+/*static std::string validateTimeOrReturnDefault(std::string time) {
     struct tm convertedTime;;
     if (strptime(time.c_str(), "%d/%m/%Y", &convertedTime)) {
         return time;
     } else {
         return Constant::defaultBirthday;
     }
-}
+}*/
 
 static std::string validateGenderOrReturnDefault(std::string gender) {
     if (gender.compare(Constant::female) == 0) {
@@ -26,8 +26,11 @@ static std::string validateGenderOrReturnDefault(std::string gender) {
 void UpdateUserInfoController::operation(Request &request, Response &response) {
     std::string appUserId = request.getResourceId();
     std::string externalUserId = this->userService.getExternalUserId(appUserId);
+    std::cout << "External user id" << externalUserId << std::endl; 
     LOG(INFO) << "Updating user info for user: '" << appUserId << "'";
     std::string body = this->makeBodyUserInfoForUpdate(request.getBody(), externalUserId, appUserId);
+    std::cout << "LLEEGAAAAA 1" << std::endl;
+    
     if ((appUserId.compare("") == 0) || (externalUserId.compare("") == 0) || (body.compare("") == 0)) {
         response.SetCode(400);
         response.SetBody("Bad request.");
@@ -39,6 +42,7 @@ void UpdateUserInfoController::operation(Request &request, Response &response) {
         curlWrapper.set_post_url(url);
         curlWrapper.set_put_data(body, readBuffer);
         bool requestResult = curlWrapper.perform_request();
+        std::cout << "LLEEGAAAAA 2" << std::endl;
         if (!requestResult) {
             LOG(WARNING) << "Error requesting url: '" << url << "' with body: " << body << ". Response: " <<
             readBuffer;
@@ -51,85 +55,59 @@ void UpdateUserInfoController::operation(Request &request, Response &response) {
         }
         curlWrapper.clean();
     }
-
+std::cout << "LLEEGAAAAA 3" << std::endl;
     response.Send();
 }
 
-Json::Value UpdateUserInfoController::makeBodyForRegistrationPost(Json::Value root, std::string appUserId) {
+void UpdateUserInfoController::makeBodyForRegistrationPost(const Json::Value &root, std::string appUserId, 
+                                                                            Json::Value &userData, int userId) {
+    
+    
     std::string name = root.get("name", "").asString();
     std::string alias = root.get("alias", "").asString();
-    std::string email = root.get("email", "").asString();
-    std::string birthday = validateTimeOrReturnDefault(root.get("birthday", "").asString());
+    int age = root.get("age", "").asInt();
     std::string gender = validateGenderOrReturnDefault(root.get("gender", Constant::male).asString());
     std::string photo_profile = root.get("photo_profile", "").asString();
-    Json::Value music = root["interests"]["music"];
-    Json::Value movies = root["interests"]["movies"];
-    Json::Value likes = root["interests"]["likes"];
-    Json::Value television = root["interests"]["television"];
-    Json::Value games = root["interests"]["games"];
-    Json::Value books = root["interests"]["books"];
-    std::string sex = root["interests"]["sex"].asString();
-    this->userService.setShowGender(appUserId, sex);
-
-    double latitude = root["location"].get("latitude", 0).asDouble();
-    double longitude = root["location"].get("longitude", 0).asDouble();
-
+    
     Json::Value event;
     Json::Value user;
     Json::Value interest;
     Json::Value interests;
+    // COPIARLO EN OTRO OBJETO, PUEDE QUE AHI ESTE EL PROBLEMA
 
-    user["name"] = name;
-    user["alias"] = alias;
-    user["email"] = email;
-    user["birthday"] = birthday;
-    user["gender"] = gender;
-    user["photo_profile"] = photo_profile;
-    user["location"]["latitude"] = latitude;
-    user["location"]["longitude"] = longitude;
-
-    for (unsigned int i = 0; i < music.size(); ++i) {
-        interest["category"] = "music";
-        interest["value"] = music[i];
-        interests.append(interest);
-    }
-    for (unsigned int i = 0; i < movies.size(); ++i) {
-        interest["category"] = "movies";
-        interest["value"] = movies[i];
-        interests.append(interest);
-    }
-    for (unsigned int i = 0; i < likes.size(); ++i) {
-        interest["category"] = "likes";
-        interest["value"] = likes[i];
-        interests.append(interest);
-    }
-    for (unsigned int i = 0; i < television.size(); ++i) {
-        interest["category"] = "television";
-        interest["value"] = television[i];
-        interests.append(interest);
-    }
-    for (unsigned int i = 0; i < games.size(); ++i) {
-        interest["category"] = "games";
-        interest["value"] = games[i];
-        interests.append(interest);
-    }
-    for (unsigned int i = 0; i < books.size(); ++i) {
-        interest["category"] = "books";
-        interest["value"] = books[i];
-        interests.append(interest);
-    }
-    interest["category"] = "sex";
-    interest["value"] = sex;
-    interests.append(interest);
-
-    user["interests"] = interests;
-    event["user"] = user;
-    std::cout << fastWriter.write(event) << std::endl;
-    return event;
+    userData["user"]["id"] = userId;
+    userData["user"]["name"] = name;
+    userData["user"]["alias"] = alias;
+    userData["user"]["sex"] = gender;
+    userData["user"]["photo_profile"] = photo_profile;
+    userData["user"]["age"] = age;
+    
+    userData["user"] = user;
+    std::cout << fastWriter.write(userData) << std::endl;
+    //return userData;
 }
 
 std::string UpdateUserInfoController::makeBodyUserInfoForUpdate(const std::string info, const std::string userId,
                                                                 const std::string appUserId) {
+    
+    
+    std::string url = "http://enigmatic-scrubland-75073.herokuapp.com/users/" + userId;
+    LOG(INFO) << "Requesting url: " << url;
+    std::cout << "Requesting url: " << url << std::endl;
+    CurlWrapper curlWrapper = CurlWrapper();
+    std::string userProfileData;
+    curlWrapper.set_get_url(url);
+    curlWrapper.set_get_buffer(userProfileData);
+    bool requestResult = curlWrapper.perform_request();
+    std::cout << "LLEGAAA LA CONCHA DE LA LORA" << std::endl;    
+    if (!requestResult) {
+        return "";
+    }
+    
+    std::cout << "User data " << userProfileData << std::endl;
+    
+    std::cout << "LLEGAAA 4" << std::endl;
+    Json::Value userData;
     Json::Value root;
     Json::Reader reader;
     bool parsingSuccessful = reader.parse(info, root, true);
@@ -137,11 +115,21 @@ std::string UpdateUserInfoController::makeBodyUserInfoForUpdate(const std::strin
         return "";
     }
 
+    std::cout << "LLEGAAA 5" << std::endl;
+    Json::Reader otherReader;
+    parsingSuccessful = otherReader.parse(userProfileData, userData, true);
+    std::cout << "User data json" << fastWriter.write(userData) << std::endl;
+    
+    userProfileData.erase();
+    if (!parsingSuccessful) {
+        return "";
+    }
+    std::cout << "LLEGAAA 6" << std::endl;
     Json::Value parsedUserInfo;
-    parsedUserInfo = this->makeBodyForRegistrationPost(root, appUserId);
     try {
-        parsedUserInfo["user"]["id"] = std::atoi(userId.c_str());
+        this->makeBodyForRegistrationPost(root, appUserId, userData, std::atoi(userId.c_str()));
     } catch (std::exception const &e) {
+            std::cout << "LLEGAAA 7" << std::endl;
         LOG(WARNING) << "Error parsing user extrenal id, which is: '" << userId << "'";
         return "";
     }

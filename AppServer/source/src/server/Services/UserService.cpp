@@ -137,6 +137,7 @@ bool UserService::hasLike(std::string fromUserId, std::string toUserId) {
 bool UserService::hasMatch(std::string fromUserId, std::string toUserId) {
     std::vector<std::string> matches = this->getMatches(fromUserId);
     if (std::find(matches.begin(), matches.end(), toUserId) != matches.end()) {
+        std::cout << "MATCH: " << fromUserId << " - " << toUserId << std::endl;
         return true;
     }
 
@@ -169,6 +170,7 @@ bool UserService::addLike(const std::string fromUserId, const std::string toUser
             } else {
                 result = this->database->set(Constant::likes_prefix + fromUserId, toUserId);
             }
+            std::cout << "Result: " << result << std::endl;
             if (result && this->hasLike(toUserId, fromUserId)) {
                 return this->addMatch(fromUserId, toUserId) && this->addMatch(toUserId, fromUserId);
             }
@@ -179,6 +181,7 @@ bool UserService::addLike(const std::string fromUserId, const std::string toUser
         return true;
     } else {
         LOG(WARNING) << "Adding like. The database is closed.";
+        std::cout << "Adding like. The database is closed." << std::endl;
         return false;
     }
 }
@@ -228,14 +231,17 @@ bool UserService::addMatch(const std::string fromUserId, const std::string toUse
         if (!this->hasMatch(fromUserId, toUserId)) {
             std::string previousMatches("");
             this->database->get(Constant::matches_prefix + fromUserId, &previousMatches);
+            std::cout << "Matches de fromUserId: " << previousMatches << std::endl;
             bool result;
             if (previousMatches.length() != 0) {
                 previousMatches += Constant::likes_separator;
                 // Because likes_separator is a char.
                 previousMatches.append(toUserId);
                 result = this->database->set(Constant::matches_prefix + fromUserId, previousMatches);
+                std::cout << "Resultado de agregar match 1: " << result << std::endl;
             } else {
                 result = this->database->set(Constant::matches_prefix + fromUserId, toUserId);
+                std::cout << "Resultado de agregar match 2: " << result << std::endl;
             }
 
             return result;

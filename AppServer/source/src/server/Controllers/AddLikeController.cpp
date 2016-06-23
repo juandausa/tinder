@@ -22,6 +22,7 @@ void AddLikeController::operation(Request &request, Response &response) {
     } else {
         if (this->userService.addLike(fromUserId, toUserId)) {
             response.SetCode(200);
+            response.SetBody(getSucceedResponseBody());
             LOG(INFO) << "Like from user: '" << fromUserId << "' to user: '" << toUserId << "' added";
         } else {
             response.SetCode(500);

@@ -9,6 +9,7 @@
 class MatchesService {
 public:
     MatchesService();
+    std::string getMatchPhoto(std::string url);
     ~MatchesService();
 
 private:

@@ -12,7 +12,7 @@ public:
     void operation(Request &request, Response &response);
     std::string makeBodyUserInfoForUpdate(const std::string info, const std::string userInfo,
                                           const std::string appUserId);
-    Json::Value makeBodyForRegistrationPost(Json::Value root, std::string appUserId);
+    void makeBodyForRegistrationPost(const Json::Value &root, std::string appUserId, Json::Value &userData, int userId);
 
 private:
     UserService userService;
