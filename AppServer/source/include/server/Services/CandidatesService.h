@@ -10,7 +10,7 @@ class CandidatesService {
 public:
     bool filterCandidates(Json::Value myUser, Json::Value user, Json::Value interests, Json::Value myArrayOfInterests );
     Json::Value getArrayInterests();
-    std::string* getCandidatePhoto(std::string url);
+    std::string getCandidatePhoto(std::string url);
 private:
     Json::Value arrayInterests;
     const double MIN_DISTANCE = 10;
