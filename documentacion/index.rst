@@ -210,7 +210,7 @@ Requerimientos para Uso Local
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Instalar node.js así como su manejador de paquetes, `npm <https://www.npmjs.com/>`_ mediante el siguiente comando: ``sudo apt-get update; sudo apt-get install nodejs; sudo apt-get install npm;``
-* Instalar postgreSQL ``sudo apt-get install postgresql-9.4```.
+* Instalar postgreSQL ``sudo apt-get install postgresql-9.4``.
 * Abrir postgres, ejecutando el comando: ``psql -U postgres`` .
 * Crear la base de datos **users**, ejecutando dentro del interprete de postgres ``CREATE DATABASE users`` .
 * Crear las tablas necesarias ejecutando el script ``create_table.sql`` .
@@ -335,6 +335,7 @@ Documentación Técnica
 Tecnologías Utilizadas
 --------------------------------------
 * La aplicación se desarrollo en Java utilizando el SDK de `Android <https://www.android.com/>`_.
+
 --------------------------------------
 Clases Principales
 --------------------------------------
@@ -344,6 +345,31 @@ Clases Principales
 --------------------------------------------------------
 Diagramas de Clases, Paquetes, Flujo, etc
 --------------------------------------------------------
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Diagrama de Paquetes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: ./images/App-Paquetes.png
+   :align: center
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Flujo de la App
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: ./images/App-Flujo.png
+   :align: center
+
+Descripción:
+
+* La primer activity, es `LoginActivity`, que tiene un botón de Facebook. 
+* Cuando se presiona, se invocan una serie de asyncTasks que obtienen los datos de perfil de Facenook. Luego se procesan esos datos y se entregan al `LoginRequest`. 
+* Este envía intenta loguearse contra el servidor. Si el usuario está registrado, el request devuelve un OK y pasa por un a `MainActivity`. 
+  * Si no esta registrado, se envian los datos de usuario por medio del `NewRegisterRequest`, y una vez que se obtiene la respuesta pasa a `MainActivity`.
+* A su vez, existe también un `SessionManager`, que guarda si el usuario está logueado o no. Asi, si el usuario abandonó la app y estaba logueado, cuando vuelva seguirá logueado.
+* `MainActivity` posee 2 pantallas, que son fragments, que corresponden a dos tabs.
+* En la primera se situan las cards de los candidatos.
+* En la segunda se muestran los matches.
 
 ################
 General
