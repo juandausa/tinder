@@ -3,9 +3,11 @@
 //
 
 #include "GetCandidatesController.h"
+#include <time.h>
 #include <string>
 #include <vector>
-#include <time.h>
+#include <algorithm>
+
 
 bool GetCandidatesController::isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests) {
     std::string theirInterest = fastWriter.write(interest);
@@ -38,7 +40,7 @@ void GetCandidatesController::operation(Request &request, Response &response) {
         if (!parsingSuccessful) {
             std::cout << "Error parsing result" << std::endl;
         }
-        if (exceedsCandidatesCountPerDay(userId)){
+        if (exceedsCandidatesCountPerDay(userId)) {
             response.SetBody("{}");
         } else {
             std::string myGender = fastWriter.write(rootShared.get("sex", Constant::male));
@@ -168,12 +170,13 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
             user["birthday"] = birthday;
             user["age"] = Converter::calculateAge(birthday);
             user["gender"] = Converter::validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString());
-            //std::cout << "LLEGAAAAA 2" << std::endl;
-           // LIBERAR ESTA MEMORIA
-            std::string photoBase64 = candidatesService.getCandidatePhoto((users[i]["user"].get("photo_profile", "")).asString());
+            // std::cout << "LLEGAAAAA 2" << std::endl;
+            // LIBERAR ESTA MEMORIA
+            std::string photoBase64 = candidatesService.getCandidatePhoto(
+                    (users[i]["user"].get("photo_profile", "")).asString());
             user["photo_profile"] = photoBase64;
-            //photos.push_back(photoBase64);
-            //std::cout << "LLEGAAAAA 3" << std::endl;
+            // photos.push_back(photoBase64);
+            // std::cout << "LLEGAAAAA 3" << std::endl;
             Json::Value interests = users[i]["user"].get("interests", "");
             /* TODO: Cuando se solucione el problema en CandidatesService usar esto*/
 //            if (candidatesService.filterCandidates(userData,user, interests,myArrayOfInterests)) {
@@ -186,7 +189,7 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
                     interestInCommon++;
                 }
             }
-            //std::cout << "LLEGAAAAA 4" << std::endl;
+            // std::cout << "LLEGAAAAA 4" << std::endl;
             user["interests"] = arrayInterests;
             if (interestInCommon >= 1) {
                 usersData.emplace(sharedUserId, user);
@@ -201,8 +204,8 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
         int start = (count - 1) * Constant::candidates_per_request;
         int size = arrayUsers.size();
         int end = std::min(size, count * Constant::candidates_per_request);
-        for (int x = start ; x < end ; x++){
-            arrayUsersForResponse.append(arrayUsers.get((size_t) x,""));
+        for (int x = start; x < end; x++) {
+            arrayUsersForResponse.append(arrayUsers.get((size_t) x, ""));
         }
         if (start < end) {
             event["candidates"] = arrayUsersForResponse;
@@ -262,8 +265,8 @@ void GetCandidatesController::fillUsersArray(std::unordered_map<std::string, Jso
     }
 }
 
-bool GetCandidatesController::exceedsCandidatesCountPerDay(std::string appUserId){
-    if (this->userService.getRequestCount(appUserId, true) > Constant::max_candidates_request){
+bool GetCandidatesController::exceedsCandidatesCountPerDay(std::string appUserId) {
+    if (this->userService.getRequestCount(appUserId, true) > Constant::max_candidates_request) {
         return true;
     }
     return false;

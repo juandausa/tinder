@@ -64,7 +64,7 @@ std::vector<Message> convertInVectorOfMessages(Json::Value jsonMessages) {
     for (unsigned int i = 0; i < jsonMessages.size(); ++i) {
         Message m;
         Json::Value jsonMessage = jsonMessages[i];
-        Message message(jsonMessage["sender"].asString(),jsonMessage["reciever"].asString(),jsonMessage["content"].asString());
+        Message message(jsonMessage["sender"].asString(), jsonMessage["reciever"].asString(), jsonMessage["content"].asString());
         messages.push_back(m);
     }
 
@@ -117,7 +117,7 @@ Message MessagesService::getLastMessage(std::string sender, std::string reciever
             log->writeAndPrintLog("Adding message. Parser error", Log::WARNING);
         }
         Json::Value jsonMessage = jsonMessages[jsonMessages.size()-1];
-        Message message(jsonMessage["sender"].asString(),jsonMessage["reciever"].asString(),jsonMessage["content"].asString());
+        Message message(jsonMessage["sender"].asString(), jsonMessage["reciever"].asString(), jsonMessage["content"].asString());
         jsonMessages.resize(jsonMessages.size()-1);
         std::string lastMessages(jsonMessages.toStyledString());
         database->set(lastMessageKey, lastMessages);
