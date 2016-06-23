@@ -386,24 +386,30 @@ Por otro lado usamos Zenhub.io, un plugin de github que te permite tener los iss
 División de Tareas
 --------------------------------------
 Si bien la división de tareas no estableció una asignación específica para cada parte del proyecto a determinado desarrollador, muchas de las tareas de la misma tecnología fueron tomadas por las mismas personas. Inicialmente la división de tareas fue la siguiente:
-Web App: Agustin Rojas
-Shared Server: Fabrizio Graffe
-App Server: Juan Dausa, Jasmina Sella Faena
-App: Fabrizio Graffe
+
+* Web App: Agustin Rojas
+* Shared Server: Fabrizio Graffe
+* App Server: Juan Dausa, Jasmina Sella Faena
+* App: Fabrizio Graffe
+
 En el caso de App Server, finalmente hubo participación de los cuatro miembros, dado que esta fue la sección que involucró mayor cantidad de tareas de procesamiento de datos y de interactuar mediante request tanto con la app como con el shared server.
 
 ================================
 Mejoras Propuestas y Faltantes
 ================================
-* Mejorar la estandarización de código
-* Mejorar el manejor de errores
-* Poder generar un apk con travis y que se suba a algún lado.
-* Hicimos un refactor del código del AppServer para que esté más modularizado pero sería óptimo generar alguna especie de API para que la usen todos los servicios y controladores del AppServer.
-* Faltaría mejorar la cobertura de test, en lo posible usando alguna herramienta como Mockito.
+
+* Mejorar la estandarización de código.
+* Mejorar el manejor de errores.
+* Poder generar el APK de la app con travis y dejarlo como fuente del proyecto.
+* Poder realizar un despliegue automático del shared server por cada build.
+* Se realizó un refactor de código del AppServer para que esté más modularizado, pero sería óptimo generar una nueva jerarquí para mejorar la reutilización de código.
+* Mejorar la cobertura de test, en lo posible usando alguna herramienta como `Mockito <http://mockito.org>`_.
+
 ================================
 Errores Conocidos
 ================================
+
 * No funciona bien la edición de perfil del usuario.
-* El chat trae los mensajes del usuario con el que estoy hablando pero no trae los mensajes viejos que le envie.
-* A veces explota el AppServer y no sabemos por qué, es dificil de replicar el error.
+* El chat trae los mensajes del usuario con el que estoy hablando pero no trae los mensajes viejos que he enviado.
+* En ocasiones el AppServer se detiene, es dificil de replicar el error.
 * Traer los datos desde el AppServer tarda bastante.
