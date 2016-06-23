@@ -105,10 +105,6 @@ void CurlWrapper::set_get_buffer(std::string* readBuffer) {
     }
 }
 
-
-
-
-
 bool CurlWrapper::perform_request() {
     if (curl) {
         /* Perform the request, res will get the return code */
@@ -117,7 +113,7 @@ bool CurlWrapper::perform_request() {
         if (res != CURLE_OK) {
             std::cout << "curl_easy_perform() failed: %s\n" <<
                     curl_easy_strerror(res) << std::endl;
-                
+
             curl_easy_cleanup(curl);
             return false;
         }
@@ -125,7 +121,7 @@ bool CurlWrapper::perform_request() {
         curl_easy_cleanup(curl);
         return true;
     }
-    
+
     curl_easy_cleanup(curl);
     return false;
 }

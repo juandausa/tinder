@@ -17,14 +17,22 @@ MessagesService::MessagesService() {
 bool MessagesService::addMessageToDatabase(Message message, std::string key) {
     std::string previousMessages("");
     this->database->get(key, &previousMessages);
-
+    Json::Value messages(Json::arrayValue);
+    bool parsingSuccessful = this->reader.parse(previousMessages, messages, true);
+    if (!parsingSuccessful) {
+        log->writeAndPrintLog("Adding message. Parser error", Log::WARNING);
+    }
+    Json::Value jsonMessage;
+    jsonMessage["sender"] = message.getSender();
+    jsonMessage["reciever"] = message.getReciever();
+    jsonMessage["content"] = message.getContent();
     bool result;
     if (previousMessages.length() != 0) {
-        previousMessages += Constant::messagesSeparator;
-        previousMessages.append(message.toString());
-        result = this->database->set(key, previousMessages);
+        messages[messages.size()] = jsonMessage;
+        result = this->database->set(key, messages.toStyledString());
     } else {
-        result = this->database->set(key, message.toString());
+        messages[0] = jsonMessage;
+        result = this->database->set(key, messages.toStyledString());
     }
 
     return result;
@@ -45,28 +53,18 @@ bool MessagesService::addMessage(Message message) {
         }
         return result;
     } else {
-        LOG(WARNING) << "Adding message. The database is closed.";
+        log->writeAndPrintLog("Adding message. The database is closed.", Log::WARNING);
         return false;
     }
 }
 
-std::vector<std::string> splitMessages(const std::string &s, char delim) {
-    std::stringstream ss(s);
-    std::string item;
-    std::vector<std::string> elems;
-    while (std::getline(ss, item, delim)) {
-        elems.push_back(item);
-    }
 
-    return elems;
-}
-
-std::vector<Message> convertInVectorOfMessages(std::string in) {
-    std::vector<std::string> out = splitMessages(in, Constant::messagesSeparator);
+std::vector<Message> convertInVectorOfMessages(Json::Value jsonMessages) {
     std::vector<Message> messages;
-    for (size_t i = 0; i < out.size(); ++i) {
+    for (unsigned int i = 0; i < jsonMessages.size(); ++i) {
         Message m;
-        m.loadFromString(out[i]);
+        Json::Value jsonMessage = jsonMessages[i];
+        Message message(jsonMessage["sender"].asString(), jsonMessage["reciever"].asString(), jsonMessage["content"].asString());
         messages.push_back(m);
     }
 
@@ -75,19 +73,25 @@ std::vector<Message> convertInVectorOfMessages(std::string in) {
 
 std::vector<Message> MessagesService::getMessages(std::string userA, std::string userB) {
     if (!this->database->is_open()) {
-        LOG(WARNING) << "Getting messages. The database is closed.";
+        log->writeAndPrintLog("Adding message. The database is closed.", Log::WARNING);
         std::vector<Message> empty;
         return empty;
     }
-
-    LOG(INFO) << "Getting messages between users '" + userA + "' and '" + userB + "'.";
+    log->writeAndPrintLog(std::string("Getting messages between users '") + userA
+                          + std::string("' and '") + userB + std::string("'."), Log::INFO);
     std::string messages;
     std::string messagesKeySender = Constant::messagesPrefix + userA + userB;
     std::string lastMessageKey = Constant::lastMessagesPrefix + userA + userB;
     this->database->get(messagesKeySender, &messages);
     this->database->set(lastMessageKey, "");
     if (messages.length() != 0) {
-        return convertInVectorOfMessages(messages);
+        Json::Value jsonMessages(Json::arrayValue);
+        bool parsingSuccessful = this->reader.parse(messages, jsonMessages, true);
+        if (!parsingSuccessful) {
+            log->writeAndPrintLog("Adding message. Parser error", Log::WARNING);
+        }
+
+        return convertInVectorOfMessages(jsonMessages);
     }
 
     std::vector<Message> empty;
@@ -96,30 +100,27 @@ std::vector<Message> MessagesService::getMessages(std::string userA, std::string
 
 Message MessagesService::getLastMessage(std::string sender, std::string reciever) {
     if (!this->database->is_open()) {
-        LOG(WARNING) << "Getting last message. The database is closed.";
+        log->writeAndPrintLog("Adding message. The database is closed.", Log::WARNING);
         Message empty;
         return empty;
     }
 
-    LOG(INFO) << "Getting messages between users '" + sender + "' and '" + reciever + "'.";
+    log->writeAndPrintLog(std::string("Getting messages between users '") + sender
+                          + std::string("' and '") + reciever + std::string("'."), Log::INFO);
     std::string messages;
     std::string lastMessageKey = Constant::lastMessagesPrefix + sender + reciever;
-    std::cout << "' lastMessageKey  '" + lastMessageKey + "'." << std::endl;
     this->database->get(lastMessageKey, &messages);
     if (messages.length() != 0) {
-        std::vector<Message> messageCollection = convertInVectorOfMessages(messages);
-        Message message(messageCollection[0].getSender(), messageCollection[0].getReciever(),
-                        messageCollection[0].getContent());
-        messageCollection.erase(messageCollection.begin());
-        std::string lastMessages;
-        for (size_t i = 0; i < messageCollection.size(); i++) {
-            lastMessages.append(messageCollection[i].toString());
-            if (i + 1 != messageCollection.size()) {
-                lastMessages += Constant::messagesSeparator;
-            }
+        Json::Value jsonMessages(Json::arrayValue);
+        bool parsingSuccessful = this->reader.parse(messages, jsonMessages, true);
+        if (!parsingSuccessful) {
+            log->writeAndPrintLog("Adding message. Parser error", Log::WARNING);
         }
+        Json::Value jsonMessage = jsonMessages[jsonMessages.size()-1];
+        Message message(jsonMessage["sender"].asString(), jsonMessage["reciever"].asString(), jsonMessage["content"].asString());
+        jsonMessages.resize(jsonMessages.size()-1);
+        std::string lastMessages(jsonMessages.toStyledString());
         database->set(lastMessageKey, lastMessages);
-
         return message;
     } else {
         Message empty;
