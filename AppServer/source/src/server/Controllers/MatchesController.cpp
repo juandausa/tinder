@@ -34,6 +34,7 @@ std::string MatchesController::makeBodyForShowMatchesResponse(std::string userId
         Json::Value user = users[i]["user"];
         std::string sharedUserId = Converter::intToString(user.get("id", "").asInt());
         std::string appUserId = this->userService.getAppUserId(sharedUserId);
+        std::cout << "CHECK FOR MATCH WITH: " << appUserId << std::endl;
         if (!this->userService.hasMatch(userId, appUserId)) {
             continue;
         }
@@ -42,6 +43,9 @@ std::string MatchesController::makeBodyForShowMatchesResponse(std::string userId
         user["age"] = Converter::calculateAge(user.get("birthday", "").asString());
         user.removeMember("id");
         user.removeMember("location");
+        // LIBERAR ESTA MEMORIA
+        std::string photoBase64 = this->matchesService.getMatchPhoto((users[i]["user"].get("photo_profile", "")).asString());
+        user["photo_profile"] = photoBase64;
         matches.append(user);
     }
 
