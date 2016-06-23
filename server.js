@@ -176,10 +176,12 @@ app.post('/interests', function (req, res) {
 		String(interest_data.category) + "' and data->>'value' = '" +
 		String(interest_data.value) + "'", function(err, found) {
 		console.log("Count founded", found);
-		var count = found[0].count;
-		if (count > 0) {
-			res.sendStatus(304);
-			return;
+		if ((found !== undefined) && (found !== null)) {
+			var count = found[0].count;
+			if (count > 0) {
+				res.sendStatus(304);
+				return;
+			}
 		}
 		db.interests.save({data: interest_data}, function(err, saved) {
 			if (checkForError(err, res, "Error at saving interest data")) return;
