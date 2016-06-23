@@ -10,7 +10,7 @@ var distances = [10,10,10,10,10,10,10];
 var emails = ["Abril@hotmail.com", "Jessica@hotmail.com", "Sofia@hotmail.com", "Mary@hotmail.com", "Amanda@hotmail.com", "Barbara@hotmail.com", "Samantha@hotmail.com"];
 
 
-var photos = [
+/*var photos = [
     "http://66.media.tumblr.com/933936c4b299a196d1e61e4edc243193/tumblr_mvesjszpd61r00u9co1_540.jpg",
     "https://pbs.twimg.com/profile_images/635004209830559744/J2zsh4DW.jpg",
     "https://pbs.twimg.com/profile_images/449986528878419968/FuQ9ienw.jpeg",
@@ -18,8 +18,70 @@ var photos = [
     "http://static.tumblr.com/pa3kh3c/pkIlytxqw/asdfhjkl.jpg",
     "http://66.media.tumblr.com/84d982c883aa3ff654e6fa7ee7011fba/tumblr_mu00wgk2zN1rz6rffo1_1280.jpg",
     "http://static.tumblr.com/8b42073d6cafba61694b1aef56375e4f/axlgwmc/L9sne9wcw/tumblr_static_54fuho9gbg4cok0g0s0wkcs0c.jpg"
-];
+];*/
 
+
+var photos = [];
+
+function store_photos() {
+    var path = __dirname + '/' + filenames[0];
+    console.log(path);
+    fs.readFile(path, function(err, data) {
+        var base64data = new Buffer(data).toString('base64');
+        photos.push(base64data);
+        var path = __dirname + '/' + filenames[1];
+        console.log(path);        
+        setTimeout(function() {
+            fs.readFile(path, function(err, data1) {
+                var base64data = new Buffer(data1).toString('base64');
+                photos.push(base64data);            
+                var path = __dirname + '/' + filenames[2];
+                console.log(path);
+                setTimeout(function() {
+                    fs.readFile(path, function(err, data2) {
+                        var base64data = new Buffer(data2).toString('base64');
+                        photos.push(base64data);
+                        var path = __dirname + '/' + filenames[3];
+                        console.log(path);
+                        setTimeout(function() {
+                            fs.readFile(path, function(err, data3) {
+                                var base64data = new Buffer(data3).toString('base64');
+                                photos.push(base64data);
+                                var path = __dirname + '/' + filenames[4];
+                                console.log(path);
+                                setTimeout(function() {
+                                    fs.readFile(path, function(err, data4) {
+                                        var base64data = new Buffer(data4).toString('base64');
+                                        photos.push(base64data);
+                                        var path = __dirname + '/' + filenames[5];
+                                        console.log(path);
+                                        setTimeout(function() {
+                                            fs.readFile(path, function(err, data5) {
+                                                var base64data = new Buffer(data5).toString('base64');
+                                                photos.push(base64data);
+                                                var path = __dirname + '/' + filenames[6];
+                                                console.log(path);
+                                                setTimeout(function() {
+                                                    fs.readFile(path, function(err, data6) {
+                                                        var base64data = new Buffer(data6).toString('base64');
+                                                        photos.push(base64data);                                           
+                                                    });
+                                                }, 200);
+                                            });                                   
+                                        }, 200);
+                                    });
+                                }, 200);  
+                            });
+                        }, 200);           
+                    });
+                }, 200);
+            });
+        }, 200);
+    });
+}
+
+
+store_photos();
 
 var location = {
         "latitude" : -34.780884,

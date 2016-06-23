@@ -26,7 +26,7 @@ public:
     void set_post_data(const std::string data, std::string* readBuffer);
     void set_put_data(const std::string data, std::string &readBuffer);
     void set_get_buffer(const std::string &readBuffer);
-    void set_get_buffer(const std::string* readBuffer);
+    void set_get_buffer(std::string* readBuffer);
     bool perform_request();
     void clean();
 };

@@ -75,11 +75,11 @@ Json::Value CandidatesService::getArrayInterests() {
     return this->arrayInterests;
 }
 
-std::string* CandidatesService::getCandidatePhoto(std::string url) {
-    CurlWrapper *curlWrapper = new CurlWrapper();
-    curlWrapper->set_get_url(url);
-    std::string* readBuffer = new std::string();
-    curlWrapper->set_get_buffer(readBuffer);
-    curlWrapper->perform_request();
+std::string CandidatesService::getCandidatePhoto(std::string url) {
+    CurlWrapper curlWrapper;
+    curlWrapper.set_get_url(url);
+    std::string readBuffer;
+    curlWrapper.set_get_buffer(readBuffer);
+    curlWrapper.perform_request();
     return readBuffer;
 }

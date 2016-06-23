@@ -94,7 +94,7 @@ void CurlWrapper::set_get_buffer(const std::string &readBuffer) {
     }
 }
 
-void CurlWrapper::set_get_buffer(const std::string* readBuffer) {
+void CurlWrapper::set_get_buffer(std::string* readBuffer) {
     if (curl) {
         struct curl_slist *headers = NULL;
         headers = curl_slist_append(headers, "Accept: application/json");
@@ -115,9 +115,9 @@ bool CurlWrapper::perform_request() {
         res = curl_easy_perform(curl);
         /* Check for errors */
         if (res != CURLE_OK) {
-            fprintf(stderr, "curl_easy_perform() failed: %s\n",
-                    curl_easy_strerror(res));
-
+            std::cout << "curl_easy_perform() failed: %s\n" <<
+                    curl_easy_strerror(res) << std::endl;
+                
             curl_easy_cleanup(curl);
             return false;
         }
@@ -125,7 +125,7 @@ bool CurlWrapper::perform_request() {
         curl_easy_cleanup(curl);
         return true;
     }
-
+    
     curl_easy_cleanup(curl);
     return false;
 }
