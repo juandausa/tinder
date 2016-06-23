@@ -2,8 +2,9 @@
 // Copyright 2016 FiUBA
 //
 
-#include <CurlWrapper.h>
+#include "CurlWrapper.h"
 #include "CandidatesService.h"
+#include <string>
 
 /* TODO: Ver porque se rompe en esta funcion */
 bool CandidatesService::isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests) {
