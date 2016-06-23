@@ -5,6 +5,7 @@
 #include "MatchesService.h"
 #include "DataBase.h"
 #include "CurlWrapper.h"
+#include <string>
 
 MatchesService::MatchesService() {
     this->database = DataBase::getInstance();
