@@ -251,6 +251,13 @@ Estructura de Tablas
 .. image:: ./images/SharedServer-Tablas.png
    :align: center
 
+-----------------------------------
+Diagrama de Paquetes
+-----------------------------------
+
+.. image:: ./images/SharedServer-Paquetes.jpg
+   :align: center
+
 #################################
 App Móvil
 #################################
@@ -345,13 +352,6 @@ Clases Principales
 --------------------------------------------------------
 Diagramas de Clases, Paquetes, Flujo, etc
 --------------------------------------------------------
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Diagrama de Paquetes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. image:: ./images/App-Paquetes.png
-   :align: center
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Flujo de la App
