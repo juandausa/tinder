@@ -79,9 +79,10 @@ Ejecutar Utilizando Docker
 
 * Instale `Docker <https://www.docker.com>`_ des la web oficial.
 * Descargue una copia del repositirio mediante ``git clone -b AppServer https://github.com/juandausa/tinder.git AppServer``.
-* En la raiz ejecute el script ``startDocker.sh`` .
+* En la raiz ejecute el script ``sudo startDocker.sh`` .
    * Esto le abrirar una terminal con todas las dependencias necesarias para ejecutar el servidor.
-   * Descargue el último release mediante ``wget https://github.com/juandausa/tinder/archive/v0.1.1AppServer.tar.gz`` y ejecute la aplicación mediante lo descrito en `Modos de Uso <#modos-de-uso>`_ .
+   * Descargue el último release mediante ``wget https://github.com/juandausa/tinder/archive/vx.y.zAppServer.tar.gz`` y ejecute la aplicación mediante lo descrito en `Modos de Uso <#modos-de-uso>`_ .
+   * En otro terminal ejecute  ``sudo docker inspect -f '{{.Name}} - {{.NetworkSettings.IPAddress }}' $(docker ps -aq)``. Esto le proveera un listado con todas las instancias de docker que posee corriendo y sus ip.
 
 -------------------
 API Web
