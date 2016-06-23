@@ -359,7 +359,7 @@ std::string UserService::getDiscoveringDistance(const std::string appUserId) {
 /**********************************************************************************************************************/
 /**********************************************************************************************************************/
 
-int UserService::getRequestCount(const std::string appUserId) {
+int UserService::getRequestCount(const std::string appUserId, bool update) {
     std::string count;
     time_t rawtime;
     time(&rawtime);
@@ -370,13 +370,12 @@ int UserService::getRequestCount(const std::string appUserId) {
         LOG(WARNING) << "The database is closed";
         return 0;
     }
-
     if (!this->database->get(date + appUserId, &count)) {
         this->database->set(date + appUserId, "1");
         return 1;
     } else {
         int lastCount = atoi(count.c_str());
-        if (lastCount <= Constant::max_candidates_request) {
+        if (lastCount <= Constant::max_candidates_request && update == true) {
             lastCount++;
             this->database->set(date + appUserId, std::to_string(lastCount));
         }
