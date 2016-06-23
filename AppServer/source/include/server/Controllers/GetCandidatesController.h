@@ -29,6 +29,7 @@ private:
     	Json::Value &arrayUsers);
     std::string genderOfMyPreference(Json::Value myArrayOfInterests);
     bool exceedsCandidatesCountPerDay(std::string appUserId);
+	bool hasUserPreviousMatch(std::string userId, std::string appUserId);
 };
 
 

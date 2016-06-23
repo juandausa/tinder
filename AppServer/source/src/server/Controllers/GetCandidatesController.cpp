@@ -150,7 +150,10 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
         std::string sharedUserId = fastWriter.write(users[i]["user"].get("id", ""));
 
         sharedUserId = sharedUserId.substr(0, sharedUserId.size() - 1);
-        std::string appUserId = this->userService.getAppUserId(sharedUserId);
+        std::string userId = this->userService.getAppUserId(sharedUserId);
+        if (this->hasUserPreviousMatch(appUserId, userId)) {
+            continue;
+        }
         if (genderOfMyInterest.compare("male|female") == 0 ||
             (genderOfMyInterest.compare(gender) == 0)) {
             /* if (genderOfMyInterest.compare("male|female") == 0 ||
@@ -262,6 +265,13 @@ void GetCandidatesController::fillUsersArray(std::unordered_map<std::string, Jso
 bool GetCandidatesController::exceedsCandidatesCountPerDay(std::string appUserId){
     if (this->userService.getRequestCount(appUserId, true) > Constant::max_candidates_request){
         return true;
+    }
+    return false;
+}
+
+bool GetCandidatesController::hasUserPreviousMatch(std::string userId, std::string appUserId) {
+    if (!userId.empty() && !appUserId.empty()) {
+        return this->userService.hasMatch(userId, appUserId) || this->userService.hasMatch(appUserId, userId);
     }
     return false;
 }
