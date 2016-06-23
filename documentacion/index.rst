@@ -404,5 +404,6 @@ Mejoras Propuestas y Faltantes
 Errores Conocidos
 ================================
 * No funciona bien la edición de perfil del usuario.
+* El chat trae los mensajes del usuario con el que estoy hablando pero no trae los mensajes viejos que le envie.
 * A veces explota el AppServer y no sabemos por qué, es dificil de replicar el error.
 * Traer los datos desde el AppServer tarda bastante.
