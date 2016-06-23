@@ -119,17 +119,19 @@ Descripción de Responsabilidades
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 * Server: Este es el encargo de levantar el servidor y capturar los request. Además ofrece clases base para el manejo de response, estas fueron adaptadas para un manejo más simple y adecuado a las necesidades del proyecto.
 * RequestParser: Inspecciona los request y expone información como la url, el verbo y los parámetros. Esto es utilizado en el Server para decidir a donde derivar la solicitud.
-* UserController: Encapsula todo el comportamiento necesario para el manejo de la información del usuario. También se encarga de disparar las llamadas al Shared Server en el caso de ser necesarias.
-* FilterController: En sintonía con el anterior, este encapsula el comportamiento para el manejo de las preferencias del usuario.
-* MatchesController: Este controlador provee lo necesario para la gestión de los likes y matches del usuario.
+* Controladores: Encapsulan el comportamiento relacionado con una operación o conjunto cerrado de operaciones. Estos también se encargan de la comunicación con el Shared Sever.
 * SecurityManager: Este servicio es transversal a todos los controladores. Está diseñado para detectar si el usuario se encuentra autenticado al momento de realizar un request.
-* UserService: Maneja el acceso a la información del usuario.
-* FilterService: Contiene el comportamiento para la gestión de las preferencias del usuario.
-* MatchesService: Encapsula el comportamiento que sugiere a los usuarios sus posibles candidatos.
+* Servicios: Maneja el acceso a datos almacenados localmente. Encapsula cálculos sobre conjuntos de usuarios. 
+* Base de Datos: Es la capa del acceso a los datos.
 
 -----------------------
 Diagrama de Flujo
 -----------------------
+* Diagrama de Componentes
+
+.. image:: ./images/AppServer-Componentes.png
+   :align: center
+
 * Diagrama de Flujo de Control de Sesión
 
 .. image:: ./images/AppServer-ControlSesion.png
