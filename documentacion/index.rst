@@ -408,4 +408,6 @@ Mejoras Propuestas y Faltantes
 ================================
 Errores Conocidos
 ================================
-* 
+* No funciona bien la edición de perfil del usuario.
+* A veces explota el AppServer y no sabemos por qué, es dificil de replicar el error.
+* Traer los datos desde el AppServer tarda bastante.
