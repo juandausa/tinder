@@ -34,7 +34,7 @@ void GetCandidatesController::operation(Request &request, Response &response) {
     if (this->userService.isUserRegistered(userId)) {
         std::string responseBody = getUserInfoWithOutResponse(request, response);
         bool parsingSuccessful = reader.parse(responseBody, rootShared, true);
-        std::cout << "User data: '" << fastWriter.write(rootShared) << "'";
+        //std::cout << "User data: '" << fastWriter.write(rootShared) << "'";
         if (!parsingSuccessful) {
             std::cout << "Error parsing result" << std::endl;
         }
