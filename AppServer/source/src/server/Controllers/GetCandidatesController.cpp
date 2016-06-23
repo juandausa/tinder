@@ -161,7 +161,7 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
                     (genderOfMyInterest.compare(gender) == 0 && genderOfTheirInterest.compare("male|female") == 0))) {*/
             Json::Value user;
             Json::Value arrayInterests;
-            user["user_id"] = appUserId;
+            user["user_id"] = userId;
             user["alias"] = users[i]["user"].get("alias", "");
             std::string birthday = Converter::validateTimeOrReturnDefault(
                     users[i]["user"].get("birthday", "").asString());
