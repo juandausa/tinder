@@ -118,7 +118,8 @@ Diagrama de Clases
 Descripción de Responsabilidades
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 * Server: Este es el encargo de levantar el servidor y capturar los request. Además ofrece clases base para el manejo de response, estas fueron adaptadas para un manejo más simple y adecuado a las necesidades del proyecto.
-* RequestParser: Inspecciona los request y expone información como la url, el verbo y los parámetros. Esto es utilizado en el Server para decidir a donde derivar la solicitud.
+* Request: Inspecciona los request y expone información como la url, el verbo y los parámetros. Esto es utilizado en el Server para decidir a donde derivar la solicitud.
+* Response: Es la respuesta al cliente.
 * Controladores: Encapsulan el comportamiento relacionado con una operación o conjunto cerrado de operaciones. Estos también se encargan de la comunicación con el Shared Sever.
 * SecurityManager: Este servicio es transversal a todos los controladores. Está diseñado para detectar si el usuario se encuentra autenticado al momento de realizar un request.
 * Servicios: Maneja el acceso a datos almacenados localmente. Encapsula cálculos sobre conjuntos de usuarios. 
