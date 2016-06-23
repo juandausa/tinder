@@ -38,6 +38,8 @@ public:
     static std::string lastMessagesPrefix;
     static std::string getUsersUrl;
     static std::string count_likes_prefix;
+    static int max_candidates_request;
+    static int candidates_per_request;
 private:
     Constant();
 };

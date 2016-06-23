@@ -19,7 +19,8 @@ private:
     UserService userService;
     Json::Value makeBodyForShowCandidatesResponse(Json::Value userData, std::string myGender,
                                                               std::string genderOfMyInterest,
-                                                              Json::Value myArrayOfInterests);
+                                                              Json::Value myArrayOfInterests,
+                                                              std::string appUserId);
     std::string getUserInfoWithOutResponse(Request &request, Response &response);
     bool isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests);
     void onePercentRule(std::unordered_map<std::string, Json::Value> &usersData,
@@ -27,6 +28,7 @@ private:
     void fillUsersArray(std::unordered_map<std::string, Json::Value> &usersData, 
     	Json::Value &arrayUsers);
     std::string genderOfMyPreference(Json::Value myArrayOfInterests);
+    bool exceedsCandidatesCountPerDay(std::string appUserId);
 };
 
 

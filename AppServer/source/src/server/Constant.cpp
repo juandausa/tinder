@@ -33,3 +33,5 @@ std::string Constant::showGenderPrefix = "showGender-";
 std::string Constant::lastMessagesPrefix = "lastmessage";
 std::string Constant::getUsersUrl = "http://enigmatic-scrubland-75073.herokuapp.com/users";
 std::string Constant::count_likes_prefix = "countLikes-";
+int Constant::max_candidates_request = 5;
+int Constant::candidates_per_request = 10;

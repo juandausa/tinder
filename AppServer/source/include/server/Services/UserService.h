@@ -37,6 +37,7 @@ public:
     bool setShowGender(const std::string appUserId, const std::string showGender);
     std::string getDiscoveringDistance(const std::string appUserId);
     std::string getShowGender(const std::string appUserId);
+    int getRequestCount(std::string appUserId, bool update);
 
 private:
     DataBase *database;

@@ -359,6 +359,33 @@ std::string UserService::getDiscoveringDistance(const std::string appUserId) {
 /**********************************************************************************************************************/
 /**********************************************************************************************************************/
 
+int UserService::getRequestCount(const std::string appUserId, bool update) {
+    std::string count;
+    time_t rawtime;
+    time(&rawtime);
+    std::string date = ctime(&rawtime);
+    // Me quedo solo con la fecha sin la hora
+    date = date.substr(0, date.size() - 14);
+    if (!this->database->is_open()) {
+        LOG(WARNING) << "The database is closed";
+        return 0;
+    }
+    if (!this->database->get(date + appUserId, &count)) {
+        this->database->set(date + appUserId, "1");
+        return 1;
+    } else {
+        int lastCount = atoi(count.c_str());
+        if (lastCount <= Constant::max_candidates_request && update == true) {
+            lastCount++;
+            this->database->set(date + appUserId, std::to_string(lastCount));
+        }
+        return lastCount;
+    }
+}
+
+/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+
 
 UserService::~UserService() {
 }

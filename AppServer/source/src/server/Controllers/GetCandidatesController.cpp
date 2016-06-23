@@ -5,6 +5,7 @@
 #include "GetCandidatesController.h"
 #include <string>
 #include <vector>
+#include <time.h>
 
 bool GetCandidatesController::isInMyArrayOfInterest(Json::Value interest, Json::Value myArrayOfInterests) {
     std::string theirInterest = fastWriter.write(interest);
@@ -34,22 +35,25 @@ void GetCandidatesController::operation(Request &request, Response &response) {
     if (this->userService.isUserRegistered(userId)) {
         std::string responseBody = getUserInfoWithOutResponse(request, response);
         bool parsingSuccessful = reader.parse(responseBody, rootShared, true);
-        //std::cout << "User data: '" << fastWriter.write(rootShared) << "'";
         if (!parsingSuccessful) {
             std::cout << "Error parsing result" << std::endl;
         }
-        std::string myGender = fastWriter.write(rootShared.get("sex", Constant::male));
-        myGender = myGender.substr(1, myGender.size() - 3);
-        myArrayOfInterests = rootShared.get("interests", "");
-        std::string genderOfMyInterest = this->userService.getShowGender(userId);
-        Json::Value body = makeBodyForShowCandidatesResponse(rootShared, myGender, genderOfMyInterest,
-                                                             myArrayOfInterests);
-        std::string sendBody = fastWriter.write(body);
-        if ((sendBody.compare("null\n") == 0)) {
-            sendBody = "{}";
+        if (exceedsCandidatesCountPerDay(userId)){
+            response.SetBody("{}");
+        } else {
+            std::string myGender = fastWriter.write(rootShared.get("sex", Constant::male));
+            myGender = myGender.substr(1, myGender.size() - 3);
+            myArrayOfInterests = rootShared.get("interests", "");
+            std::string genderOfMyInterest = this->userService.getShowGender(userId);
+            Json::Value body = makeBodyForShowCandidatesResponse(rootShared, myGender, genderOfMyInterest,
+                                                                 myArrayOfInterests, userId);
+            std::string sendBody = fastWriter.write(body);
+            if ((sendBody.compare("null\n") == 0)) {
+                sendBody = "{}";
+            }
+            response.SetBody(sendBody);
         }
         response.SetCode(200);
-        response.SetBody(sendBody);
         response.Send();
     } else {
         response.SetCode(400);
@@ -117,10 +121,12 @@ std::string GetCandidatesController::makeBodyForUserInfoResponse(const std::stri
 
 Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Value userData, std::string myGender,
                                                                        std::string genderOfMyInterest,
-                                                                       Json::Value myArrayOfInterests) {
+                                                                       Json::Value myArrayOfInterests,
+                                                                       std::string appUserId) {
     Json::Value event;
     Json::Value root;
     Json::Value arrayUsers;
+    Json::Value arrayUsersForResponse;
     std::string readBuffer;
     std::string genderOfInterest;
     std::unordered_map<std::string, std::string> usersLikes = std::unordered_map<std::string, std::string>();
@@ -188,7 +194,16 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
     onePercentRule(usersData, usersLikes);
     fillUsersArray(usersData, arrayUsers);
     if (arrayUsers.size() != 0) {
-        event["candidates"] = arrayUsers;
+        int count = this->userService.getRequestCount(appUserId, false);
+        int start = (count - 1) * Constant::candidates_per_request;
+        int size = arrayUsers.size();
+        int end = std::min(size, count * Constant::candidates_per_request);
+        for (int x = start ; x < end ; x++){
+            arrayUsersForResponse.append(arrayUsers.get((size_t) x,""));
+        }
+        if (start < end) {
+            event["candidates"] = arrayUsersForResponse;
+        }
     }
     return event;
 }
@@ -242,4 +257,11 @@ void GetCandidatesController::fillUsersArray(std::unordered_map<std::string, Jso
     for (iter = usersData.begin(); iter != usersData.end(); ++iter) {
         arrayUsers.append((*iter).second);
     }
+}
+
+bool GetCandidatesController::exceedsCandidatesCountPerDay(std::string appUserId){
+    if (this->userService.getRequestCount(appUserId, true) > Constant::max_candidates_request){
+        return true;
+    }
+    return false;
 }
