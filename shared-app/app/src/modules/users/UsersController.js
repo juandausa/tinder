@@ -6,6 +6,7 @@ angular.module('users')
 		'HeaderService',
 		'MenuService',
 		'ToastService',
+		'RequestService',
 		UsersController
 	]);
 
@@ -14,7 +15,7 @@ angular.module('users')
  * @param $scope
  * @constructor
  */
-function UsersController($state, UsersService, UserService, HeaderService, MenuService, ToastService) {
+function UsersController($state, UsersService, UserService, HeaderService, MenuService, ToastService, RequestService) {
 	"use strict";
 
 	var self = this;
@@ -38,6 +39,22 @@ function UsersController($state, UsersService, UserService, HeaderService, MenuS
 		UsersService.getUsers().then(
 			function success(response) {
 				self.data.users = response.users;
+				angular.forEach(self.data.users,function(value,key){
+					var requestArgs = {
+		              "method": "GET",
+		              "url": value.user.photo_profile
+		            };
+		            RequestService.callApiCustomUrl(requestArgs)
+		            .then(
+		              function successCallback(response) {
+		                  value.user.photo = response;  
+		              }, 
+		              function errorCallback(response) {
+		              	value.user.photo ="";
+		              }
+		            );  
+		          });
+
 				HeaderService.hideProgressBar();
 				ToastService.showSuccess('Users: ' + self.data.users.length);
 			},
