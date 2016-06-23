@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include "Log.h"
+#include <jsoncpp/json/json.h>
 class MessagesService {
 public:
     MessagesService();
@@ -19,6 +20,8 @@ public:
 private:
     DataBase* database;
     Log *log;
+    Json::Reader reader;
+    Json::FastWriter fastWriter;
     bool addMessageToDatabase(Message message, std::string key);
 };
 
