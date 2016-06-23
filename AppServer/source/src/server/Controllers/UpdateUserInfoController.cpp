@@ -99,7 +99,7 @@ std::string UpdateUserInfoController::makeBodyUserInfoForUpdate(const std::strin
     curlWrapper.set_get_url(url);
     curlWrapper.set_get_buffer(userProfileData);
     bool requestResult = curlWrapper.perform_request();
-    std::cout << "LLEGAAA LA CONCHA DE LA LORA" << std::endl;    
+    std::cout << "LLEGAAA LA C--- DE LA L---A" << std::endl;    
     if (!requestResult) {
         return "";
     }
