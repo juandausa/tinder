@@ -400,9 +400,12 @@ En el caso de App Server, finalmente hubo participación de los cuatro miembros,
 ================================
 Mejoras Propuestas y Faltantes
 ================================
-*
-
+* Mejorar la estandarización de código
+* Mejorar el manejor de errores
+* Poder generar un apk con travis y que se suba a algún lado.
+* Hicimos un refactor del código del AppServer para que esté más modularizado pero sería óptimo generar alguna especie de API para que la usen todos los servicios y controladores del AppServer.
+* Faltaría mejorar la cobertura de test, en lo posible usando alguna herramienta como Mockito.
 ================================
 Errores Conocidos
 ================================
-*
+* 
