@@ -145,7 +145,7 @@ Diagrama de Flujo
 #################################
 Shared Server
 #################################
-El Shared Server es un servidor desarrollado en `node.js <https://nodejs.org>`_ que ofrece las operaciones de alta, baja, modificación y consulta de usuarios. Consta de una base de datos relacional para la cual se usa `postgreSQL <http://www.postgresql.org/>`_ como administrador de base de datos.
+El Shared Server es un servidor desarrollado en `node.js <https://nodejs.org>`_ que ofrece las operaciones de alta, baja, modificación y consulta de usuarios. Consta de una base de datos relacional para la cual se usa `PostgreSQL <https://www.postgresql.org/>`_ como administrador de base de datos.
 
 ================================
 Documentación de Instalación
@@ -234,17 +234,22 @@ Documentación Técnica
 Tecnologías Utilizadas
 --------------------------------------
 
+* Para la base de datos se utilizó: `PostgreSQL <https://www.postgresql.org/>`_.
+* Para el servidor se utilizó: `NodeJS <https://nodejs.org>`_.
+* Para la App web se utilizó: `Angular <https://angularjs.org/>`_ & `Angular Material <https://material.angularjs.org/>`_.
+
 --------------------------------------
 Clases Principales
 --------------------------------------
+
+La clase pricipal es `User` que modela al usuario.
 
 --------------------------------------
 Estructura de Tablas
 --------------------------------------
 
---------------------------------------------------------
-Diagramas de Clases, Paquetes, Flujo, etc
---------------------------------------------------------
+.. image:: ./images/SharedServer-Tablas.png
+   :align: center
 
 #################################
 App Móvil
@@ -329,10 +334,12 @@ Documentación Técnica
 --------------------------------------
 Tecnologías Utilizadas
 --------------------------------------
-
+* La aplicación se desarrollo en Java utilizando el SDK de `Android <https://www.android.com/>`_.
 --------------------------------------
 Clases Principales
 --------------------------------------
+
+* La clase principal es `User` que modela el usuario.
 
 --------------------------------------------------------
 Diagramas de Clases, Paquetes, Flujo, etc
@@ -341,6 +348,7 @@ Diagramas de Clases, Paquetes, Flujo, etc
 ################
 General
 ################
+
 ================================
 Modo de Trabajo
 ================================
