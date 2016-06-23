@@ -384,13 +384,18 @@ Modo de Trabajo
 --------------------------------------
 Herramientas
 --------------------------------------
-Desde la primera iteración comenzamos con la integración de todas las herramientas propuestas por la cátedra. Esto fue realmente útil en los checkpoints, ya que en esos momentos no tuvimos que preocuparnos por estas tareas y quitarle tiempo al desarrallo.
+Para la gestión de tickets y milestones se utilizó la herramienta provista por github, mediante la cual se puede crear issues con checkpoints a cumplir, asignar a uno de los integrantes, indicar a qué milestone pertenece, agregarle labels para saber a qué parte de la aplicación pertenece el issue y agregar comentarios. A la vez, para un mejor seguimiento de cada issue acordamos indicar en los commit a qué número de issue hace referencia para poder luego ver de un issue todos los commmits involucrados en sus cambios. 
+Por otro lado usamos Zenhub.io, un plugin de github que te permite tener los issues en boards. Los boards que utilizamos fueron: Backlog, Bugs, To Do, In Progress, Testing y Closed. De esta forma cada integrante podía saber en qué etapa esta cada componente del proyecto constantemente.
 
 --------------------------------------
 División de Tareas
 --------------------------------------
-Si bien la división de tareas no estableció una asignación específica para cada parte del proyecto a determinado desarrollador, muchas de las tareas de la misma tecnología fueron tomadas por las mismas personas.
-En el caso de App Server, hubo participación de los cuatro miembros, dado que esta fue la sección que involucró mayor incertidumbre.
+Si bien la división de tareas no estableció una asignación específica para cada parte del proyecto a determinado desarrollador, muchas de las tareas de la misma tecnología fueron tomadas por las mismas personas. Inicialmente la división de tareas fue la siguiente:
+Web App: Agustin Rojas
+Shared Server: Fabrizio Graffe
+App Server: Juan Dausa, Jasmina Sella Faena
+App: Fabrizio Graffe
+En el caso de App Server, finalmente hubo participación de los cuatro miembros, dado que esta fue la sección que involucró mayor cantidad de tareas de procesamiento de datos y de interactuar mediante request tanto con la app como con el shared server.
 
 ================================
 Mejoras Propuestas y Faltantes
