@@ -32,20 +32,20 @@ Clonar Branch
 ^^^^^^^^^^^^^^^^
 Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar en la linea de comandos:
 
-* ``git clone -b AppServer https://github.com/juandausa/tinder.git AppServer``
+* ``git clone -b AppServerRefactor https://github.com/juandausa/tinder.git AppServerRefactor``
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Requerimientos Para su Uso
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Posicionarse en la carpeta AppServer/AppServer y ejecutar ``sudo install.sh`` . Eso instalará las herramientas y recursos necesarios.
+* Posicionarse en la carpeta AppServerRefactor/AppServer y ejecutar ``sudo install.sh`` . Eso instalará las herramientas y recursos necesarios.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Modos de Uso
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Generar los ejecutables:
-   * Posicionarse sobre la carpeta AppServer/AppServer y ejecutar ``cmake .``.
+   * Posicionarse sobre la carpeta AppServerRefactor/AppServer y ejecutar ``cmake .``.
    * Luego ejecutar ``make``.
 * Para correr los tests por consola:
    * Puede correr los tests mediante ``./ar/fi/uba/tallerii/test/runTests`` .
@@ -56,7 +56,7 @@ Modos de Uso
 Configuración en CLion
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Importar el proyecto desde los fuentes desde la carpeta AppServer.
+* Importar el proyecto desde los fuentes desde la carpeta AppServerRefactor.
 * Si le pregunta si desea crear nuevos archivos Cmake indique ``NO``.
 * Los posibles targets son Tinder_Main y RunTests. El primero lanza el servidor y el segundo corre los tests.
 
@@ -78,10 +78,10 @@ Ejecutar Utilizando Docker
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Instale `Docker <https://www.docker.com>`_ des la web oficial.
-* Descargue una copia del repositirio mediante ``git clone -b AppServer https://github.com/juandausa/tinder.git AppServer``.
+* Descargue una copia del repositirio mediante ``git clone -b AppServerRefactor https://github.com/juandausa/tinder.git AppServerRefactor``.
 * En la raiz ejecute el script ``sudo startDocker.sh`` .
    * Esto le abrirar una terminal con todas las dependencias necesarias para ejecutar el servidor.
-   * Descargue el último release mediante ``wget https://github.com/juandausa/tinder/archive/vx.y.zAppServer.tar.gz`` y ejecute la aplicación mediante lo descrito en `Modos de Uso <#modos-de-uso>`_ .
+   * Descargue el último release mediante ``wget https://github.com/juandausa/tinder/archive/vx.y.zAppServerRefactor.tar.gz`` y ejecute la aplicación mediante lo descrito en `Modos de Uso <#modos-de-uso>`_ .
    * En otro terminal ejecute  ``sudo docker inspect -f '{{.Name}} - {{.NetworkSettings.IPAddress }}' $(docker ps -aq)``. Esto le proveera un listado con todas las instancias de docker que posee corriendo y sus ip.
 
 -------------------
@@ -118,7 +118,7 @@ Diagrama de Clases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Descripción de Responsabilidades
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-* Server: Este es el encargo de levantar el servidor y capturar los request. Además ofrece clases base para el manejo de response, estas fueron adaptadas para un manejo más simple y adecuado a las necesidades del proyecto.
+* Server: Este es el encargado de levantar el servidor y capturar los request. Además ofrece clases base para el manejo de response, estas fueron adaptadas para un manejo más simple y adecuado a las necesidades del proyecto.
 * Request: Inspecciona los request y expone información como la url, el verbo y los parámetros. Esto es utilizado en el Server para decidir a donde derivar la solicitud.
 * Response: Es la respuesta al cliente.
 * Controladores: Encapsulan el comportamiento relacionado con una operación o conjunto cerrado de operaciones. Estos también se encargan de la comunicación con el Shared Sever.
