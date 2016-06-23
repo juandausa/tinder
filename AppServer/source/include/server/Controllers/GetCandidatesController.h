@@ -27,6 +27,7 @@ private:
     void fillUsersArray(std::unordered_map<std::string, Json::Value> &usersData, 
     	Json::Value &arrayUsers);
     std::string genderOfMyPreference(Json::Value myArrayOfInterests);
+    bool exceedsCandidatesCountPerDay(std::string appUserId);
 };
 
 
