@@ -163,7 +163,7 @@ function UserController($state, $stateParams, UserService, HeaderService, MenuSe
         self.photo_profile.changePhoto = true;
         var fileReader = new FileReader();
         fileReader.onload = function(event) {
-            self.photo_profile.changed = event.target.result;
+            self.photo_profile.changed = event.target.result.replace("data:image/jpeg;base64,", "");
             self.photo_profile.showOriginalPhoto = false;
             self.photo_profile.show = self.photo_profile.changed;
         };

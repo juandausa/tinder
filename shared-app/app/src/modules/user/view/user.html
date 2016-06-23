@@ -16,8 +16,8 @@
 
 			<md-card-title-media>
 				<div class="md-media-lg card-media">
-					<img ng-show="uc.photo_profile.showOriginalPhoto" ng-src="{{uc.getPhotoProfile()}}" class="md-media-lg card-media" alt="image caption">
-					<img ng-hide="uc.photo_profile.showOriginalPhoto" ng-src="{{uc.getPhotoProfile()}}" class="md-media-lg card-media" alt="image caption">
+					<img ng-show="uc.photo_profile.showOriginalPhoto" ng-src="data:image/jpeg;base64,{{uc.getPhotoProfile()}}" class="md-media-lg card-media" alt="image caption">
+					<img ng-hide="uc.photo_profile.showOriginalPhoto" ng-src="data:image/jpeg;base64,{{uc.getPhotoProfile()}}" class="md-media-lg card-media" alt="image caption">
 				</div>
 				<div ng-show="uc.showPhotoOptions">
 					<md-button ng-hide="uc.photo_profile.changePhoto" aria-label="new" flow-btn flow-attrs="{accept:'image/*'}"   flow-file-added="uc.selectPhotoProfile( $file, $event, $flow )">

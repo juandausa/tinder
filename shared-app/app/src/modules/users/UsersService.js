@@ -20,7 +20,7 @@ function UsersService($q, RequestService){
     RequestService.callApi(requestArgs)
     .then(
       function successCallback(response) {
-          deferred.resolve(response);
+        deferred.resolve(response);
       }, 
       function errorCallback(response) {
           _data = {};
