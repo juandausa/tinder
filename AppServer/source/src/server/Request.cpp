@@ -17,10 +17,16 @@
 #include "AddMessagesController.h"
 #include "GetMessagesController.h"
 
-Request::Request(Response &response) : response(response) { }
+Request::Request(Response &response) : response(response) {
+    this->body = "";
+    this->method = "";
+    this->resourceId = "";
+    this->uri = "";
+    this->genericController = nullptr;
+}
 
 Request::~Request() {
-    if (this->genericController) {
+    if (this->genericController != nullptr) {
         delete this->genericController;
     }
 }
