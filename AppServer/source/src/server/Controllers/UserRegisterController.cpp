@@ -8,8 +8,8 @@
 #include <vector>
 
 static std::string validateTimeOrReturnDefault(std::string time) {
-    struct tm convertedTime;;
-    if (strptime(time.c_str(), "%d/%m/%Y", &convertedTime)) {
+    struct tm convertedTime;
+    if (strptime(time.c_str(), "%m/%d/%Y", &convertedTime)) {
         return time;
     } else {
         return Constant::defaultBirthday;

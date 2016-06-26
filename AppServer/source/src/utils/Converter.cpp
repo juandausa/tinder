@@ -7,6 +7,9 @@
 #include <time.h>
 #include <sstream>
 #include <string>
+#include <iostream>
+
+using namespace std;
 
 std::string Converter::validateTimeOrReturnDefault(std::string time) {
     struct tm convertedTime;;

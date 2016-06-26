@@ -5,9 +5,9 @@
 #include "GetUserInfoController.h"
 #include <string>
 
-static std::string validateTimeOrReturnDefault(std::string time) {
+/*static std::string validateTimeOrReturnDefault(std::string time) {
     struct tm convertedTime;;
-    if (strptime(time.c_str(), "%d/%m/%Y", &convertedTime)) {
+    if (strptime(time.c_str(), "%m/%d/%Y", &convertedTime)) {
         return time;
     } else {
         return Constant::defaultBirthday;
@@ -24,7 +24,7 @@ static std::string calculateAge(std::string birthday) {
     }
 
     return Constant::defaultAge;
-}
+}*/
 
 void GetUserInfoController::operation(Request &request, Response &response) {
     std::string readBuffer;
@@ -66,9 +66,7 @@ std::string GetUserInfoController::makeBodyForUserInfoResponse(const std::string
     rootApp["user_id"] = appUserId;
     rootApp["name"] = rootShared["user"].get("name", "");
     rootApp["alias"] = rootShared["user"].get("alias", "");
-    std::string birthday = validateTimeOrReturnDefault(rootShared["user"].get("birthday", "").asString());
-    rootApp["birthday"] = birthday;
-    rootApp["age"] = calculateAge(birthday);
+    rootApp["age"] = rootShared["user"].get("age", "");
     rootApp["gender"] = rootShared["user"].get("sex", Constant::male);
     rootApp["email"] = rootShared["user"].get("email", "");
     rootApp["photo_profile"] = rootShared["user"].get("photo_profile", "");
