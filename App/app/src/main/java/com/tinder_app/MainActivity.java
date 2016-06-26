@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SessionManager.loadServerIp(MainActivity.this);
 
         //userId = getIntent().getStringExtra(Constants.USER_ID);
         getProfile();

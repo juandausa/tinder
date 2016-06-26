@@ -11,7 +11,13 @@ public final class Constants {
      * Ip of the server. Used to build paths for requests.
      * Localhost is "http://10.0.2.2:5000";;
      */
-    public static final String IP_SERVER = "http://192.168.1.108:8000"; //"http://192.168.1.108:5000";
+    public static String IP_SERVER = "http://192.168.1.101:8000";
+
+    /**
+     * Default string for the server ip. Used to build paths for requests.
+     * Localhost is "http://10.0.2.2:5000";
+     */
+    public static final String DEFAULT_IP = "http://10.0.2.2:8000";
 
     /**
      * Route for constructing the url path for the request that checks if the user is registered in
@@ -189,6 +195,11 @@ public final class Constants {
     /**********************************************************************************************/
 
     /**
+     * Name of the "ip" field
+     */
+    public static final String IP = "ip";
+
+    /**
      * Name of the "session" field
      */
     public static final String SESSION = "session";
@@ -278,4 +289,12 @@ public final class Constants {
     public static void setContext(Context context) {
         cONTEXT = context;
     }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    public static void setIpServer(String ip) {
+        IP_SERVER = "http://" + ip + ":8000";
+    }
+
 }

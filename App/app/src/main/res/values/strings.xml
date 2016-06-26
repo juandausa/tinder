@@ -21,7 +21,7 @@
 
     <!-- LoginActivity strings -->
     <string name="login_string">Login con facebook</string>
-
+    <string name="ip_hint">192.168.X.X</string>
 
     <!-- MainActivity strings -->
     <string name="people">Personas</string>

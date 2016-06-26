@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -34,6 +36,7 @@ public class LoginActivity extends AppLocationActivity {
     private CallbackManager mCallbackManager;
     private String mFacebookUserId;
     private Location mCurrentLocation;
+    private EditText mIpTextBox;
 
     /**********************************************************************************************/
     /**********************************************************************************************/
@@ -62,6 +65,9 @@ public class LoginActivity extends AppLocationActivity {
         mLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Editable content = mIpTextBox.getText();
+                String ip = content.toString();
+                SessionManager.setServerIp(LoginActivity.this, ip);
                 registerUser(loginResult);
             }
 
@@ -75,6 +81,15 @@ public class LoginActivity extends AppLocationActivity {
             }
         });
 
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mIpTextBox = (EditText) findViewById(R.id.ip_data);
     }
 
     /**********************************************************************************************/
