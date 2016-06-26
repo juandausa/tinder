@@ -115,7 +115,7 @@ Json::Value UserRegisterController::makeBodyForRegistrationPost(Json::Value root
     user["name"] = name;
     user["alias"] = alias;
     user["email"] = email;
-    user["birthday"] = birthday;
+    //user["birthday"] = birthday;
     user["age"] = Converter::calculateAge(birthday);
     user["sex"] = gender;
     user["photo_profile"] = photo_profile;
