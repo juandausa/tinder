@@ -112,7 +112,7 @@ public class MyUserProfileData extends UserData {
             return;
         }
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        photo.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         mPhoto = Base64.encodeToString(byteArray, Base64.DEFAULT);
         try {

@@ -413,7 +413,10 @@ public class EditProfileActivity extends AppCompatActivity {
                     + "/tinderCloneProfile";*/
             File file = new File(filePath);
             FileOutputStream fOut = new FileOutputStream(file);
-            mNewProfilePhoto.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+            //mNewProfilePhoto = scaleDown(mNewProfilePhoto, 200, true);
+            mNewProfilePhoto.compress(Bitmap.CompressFormat.JPEG, 10, fOut);
+            mNewProfilePhoto = resize(mNewProfilePhoto, 100, 100);
+            Log.e("CANT DE BYTES EDIT", Integer.toString(mNewProfilePhoto.getByteCount()));
             fOut.flush();
             fOut.close();
             return filePath;
@@ -423,4 +426,43 @@ public class EditProfileActivity extends AppCompatActivity {
             return null;
         }
     }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        return newBitmap;
+    }
+
+    private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
+        }
+    }
+
+
 }

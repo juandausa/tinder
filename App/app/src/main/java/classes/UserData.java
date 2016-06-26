@@ -83,7 +83,9 @@ public class UserData {
      */
     public Bitmap getPhoto() {
         byte[] decodedString = Base64.decode(mPhoto, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        if (bitmap != null) Log.e("CANT DE BYTES", Integer.toString(bitmap.getByteCount()));
+        return bitmap;
     }
 
     public String getImageURL() {
