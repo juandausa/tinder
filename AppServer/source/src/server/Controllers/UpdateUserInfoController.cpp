@@ -29,7 +29,6 @@ void UpdateUserInfoController::operation(Request &request, Response &response) {
     std::cout << "External user id" << externalUserId << std::endl; 
     LOG(INFO) << "Updating user info for user: '" << appUserId << "'";
     std::string body = this->makeBodyUserInfoForUpdate(request.getBody(), externalUserId, appUserId);
-    std::cout << "LLEEGAAAAA 1" << std::endl;
     
     if ((appUserId.compare("") == 0) || (externalUserId.compare("") == 0) || (body.compare("") == 0)) {
         response.SetCode(400);
@@ -42,7 +41,6 @@ void UpdateUserInfoController::operation(Request &request, Response &response) {
         curlWrapper.set_post_url(url);
         curlWrapper.set_put_data(body, readBuffer);
         bool requestResult = curlWrapper.perform_request();
-        std::cout << "LLEEGAAAAA 2" << std::endl;
         if (!requestResult) {
             LOG(WARNING) << "Error requesting url: '" << url << "' with body: " << body << ". Response: " <<
             readBuffer;
@@ -55,7 +53,6 @@ void UpdateUserInfoController::operation(Request &request, Response &response) {
         }
         curlWrapper.clean();
     }
-std::cout << "LLEEGAAAAA 3" << std::endl;
     response.Send();
 }
 
@@ -73,7 +70,6 @@ void UpdateUserInfoController::makeBodyForRegistrationPost(const Json::Value &ro
     Json::Value user;
     Json::Value interest;
     Json::Value interests;
-    // COPIARLO EN OTRO OBJETO, PUEDE QUE AHI ESTE EL PROBLEMA
 
     userData["user"]["id"] = userId;
     userData["user"]["name"] = name;
@@ -82,9 +78,7 @@ void UpdateUserInfoController::makeBodyForRegistrationPost(const Json::Value &ro
     userData["user"]["photo_profile"] = photo_profile;
     userData["user"]["age"] = age;
     
-    userData["user"] = user;
     std::cout << fastWriter.write(userData) << std::endl;
-    //return userData;
 }
 
 std::string UpdateUserInfoController::makeBodyUserInfoForUpdate(const std::string info, const std::string userId,
@@ -99,14 +93,12 @@ std::string UpdateUserInfoController::makeBodyUserInfoForUpdate(const std::strin
     curlWrapper.set_get_url(url);
     curlWrapper.set_get_buffer(userProfileData);
     bool requestResult = curlWrapper.perform_request();
-    std::cout << "LLEGAAA LA CONCHA DE LA LORA" << std::endl;    
     if (!requestResult) {
         return "";
     }
     
     std::cout << "User data " << userProfileData << std::endl;
     
-    std::cout << "LLEGAAA 4" << std::endl;
     Json::Value userData;
     Json::Value root;
     Json::Reader reader;
@@ -115,7 +107,6 @@ std::string UpdateUserInfoController::makeBodyUserInfoForUpdate(const std::strin
         return "";
     }
 
-    std::cout << "LLEGAAA 5" << std::endl;
     Json::Reader otherReader;
     parsingSuccessful = otherReader.parse(userProfileData, userData, true);
     std::cout << "User data json" << fastWriter.write(userData) << std::endl;
@@ -124,15 +115,11 @@ std::string UpdateUserInfoController::makeBodyUserInfoForUpdate(const std::strin
     if (!parsingSuccessful) {
         return "";
     }
-    std::cout << "LLEGAAA 6" << std::endl;
-    Json::Value parsedUserInfo;
     try {
         this->makeBodyForRegistrationPost(root, appUserId, userData, std::atoi(userId.c_str()));
     } catch (std::exception const &e) {
-            std::cout << "LLEGAAA 7" << std::endl;
         LOG(WARNING) << "Error parsing user extrenal id, which is: '" << userId << "'";
         return "";
     }
-    parsedUserInfo["metadata"]["version"] = "0.1";
-    return fastWriter.write(parsedUserInfo);
+    return fastWriter.write(userData);
 }
