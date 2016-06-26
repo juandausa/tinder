@@ -332,3 +332,65 @@ TEST(UserService, HasDislikeBeforeAddDislikeShouldReturnFalse) {
     }
 
 }
+
+TEST(UserService, RegisterUser) {
+    removeDataBase("/tmp/testuserservicedb25");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb25")){
+        UserService user_service;
+        EXPECT_TRUE(user_service.registerUser("34", "rr6yhghgh"));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, SetAndGetDiscovery) {
+    removeDataBase("/tmp/testuserservicedb26");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb26")){
+        UserService user_service;
+        EXPECT_TRUE(user_service.registerUser("34", "rr6yhghgh"));
+        EXPECT_TRUE(user_service.setDiscoveringDistance("34", "100"));
+        EXPECT_EQ("100", user_service.getDiscoveringDistance("34"));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, SetAndGetShowgender) {
+    removeDataBase("/tmp/testuserservicedb27");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb27")){
+        UserService user_service;
+        EXPECT_TRUE(user_service.registerUser("34", "rr6yhghgh"));
+        EXPECT_TRUE(user_service.setShowGender("34", "female"));
+        EXPECT_EQ("female", user_service.getShowGender("34"));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, GetRequestCount) {
+    removeDataBase("/tmp/testuserservicedb28");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb28")){
+        UserService user_service;
+        EXPECT_TRUE(user_service.registerUser("34", "rr6yhghgh"));
+        EXPECT_EQ(1, user_service.getRequestCount("43", true));
+        EXPECT_EQ(2, user_service.getRequestCount("43", true));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}
+
+TEST(UserService, GetExternalUserId) {
+    removeDataBase("/tmp/testuserservicedb29");
+    DataBase* db = DataBase::getInstance();
+    if (db->open("/tmp/testuserservicedb29")){
+        db->set("34", "444");
+        UserService user_service;
+        EXPECT_EQ("444", user_service.getExternalUserId("34"));
+    } else {
+        EXPECT_EQ(1, 0);
+    }
+}

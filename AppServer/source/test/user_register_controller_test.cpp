@@ -6,7 +6,7 @@
 
 TEST(UserRegisterController, CreateBody) {
     DataBase* db = DataBase::getInstance();
-    if (db->open("/tmp/testuserregistercontroller")) {
+    if (db->open("/tmp/testuserregistercontroller1")) {
         UserService user_service;
         UserRegisterController userRegisterController;
         Json::Value root;
@@ -16,15 +16,6 @@ TEST(UserRegisterController, CreateBody) {
             Json::Value body = userRegisterController.makeBodyForRegistrationPost(root, "idausa");
             EXPECT_FALSE(body.empty());
         }
-    }
-}
-
-TEST(UserRegisterController, CreateResponse) {
-    DataBase* db = DataBase::getInstance();
-    if (db->open("/tmp/testuserregistercontrollerCreateResponse")) {
-        UserRegisterController userRegisterController;
-        //Json::Value body = userRegisterController.makeBodyAndTokenForRegistrationResponse("32");
-        //EXPECT_FALSE(body.empty());
     }
 }
 

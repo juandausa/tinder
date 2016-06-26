@@ -10,10 +10,10 @@ class AddLikeController: public GenericController {
 
 public:
     void operation(Request &request, Response &response);
+    std::string getUserTo(const std::string body);
 
 private:
     UserService userService;
-    std::string getUserTo(const std::string body);
 };
 
 
