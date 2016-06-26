@@ -235,7 +235,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         Log.i("GENDER", data.getGender());
-        if (data.getGender().equals("Hombre")) {
+        if (data.getGender().equals(Constants.MEN_INTEREST)) {
             gender.check(R.id.radio_male);
         } else {
             gender.check(R.id.radio_female);
@@ -244,9 +244,9 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radio_male) {
-                    mSelectedGender = "male";
+                    mSelectedGender = Constants.MEN_INTEREST;
                 } else {
-                    mSelectedGender = "female";
+                    mSelectedGender = Constants.WOMEN_INTEREST;
                 }
             }
         });
@@ -416,7 +416,6 @@ public class EditProfileActivity extends AppCompatActivity {
             //mNewProfilePhoto = scaleDown(mNewProfilePhoto, 200, true);
             mNewProfilePhoto.compress(Bitmap.CompressFormat.JPEG, 10, fOut);
             mNewProfilePhoto = resize(mNewProfilePhoto, 100, 100);
-            Log.e("CANT DE BYTES EDIT", Integer.toString(mNewProfilePhoto.getByteCount()));
             fOut.flush();
             fOut.close();
             return filePath;
