@@ -35,6 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * Set up the look and behavior of the activity
+     *
      * @param savedInstanceState saved state of the activity
      */
     @Override
@@ -162,7 +163,7 @@ public class SettingsActivity extends AppCompatActivity {
     /**********************************************************************************************/
 
     private void setGenderLabel(TextView genderLabel, boolean genderChecked,
-                        boolean otherGenderChecked, String genderString, String otherGenderString) {
+                                boolean otherGenderChecked, String genderString, String otherGenderString) {
         if ((genderChecked) && (otherGenderChecked)) {
             String label = genderString + " y " + otherGenderString;
             genderLabel.setText(label);

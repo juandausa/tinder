@@ -2,7 +2,6 @@ package com.tinder_app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -30,10 +29,10 @@ import services.GetNewMessageService;
  */
 public class MatchChatActivity extends AppCompatActivity {
 
+    public String mOtherUserId = null;
     private Conversation mConversation;
     private String mAlias;
     private String mUserId;
-    public String mOtherUserId = null;
     private ListView mListView;
     private ChatMessageAdapter mAdapter;
     private Button mButtonSend;
@@ -48,6 +47,7 @@ public class MatchChatActivity extends AppCompatActivity {
 
     /**
      * Sets the activity data and views
+     *
      * @param savedInstanceState the saved state of the activity to be restored
      */
     @Override
@@ -114,6 +114,7 @@ public class MatchChatActivity extends AppCompatActivity {
 
     /**
      * The user sends a message
+     *
      * @param message the message to be sent
      */
     public void sendMessage(String message) {
@@ -128,6 +129,7 @@ public class MatchChatActivity extends AppCompatActivity {
 
     /**
      * The other user sends a message
+     *
      * @param message the message to be sent
      */
     public void mimicOtherMessage(String message) {

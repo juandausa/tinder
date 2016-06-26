@@ -23,9 +23,10 @@ public class StatusRequest extends Request<Integer> {
 
     /**
      * Constructor of the class StatusRequest
-     * @param method the method to be used in the request (GET, POST, PUT, etc)
-     * @param url the url where the request will be sent
-     * @param listener the response listener
+     *
+     * @param method        the method to be used in the request (GET, POST, PUT, etc)
+     * @param url           the url where the request will be sent
+     * @param listener      the response listener
      * @param errorListener the error listener
      */
     public StatusRequest(int method, String url, Response.Listener listener,
@@ -38,42 +39,9 @@ public class StatusRequest extends Request<Integer> {
     /**********************************************************************************************/
 
     /**
-     * Parse the the response of the request and returns it.
-     * @param response the response of the request
-     * @return the status code of the response to the request
-     */
-    @Override
-    protected Response<Integer> parseNetworkResponse(NetworkResponse response) {
-        try {
-            Log.d("HEADERS", "Response Header = " + response.headers);
-            Log.d("STATUS CODE", Integer.toString(response.statusCode));
-            //Cache.Entry entry = HttpHeaderParser.parseCacheHeaders(response);
-            //Cache.Entry entry = parseIgnoreCacheHeaders(response);
-            Response<Integer> resp = Response.success(response.statusCode, null);
-            return resp;
-        } catch (Exception e) {
-            return Response.error(new ParseError(e));
-        }
-    }
-
-    /**********************************************************************************************/
-    /**********************************************************************************************/
-
-    /**
-     * Deliver the response to the response listener
-     * @param response the response to the request sent
-     */
-    @Override
-    protected void deliverResponse(Integer response) {
-        mListener.onResponse(response);
-    }
-
-    /**********************************************************************************************/
-    /**********************************************************************************************/
-
-    /**
      * Extracts a {@link Cache.Entry} from a {@link NetworkResponse}.
      * Cache-control headers are ignored. SoftTtl == 3 mins, ttl == 24 hours.
+     *
      * @param response The network response to parse headers from
      * @return a cache entry for the given response, or null if the response is not cacheable.
      */
@@ -108,6 +76,42 @@ public class StatusRequest extends Request<Integer> {
         entry.responseHeaders = headers;
 
         return entry;
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Parse the the response of the request and returns it.
+     *
+     * @param response the response of the request
+     * @return the status code of the response to the request
+     */
+    @Override
+    protected Response<Integer> parseNetworkResponse(NetworkResponse response) {
+        try {
+            Log.d("HEADERS", "Response Header = " + response.headers);
+            Log.d("STATUS CODE", Integer.toString(response.statusCode));
+            //Cache.Entry entry = HttpHeaderParser.parseCacheHeaders(response);
+            //Cache.Entry entry = parseIgnoreCacheHeaders(response);
+            Response<Integer> resp = Response.success(response.statusCode, null);
+            return resp;
+        } catch (Exception e) {
+            return Response.error(new ParseError(e));
+        }
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Deliver the response to the response listener
+     *
+     * @param response the response to the request sent
+     */
+    @Override
+    protected void deliverResponse(Integer response) {
+        mListener.onResponse(response);
     }
 
 }

@@ -1,6 +1,7 @@
 package requests;
 
 import android.util.Log;
+
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.tinder_app.LoginActivity;
@@ -8,6 +9,7 @@ import com.tinder_app.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import classes.Constants;
 
 /**
@@ -25,6 +27,7 @@ public class LoginRequest extends SimpleRequest {
 
     /**
      * Constructor of the class LoginRequest
+     *
      * @param context the context from where this request is being constructed
      */
     public LoginRequest(LoginActivity context) {
@@ -38,6 +41,7 @@ public class LoginRequest extends SimpleRequest {
 
     /**
      * Send a request using the data of the json passed as parameter
+     *
      * @param json this parameter has the data that has to be used in the sending of the request
      */
     @Override
@@ -59,6 +63,7 @@ public class LoginRequest extends SimpleRequest {
 
     /**
      * Callback function that has the logic for handling the response
+     *
      * @param response the response of the request in format JSONObject
      */
     @Override
@@ -81,6 +86,7 @@ public class LoginRequest extends SimpleRequest {
 
     /**
      * Callback function that has the logic for handling errors
+     *
      * @param error belonging to the request sent
      */
     @Override

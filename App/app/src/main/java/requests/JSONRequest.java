@@ -17,6 +17,7 @@ public abstract class JSONRequest extends AbstractRequest {
 
     /**
      * Constructor of the class JSONRequest
+     *
      * @param context the context from where this request is being constructed
      **/
     protected JSONRequest(Context context) {
@@ -28,6 +29,7 @@ public abstract class JSONRequest extends AbstractRequest {
 
     /**
      * Builds the request. Generates the path and sets the data to be sent from the json.
+     *
      * @param path the path used to send the request
      * @param json the data to be sent
      * @return the generated request
@@ -74,6 +76,7 @@ public abstract class JSONRequest extends AbstractRequest {
 
     /**
      * Callback function that has the logic for handling the response
+     *
      * @param response the response of the request in format JSONObject
      */
     protected abstract void onResponse(JSONObject response);

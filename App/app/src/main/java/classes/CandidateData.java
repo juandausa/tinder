@@ -9,6 +9,7 @@ public class CandidateData extends UserData {
 
     /**
      * Constructor of the class CandidateData
+     *
      * @param candidate the JSONObject containing the candidate data.
      */
     public CandidateData(JSONObject candidate) {

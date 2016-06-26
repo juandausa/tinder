@@ -64,7 +64,32 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
 
     /**
+     * Checks if the app has permission to write to device storage
+     * <p/>
+     * If the app does not has permission then the user will be prompted to grant permissions
+     *
+     * @param activity the context
+     */
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
      * Set up the activity for edit user profile
+     *
      * @param savedInstanceState object for saving the state of the activity
      */
     @Override
@@ -90,9 +115,6 @@ public class EditProfileActivity extends AppCompatActivity {
         //setEditableLocation();
     }
 
-    /**********************************************************************************************/
-    /**********************************************************************************************/
-
     /**
      * Initialize the state of the activity
      */
@@ -103,9 +125,12 @@ public class EditProfileActivity extends AppCompatActivity {
         mNewProfilePhoto = mUserData.getPhoto();
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     /**
      * Get data from the intent that started this activity
+     *
      * @return the profile data of the user sent by the father activity
      */
     protected MyUserProfileData getDataFromIntent() {
@@ -125,6 +150,7 @@ public class EditProfileActivity extends AppCompatActivity {
     /**
      * Set the profile photo and the behaviour of it, so it can be edited. Starts an activity that
      * allows the user to choose an image from the gallery
+     *
      * @param data the profile data of the user
      */
     private void setEditablePhoto(MyUserProfileData data) {
@@ -153,9 +179,10 @@ public class EditProfileActivity extends AppCompatActivity {
     /**
      * On result from the activity that gets an image from the gallery, stores that image in an
      * attribute of the activity
+     *
      * @param requestCode the request code of the started activity
-     * @param resultCode the resulting code from the activity
-     * @param data the data sent as result of the activity
+     * @param resultCode  the resulting code from the activity
+     * @param data        the data sent as result of the activity
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -182,6 +209,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     /**
      * Sets the edit text that holds the alias
+     *
      * @param data the user profile data
      */
     private void setEditableAlias(MyUserProfileData data) {
@@ -197,6 +225,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     /**
      * Sets the radio buttons that shows the gender of the user
+     *
      * @param data the user profile data
      */
     private void setEditableGender(MyUserProfileData data) {
@@ -228,6 +257,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     /**
      * Sets the button and the dialog that contains a number picker for the user age
+     *
      * @param userData the user profile data
      */
     private void setEditableAge(MyUserProfileData userData) {
@@ -248,11 +278,13 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
+
     /**********************************************************************************************/
     /**********************************************************************************************/
 
     /**
      * Update the view that shows the age of the user
+     *
      * @param newVal the new value of the user age
      */
     public void updateAgeView(String newVal) {
@@ -261,12 +293,12 @@ public class EditProfileActivity extends AppCompatActivity {
         mAgeView.setText(ageString);
     }
 
-
     /**********************************************************************************************/
     /**********************************************************************************************/
 
     /**
      * Inflates the option menu of the activity
+     *
      * @param menu the menu of the activity
      * @return true
      */
@@ -306,6 +338,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     /**
      * Executes a determined action on item's selection on the menu.
+     *
      * @param item item selected
      * @return true if action is performed, false otherwise.
      */
@@ -366,6 +399,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     /**
      * Stores in the external storage the profile photo of the user
+     *
      * @return the path where the photo was saved
      */
     private String saveProfilePhoto() {
@@ -387,30 +421,6 @@ public class EditProfileActivity extends AppCompatActivity {
             Log.e("FILE ERROR", e.toString());
             Log.e(null, "Save file error!");
             return null;
-        }
-    }
-
-    /**********************************************************************************************/
-    /**********************************************************************************************/
-
-    /**
-     * Checks if the app has permission to write to device storage
-     *
-     * If the app does not has permission then the user will be prompted to grant permissions
-     *
-     * @param activity the context
-     */
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
         }
     }
 }

@@ -25,7 +25,8 @@ public class FacebookDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
     /**
      * Constructor of the class FacebookDataAsyncTask
-     * @param userId the user id of the facebook user
+     *
+     * @param userId    the user id of the facebook user
      * @param interests the map that will be filled with the interests of the user
      */
     public FacebookDataAsyncTask(String userId, ConcurrentMap interests) {
@@ -38,6 +39,7 @@ public class FacebookDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
     /**
      * Gets all the interests of the facebook user
+     *
      * @param params none
      * @return null
      */
@@ -59,25 +61,26 @@ public class FacebookDataAsyncTask extends AsyncTask<Void, Void, Void> {
      * Gets the interests of the user from Facebook using the Graph API, and store them in the
      * attribute mInterests, with the category of the interest as key and the data received as
      * response as value.
-     * @param userId The id of the user in Facebook.
+     *
+     * @param userId   The id of the user in Facebook.
      * @param category The category of the interests.
      */
     private void getUserData(String userId, final String category) {
         final AtomicBoolean ready = new AtomicBoolean(false);
         GraphRequest request = new GraphRequest(
-            AccessToken.getCurrentAccessToken(),
-            userId + "/" + category + "/",
-            null,
-            HttpMethod.GET,
-            new GraphRequest.Callback() {
-                @Override
-                public void onCompleted(GraphResponse graphResponse) {
-                    JSONObject response = (graphResponse.getJSONObject());
-                    Log.d("JSON", response.toString());
-                    mInterests.putIfAbsent(category, response);
-                    ready.set(true);
-                }
-            });
+                AccessToken.getCurrentAccessToken(),
+                userId + "/" + category + "/",
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse graphResponse) {
+                        JSONObject response = (graphResponse.getJSONObject());
+                        Log.d("JSON", response.toString());
+                        mInterests.putIfAbsent(category, response);
+                        ready.set(true);
+                    }
+                });
         request.executeAndWait();
     }
 }

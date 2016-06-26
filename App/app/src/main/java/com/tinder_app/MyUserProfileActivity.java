@@ -26,6 +26,7 @@ public class MyUserProfileActivity extends UserProfileActivity {
 
     /**
      * Sets up the activity data and look
+     *
      * @param savedInstance the saved state of the activity
      */
     @Override
@@ -53,6 +54,7 @@ public class MyUserProfileActivity extends UserProfileActivity {
 
     /**
      * Set visibility of the button with id "resourceId" invisible
+     *
      * @param resourceId the id of the button
      */
     private void setButtonInvisible(int resourceId) {
@@ -67,6 +69,7 @@ public class MyUserProfileActivity extends UserProfileActivity {
 
     /**
      * Inflates the menu that contains the options available for this activity
+     *
      * @param menu the menu for this activity
      * @return true
      */
@@ -81,6 +84,7 @@ public class MyUserProfileActivity extends UserProfileActivity {
 
     /**
      * Executes a determined action on item's selection on the menu.
+     *
      * @param item item selected
      * @return true if action is performed, false otherwise.
      */
@@ -113,9 +117,10 @@ public class MyUserProfileActivity extends UserProfileActivity {
 
     /**
      * On result from the EditProfileActivity updates the user data.
+     *
      * @param requestCode the request code sent in the startActivityForResult
-     * @param resultCode the result code sent by the finished activity
-     * @param data the data result of the finished activity
+     * @param resultCode  the result code sent by the finished activity
+     * @param data        the data result of the finished activity
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -140,6 +145,7 @@ public class MyUserProfileActivity extends UserProfileActivity {
 
     /**
      * Reads and returns image stored in the path indicated by the filePath
+     *
      * @param filePath the path of the stored image
      * @return a Bitmap with the image wanted
      */
@@ -155,6 +161,7 @@ public class MyUserProfileActivity extends UserProfileActivity {
 
     /**
      * Returns the user data
+     *
      * @param data the data of the user in a JSONObject
      * @return the user data in an instance of MyUserProfileData
      */

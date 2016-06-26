@@ -31,6 +31,7 @@ public class FacebookProxy {
 
     /**
      * Constructor of the class FacebookProxy.
+     *
      * @param userId The id of the user in Facebook.
      */
     public FacebookProxy(String userId) {
@@ -58,6 +59,7 @@ public class FacebookProxy {
 
     /**
      * Indicates if the FacebookProxy instace is syncronized with the Facebook profile.
+     *
      * @return True if it is initialized, false otherwise.
      */
     public boolean isInitialized() {
@@ -69,6 +71,7 @@ public class FacebookProxy {
 
     /**
      * Getter of the property likes.
+     *
      * @return a JSON Array with the name of the interests as value
      */
     public JSONArray getLikes() {
@@ -80,6 +83,7 @@ public class FacebookProxy {
 
     /**
      * Getter of the property/interest movies.
+     *
      * @return a JSON Array with the name of the interests as value
      */
     public JSONArray getMovies() {
@@ -91,6 +95,7 @@ public class FacebookProxy {
 
     /**
      * Getter of the property/interest books.
+     *
      * @return a JSON Array with the name of the interests as value
      */
     public JSONArray getBooks() {
@@ -102,6 +107,7 @@ public class FacebookProxy {
 
     /**
      * Getter of the property/interest television.
+     *
      * @return a JSON Array with the name of the interests as value
      */
     public JSONArray getTVShows() {
@@ -113,6 +119,7 @@ public class FacebookProxy {
 
     /**
      * Getter of the property/interest music.
+     *
      * @return a JSON Array with the name of the interests as value
      */
     public JSONArray getMusic() {
@@ -124,6 +131,7 @@ public class FacebookProxy {
 
     /**
      * Getter of the property/interest games.
+     *
      * @return a JSONArray with  the name of the interests as value
      */
     public JSONArray getGames() {
@@ -135,6 +143,7 @@ public class FacebookProxy {
 
     /**
      * Setter of the attribute location.
+     *
      * @param location the location of the user, to be stored.
      */
     public void addLocation(Location location) {
@@ -146,6 +155,7 @@ public class FacebookProxy {
 
     /**
      * Parse the instance of FacebookProxy into a JSONObject.
+     *
      * @return the JSONObject with the data of the FacebookProxy instance.
      */
     public JSONObject toJSON() {

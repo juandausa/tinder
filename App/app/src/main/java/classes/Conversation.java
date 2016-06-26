@@ -21,6 +21,7 @@ public class Conversation {
 
     /**
      * Constructor of the class Conversation
+     *
      * @param messages the messages of the conversation
      */
     public Conversation(JSONArray messages) {
@@ -29,6 +30,7 @@ public class Conversation {
 
     /**
      * Constructor of the class Conversation
+     *
      * @param messages the messages of the conversation
      */
     public Conversation(String messages) {
@@ -45,6 +47,7 @@ public class Conversation {
 
     /**
      * Returns true if the message is from the user
+     *
      * @return true if the message is from the user
      */
     public boolean currentMessageIsMine() {
@@ -66,6 +69,7 @@ public class Conversation {
 
     /**
      * Get the current message, and advances to the next
+     *
      * @return the current message in the conversation
      */
     public String getCurrentMessage() {
@@ -94,6 +98,7 @@ public class Conversation {
 
     /**
      * Returns true if there are no more messages
+     *
      * @return true if there are no more messages in the conversation to be read
      */
     public boolean noMoreMessages() {
@@ -105,6 +110,7 @@ public class Conversation {
 
     /**
      * Converts the conversation into a string
+     *
      * @return the string of the conversation
      */
     @Override

@@ -10,9 +10,10 @@ public class ChatMessage {
 
     /**
      * Constructor of the class ChatMessage
+     *
      * @param message a message
-     * @param mine true if the message is from the user, false if it is from other user
-     * @param image true if the message is an image
+     * @param mine    true if the message is from the user, false if it is from other user
+     * @param image   true if the message is an image
      */
     public ChatMessage(String message, boolean mine, boolean image) {
         mContent = message;
@@ -22,6 +23,7 @@ public class ChatMessage {
 
     /**
      * Returns the content of the message
+     *
      * @return a string that is the content of the message
      */
     public String getContent() {
@@ -30,6 +32,7 @@ public class ChatMessage {
 
     /**
      * Sets the content of the message
+     *
      * @param content the string that is the message to be sent
      */
     public void setContent(String content) {
@@ -38,6 +41,7 @@ public class ChatMessage {
 
     /**
      * Returns true if the message is from the user
+     *
      * @return true if the message is from the user
      */
     public boolean isMine() {
@@ -46,6 +50,7 @@ public class ChatMessage {
 
     /**
      * Sets that the message is or not from the user
+     *
      * @param isMine true if the message is from the user
      */
     public void setIsMine(boolean isMine) {
@@ -54,6 +59,7 @@ public class ChatMessage {
 
     /**
      * Returns true if the message is an image
+     *
      * @return true is the message is an image
      */
     public boolean ismIsImage() {
@@ -62,6 +68,7 @@ public class ChatMessage {
 
     /**
      * Set that the message is or not an image
+     *
      * @param isImage true if the message is an image
      */
     public void setIsImage(boolean isImage) {

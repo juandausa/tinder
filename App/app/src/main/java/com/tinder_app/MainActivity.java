@@ -21,13 +21,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import classes.CandidateData;
 import classes.Constants;
 import classes.CustomViewPager;
 import classes.MyUserProfileData;
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Set up the mainAcivity
+     *
      * @param savedInstanceState the saved state of the acivity
      */
     @Override
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Set up the Tab Layout, sets the content of each tab
+     *
      * @param tabLayout the layout to be setted
      * @param viewPager the view pager containig the fragments that will be en each tab
      */
@@ -117,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Executes a determined action on item's selection on the menu.
+     *
      * @param item item selected
      * @return true if action is performed, false otherwise.
      */
@@ -137,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Sets the content of the ViewPager.
+     *
      * @param viewPager the view pager that will have the fragments to be shown in each tab
      */
     private void setupViewPager(ViewPager viewPager) {
@@ -152,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Sets the content of the NavigationDrawer View
+     *
      * @param navigationView the view that contains the sliding menu that will hold options
      */
     private void setupDrawerContent(NavigationView navigationView) {
@@ -215,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Set the profile data of the user
+     *
      * @param user a JSONObject with the profile data of the user
      */
     public void setProfile(final JSONObject user) {
@@ -254,8 +260,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                String result =data.getStringExtra(OtherUsersProfileActivity.DECISION);
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getStringExtra(OtherUsersProfileActivity.DECISION);
                 mPeopleFragment.sendDecisionFromResult(result);
             }
             if (resultCode == Activity.RESULT_CANCELED) {
@@ -276,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Constructor of the class Adapter.
+         *
          * @param fm fragment manager.
          */
         public Adapter(FragmentManager fm) {
@@ -284,6 +291,7 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Adds a fragment to the Adapter.
+         *
          * @param fragment fragment to be added to the Adapter.
          */
         public void addFragment(Fragment fragment) {
@@ -293,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Returns the item at the position "position"
+         *
          * @param position of the element to the returned
          * @return the item at the position "position"
          */
@@ -303,6 +312,7 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Returns the count of items in the adapter
+         *
          * @return the count of items in the adapter
          */
         @Override
@@ -313,6 +323,7 @@ public class MainActivity extends AppCompatActivity {
         /**
          * Returns the page title to show on the Tab that is related with the fragment on the
          * Pager Adapter
+         *
          * @param position of the item in the adapter
          * @return the title of the item
          */

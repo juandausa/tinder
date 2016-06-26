@@ -1,6 +1,5 @@
 package requests.chat;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;

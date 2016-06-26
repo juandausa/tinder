@@ -27,8 +27,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private String mUserId;
-    private ConcurrentMap mProfile;
     private final String mName = "name";
     private final String mEmail = "email";
     private final String mGender = "gender";
@@ -37,11 +35,14 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
     private final String mAlias = "alias";
     private final String mUser = "user_id";
     private final String mPhoto = "photo_profile";
+    private String mUserId;
+    private ConcurrentMap mProfile;
     private Bundle mParams;
 
     /**
      * Constructor of the class FacebookProfileAsyncTask
-     * @param userId the user id of the user
+     *
+     * @param userId  the user id of the user
      * @param profile the profile to be filled with info
      */
     public FacebookProfileAsyncTask(String userId, ConcurrentMap profile) {
@@ -54,8 +55,33 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            // Log exception
+            return null;
+        }
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        image.compress(compressFormat, quality, byteArrayOS);
+        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
+    }
+
     /**
      * Gets the user data from facebook
+     *
      * @param params none
      * @return null
      */
@@ -67,9 +93,6 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
         ready.set(true);
         return null;
     }
-
-    /**********************************************************************************************/
-    /**********************************************************************************************/
 
     /**
      * Gets the user profile data from facebook using the Facebook Graph API
@@ -108,33 +131,8 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
         request.executeAndWait();
     }
 
-
     private boolean genderIsMale(String gender) {
         return ((gender.equals("hombre")) || (gender.equals("male")));
-    }
-
-
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            // Log exception
-            return null;
-        }
-    }
-
-
-    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
-    {
-        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-        image.compress(compressFormat, quality, byteArrayOS);
-        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
     }
 
 }

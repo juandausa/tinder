@@ -1,12 +1,10 @@
 package requests;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.tinder_app.MainActivity;
-import com.tinder_app.PeopleListFragment;
 import com.tinder_app.R;
 
 import org.json.JSONException;
@@ -68,9 +66,8 @@ public class SendLikeRequest extends JSONRequest {
 
     @Override
     protected void onError(VolleyError error) {
-        Log.e(mContext.getString(R.string.REQUEST_ERROR)+LIKE_STRING, error.toString());
+        Log.e(mContext.getString(R.string.REQUEST_ERROR) + LIKE_STRING, error.toString());
     }
-
 
 
 }

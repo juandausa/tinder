@@ -1,6 +1,5 @@
 package services;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.tinder_app.MatchChatActivity;
@@ -18,8 +17,8 @@ import requests.chat.GetNewMessageRequest;
  */
 public class GetNewMessageService implements Runnable {
 
-    private MatchChatActivity mContext;
     private static final int TIME = 5000;
+    private MatchChatActivity mContext;
 
     public GetNewMessageService(MatchChatActivity context) {
         mContext = context;

@@ -40,6 +40,7 @@ public abstract class UserProfileActivity extends AppCompatActivity {
 
     /**
      * Sets up the activity data and look
+     *
      * @param savedInstanceState the saved state of the activity
      */
     @Override
@@ -68,6 +69,7 @@ public abstract class UserProfileActivity extends AppCompatActivity {
 
     /**
      * Load the image of the user
+     *
      * @param data the profile data of the user
      */
     protected void loadBackdropImage(UserData data) {
@@ -97,6 +99,7 @@ public abstract class UserProfileActivity extends AppCompatActivity {
 
     /**
      * Set the alias and age of the user in the view that has to show them
+     *
      * @param userData the data of the user
      */
     protected void loadUserData(UserData userData) {
@@ -112,6 +115,7 @@ public abstract class UserProfileActivity extends AppCompatActivity {
 
     /**
      * Loads and displays the user interests
+     *
      * @param userData the user data
      */
     protected void loadUserInterests(UserData userData) {
@@ -146,6 +150,7 @@ public abstract class UserProfileActivity extends AppCompatActivity {
 
     /**
      * Inflates the menu of the activity with it's options
+     *
      * @param menu the menu of the activity
      * @return true
      */
@@ -160,6 +165,7 @@ public abstract class UserProfileActivity extends AppCompatActivity {
 
     /**
      * Gets the user data from the intent sent by the father activity
+     *
      * @return the user data
      */
     protected UserData getDataFromIntent() {
@@ -178,6 +184,7 @@ public abstract class UserProfileActivity extends AppCompatActivity {
 
     /**
      * Returns the user data
+     *
      * @param data the data of the user in a JSONObject
      * @return the user data in an instance of a subclass of UserData
      */

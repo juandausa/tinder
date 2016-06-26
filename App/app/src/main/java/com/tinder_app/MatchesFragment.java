@@ -2,15 +2,14 @@ package com.tinder_app;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +50,7 @@ public class MatchesFragment extends Fragment {
 
     /**
      * Set up content of the recycler view (list) of the fragment.
+     *
      * @param recyclerView view that show elements in form of list.
      */
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -65,7 +65,8 @@ public class MatchesFragment extends Fragment {
 
     /**
      * Function that gets a random list of the elements available in the array received as param.
-     * @param array elements from wich 'amount' will be chosen randomly.
+     *
+     * @param array  elements from wich 'amount' will be chosen randomly.
      * @param amount amount of elements that will have the list returned.
      * @return list of the elements chosen randomly.
      */
@@ -98,6 +99,7 @@ public class MatchesFragment extends Fragment {
 
     /**
      * Receives the candidates and place them in an array, and on the stack of cards
+     *
      * @param matches of match for the user
      */
     public void setMatches(final JSONArray matches) {

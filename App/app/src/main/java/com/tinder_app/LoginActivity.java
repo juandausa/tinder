@@ -44,8 +44,9 @@ public class LoginActivity extends AppLocationActivity {
     /**
      * Method that is invocated when the Activity is created to set up the view and controllers.
      * This set up the background, texts and the Facebook Login Button with its behaviour.
+     *
      * @param savedInstanceState Data saved from this activity to be restored when is destroyed and
-     * re-reated.
+     *                           re-reated.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +110,7 @@ public class LoginActivity extends AppLocationActivity {
 
     /**
      * Checks if the user is loged in
+     *
      * @return true if the user is loged in, false otherwise
      */
     private boolean isLoggedIn() {
@@ -135,9 +137,10 @@ public class LoginActivity extends AppLocationActivity {
 
     /**
      * Method that gets the result from the Facebook handler activity.
+     *
      * @param requestCode request code sent by this Activity.
-     * @param resultCode result code from the Facebook activity.
-     * @param data data sent by the Facebook Activity
+     * @param resultCode  result code from the Facebook activity.
+     * @param data        data sent by the Facebook Activity
      */
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -151,6 +154,7 @@ public class LoginActivity extends AppLocationActivity {
     /**
      * Sends request for checking if the user is registered, if not sends a request to register and
      * login the user
+     *
      * @param loginResult the result from the login
      */
     private void registerUser(LoginResult loginResult) {
@@ -184,16 +188,19 @@ public class LoginActivity extends AppLocationActivity {
 
     /**
      * On change of location executes the code in this function
+     *
      * @param location the new location
      */
     @Override
-    public void newLocation(Location location) { }
+    public void newLocation(Location location) {
+    }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
     /**
      * Get the current location of the user
+     *
      * @param currentLocation the current location of the user
      */
     @Override

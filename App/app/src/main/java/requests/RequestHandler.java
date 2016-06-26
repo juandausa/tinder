@@ -23,6 +23,7 @@ public final class RequestHandler {
 
     /**
      * Constructor of the class RequestHandler
+     *
      * @param context the context from where the request is being constructed
      */
     private RequestHandler(Context context) {
@@ -34,7 +35,6 @@ public final class RequestHandler {
     /**********************************************************************************************/
 
     /**
-     *
      * @param context the context from where the instance is being required
      * @return an instance of RequestHandler
      */
@@ -50,6 +50,7 @@ public final class RequestHandler {
 
     /**
      * Gets the server url
+     *
      * @return the server url
      */
     public static String getServerUrl() {
@@ -61,6 +62,7 @@ public final class RequestHandler {
 
     /**
      * Returns the context from where this handler is being used
+     *
      * @return the context from where this handler is being used
      */
     public Context getContext() {
@@ -71,7 +73,20 @@ public final class RequestHandler {
     /**********************************************************************************************/
 
     /**
+     * Sets the context from where this handler is being used
+     *
+     * @param context the context to be setted
+     */
+    public void setContext(Context context) {
+        mContext = context;
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
      * Returns the request queue, where the requests are queued for sending
+     *
      * @return the request queue
      */
     public RequestQueue getRequestQueue() {
@@ -85,18 +100,8 @@ public final class RequestHandler {
     /**********************************************************************************************/
 
     /**
-     * Sets the context from where this handler is being used
-     * @param context the context to be setted
-     */
-    public void setContext(Context context) {
-        mContext = context;
-    }
-
-    /**********************************************************************************************/
-    /**********************************************************************************************/
-
-    /**
      * Adds a new request to the request's queue
+     *
      * @param req the new request to be added to the queue
      */
     public void addToRequestQueue(Request req) {

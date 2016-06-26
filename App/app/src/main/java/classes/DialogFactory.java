@@ -15,6 +15,7 @@ public final class DialogFactory {
 
     private static final int MAX_AGE = 100;
     private static final int MIN_AGE = 18;
+
     /**
      * Private constructor of the DialogFactory class
      */
@@ -26,7 +27,8 @@ public final class DialogFactory {
 
     /**
      * Builds a dialog with a number picker.
-     * @param context The context where the dialog is used
+     *
+     * @param context   The context where the dialog is used
      * @param initValue initial value of the number picker
      * @return an AlertDialog with a number picker
      */
@@ -62,6 +64,7 @@ public final class DialogFactory {
 
     /**
      * Builds a dialog with a message that asks to exit without save.
+     *
      * @param context The context where the dialog is used
      * @return an AlertDialog with a meessage that asks to exit without save
      */
@@ -83,6 +86,7 @@ public final class DialogFactory {
     /**
      * Builds a dialog with a message that informs that the user can leave the activity without
      * selecting one or more genders.
+     *
      * @param context The context where the dialog is used
      * @return an AlertDialog with a meessage that informs the situation
      */

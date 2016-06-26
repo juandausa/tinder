@@ -13,6 +13,7 @@ public class MatchData extends UserData {
 
     /**
      * Constructor of the class MatchData
+     *
      * @param match the JSONObject containing the match data.
      */
     public MatchData(JSONObject match) {
@@ -30,6 +31,7 @@ public class MatchData extends UserData {
 
     /**
      * Gets the conversation of the user with this match
+     *
      * @return the conversation
      */
     public Conversation getConversation() {

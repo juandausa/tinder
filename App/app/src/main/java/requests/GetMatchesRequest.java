@@ -26,7 +26,8 @@ public class GetMatchesRequest extends JSONRequest {
 
     /**
      * Constructor of the class GetCandidatesRequest
-     * @param context the context from where this request is being constructed
+     *
+     * @param context  the context from where this request is being constructed
      * @param fragment the fragment from where this request is being constructed
      **/
     public GetMatchesRequest(Context context, MatchesFragment fragment) {
@@ -40,6 +41,7 @@ public class GetMatchesRequest extends JSONRequest {
 
     /**
      * Callback function that has the logic for handling the response
+     *
      * @param response the response of the request in format JSONObject
      */
     @Override
@@ -57,6 +59,7 @@ public class GetMatchesRequest extends JSONRequest {
 
     /**
      * Send a request using the data of the json passed as parameter
+     *
      * @param json this parameter has the data that has to be used in the sending of the request
      */
     @Override
@@ -73,6 +76,7 @@ public class GetMatchesRequest extends JSONRequest {
 
     /**
      * Callback function that has the logic for handling errors
+     *
      * @param error belonging to the request sent
      */
     @Override

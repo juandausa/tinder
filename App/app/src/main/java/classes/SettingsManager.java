@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 public final class SettingsManager {
 
 
-
     /**
      * Private constructor of the class SettingsManager
      */
@@ -63,6 +62,7 @@ public final class SettingsManager {
 
     /**
      * Returns true if the user is interested in women
+     *
      * @param context the context where the session manager is used
      * @return true if the user is interested in women
      */
@@ -76,6 +76,7 @@ public final class SettingsManager {
 
     /**
      * Sets the default values for the settings
+     *
      * @param context the context where the session manager is used
      */
     public static void setDefaultValues(Context context) {
@@ -90,8 +91,9 @@ public final class SettingsManager {
 
     /**
      * Changes the distance setting saved
+     *
      * @param distance the distance in wich range the user wants to search for people
-     * @param context the context where the session manager is used
+     * @param context  the context where the session manager is used
      */
     public static void changeDistance(Context context, int distance) {
         SharedPreferences preferences = getSettingsPreferences(context);
@@ -103,7 +105,8 @@ public final class SettingsManager {
 
     /**
      * Change the interest on men
-     * @param men true if the user is interested in men
+     *
+     * @param men     true if the user is interested in men
      * @param context the context where the session manager is used
      */
     public static void changeInterestOnMen(Context context, boolean men) {
@@ -116,7 +119,8 @@ public final class SettingsManager {
 
     /**
      * Change the interest on men
-     * @param women true if the user is interested in women
+     *
+     * @param women   true if the user is interested in women
      * @param context the context where the session manager is used
      */
     public static void changeInterestOnWomen(Context context, boolean women) {

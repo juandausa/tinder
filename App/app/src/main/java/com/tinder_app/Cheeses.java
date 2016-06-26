@@ -153,6 +153,7 @@ public final class Cheeses {
 
     /**
      * Gets a random id from the ids of the drawables availables.
+     *
      * @return id of the random drawable selected.
      */
     public static int getRandomCheeseDrawable() {

@@ -24,8 +24,9 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
 
     /**
      * Constructor for the ChatMessageAdapter
+     *
      * @param context the context where it is used
-     * @param data the data to be stored
+     * @param data    the data to be stored
      */
     public ChatMessageAdapter(Context context, List<ChatMessage> data) {
         super(context, R.layout.item_mine_message, data);
@@ -33,6 +34,7 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
 
     /**
      * Returns the count of data types in the adapter
+     *
      * @return the count of data types in the adapter
      */
     @Override
@@ -43,6 +45,7 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
 
     /**
      * Returns the type of the data at position 'position'
+     *
      * @param position the position of the data selected
      * @return the type of the data at position 'position'
      */
@@ -63,9 +66,10 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
 
     /**
      * Gets the view whit all the messages generated from the data stored in the adapter
-     * @param position position of the data that will be procesed to generate it's view
+     *
+     * @param position  position of the data that will be procesed to generate it's view
      * @param otherView the view
-     * @param parent the parent view
+     * @param parent    the parent view
      * @return the generated view
      */
     @Override

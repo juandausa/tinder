@@ -1,10 +1,7 @@
 package classes.communications;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import java.io.InputStream;
 import java.net.URL;
 
 public class ServerConnectGet extends AsyncTask<String, String, String> {

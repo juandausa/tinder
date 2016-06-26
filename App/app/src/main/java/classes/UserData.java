@@ -28,6 +28,7 @@ public class UserData {
     /**
      * Constructor of the class CandidateData, that represents a user that can be a candidadate to
      * match with the current user.
+     *
      * @param user data of the candidate to be builded.
      */
     public UserData(JSONObject user) {
@@ -53,6 +54,7 @@ public class UserData {
 
     /**
      * Returns the user id
+     *
      * @return the user id
      */
     public String getUserId() {
@@ -64,6 +66,7 @@ public class UserData {
 
     /**
      * Returns the alias of the user
+     *
      * @return the alias of the user
      */
     public String getAlias() {
@@ -75,6 +78,7 @@ public class UserData {
 
     /**
      * Returns the photo of the user in bitmap format
+     *
      * @return the photo of the user
      */
     public Bitmap getPhoto() {
@@ -91,6 +95,7 @@ public class UserData {
 
     /**
      * Returns a JSON Array with the interests of the user
+     *
      * @return a JSON Array with the interests of the user
      */
     public JSONArray getInterests() {
@@ -102,6 +107,7 @@ public class UserData {
 
     /**
      * Returns the age of the user
+     *
      * @return the age of the user
      */
     public String getAge() {
@@ -113,6 +119,7 @@ public class UserData {
 
     /**
      * Converts the instance of MyUserProfileData to a string
+     *
      * @return a string with the data of the user
      */
     @Override
@@ -125,6 +132,7 @@ public class UserData {
 
     /**
      * Converts the instance of MyUserProfileData to a string
+     *
      * @return a string with the data of the user
      */
     public JSONObject toJSON() {

@@ -13,6 +13,7 @@ public class FacebookInterestParser {
 
     /**
      * Gets the value of the field "name" of the JSON received as parameter.
+     *
      * @param interest the JSON object to process.
      * @return a the String with the value of the field "name" of the JSON object.
      * @throws JSONException if field "name" does not exist in the JSON object.
@@ -28,7 +29,8 @@ public class FacebookInterestParser {
      * Process the JSON object data, received as parameter to give it a new format.
      * The format of the returned JSON is the parameter category as key and a JSONArray of Strings
      * as value . These strings are the names of the interests in the data object.
-     * @param data The JSON object containing the interests.
+     *
+     * @param data     The JSON object containing the interests.
      * @param category The category of the interests contained in data.
      * @return A JSONObject with the category of the interests as key and a JSONArray of the
      * interest's names.

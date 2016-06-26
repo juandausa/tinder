@@ -27,6 +27,7 @@ public abstract class AbstractRequest {
 
     /**
      * Constructor of the class AbstractRequest
+     *
      * @param context the context from where this request is being constructed
      */
     protected AbstractRequest(Context context) {
@@ -40,7 +41,8 @@ public abstract class AbstractRequest {
     /**
      * Send a request using the data of the json passed as parameter. Sets the listeners and sets
      * the retry policy.
-     * @param json this parameter has the data that has to be used in the sending of the request
+     *
+     * @param json  this parameter has the data that has to be used in the sending of the request
      * @param route the route to construct the path of the request
      */
     protected void send(JSONObject json, String route) {
@@ -57,6 +59,7 @@ public abstract class AbstractRequest {
 
     /**
      * Sets the retry polciy for retrying to send the request if an error ocurred
+     *
      * @param request the request to be sent
      */
     private void setRetryPolicy(Request request) {
@@ -99,6 +102,7 @@ public abstract class AbstractRequest {
 
     /**
      * Builds the request. Generates the path and sets the data to be sent from the json.
+     *
      * @param path the path used to send the request
      * @param json the data to be sent
      * @return the generated request
@@ -110,6 +114,7 @@ public abstract class AbstractRequest {
 
     /**
      * Send a request using the data of the json passed as parameter
+     *
      * @param json this parameter has the data that has to be used in the sending of the request
      */
     public abstract void send(JSONObject json);
@@ -119,6 +124,7 @@ public abstract class AbstractRequest {
 
     /**
      * Callback function that has the logic for handling errors
+     *
      * @param error belonging to the request sent
      */
     protected abstract void onError(VolleyError error);

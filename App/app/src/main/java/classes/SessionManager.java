@@ -11,13 +11,15 @@ public final class SessionManager {
     /**
      * Private constructor of the class SessionManager
      */
-    private SessionManager() { }
+    private SessionManager() {
+    }
 
     /**********************************************************************************************/
     /**********************************************************************************************/
 
     /**
      * Gets an instance of SharedPreferences with the session data
+     *
      * @param context the context where the session manager is used
      * @return an instance of sharedPreferences with the session data
      */
@@ -31,8 +33,9 @@ public final class SessionManager {
 
     /**
      * Opens a session
+     *
      * @param context the context where the session manager is used
-     * @param id the id of the user that owns the session
+     * @param id      the id of the user that owns the session
      */
     public static void login(Context context, String id) {
         SharedPreferences preferences = getSessionPreferences(context);
@@ -45,8 +48,9 @@ public final class SessionManager {
 
     /**
      * Opens a session
+     *
      * @param context the context where the session manager is used
-     * @param ip the ip of the application server
+     * @param ip      the ip of the application server
      */
     public static void setServerIp(Context context, String ip) {
         SharedPreferences preferences = getSessionPreferences(context);
@@ -59,6 +63,7 @@ public final class SessionManager {
 
     /**
      * Closes a session
+     *
      * @param context the context where the session manager is used
      */
     public static void logout(Context context) {
@@ -71,6 +76,7 @@ public final class SessionManager {
 
     /**
      * Checks if the session is open
+     *
      * @param context the context where the session manager is used
      * @return true if session is open, false otherwise.
      */
@@ -84,6 +90,7 @@ public final class SessionManager {
 
     /**
      * Returns the user id
+     *
      * @param context the context where the session manager is used
      * @return the user id
      */
@@ -97,6 +104,7 @@ public final class SessionManager {
 
     /**
      * Loads the user id
+     *
      * @param context the context where the session manager is used
      * @return the user id
      */

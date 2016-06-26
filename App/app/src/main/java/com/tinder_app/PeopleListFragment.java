@@ -25,16 +25,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import classes.CandidateData;
 import classes.Constants;
 import classes.SessionManager;
 import classes.SwipeDeckAdapter;
 import requests.GetCandidatesRequest;
-import requests.JSONRequest;
-import requests.SendDislikeRequest;
-import requests.SendLikeRequest;
 
 /**
  * Fragment that holds the SwipeDeck of the people to be liked or disliked by the user.
@@ -44,13 +40,13 @@ public class PeopleListFragment extends Fragment {
     private static final int SWIPE_DURATION = 4000;
     private static final String SEND_LIKE = "LIKE";
     private static final String SEND_DISLIKE = "DISLIKE";
+    MainActivity mActivity;
     private JSONArray mCandidates;
     private List<CandidateData> mCardList;
     private SwipeDeckAdapter mAdapter;
     private SwipeDeck mCardStack;
     private ProgressDialog mProgress;
     private Map<String, Method> mDecisionMethods;
-    MainActivity mActivity;
     private int mCurrId = 0;
 
     /**********************************************************************************************/
@@ -58,8 +54,9 @@ public class PeopleListFragment extends Fragment {
 
     /**
      * Sets up the swipe deck, and the buttons with their logic in the PeopleListFragment
-     * @param inflater the inflater for inflating the layout
-     * @param container the parent view
+     *
+     * @param inflater           the inflater for inflating the layout
+     * @param container          the parent view
      * @param savedInstanceState the bundle for saving the state of the fragment
      * @return the view with the data setted
      */
@@ -144,6 +141,7 @@ public class PeopleListFragment extends Fragment {
 
     /**
      * Sets up the look and logic of the like button
+     *
      * @param layout the layout where the button is placed
      */
     private void setUpLikeButton(ViewGroup layout) {
@@ -170,6 +168,7 @@ public class PeopleListFragment extends Fragment {
 
     /**
      * Sets up the look and logic of the dislike button
+     *
      * @param layout the layout where the button is placed
      */
     private void setUpDislikeButton(ViewGroup layout) {
@@ -208,7 +207,7 @@ public class PeopleListFragment extends Fragment {
     /**********************************************************************************************/
 
     private void sendDecisionOverCandidate(String decision) {
-        CandidateData candidate = (CandidateData) ((SwipeDeckAdapter)mAdapter).getItem(mCurrId);
+        CandidateData candidate = (CandidateData) ((SwipeDeckAdapter) mAdapter).getItem(mCurrId);
         try {
             (mDecisionMethods.get(decision)).invoke(mActivity, candidate.getUserId());
             mCurrId += 1;
@@ -236,6 +235,7 @@ public class PeopleListFragment extends Fragment {
 
     /**
      * Receives the candidates and place them in an array, and on the stack of cards
+     *
      * @param candidates of match for the user
      */
     public void setCandidates(final JSONArray candidates) {

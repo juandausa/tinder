@@ -17,12 +17,13 @@ import classes.UserData;
  */
 public class OtherUsersProfileActivity extends UserProfileActivity {
 
+    public static final String DECISION = "DECISION";
     private static final String SEND_LIKE = "LIKE";
     private static final String SEND_DISLIKE = "DISLIKE";
-    public static final String DECISION = "DECISION";
 
     /**
      * Sets up the activity data and look
+     *
      * @param savedInstance the saved state of the activity
      */
     @Override
@@ -40,6 +41,7 @@ public class OtherUsersProfileActivity extends UserProfileActivity {
 
     /**
      * Set the visibility of the button with id "resourceId"
+     *
      * @param resourceId the id of the button
      * @param visibility the visibility wanted for the button
      */
@@ -109,6 +111,7 @@ public class OtherUsersProfileActivity extends UserProfileActivity {
 
     /**
      * Returns the user data
+     *
      * @param data the data of the user in a JSONObject
      * @return the user data in an instance of CandidateData
      */

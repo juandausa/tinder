@@ -15,8 +15,9 @@ public abstract class SimpleRequest extends AbstractRequest {
 
     /**
      * Constructor of the class SimpleRequest
+     *
      * @param context the context from where this request is being constructed
-    **/
+     **/
     protected SimpleRequest(Context context) {
         super(context);
     }
@@ -26,6 +27,7 @@ public abstract class SimpleRequest extends AbstractRequest {
 
     /**
      * Builds the request. Generates the path and sets the data to be sent from the json.
+     *
      * @param path the path used to send the request
      * @param json the data to be sent
      * @return the generated request
@@ -72,6 +74,7 @@ public abstract class SimpleRequest extends AbstractRequest {
 
     /**
      * Callback function that has the logic for handling the response
+     *
      * @param response the response of the request in format JSONObject
      */
     protected abstract void onResponse(Integer response);

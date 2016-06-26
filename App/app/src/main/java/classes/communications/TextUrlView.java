@@ -1,7 +1,5 @@
 package classes.communications;
 
-import android.graphics.Bitmap;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 

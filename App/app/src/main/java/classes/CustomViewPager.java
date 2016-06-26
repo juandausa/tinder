@@ -12,6 +12,7 @@ public class CustomViewPager extends ViewPager {
 
     /**
      * Constructor for the CustomViewPager class.
+     *
      * @param context Contex of the CustomViewPager.
      */
     public CustomViewPager(Context context) {
@@ -20,8 +21,9 @@ public class CustomViewPager extends ViewPager {
 
     /**
      * Constructor for the CustomViewPager class.
+     *
      * @param context Contex of the CustomViewPager.
-     * @param attrs Other attributes.
+     * @param attrs   Other attributes.
      */
     public CustomViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);

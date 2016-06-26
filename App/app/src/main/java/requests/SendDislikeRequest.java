@@ -1,6 +1,5 @@
 package requests;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -55,7 +54,7 @@ public class SendDislikeRequest extends JSONRequest {
 
     @Override
     protected void onError(VolleyError error) {
-        Log.e(mContext.getString(R.string.REQUEST_ERROR)+DISLIKE_STRING, error.getMessage());
+        Log.e(mContext.getString(R.string.REQUEST_ERROR) + DISLIKE_STRING, error.getMessage());
     }
 
 }
