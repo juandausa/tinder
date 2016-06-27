@@ -27,6 +27,18 @@ std::string Message::getSender() {
     return this->sender;
 }
 
+void Message::setContent(std::string content) {
+    this->content = content;
+}
+
+void Message::setReciever(std::string reciever) {
+    this->reciever = reciever;
+}
+
+void Message::setSender(std::string sender) {
+    this->sender = sender;
+}
+
 std::string Message::toString() {
     return this->getSender() + Constant::messageComponentDivider + this->getReciever() +
            Constant::messageComponentDivider + this->getContent();

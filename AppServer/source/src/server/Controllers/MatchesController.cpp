@@ -34,7 +34,6 @@ std::string MatchesController::makeBodyForShowMatchesResponse(std::string userId
         Json::Value user = users[i]["user"];
         std::string sharedUserId = Converter::intToString(user.get("id", "").asInt());
         std::string appUserId = this->userService.getAppUserId(sharedUserId);
-        std::cout << "CHECK FOR MATCH WITH: " << appUserId << std::endl;
         if (!this->userService.hasMatch(userId, appUserId)) {
             continue;
         }

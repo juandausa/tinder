@@ -65,7 +65,7 @@ std::vector<Message> convertInVectorOfMessages(Json::Value jsonMessages) {
         Message m;
         Json::Value jsonMessage = jsonMessages[i];
         Message message(jsonMessage["sender"].asString(), jsonMessage["reciever"].asString(), jsonMessage["content"].asString());
-        messages.push_back(m);
+        messages.push_back(message);
     }
 
     return messages;
