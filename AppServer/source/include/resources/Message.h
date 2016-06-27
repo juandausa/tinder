@@ -16,6 +16,9 @@ public:
     std::string getSender();
     std::string getReciever();
     std::string getContent();
+    void setSender(std::string sender);
+    void setReciever(std::string reciever);
+    void setContent(std::string content);
 private:
     std::string sender;
     std::string reciever;
