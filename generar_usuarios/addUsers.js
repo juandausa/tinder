@@ -83,11 +83,15 @@ function store_photos() {
 
 store_photos();
 
-var location = {
-        "latitude" : -34.780884,
-        "longitude" : -58.395260 
-    };
+var locationFabri = {
+    "latitude" : -34.780884,
+    "longitude" : -58.395260 
+};
 
+var locationAgu = {
+    "latitude" : -34.745092,
+    "longitude" : -58.258807
+};
 
 var movies = {"movies": ["Primer", "Dead Poets Society"]};
 var music = {"music" : ["Alter Bridge"]};
@@ -101,6 +105,7 @@ var television = {"television" : ["Supernatural"]};
 function set_interests() {
     var user_interests = {};
     user_interests.movies = ["Primer", "Dead Poets Society"];
+    user_interests.music = ["PEZ", "Megadeth Argentina", "MOLOTOV OFICIAL"];
     user_interests.gender = "male";
     return user_interests;
 }
@@ -145,7 +150,7 @@ setTimeout(function() {
         candidate.alias = alias[i];
         candidate.interests = interests;
         candidate.photo_profile = photos[i];        
-        candidate.location = location;
+        candidate.location = (i<3) ? locationFabri : locationAgu;
         candidate.discovering_distance = distances[i];
         candidates.push(candidate);           
     }    
