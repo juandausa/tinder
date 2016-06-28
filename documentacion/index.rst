@@ -391,8 +391,8 @@ Estos son los pasos recomendados para dar de alta los usuarios en ambos servidor
   * En el directorio del branch de SharedServer, entrar a postgres en heroku con: ``heroku pg:psql``
   * Borrar las tablas ejecutando:
 
-    * delete from users;
-    * delete from interests;
+    * ``delete from users;``
+    * ``delete from interests;``
 * Paso 2
 
   * Detener (si estuviera corriendo) el AppServer.
