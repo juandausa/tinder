@@ -443,7 +443,6 @@ Mejoras Propuestas y Faltantes
 Errores Conocidos
 ================================
 
-* No funciona bien la edición de perfil del usuario.
-* El chat trae los mensajes del usuario con el que estoy hablando pero no trae los mensajes viejos que he enviado.
-* En ocasiones el AppServer se detiene, es dificil de replicar el error.
+* En ocasiones el AppServer se detiene, esto sucede debido a un error con curl.
+* La edición de las preferencias de descubrimiento funciona con deficiencias.
 * Traer los datos desde el AppServer tarda bastante.
