@@ -32,7 +32,6 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 * Los posibles targets son Tinder_Main y RunTests. El primero lanza el servidor y el segundo corre los tests.
 
 ### Políticas de Commit
-* Correr valgrind sobre los tests, utilizando los flags --leak-check=full.
 * Correr cpplint para verificar los estilos de codificación. Desde la carpeta AppServer ejecute los siguientes comando y verifique que no hay errores:
    * ./cpplint.sh
 
