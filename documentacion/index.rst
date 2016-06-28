@@ -59,10 +59,8 @@ Configuración en CLion
 Políticas de Commit
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Correr valgrind sobre los tests, utilizando los flags ``--leak-check=full`` .
 * Correr cpplint para verificar los estilos de codificación. Desde la carpeta AppServer ejecute los siguientes comando y verifique que no hay errores:
-   * ``./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/src/*``
-   * ``./cpplint/cpplint.py --extensions=cpp --linelength=140 ./ar/fi/uba/tallerii/main/*``
+   * `./cpplint.sh`
 
 -------------------
 Usuarios
@@ -187,15 +185,22 @@ Pushear a Heroku
 -------------------
 Heroku
 -------------------
+
+^^^^^^^^^^^^^^
+Login
+^^^^^^^^^^^^^^
+
+* Si es la primera vez que van a usar heroku: Ejecutar en la consola ``heroku login`` .
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Abrir Base de Datos
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* Ejecutar en la consola ``heroku pg:psql`` .
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Ver Logs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 * Ejecutar en la consola ``heroku logs --tail`` .
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Entrar a Postgres en Heroku
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-* Ejecutar en la consola ``heroku pg:psql`` .
 
 -------------------
 Ambiente Local
@@ -371,6 +376,35 @@ Descripción:
 ################
 General
 ################
+
+================================
+Desarrolladores
+================================
+-------------------------------
+Alta de Usuarios
+-------------------------------
+
+Estos son los pasos recomendados para dar de alta los usuarios en ambos servidores.
+
+* Paso 1
+
+  * En el directorio del branch de SharedServer, entrar a postgres en heroku con: ``heroku pg:psql``
+  * Borrar las tablas ejecutando:
+
+    * delete from users;
+    * delete from interests;
+* Paso 2
+
+  * Detener (si estuviera corriendo) el AppServer.
+  * Borrar la base de datos del AppServer, ubicada por defecto en `/tmp/tinderdb`
+* Paso 3
+
+  * Correr el AppServer.
+* Paso 4
+
+  * Ejecutar el script de generación de usuarios que se encuentra en el branch de AppServerRefactor en la carpeta `generar_usuarios/`
+  * Ejecutar (con el AppServer corriendo): ``node addUsers.js``
+
 
 ================================
 Modo de Trabajo
