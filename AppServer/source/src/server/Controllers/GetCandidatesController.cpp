@@ -165,9 +165,9 @@ Json::Value GetCandidatesController::makeBodyForShowCandidatesResponse(Json::Val
             Json::Value arrayInterests;
             user["user_id"] = userId;
             user["alias"] = users[i]["user"].get("alias", "");
-            //std::string birthday = Converter::validateTimeOrReturnDefault(
-            //users[i]["user"].get("birthday", "").asString());
-            //user["birthday"] = birthday;
+            // std::string birthday = Converter::validateTimeOrReturnDefault(
+            // users[i]["user"].get("birthday", "").asString());
+            // user["birthday"] = birthday;
             user["age"] = users[i]["user"].get("age", "");
             user["gender"] = Converter::validateGenderOrReturnDefault(users[i]["user"].get("gender", "").asString());
             // std::cout << "LLEGAAAAA 2" << std::endl;

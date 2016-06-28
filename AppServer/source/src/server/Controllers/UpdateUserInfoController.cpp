@@ -29,7 +29,7 @@ void UpdateUserInfoController::operation(Request &request, Response &response) {
     std::cout << "External user id" << externalUserId << std::endl;
     LOG(INFO) << "Updating user info for user: '" << appUserId << "'";
     std::string body = this->makeBodyUserInfoForUpdate(request.getBody(), externalUserId, appUserId);
-    
+
     if ((appUserId.compare("") == 0) || (externalUserId.compare("") == 0) || (body.compare("") == 0)) {
         response.SetCode(400);
         response.SetBody("Bad request.");
@@ -75,7 +75,7 @@ void UpdateUserInfoController::makeBodyForRegistrationPost(const Json::Value &ro
     userData["user"]["sex"] = gender;
     userData["user"]["photo_profile"] = photo_profile;
     userData["user"]["age"] = age;
-    
+
     std::cout << fastWriter.write(userData) << std::endl;
 }
 
@@ -94,7 +94,7 @@ std::string UpdateUserInfoController::makeBodyUserInfoForUpdate(const std::strin
     }
 
     std::cout << "User data " << userProfileData << std::endl;
-    
+
     Json::Value userData;
     Json::Value root;
     Json::Reader reader;

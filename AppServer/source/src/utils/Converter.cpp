@@ -9,8 +9,6 @@
 #include <string>
 #include <iostream>
 
-using namespace std;
-
 std::string Converter::validateTimeOrReturnDefault(std::string time) {
     struct tm convertedTime;;
     if (strptime(time.c_str(), "%m/%d/%Y", &convertedTime)) {
