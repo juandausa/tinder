@@ -25,7 +25,7 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
    * Puede correr los tests mediante ```./source/test/runTests``` .
 * Para correr el servidor utilizar lo anterior pero iniciar el server mediante ```./source/main/Tinder_main``` .
    * El servidor lo puede finalizar con ```Ctrl+C``` o eviandole cualquier señal distinta de ```-9```.
-   
+
 ### Configuración en CLion
 * Importar el proyecto desde los fuentes desde la carpeta AppServer.
 * Si le pregunta si desea crear nuevos archivos Cmake indique ```NO```.
@@ -34,8 +34,7 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 ### Políticas de Commit
 * Correr valgrind sobre los tests, utilizando los flags --leak-check=full.
 * Correr cpplint para verificar los estilos de codificación. Desde la carpeta AppServer ejecute los siguientes comando y verifique que no hay errores:
-   * ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./source/src/*
-   * ./cpplint/cpplint.py --extensions=cpp --linelength=140 ./source/main/*
+   * ./cpplint.sh
 
 ### API Web
 
@@ -48,4 +47,4 @@ Para descargar el branch y empezar a desarrollar sobre el mismo se debe ejecutar
 * Descargue una copia del repositirio mediante ```git clone -b AppServer https://github.com/juandausa/tinder.git AppServer```.
 * En la raiz ejecute el script ```startDocker.sh``` .
    * Esto le abrirar una terminal con todas las dependencias necesarias para ejecutar el servidor.
-   * Descargue el último release mediante ```wget https://github.com/juandausa/tinder/archive/v0.1.1AppServer.tar.gz``` y ejecute la aplicación mediante lo descrito en [Modos de Uso](https://github.com/juandausa/tinder/tree/AppServer#modos-de-uso) .
+   * Descargue el último release mediante ```wget https://github.com/juandausa/tinder/archive/vx.y.zAppServer.tar.gz``` y ejecute la aplicación mediante lo descrito en [Modos de Uso](https://github.com/juandausa/tinder/tree/AppServer#modos-de-uso) .
