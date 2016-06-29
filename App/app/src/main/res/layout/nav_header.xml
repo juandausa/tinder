@@ -17,7 +17,7 @@
         android:id="@+id/profile_image"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:src="@drawable/cheese_1"
+        android:src="@drawable/blank_user"
         app:border_width="4dp"
         app:border_color="#FFFFFFFF"
         android:layout_gravity="center_vertical"

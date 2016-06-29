@@ -68,8 +68,9 @@ public class MatchChatActivity extends AppCompatActivity {
 
         mUserId = SessionManager.getUserId(this);
         mConversation = new Conversation(intent.getStringExtra(Constants.CONVERSATION));
-        toolbar.setTitle(mAlias);
+        //toolbar.setTitle(mAlias);
         toolbar.bringToFront();
+        getSupportActionBar().setTitle(mAlias);
 
         mAdapter = new ChatMessageAdapter(this, new ArrayList<ChatMessage>());
         mListView.setAdapter(mAdapter);
