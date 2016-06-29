@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true})); // for parsing application/x-www-form-urlencoded
-app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || 8000));
 app.use(express.static(__dirname + '/public'));
 // views is directory for all template files
 app.set('views', __dirname + '/views');
