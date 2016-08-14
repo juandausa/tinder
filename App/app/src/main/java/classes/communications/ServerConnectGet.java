@@ -4,14 +4,32 @@ import android.os.AsyncTask;
 
 import java.net.URL;
 
+/**
+ * Worker that loads the text from the url in background
+ */
 public class ServerConnectGet extends AsyncTask<String, String, String> {
 
-    protected AsyncCallerResponse caller = null;
+    protected AsyncCallerResponse mCaller = null;
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Constructor for the class
+     * @param caller the context that interacts with this
+     */
     public ServerConnectGet(AsyncCallerResponse caller) {
-        this.caller = caller;
+        this.mCaller = caller;
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Loads the image into a bitmap from the url in background
+     * @param args arguments, the first is a string with the url
+     * @return the bitmap loaded
+     */
     protected String doInBackground(String... args) {
         String data = null;
         String url = args[0];
@@ -23,8 +41,16 @@ public class ServerConnectGet extends AsyncTask<String, String, String> {
         return data;
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Calls the processFinish method from the context
+     * @param data the text to be passed to the context
+     */
+
     protected void onPostExecute(String data) {
-        caller.processFinish(data);
+        mCaller.processFinish(data);
     }
 }
 

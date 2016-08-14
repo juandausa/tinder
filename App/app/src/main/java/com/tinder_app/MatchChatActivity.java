@@ -29,7 +29,7 @@ import services.GetNewMessageService;
  */
 public class MatchChatActivity extends AppCompatActivity {
 
-    public String mOtherUserId = null;
+    private String mOtherUserId = null;
     private Conversation mConversation;
     private String mAlias;
     private String mUserId;
@@ -114,6 +114,25 @@ public class MatchChatActivity extends AppCompatActivity {
     /**********************************************************************************************/
 
     /**
+     * Getter for the mOtherUserId attribute
+     * @return the user id of the other user
+     */
+    public String getOtherUserId() {
+        return mOtherUserId;
+    }
+
+    /**
+     * Setter for the mOtherUserId attribute
+     * @param userId of the other user
+     */
+    public void setOtherUserId(String userId) {
+        mOtherUserId = userId;
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
      * The user sends a message
      *
      * @param message the message to be sent
@@ -184,6 +203,9 @@ public class MatchChatActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * When the user exits this activity, the isAlive flag becomes false
+     */
     @Override
     protected void onStop() {
         mIsAlive = false;
@@ -193,6 +215,10 @@ public class MatchChatActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Returns true if the user is in the match chat activity
+     * @return true if the user is in the match chat activity
+     */
     public boolean isAlive() {
         return mIsAlive;
     }

@@ -14,7 +14,7 @@ import classes.Constants;
 public final class RequestHandler {
 
     private static RequestHandler singleton;
-    private static String serverUrl = Constants.IP_SERVER;
+    private static String serverUrl = Constants.getIpServer();
     private Context mContext;
     private RequestQueue mRequestQueue;
 

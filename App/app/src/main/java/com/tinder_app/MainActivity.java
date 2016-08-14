@@ -230,11 +230,19 @@ public class MainActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Send a like request to the server from this context
+     * @param candidateId from the user to be liked
+     */
     public void sendLikeRequest(String candidateId) {
         SendLikeRequest request = new SendLikeRequest(this);
         sendDecisionOverCandidate(candidateId, request);
     }
 
+    /**
+     * Send a dislike request to the server from this context
+     * @param candidateId from the user to be disliked
+     */
     public void sendDislikeRequest(String candidateId) {
         SendDislikeRequest request = new SendDislikeRequest(this);
         sendDecisionOverCandidate(candidateId, request);
@@ -256,6 +264,12 @@ public class MainActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Callback that executes the decision maked in the OtherUsersProfileActivity
+     * @param requestCode the request code
+     * @param resultCode the result code
+     * @param data the data containing the decision maked in the other activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

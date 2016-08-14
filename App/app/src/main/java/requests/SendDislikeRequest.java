@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import classes.Constants;
 
 /**
- * Created by fabrizio on 13/06/16.
+ * Request that sends a decision of give a "dislike" to other user
  */
 public class SendDislikeRequest extends JSONRequest {
 
@@ -32,6 +32,13 @@ public class SendDislikeRequest extends JSONRequest {
         mMethod = Request.Method.POST;
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Do nothing on response
+     * @param response the response of the request in format JSONObject
+     */
     @Override
     protected void onResponse(JSONObject response) {
         try {
@@ -43,6 +50,14 @@ public class SendDislikeRequest extends JSONRequest {
         }
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Send a request using the data of the json passed as parameter
+     *
+     * @param json this parameter has the data that has to be used in the sending of the request
+     */
     @Override
     public void send(JSONObject json) {
         try {
@@ -52,6 +67,14 @@ public class SendDislikeRequest extends JSONRequest {
         }
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Callback function that has the logic for handling errors
+     *
+     * @param error belonging to the request sent
+     */
     @Override
     protected void onError(VolleyError error) {
         Log.e(mContext.getString(R.string.REQUEST_ERROR) + DISLIKE_STRING, error.getMessage());

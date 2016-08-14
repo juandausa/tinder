@@ -17,6 +17,9 @@ import classes.UserData;
  */
 public class OtherUsersProfileActivity extends UserProfileActivity {
 
+    /**
+     * Static atributes
+     */
     public static final String DECISION = "DECISION";
     private static final String SEND_LIKE = "LIKE";
     private static final String SEND_DISLIKE = "DISLIKE";

@@ -13,27 +13,40 @@ import classes.SessionManager;
 import requests.chat.GetNewMessageRequest;
 
 /**
- * Created by fabrizio on 16/06/16.
+ * Daemon that checks for new messages
  */
 public class GetNewMessageService implements Runnable {
 
     private static final int TIME = 5000;
     private MatchChatActivity mContext;
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Constructor for the class GetNewMessageService
+     * @param context the context from where it is executed
+     */
     public GetNewMessageService(MatchChatActivity context) {
         mContext = context;
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    /**
+     * Gets the new message in background every half a second
+     */
     @Override
     public void run() {
         android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
         while (mContext.isAlive()) {
-            if (mContext.mOtherUserId != null) {
+            if (mContext.getOtherUserId() != null) {
                 GetNewMessageRequest request = new GetNewMessageRequest(mContext);
                 JSONObject data = new JSONObject();
                 try {
                     data.put("to_user_id", SessionManager.getUserId(mContext));
-                    data.put(Constants.USER_ID, mContext.mOtherUserId);
+                    data.put(Constants.USER_ID, mContext.getOtherUserId());
                     request.send(data);
                 } catch (JSONException e) {
                     e.printStackTrace();

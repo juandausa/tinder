@@ -14,13 +14,13 @@ import classes.Constants;
 import requests.JSONRequest;
 
 /**
- * Created by fabrizio on 16/06/16.
+ * Request that gets a new message from the other user
  */
 public class GetNewMessageRequest extends JSONRequest {
 
 
-    MatchChatActivity mContext;
-    private String TO_USER_ID = "to_user_id";
+    private MatchChatActivity mContext;
+    //private String TO_USER_ID = "to_user_id";
 
 
     /**********************************************************************************************/
@@ -40,6 +40,10 @@ public class GetNewMessageRequest extends JSONRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * On response, send the message received to the context
+     * @param response the response of the request in format JSONObject
+     */
     @Override
     protected void onResponse(final JSONObject response) {
         try {
@@ -60,6 +64,10 @@ public class GetNewMessageRequest extends JSONRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Method that sends the request
+     * @param json this parameter has the data that has to be used in the sending of the request
+     */
     @Override
     public void send(JSONObject json) {
         try {
@@ -72,6 +80,10 @@ public class GetNewMessageRequest extends JSONRequest {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Callback executed on error
+     * @param error belonging to the request sent
+     */
     @Override
     protected void onError(VolleyError error) {
         Log.e(mContext.getString(R.string.REQUEST_ERROR), error.getMessage());

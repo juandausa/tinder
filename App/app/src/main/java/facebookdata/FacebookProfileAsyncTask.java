@@ -39,6 +39,9 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
     private ConcurrentMap mProfile;
     private Bundle mParams;
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
     /**
      * Constructor of the class FacebookProfileAsyncTask
      *
@@ -55,6 +58,11 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Gets the profile image of the facebook user
+     * @param src url of the profile image
+     * @return the bitmap with the image
+     */
     public static Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);
@@ -73,11 +81,21 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Encode the bitmap to base64
+     * @param image the bitmap with the image
+     * @param compressFormat the format to be compressed
+     * @param quality the final quality of the image stored as base64
+     * @return the string with the base64
+     */
     public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
         image.compress(compressFormat, quality, byteArrayOS);
         return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
     }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     /**
      * Gets the user data from facebook
@@ -93,6 +111,9 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
         ready.set(true);
         return null;
     }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     /**
      * Gets the user profile data from facebook using the Facebook Graph API
@@ -130,6 +151,9 @@ public class FacebookProfileAsyncTask extends AsyncTask<Void, Void, Void> {
         request.setParameters(mParams);
         request.executeAndWait();
     }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
     private boolean genderIsMale(String gender) {
         return ((gender.equals("hombre")) || (gender.equals("male")));

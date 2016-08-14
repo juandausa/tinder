@@ -429,6 +429,13 @@ public class EditProfileActivity extends AppCompatActivity {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Scale down the image received as parameter
+     * @param realImage the image to scale down
+     * @param maxImageSize the max size of the image resized
+     * @param filter filter
+     * @return the scaled down image
+     */
     public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
                                    boolean filter) {
         float ratio = Math.min(
@@ -442,7 +449,16 @@ public class EditProfileActivity extends AppCompatActivity {
         return newBitmap;
     }
 
+    /**
+     * Resize the image
+     * @param image the image to be resized
+     * @param maxWidth the max width
+     * @param maxHeight the max heigth
+     * @return the resized image
+     */
     private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        Bitmap newImage = image;
+
         if (maxHeight > 0 && maxWidth > 0) {
             int width = image.getWidth();
             int height = image.getHeight();
@@ -452,14 +468,14 @@ public class EditProfileActivity extends AppCompatActivity {
             int finalWidth = maxWidth;
             int finalHeight = maxHeight;
             if (ratioMax > 1) {
-                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+                finalWidth = (int) ((float) maxHeight * ratioBitmap);
             } else {
-                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+                finalHeight = (int) ((float) maxWidth / ratioBitmap);
             }
-            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
-            return image;
+            newImage = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return newImage;
         } else {
-            return image;
+            return newImage;
         }
     }
 

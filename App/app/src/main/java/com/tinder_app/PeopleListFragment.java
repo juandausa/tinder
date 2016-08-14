@@ -40,7 +40,7 @@ public class PeopleListFragment extends Fragment {
     private static final int SWIPE_DURATION = 4000;
     private static final String SEND_LIKE = "LIKE";
     private static final String SEND_DISLIKE = "DISLIKE";
-    MainActivity mActivity;
+    private MainActivity mActivity;
     private JSONArray mCandidates;
     private List<CandidateData> mCardList;
     private SwipeDeckAdapter mAdapter;
@@ -222,6 +222,10 @@ public class PeopleListFragment extends Fragment {
     /**********************************************************************************************/
     /**********************************************************************************************/
 
+    /**
+     * Sends the decision made in this fragment to the context
+     * @param result the decision made
+     */
     public void sendDecisionFromResult(String result) {
         if (result.equals(SEND_LIKE)) {
             sendLikeDecision();

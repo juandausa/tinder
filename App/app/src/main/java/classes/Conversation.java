@@ -88,7 +88,12 @@ public class Conversation {
         }
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
+    /**
+     * Advance the pointer pointing to the current message in the conversation to the next.
+     */
     public void advanceToNextMessage() {
         mMessageIndex++;
     }

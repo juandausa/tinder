@@ -55,7 +55,7 @@ public final class SessionManager {
     public static void setServerIp(Context context, String ip) {
         SharedPreferences preferences = getSessionPreferences(context);
         Constants.setIpServer(ip);
-        preferences.edit().putString(Constants.IP, Constants.IP_SERVER).apply();
+        preferences.edit().putString(Constants.IP, Constants.getIpServer()).apply();
     }
 
     /**********************************************************************************************/
@@ -106,10 +106,9 @@ public final class SessionManager {
      * Loads the user id
      *
      * @param context the context where the session manager is used
-     * @return the user id
      */
     public static void loadServerIp(Context context) {
         SharedPreferences preferences = getSessionPreferences(context);
-        Constants.IP_SERVER = preferences.getString(Constants.IP, Constants.DEFAULT_IP);
+        Constants.setServerURL(preferences.getString(Constants.IP, Constants.DEFAULT_IP));
     }
 }
