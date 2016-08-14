@@ -49,7 +49,7 @@ public class GetNewMessageService implements Runnable {
                     data.put(Constants.USER_ID, mContext.getOtherUserId());
                     request.send(data);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e(mContext.getString(R.string.JSON_ERROR), e.toString());
                 }
             }
             try {

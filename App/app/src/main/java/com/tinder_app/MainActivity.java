@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
             data.put("to_user_id", candidateId);
             data.put(Constants.USER_ID, mUserId);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(getString(R.string.connection_error), e.toString());
         }
         request.send(data);
     }

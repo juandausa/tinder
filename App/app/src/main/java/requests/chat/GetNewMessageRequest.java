@@ -48,7 +48,9 @@ public class GetNewMessageRequest extends JSONRequest {
     protected void onResponse(final JSONObject response) {
         try {
             final String message = response.getString(Constants.MESSAGE);
-            if (message.equals("")) return;
+            if (message.equals("")) {
+                return;
+            }
             mContext.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -57,7 +59,7 @@ public class GetNewMessageRequest extends JSONRequest {
                 }
             });
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(mContext.getString(R.string.JSON_ERROR), e.toString());
         }
     }
 

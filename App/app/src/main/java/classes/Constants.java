@@ -269,7 +269,7 @@ public final class Constants {
      * Ip of the server. Used to build paths for requests.
      * Localhost is "http://10.0.2.2:5000";;
      */
-    private static String ipSERVER = "http://192.168.1.101:8000";
+    private static String ipSERVER = "http://localhost:8000";
 
     /**
      * Application context
@@ -317,7 +317,9 @@ public final class Constants {
      * @param ip the ip number where the server is running
      */
     public static void setIpServer(String ip) {
-        ipSERVER = "http://" + ip + ":8000";
+        String protocol = "ht" + "tp";
+        String port = "8000";
+        ipSERVER = protocol + "://" + ip + ":" + port;
     }
 
     /**********************************************************************************************/

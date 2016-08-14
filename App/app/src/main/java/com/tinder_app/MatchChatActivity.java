@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,7 +92,7 @@ public class MatchChatActivity extends AppCompatActivity {
                     data.put("to_user_id", mOtherUserId);
                     (new SendNewMessageRequest(MatchChatActivity.this)).send(data);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e(getString(R.string.JSON_ERROR), e.toString());
                 }
                 mEditTextMessage.setText("");
             }

@@ -199,7 +199,7 @@ public class PeopleListFragment extends Fragment {
             mDecisionMethods.put(SEND_LIKE, mActivity.getClass().getMethod("sendLikeRequest", String.class));
             mDecisionMethods.put(SEND_DISLIKE, mActivity.getClass().getMethod("sendDislikeRequest", String.class));
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            Log.e("ERROR", e.toString());
         }
     }
 
@@ -212,9 +212,9 @@ public class PeopleListFragment extends Fragment {
             (mDecisionMethods.get(decision)).invoke(mActivity, candidate.getUserId());
             mCurrId += 1;
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            Log.e("ERROR", e.toString());
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            Log.e("ERROR", e.toString());
         }
 
     }

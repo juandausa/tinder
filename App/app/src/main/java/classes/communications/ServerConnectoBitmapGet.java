@@ -3,6 +3,7 @@ package classes.communications;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -39,7 +40,7 @@ public class ServerConnectoBitmapGet extends AsyncTask<String, String, Bitmap> {
         try {
             bitmap = BitmapFactory.decodeStream((InputStream) new URL(imageUrl).getContent());
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("ERROR", e.toString());
         }
         return bitmap;
     }

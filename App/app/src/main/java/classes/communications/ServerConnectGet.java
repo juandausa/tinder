@@ -1,8 +1,10 @@
 package classes.communications;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.net.URL;
+
 
 /**
  * Worker that loads the text from the url in background
@@ -36,7 +38,7 @@ public class ServerConnectGet extends AsyncTask<String, String, String> {
         try {
             data = (String) new URL(url).getContent();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("ERROR", e.toString());
         }
         return data;
     }

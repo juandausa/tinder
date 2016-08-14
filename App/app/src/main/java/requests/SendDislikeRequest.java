@@ -46,7 +46,7 @@ public class SendDislikeRequest extends JSONRequest {
                 // TODO: Do something on error code received
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(mContext.getString(R.string.JSON_ERROR), e.toString());
         }
     }
 
