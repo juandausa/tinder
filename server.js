@@ -95,7 +95,7 @@ app.get('/users', function (req, res) {
 		for (i = 0; i < users.length; i++) {
 			var data = users[i].data;
 			data.id = users[i].id;
-			data.photo_profile = url + "/users/"+ String(data.id) + "/photo"
+			data.photo_profile = url + "/users/"+ String(data.id) + "/photo";
 			response.users.push({user: data});
 		}
 		response.metadata = getMetadata(users);
